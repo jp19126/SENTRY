@@ -1,0 +1,14 @@
+# Machine-local environments, credentials and generated research artifacts
+.venv/
+__pycache__/
+*.py[cod]
+.env
+.env.*
+!.env.example
+.cache/
+data/
+checkpoints/
+build/
+results/
+third_party/
+reports/environment.json

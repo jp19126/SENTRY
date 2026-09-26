@@ -1,0 +1,169 @@
+{
+  "project": "Mixed-Precision FPGA Co-Design for LLM Guards",
+  "protocol_version": "2.1",
+  "seed": 42,
+  "models": {
+    "detector": {
+      "id": "google/bert_uncased_L-4_H-256_A-4",
+      "revision": null,
+      "tokenizer_revision": null,
+      "labels": {
+        "benign": 0,
+        "injection": 1
+      }
+    },
+    "quality_reference": {
+      "id": "meta-llama/Llama-Prompt-Guard-2-22M",
+      "revision": null,
+      "authorized": false
+    },
+    "target": {
+      "id": "Qwen/Qwen3-4B-Instruct-2507",
+      "revision": null,
+      "endpoint": null,
+      "max_new_tokens": 256,
+      "do_sample": false
+    }
+  },
+  "data": {
+    "application": "BIPIA EmailQA",
+    "source_revision": null,
+    "training_source": null,
+    "development_pairs": 100,
+    "split_unit": "original source group including variants",
+    "fallback_split_fractions": {
+      "train": 0.6,
+      "search": 0.2,
+      "final_calibration": 0.1,
+      "test": 0.1
+    },
+    "search_subsets": [
+      "temporary_threshold",
+      "candidate_scoring"
+    ],
+    "search_subset_allocation": null,
+    "benign_test_target_distinct_documents": 3000,
+    "notinject_separate": true
+  },
+  "evaluation": {
+    "fpr_target": 0.01,
+    "max_recall_loss_absolute": 0.01,
+    "nearby_fpr": [
+      0.005,
+      0.02
+    ],
+    "attack_rule": "score > threshold",
+    "threshold_rule": "Sort n benign scores ascending; k=floor(alpha*n); threshold=value at 1-based index n-k",
+    "level": "document"
+  },
+  "windowing": {
+    "primary_length": 256,
+    "content_token_overlap": 64,
+    "aggregation": "max_window_risk",
+    "labels": "injection spans when available; otherwise train using document aggregate"
+  },
+  "training": {
+    "optimizer": "AdamW",
+    "learning_rate": 2e-05,
+    "weight_decay": 0.01,
+    "effective_batch": 32,
+    "epochs": 3,
+    "microbatch": null,
+    "gradient_accumulation": null
+  },
+  "quantization": {
+    "weight_bits": [
+      4,
+      8
+    ],
+    "activation_bits": 8,
+    "encoder_layers": 4,
+    "groups_per_layer": [
+      "qkv",
+      "attention_output",
+      "ffn_input",
+      "ffn_output"
+    ],
+    "group_count": 16,
+    "other_operation_formats": null,
+    "scales_rounding_clipping_accumulators": null,
+    "note": "Resolve and calibrate all non-search formats in Goal 3; share with hardware and evaluation."
+  },
+  "methods": {
+    "published_baseline": null,
+    "A": "existing method with conventional objective",
+    "B": "same method with protection requirements during selection",
+    "C": "B plus one evidence-supported mechanism",
+    "proposed_mechanism": null,
+    "max_unique_maps_per_method": 64,
+    "max_engine_profiles": 3,
+    "exploratory_beam_width": 3,
+    "max_initial_micro_synthesis_runs": 12,
+    "max_pair_sensitivity_experiments": 3,
+    "qat_epochs": 1,
+    "max_shortlist_per_method": 2,
+    "uniform_anchors": [
+      "W8A8",
+      "W4A8"
+    ],
+    "mechanism_removal_comparisons": 1,
+    "board_designs": [
+      "uniform",
+      "B",
+      "C"
+    ]
+  },
+  "hardware": {
+    "allocated_board": null,
+    "part": null,
+    "interface": null,
+    "clock_objective_mhz": null,
+    "resource_limits": null,
+    "tool_versions": null,
+    "execution_host": null,
+    "programming_authorized": false,
+    "initial_implementation": "programmable logic"
+  },
+  "measurement": {
+    "primary_length": 256,
+    "primary_batch": 1,
+    "final_lengths": [
+      128,
+      256,
+      512
+    ],
+    "final_batches": [
+      1,
+      8,
+      32
+    ],
+    "min_completed_checks_per_main_configuration": 10000,
+    "repeats": 3,
+    "warmup_checks": null,
+    "bringup_agreement_examples": 32,
+    "final_agreement_examples_approx": 1000,
+    "matched_load_fractions": [
+      0.25,
+      0.6,
+      0.85
+    ],
+    "energy_boundary": null
+  },
+  "final_evaluation": {
+    "challenge_tasks": 20,
+    "max_variants_per_task": 3,
+    "extension": "one additional task OR one additional small encoder",
+    "application_chunks_when_naturally_available": 5
+  },
+  "paths": {
+    "data": "data",
+    "checkpoints": "checkpoints",
+    "results": "results",
+    "reports": "reports",
+    "hardware": "hardware"
+  },
+  "access": {
+    "paid_api_budget": null
+  },
+  "configuration_state": "Preparation defaults, not frozen experimental protocol. Resolve nulls at the relevant goal and record changes before comparisons."
+}
