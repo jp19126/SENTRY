@@ -39,7 +39,7 @@ Authoritative artifacts in `results/goal2/application_deepseek/`: `request_plan.
 Regenerate the report offline, with no credential or network call:
 
 ```powershell
-& 'C:\research\GATE\.venv\Scripts\python.exe' '\\wsl.localhost\Ubuntu\home\jp19126\Projects\GATE\scripts\application_pilot.py'
+& 'C:\research\GATE\.venv\Scripts\python.exe' '\\wsl.localhost\Ubuntu\home\jp19126\Projects\SENTRY\scripts\application_pilot.py'
 ```
 
 No further API request is needed to reproduce this completed pilot. Final calibration/test, NotInject, hardware costs, A/B/C comparison, FPGA measurements and final held-out application evaluation remain unexecuted. The optional gated Prompt Guard reference remains unavailable. No full research-goal completion is claimed.

@@ -536,3 +536,75 @@ The unchanged compiled FP32 snapshot executed six real-input calls in three invo
 Per-half cycles are98,455embedding,208,648LayerNorm and98,484quantization. Their six-call subtotal811,174cycles is4.055870ms at5ns under the existing simulated six-port memory model, excluding Python/file handoffs; it is not full-detector or board timing. Real-data LayerNorm simulation was slower than its initial estimate but finished within the unchanged900-second stage limit. No additional experiment or runtime extension was launched. Root and independent read-only review found no concrete orchestration/reference/status defect. Full numerical acceptance and score identity approvals remain unresolved; no campaign maps or dataset scores were added.
 
 Final observed weekly usage89%, reset1791049884unchanged. The conditional extension used4percentage points beyond85%, below the allowed7; the task is complete and research is now paused, with the standard pause marker restored. On explicit resume, reuse all completed evidence and implement the remaining same-input synthesized-arithmetic replay, then the prescribed broader bring-up; host/physical-memory and full checking costs remain unresolved. Goal4 and the overall research objective are not complete.
+
+
+## 2026-10-08 — SENTRY rename audit and Git synchronization
+
+User requested an audit of the renamed remote/local repository, fixes and Git
+sync. Active checkout: `\\wsl.localhost\Ubuntu\home\jp19126\Projects\SENTRY`
+(`/home/jp19126/Projects/SENTRY`). The separate historical WSL GATE directory and
+native `C:\research\GATE\.venv\Scripts\python.exe` still exist. The interpreter
+successfully ran the current SENTRY application/data scripts in help mode.
+
+Git origin already used `git@github.com:jp19126/SENTRY.git`; WSL `ls-remote` and
+`fetch origin` succeeded, with remote main initially at
+`df904fcefe6566650490f7476e13914524db6907` and no divergence. Main tracks origin/main.
+Windows Git initially rejected the UNC checkout as dubious ownership. Added only
+`%(prefix)///wsl.localhost/Ubuntu/home/jp19126/Projects/SENTRY` to its global
+safe.directory list; ordinary Windows Git status/remote checks then succeeded.
+No wildcard trust, remote replacement or force push was used.
+
+The pre-existing research implementation, reports and paused handoff were mostly
+untracked. A credential-pattern/file-scope check found no credential-like values,
+private-key markers, secret files or generated artifact roots among the 117
+tracked/nonignored files (1,972,522 bytes including the already tracked proposal
+PDF). This was a bounded sync check, not a general security assessment. Preserved
+the existing work in commit `f4fc5a0` (113 changed files) before rename fixes.
+Original logs/dataset whitespace and historical paths were kept.
+
+Fixed hardcoded reproduction commands in `scripts/prepare_data.py`,
+`scripts/application_pilot.py` and `scripts/run_real_prefix_rtl.py`: generated
+commands now derive their script location from ROOT and use the executing native
+interpreter where appropriate. Updated the data/application/training/profiling
+and hardware-cost report commands to SENTRY. Updated the data-download user agent,
+README title/current Git guidance and Windows handoff's current clone example.
+Historical setup/actually executed commands, saved JSON/log evidence, native
+interpreter and credential names, gate_* modules and GATE_* RTL interfaces remain
+unchanged. Shared configuration already uses relative repository paths.
+
+Validation: syntax parsing passed for all three changed scripts; native
+application/data --help and WSL real-prefix default preview passed without data
+preparation, inference, vendor execution or result/report regeneration. All
+configured relative directories and configured Linux tool executables exist.
+The FP32 source_evidence check passed; two saved testbenches and all 66 recorded
+reachable RTL copies exactly match current source/synthesized files, with the
+matching compiled signature and snapshot executable present. These are read-only
+associations, not validation of relocated compiled/vendor execution. Saved vendor
+Tcl/shell/projects still contain historical absolute GATE paths: launch current
+Python drivers rather than directly executing those archived scripts. No new
+synthesis, simulation, API request or numerical acceptance was claimed.
+
+The Goal 2 pause marker/configuration were preserved. The separate Goal 3 pause
+marker was absent in this checkout and the checked historical locations; its
+absence cannot be attributed to the rename. Restored the local ignored
+`results/goal3/pause.request` to prevent accidental quantization/profiling resume
+under the already paused handoff. Research remains paused; all budgets and null
+numerical approvals are unchanged.
+
+Execution tooling: ordinary shell and Node launch attempts failed at Windows
+sandbox helper setup (`helper_unknown_error: setup refresh had errors`). The same
+failure was already documented in September, so it is not evidence of a rename
+regression. Approved elevated commands were used. apply_patch could not read the
+UNC reparse-point path; edits used scoped WSL Python instead. An initial temporary
+edit script had a quoting syntax error before any writes; the corrected script
+succeeded. Git whitespace checks accept CRLF; pre-existing final blank lines and
+original log/dataset whitespace were preserved in the research snapshot. The
+focused rename diff passed its whitespace check.
+
+Commit the rename fixes and push ordinary main to origin/main, then verify remote
+HEAD equals local HEAD and `git status --short --branch` is clean. Next routine
+read-only command:
+
+```powershell
+wsl.exe -d Ubuntu --exec git -C /home/jp19126/Projects/SENTRY status --short --branch
+```

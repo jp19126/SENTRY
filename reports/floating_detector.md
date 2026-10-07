@@ -53,7 +53,7 @@ All three model/tokenizer checkpoints and optimizer/RNG states remain in native 
 
 Execution note: after epoch 1, a report expected a `task` field instead of the actual `source_dataset` field. The reporting code was corrected, both saved search score files were reused, and training resumed at epoch 2 from the saved model/optimizer/RNG state. No epoch or inference was repeated to fix the report. Epoch 1 whole-epoch peak memory was not persisted; it remains null. Its first-batch measured memory evidence is preserved. Future checkpoints persist pending evaluation status before scoring.
 
-Reproduction/resume command: `C:\research\GATE\.venv\Scripts\python.exe C:\research\GATE\scripts\train_detector.py --microbatch-windows 32 --resume`. A completed run reuses its artifacts. For an authorized pause, create native `results/goal2/pause.request`; the running trainer saves its current optimizer/RNG after the current effective batch.
+Reproduction/resume command: `& 'C:\research\GATE\.venv\Scripts\python.exe' '\\wsl.localhost\Ubuntu\home\jp19126\Projects\SENTRY\scripts\train_detector.py' --microbatch-windows 32 --resume`. A completed run reuses its artifacts. For an authorized pause, create `results/goal2/pause.request` in the active checkout; the running trainer saves its current optimizer/RNG after the current effective batch.
 
 Prompt Guard access and the Gemini application experiment are tracked separately; this detector report does not claim their results or any FPGA, quantized arithmetic, power or final-test measurement.
 

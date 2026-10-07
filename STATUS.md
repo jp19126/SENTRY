@@ -1,6 +1,6 @@
 # Status
 
-Last updated: **2026-10-07** (documentation review; no new research measurements).
+Last updated: **2026-10-08** (repository rename audit and Git synchronization; no new research measurements).
 Latest research handoff: 2026-09-26 22:30 UTC (2026-09-27 in Europe/Madrid).
 Current objective: complete Goal 4 numerical qualification and full checking-cost
 accounting before the Goal 5 campaign. Research remains paused.
@@ -69,7 +69,7 @@ Offline ledger refresh after relevant evidence changes (writes
 wsl.exe -d Ubuntu --exec /usr/bin/python3 /home/jp19126/Projects/SENTRY/scripts/estimate_detector_cost.py
 ```
 
-This checkout is `/home/jp19126/Projects/SENTRY`; the historical `GATE` checkout is a separate directory. Use [README paths](README.md#environment-and-paths) for current commands. Saved vendor projects contain historical absolute paths; their reuse from SENTRY has not been validated. Native Python is `C:\research\GATE\.venv\Scripts\python.exe`; vendor tools are in `/home/jp19126/Xilinx/2025.2/{Vitis,Vivado}/bin/`. Physical board revision, boot/host connection and memory/coherency allocation remain unresolved. Research changes are uncommitted, based on `df904fcefe6566650490f7476e13914524db6907`. Detailed attempts, failures and progress are in `reports/execution_log.md`.
+This checkout is `/home/jp19126/Projects/SENTRY`; the historical `GATE` checkout is a separate directory. Use [README paths](README.md#environment-and-paths) for current commands. Saved vendor projects contain historical absolute paths; their reuse from SENTRY has not been validated. Native Python is `C:\research\GATE\.venv\Scripts\python.exe`; vendor tools are in `/home/jp19126/Xilinx/2025.2/{Vitis,Vivado}/bin/`. Physical board revision, boot/host connection and memory/coherency allocation remain unresolved. The existing research source/reports were committed as `f4fc5a0` before the rename fixes; the original research base remains `df904fcefe6566650490f7476e13914524db6907`. This handoff accompanies the subsequent rename-fix commit on `main`. Detailed attempts, failures and progress are in `reports/execution_log.md`.
 
 Documentation/configuration discrepancy: `configs/project.json` still has an earlier
 `configuration_state` string saying to continue remaining profiles. Its structured
@@ -77,3 +77,20 @@ Documentation/configuration discrepancy: `configs/project.json` still has an ear
 `results/goal2/pause.request` record the later pause. The completed 12 initial
 syntheses are not a new allowance. Configuration and pause markers were preserved
 during this documentation-only review.
+
+## Repository rename handoff
+
+`origin` uses `git@github.com:jp19126/SENTRY.git`; `main` tracks `origin/main`.
+The 2026-10-08 audit corrected current reproduction commands and their report
+generators, and added an exact-directory Windows Git ownership exception.
+The research implementation/reports are now tracked; ignored artifacts remain
+local. A missing local Goal 3 pause marker was restored to match the paused handoff. Evidence and verification are in
+[execution_log.md](reports/execution_log.md#2026-10-08--sentry-rename-audit-and-git-synchronization).
+Research stays paused. Saved vendor projects retain historical absolute paths;
+only read-only associations were checked, so relocated execution is unqualified.
+
+Next read-only Git check:
+
+```powershell
+wsl.exe -d Ubuntu --exec git -C /home/jp19126/Projects/SENTRY status --short --branch
+```

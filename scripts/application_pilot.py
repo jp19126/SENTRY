@@ -1002,7 +1002,7 @@ Actual stream timing starts at dispatch and records first visible answer text (n
 
 Default preview (no key required, no network):
 ```powershell
-C:\\research\\GATE\\.venv\\Scripts\\python.exe scripts/application_pilot.py
+& '{sys.executable}' '{ROOT / 'scripts/application_pilot.py'}'
 ```
 
 The current user stop and pause controls remain authoritative. Only after explicit resumption and configured authorization may `--execute` use the configured named environment variable or an external literal key source. `--config <path>` can select a historical configuration for offline inspection; it cannot override the live user stop. Secrets are never saved. Output directory: `{destination.relative_to(ROOT).as_posix()}`. Full reviewable requests, logical-case plan, response records, allowance events, outcomes and summary are saved there.

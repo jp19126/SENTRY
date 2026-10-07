@@ -42,6 +42,22 @@ access needs and the reproduction command. Ask only for essential access,
 physical work, a budget extension or a substantive research change.
 ```
 
+## Current Git synchronization
+
+The renamed remote is [jp19126/SENTRY](https://github.com/jp19126/SENTRY).
+For a new native Windows checkout:
+
+```powershell
+git clone https://github.com/jp19126/SENTRY.git C:\research\SENTRY
+cd C:\research\SENTRY
+```
+
+The active research checkout is in WSL at `/home/jp19126/Projects/SENTRY`;
+use [README's current Git commands](README.md#git-synchronization-after-the-rename)
+for that checkout. The verified native Python environment remains at
+`C:\research\GATE\.venv`; preserve it and the ignored research artifacts.
+The examples below record the original setup and are not current clone commands.
+
 ## Original sync procedure (historical)
 
 For a new checkout:

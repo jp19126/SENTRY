@@ -60,9 +60,9 @@ Before a hardware-grounded A/B/C campaign: establish the common physical/control
 Reuse successful evidence. Offline analyses:
 
 ```powershell
-wsl.exe -d Ubuntu --exec /usr/bin/python3 /home/jp19126/Projects/GATE/scripts/analyze_hls_characterization.py
-wsl.exe -d Ubuntu --exec /usr/bin/python3 /home/jp19126/Projects/GATE/scripts/analyze_cached_linear.py
-wsl.exe -d Ubuntu --exec /usr/bin/python3 /home/jp19126/Projects/GATE/scripts/analyze_fixed_fp32.py
+wsl.exe -d Ubuntu --exec /usr/bin/python3 /home/jp19126/Projects/SENTRY/scripts/analyze_hls_characterization.py
+wsl.exe -d Ubuntu --exec /usr/bin/python3 /home/jp19126/Projects/SENTRY/scripts/analyze_cached_linear.py
+wsl.exe -d Ubuntu --exec /usr/bin/python3 /home/jp19126/Projects/SENTRY/scripts/analyze_fixed_fp32.py
 ```
 
 Actual dispatches, failures, active sessions, usage monitoring and remaining allowances are in `reports/execution_log.md`. The selected DeepSeek pilot is already complete; this work makes no API calls. No board latency, sustained throughput, energy, full-model hardware accuracy or final method improvement has been measured.

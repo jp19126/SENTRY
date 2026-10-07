@@ -67,7 +67,7 @@ def download(url, path):
     if path.exists():
         return path
     path.parent.mkdir(parents=True, exist_ok=True)
-    request = urllib.request.Request(url, headers={"User-Agent": "GATE-Goal1-research"})
+    request = urllib.request.Request(url, headers={"User-Agent": "SENTRY-Goal1-research"})
     with urllib.request.urlopen(request, timeout=90) as response:
         data = response.read()
     path.write_bytes(data)
@@ -401,7 +401,7 @@ The required fields/labels, original-group and normalized-body split separation,
 
 Reproduce from any working directory:
 ```powershell
-C:\\research\\GATE\\.venv\\Scripts\\python.exe C:\\research\\GATE\\scripts\\prepare_data.py
+& '{sys.executable}' '{ROOT / 'scripts/prepare_data.py'}'
 ```
 Already acquired immutable raw snapshots are reused. Settings are read from `configs/project.json`.
 """

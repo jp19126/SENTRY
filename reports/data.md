@@ -39,6 +39,6 @@ The required fields/labels, original-group and normalized-body split separation,
 
 Reproduce from any working directory:
 ```powershell
-C:\research\GATE\.venv\Scripts\python.exe C:\research\GATE\scripts\prepare_data.py
+& 'C:\research\GATE\.venv\Scripts\python.exe' '\\wsl.localhost\Ubuntu\home\jp19126\Projects\SENTRY\scripts\prepare_data.py'
 ```
 Already acquired immutable raw snapshots are reused. Settings are read from `configs/project.json`.

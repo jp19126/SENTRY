@@ -33,7 +33,7 @@ Actual stream timing starts at dispatch and records first visible answer text (n
 
 Default preview (no key required, no network):
 ```powershell
-C:\research\GATE\.venv\Scripts\python.exe scripts/application_pilot.py
+& 'C:\research\GATE\.venv\Scripts\python.exe' '\\wsl.localhost\Ubuntu\home\jp19126\Projects\SENTRY\scripts\application_pilot.py'
 ```
 
 The current user stop and pause controls remain authoritative. Only after explicit resumption and configured authorization may `--execute` use the configured named environment variable or an external literal key source. `--config <path>` can select a historical configuration for offline inspection; it cannot override the live user stop. Secrets are never saved. Output directory: `results/goal2/application_deepseek`. Full reviewable requests, logical-case plan, response records, allowance events, outcomes and summary are saved there.

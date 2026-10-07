@@ -49,7 +49,7 @@ def report(record):
     lines += ['', 'State: '+record['state']+'. '+record.get('error',''), '',
       'Source/capture associations, exact commands, raw inputs/outputs, logs and failure records are preserved under results/goal4/numerical_bridge/rtl_prefix_v1. The simulator runs a private copy of the already compiled snapshot; no RTL, testbench, compilation or synthesis changes are made.', '',
       'Cycles retain the existing accepted-service-start to sampled-done convention and bounded six-port memory model. Their sum covers this arithmetic prefix only. Python orchestration/file handoffs are outside simulated cycles; this is not end-to-end execution or board timing.', '',
-      'Reproduction: `wsl.exe -d Ubuntu --exec /usr/bin/python3 /home/jp19126/Projects/GATE/scripts/run_real_prefix_rtl.py --execute`. Default is preview; completed/failed output is never overwritten. The existing pause marker is respected.']
+      f'Reproduction: `wsl.exe -d Ubuntu --exec /usr/bin/python3 {ROOT.as_posix()}/scripts/run_real_prefix_rtl.py --execute`. Default is preview; completed/failed output is never overwritten. The existing pause marker is respected.']
     (ROOT/'reports/goal4_real_prefix_rtl.md').write_text('\n'.join(lines)+'\n')
 
 def main():

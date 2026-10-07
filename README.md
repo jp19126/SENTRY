@@ -1,4 +1,4 @@
-# Mixed-Precision FPGA Co-Design for LLM Guards
+# SENTRY: Mixed-Precision FPGA Co-Design for LLM Guards
 
 SENTRY studies whether one improvement to precision allocation or FPGA execution
 can reduce the complete cost of checking external documents for indirect prompt
@@ -73,6 +73,39 @@ Python cannot launch these Linux tools. Saved software checkpoint paths also
 contain Windows separators, so do not assume all software scripts are portable
 to Linux. [fpga_toolchain.md](reports/fpga_toolchain.md) records the tool/part
 checks; [STATUS.md](STATUS.md) records later validation and remaining access needs.
+
+## Git synchronization after the rename
+
+The current remote is [jp19126/SENTRY](https://github.com/jp19126/SENTRY), with
+`origin` set to `git@github.com:jp19126/SENTRY.git` and `main` tracking
+`origin/main`. Commit or preserve local changes before pulling. For this WSL
+checkout, use its owner's Linux Git:
+
+```powershell
+wsl.exe -d Ubuntu --exec git -C /home/jp19126/Projects/SENTRY remote -v
+wsl.exe -d Ubuntu --exec git -C /home/jp19126/Projects/SENTRY pull --ff-only
+wsl.exe -d Ubuntu --exec git -C /home/jp19126/Projects/SENTRY push origin main
+```
+
+Windows Git also works after the exact checkout is trusted. The rename audit
+added only this directory to Windows Git's `safe.directory` list:
+
+```powershell
+git config --global --add safe.directory '%(prefix)///wsl.localhost/Ubuntu/home/jp19126/Projects/SENTRY'
+```
+
+Keep the existing native interpreter, external credential variable names and
+`gate_*`/`GATE_*` software/RTL interfaces. They are still valid dependencies;
+changing their names would break archived checkpoint and synthesized-service
+associations. Historical commands and saved records retain their original paths.
+Run current Python drivers from SENTRY; saved vendor Tcl/shell projects still
+contain GATE paths and must not be launched directly as relocated builds.
+Read-only source-association checks do not qualify a compiled snapshot for reuse.
+
+Git carries source and reports. The ignored data, checkpoints, results, vendor
+builds and environments still require separate preservation. See the
+[rename audit](reports/execution_log.md#2026-10-08--sentry-rename-audit-and-git-synchronization)
+for the checked paths and validation boundary.
 
 ## Commands and checks
 
