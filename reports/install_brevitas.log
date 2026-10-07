@@ -1,0 +1,26 @@
+Collecting brevitas==0.13.4
+  Using cached brevitas-0.13.4-py3-none-any.whl.metadata (11 kB)
+Collecting dependencies==2.0.1 (from brevitas==0.13.4)
+  Using cached dependencies-2.0.1-py2.py3-none-any.whl.metadata (3.9 kB)
+Requirement already satisfied: packaging in c:\research\gate\.venv\lib\site-packages (from brevitas==0.13.4) (26.3)
+Requirement already satisfied: setuptools<81 in c:\research\gate\.venv\lib\site-packages (from brevitas==0.13.4) (79.0.1)
+Requirement already satisfied: sympy in c:\research\gate\.venv\lib\site-packages (from brevitas==0.13.4) (1.14.0)
+Requirement already satisfied: torch>=1.13 in c:\research\gate\.venv\lib\site-packages (from brevitas==0.13.4) (2.9.1+cu128)
+Requirement already satisfied: typing-extensions>=3.7.4 in c:\research\gate\.venv\lib\site-packages (from brevitas==0.13.4) (4.16.0)
+Collecting unfoldNd (from brevitas==0.13.4)
+  Using cached unfoldNd-0.2.3-py3-none-any.whl.metadata (1.5 kB)
+Requirement already satisfied: filelock in c:\research\gate\.venv\lib\site-packages (from torch>=1.13->brevitas==0.13.4) (3.32.3)
+Requirement already satisfied: networkx>=2.5.1 in c:\research\gate\.venv\lib\site-packages (from torch>=1.13->brevitas==0.13.4) (3.6.1)
+Requirement already satisfied: jinja2 in c:\research\gate\.venv\lib\site-packages (from torch>=1.13->brevitas==0.13.4) (3.1.6)
+Requirement already satisfied: fsspec>=0.8.5 in c:\research\gate\.venv\lib\site-packages (from torch>=1.13->brevitas==0.13.4) (2026.7.0)
+Requirement already satisfied: mpmath<1.4,>=1.1.0 in c:\research\gate\.venv\lib\site-packages (from sympy->brevitas==0.13.4) (1.3.0)
+Requirement already satisfied: numpy in c:\research\gate\.venv\lib\site-packages (from unfoldNd->brevitas==0.13.4) (2.4.6)
+Requirement already satisfied: MarkupSafe>=2.0 in c:\research\gate\.venv\lib\site-packages (from jinja2->torch>=1.13->brevitas==0.13.4) (3.0.3)
+Using cached brevitas-0.13.4-py3-none-any.whl (1.0 MB)
+Using cached dependencies-2.0.1-py2.py3-none-any.whl (15 kB)
+Using cached unfoldNd-0.2.3-py3-none-any.whl (16 kB)
+Installing collected packages: dependencies, unfoldNd, brevitas
+Successfully installed brevitas-0.13.4 dependencies-2.0.1 unfoldNd-0.2.3
+
+[notice] A new release of pip is available: 24.0 -> 26.2.1
+[notice] To update, run: C:\research\GATE\.venv\Scripts\python.exe -m pip install --upgrade pip

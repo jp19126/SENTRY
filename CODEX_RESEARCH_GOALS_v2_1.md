@@ -1,3 +1,14 @@
+> **Current handoff:** [STATUS.md](STATUS.md) records the later research pause and
+> completed work. The dated notes and `/goal` example below are historical context,
+> not new execution requests. Use this document for scientific defaults and goal
+> completion criteria; use [README.md](README.md) for current paths and commands.
+
+> Research resumption (2026-09-26): The user explicitly said "continue the goal" after clarifying the distinction between model selection and the guard study. Resume the bounded institutional DeepSeek study; keep the model-selection comparison stopped. Preserve historical Gemini evidence and pause on an actual Codex usage reset.
+
+> Latest target decision (2026-09-26): The user explicitly selected institutional `deepseek-ai/DeepSeek-V4-Flash-0731` at `https://llm.iiia.es/v1`, superseding the Gemini target override below, and asked to stop benchmarking/model comparison. No comparative model benchmark or institutional generation was run. Preserve prior Gemini results separately; benchmark dispatch is stopped pending resumption.
+
+> Earlier execution override (2026-09-26; target superseded by the DeepSeek decision above): The user has authorized continuation through the remaining goals, reusing completed Goal 1. Gemini replaces the Qwen target for now; exact served model/version and any API spending authorization must be recorded. Pause execution when a Codex usage reset is detected. These explicit instructions supersede the historical one-goal handoff and Qwen defaults below.
+
 # Codex research goals — aligned with research proposal v2.1
 
 **Project:** Mixed-Precision FPGA Co-Design for LLM Guards

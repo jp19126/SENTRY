@@ -1,0 +1,142 @@
+Some weights of BertForSequenceClassification were not initialized from the model checkpoint at google/bert_uncased_L-4_H-256_A-4 and are newly initialized: ['classifier.bias', 'classifier.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+{"event": "tokenization_started", "train_documents": 32370, "search_documents": {"search_temporary_threshold": 4065, "search_candidate_scoring": 4107}}
+You're using a BertTokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+{"event": "training", "epoch": 1, "batch": 1, "batches": 1012, "mean_document_balanced_window_ce": 0.6645384207367897, "elapsed_seconds": 0.4031572000239976}
+{"event": "training", "epoch": 1, "batch": 51, "batches": 1012, "mean_document_balanced_window_ce": 0.6373929099782425, "elapsed_seconds": 2.811940100044012}
+{"event": "training", "epoch": 1, "batch": 101, "batches": 1012, "mean_document_balanced_window_ce": 0.555886659808088, "elapsed_seconds": 5.2806342000258155}
+{"event": "training", "epoch": 1, "batch": 151, "batches": 1012, "mean_document_balanced_window_ce": 0.4444288944375288, "elapsed_seconds": 7.6900964000378735}
+{"event": "training", "epoch": 1, "batch": 201, "batches": 1012, "mean_document_balanced_window_ce": 0.36006915712652643, "elapsed_seconds": 10.100068200030364}
+{"event": "training", "epoch": 1, "batch": 251, "batches": 1012, "mean_document_balanced_window_ce": 0.3012067215276912, "elapsed_seconds": 12.53042770002503}
+{"event": "training", "epoch": 1, "batch": 301, "batches": 1012, "mean_document_balanced_window_ce": 0.2601975471568773, "elapsed_seconds": 15.042404900013935}
+{"event": "training", "epoch": 1, "batch": 351, "batches": 1012, "mean_document_balanced_window_ce": 0.22844083872646959, "elapsed_seconds": 17.57299170002807}
+{"event": "training", "epoch": 1, "batch": 401, "batches": 1012, "mean_document_balanced_window_ce": 0.20464536303174136, "elapsed_seconds": 19.93026590003865}
+{"event": "training", "epoch": 1, "batch": 451, "batches": 1012, "mean_document_balanced_window_ce": 0.18645636972235857, "elapsed_seconds": 22.30114820000017}
+{"event": "training", "epoch": 1, "batch": 501, "batches": 1012, "mean_document_balanced_window_ce": 0.1703651058202946, "elapsed_seconds": 24.97240910003893}
+{"event": "training", "epoch": 1, "batch": 551, "batches": 1012, "mean_document_balanced_window_ce": 0.15699395168011293, "elapsed_seconds": 27.239045099995565}
+{"event": "training", "epoch": 1, "batch": 601, "batches": 1012, "mean_document_balanced_window_ce": 0.14603280055485998, "elapsed_seconds": 29.552893400017638}
+{"event": "training", "epoch": 1, "batch": 651, "batches": 1012, "mean_document_balanced_window_ce": 0.13638160192169294, "elapsed_seconds": 31.808073599997442}
+{"event": "training", "epoch": 1, "batch": 701, "batches": 1012, "mean_document_balanced_window_ce": 0.1280745279359488, "elapsed_seconds": 34.17516990000149}
+{"event": "training", "epoch": 1, "batch": 751, "batches": 1012, "mean_document_balanced_window_ce": 0.12066973769929482, "elapsed_seconds": 36.66762370005017}
+{"event": "training", "epoch": 1, "batch": 801, "batches": 1012, "mean_document_balanced_window_ce": 0.11396837350358292, "elapsed_seconds": 39.12189340003533}
+{"event": "training", "epoch": 1, "batch": 851, "batches": 1012, "mean_document_balanced_window_ce": 0.10821488463957592, "elapsed_seconds": 41.526636000024155}
+{"event": "training", "epoch": 1, "batch": 901, "batches": 1012, "mean_document_balanced_window_ce": 0.10314982108787048, "elapsed_seconds": 43.92326510004932}
+{"event": "training", "epoch": 1, "batch": 951, "batches": 1012, "mean_document_balanced_window_ce": 0.09830382496169071, "elapsed_seconds": 46.20229300000938}
+{"event": "training", "epoch": 1, "batch": 1001, "batches": 1012, "mean_document_balanced_window_ce": 0.0942201553070963, "elapsed_seconds": 48.56011840002611}
+{"event": "training", "epoch": 1, "batch": 1012, "batches": 1012, "mean_document_balanced_window_ce": 0.09329381954722718, "elapsed_seconds": 49.056274400034454}
+{"event": "search_scored", "split": "search_temporary_threshold", "documents": 4065, "seconds": 3.4943971000029705}
+{"event": "search_scored", "split": "search_candidate_scoring", "documents": 4107, "seconds": 3.7355410999734886}
+Traceback (most recent call last):
+  File "C:\research\GATE\scripts\train_detector.py", line 296, in <module>
+    main()
+  File "C:\research\GATE\scripts\train_detector.py", line 260, in main
+    metrics = infer_search(model,tokenizer,search,config,destination / f'epoch_{epoch}',args.microbatch_windows)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\research\GATE\scripts\train_detector.py", line 78, in infer_search
+    metrics = summarize(outputs['search_temporary_threshold']['documents'], outputs['search_candidate_scoring']['documents'], config)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\research\GATE\scripts\train_detector.py", line 64, in summarize
+    strata['task:' + task] = evaluate_documents([r['risk_score'] for r in rows], [r['label'] for r in rows], threshold)
+           ~~~~~~~~^~~~~~
+TypeError: can only concatenate str (not "NoneType") to str
+{"event": "tokenization_started", "train_documents": 32370, "search_documents": {"search_temporary_threshold": 4065, "search_candidate_scoring": 4107}}
+{"event": "search_scored", "split": "search_temporary_threshold", "documents": 4065, "seconds": 0.4046455000061542}
+{"event": "search_scored", "split": "search_candidate_scoring", "documents": 4107, "seconds": 0.1332776000490412}
+{"event": "recovered_epoch_evaluation", "epoch": 1, "reused_saved_training": true, "primary": {"threshold": 0.026763828471302986, "temporary_threshold_benign": {"level": "document", "threshold": 0.026763828471302986, "attack_rule": "score > threshold", "documents": 1355, "attacks": 0, "benign": 1355, "tp": 0, "fn": 0, "fp": 13, "tn": 1342, "recall": null, "fpr": 0.00959409594095941, "accuracy": 0.9904059040590406}, "candidate_scoring": {"level": "document", "threshold": 0.026763828471302986, "attack_rule": "score > threshold", "documents": 4107, "attacks": 2738, "benign": 1369, "tp": 2738, "fn": 0, "fp": 10, "tn": 1359, "recall": 1.0, "fpr": 0.007304601899196494, "accuracy": 0.9975651327002678}}}
+You're using a BertTokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+{"event": "training", "epoch": 2, "batch": 1, "batches": 1012, "mean_document_balanced_window_ce": 0.00513178261462599, "elapsed_seconds": 0.3394343000254594}
+{"event": "training", "epoch": 2, "batch": 51, "batches": 1012, "mean_document_balanced_window_ce": 0.014861046204197348, "elapsed_seconds": 2.7622576000285335}
+{"event": "training", "epoch": 2, "batch": 101, "batches": 1012, "mean_document_balanced_window_ce": 0.010402194624547709, "elapsed_seconds": 5.101658199972007}
+{"event": "training", "epoch": 2, "batch": 151, "batches": 1012, "mean_document_balanced_window_ce": 0.008811510582504616, "elapsed_seconds": 7.575345000019297}
+{"event": "training", "epoch": 2, "batch": 201, "batches": 1012, "mean_document_balanced_window_ce": 0.008868444560781128, "elapsed_seconds": 10.043554599978961}
+{"event": "training", "epoch": 2, "batch": 251, "batches": 1012, "mean_document_balanced_window_ce": 0.008284363545249198, "elapsed_seconds": 12.403538300015498}
+{"event": "training", "epoch": 2, "batch": 301, "batches": 1012, "mean_document_balanced_window_ce": 0.008402349000550695, "elapsed_seconds": 14.772991299978457}
+{"event": "training", "epoch": 2, "batch": 351, "batches": 1012, "mean_document_balanced_window_ce": 0.008388743248039393, "elapsed_seconds": 17.244316200027242}
+{"event": "training", "epoch": 2, "batch": 401, "batches": 1012, "mean_document_balanced_window_ce": 0.008526040954138876, "elapsed_seconds": 19.664525799977127}
+{"event": "training", "epoch": 2, "batch": 451, "batches": 1012, "mean_document_balanced_window_ce": 0.008791249589165962, "elapsed_seconds": 22.194807199994102}
+{"event": "training", "epoch": 2, "batch": 501, "batches": 1012, "mean_document_balanced_window_ce": 0.008389520562730126, "elapsed_seconds": 24.596238299971446}
+{"event": "training", "epoch": 2, "batch": 551, "batches": 1012, "mean_document_balanced_window_ce": 0.008528825551460112, "elapsed_seconds": 26.89221770002041}
+{"event": "training", "epoch": 2, "batch": 601, "batches": 1012, "mean_document_balanced_window_ce": 0.00888340830664759, "elapsed_seconds": 29.211755399999674}
+{"event": "training", "epoch": 2, "batch": 651, "batches": 1012, "mean_document_balanced_window_ce": 0.008569580097578609, "elapsed_seconds": 31.518886699981522}
+{"event": "training", "epoch": 2, "batch": 701, "batches": 1012, "mean_document_balanced_window_ce": 0.008404074444001222, "elapsed_seconds": 33.87161079997895}
+{"event": "training", "epoch": 2, "batch": 751, "batches": 1012, "mean_document_balanced_window_ce": 0.008274779515996826, "elapsed_seconds": 36.34780340001453}
+{"event": "training", "epoch": 2, "batch": 801, "batches": 1012, "mean_document_balanced_window_ce": 0.00811523688514924, "elapsed_seconds": 38.827877999981865}
+{"event": "training", "epoch": 2, "batch": 851, "batches": 1012, "mean_document_balanced_window_ce": 0.007806813503028283, "elapsed_seconds": 41.21249180001905}
+{"event": "training", "epoch": 2, "batch": 901, "batches": 1012, "mean_document_balanced_window_ce": 0.007529134111199256, "elapsed_seconds": 43.706959899980575}
+{"event": "training", "epoch": 2, "batch": 951, "batches": 1012, "mean_document_balanced_window_ce": 0.00738395632945319, "elapsed_seconds": 46.09612589998869}
+{"event": "training", "epoch": 2, "batch": 1001, "batches": 1012, "mean_document_balanced_window_ce": 0.007133075808982736, "elapsed_seconds": 48.48233789997175}
+{"event": "training", "epoch": 2, "batch": 1012, "batches": 1012, "mean_document_balanced_window_ce": 0.007204963459179353, "elapsed_seconds": 48.96318159997463}
+{"event": "search_scored", "split": "search_temporary_threshold", "documents": 4065, "seconds": 3.588801499980036}
+{"event": "search_scored", "split": "search_candidate_scoring", "documents": 4107, "seconds": 3.8256579999579117}
+{"event": "epoch_complete", "epoch": 2, "primary": {"threshold": 0.026158824563026428, "temporary_threshold_benign": {"level": "document", "threshold": 0.026158824563026428, "attack_rule": "score > threshold", "documents": 1355, "attacks": 0, "benign": 1355, "tp": 0, "fn": 0, "fp": 13, "tn": 1342, "recall": null, "fpr": 0.00959409594095941, "accuracy": 0.9904059040590406}, "candidate_scoring": {"level": "document", "threshold": 0.026158824563026428, "attack_rule": "score > threshold", "documents": 4107, "attacks": 2738, "benign": 1369, "tp": 2738, "fn": 0, "fp": 12, "tn": 1357, "recall": 1.0, "fpr": 0.008765522279035792, "accuracy": 0.9970781592403214}}, "mean_doc_bce": 0.006258246419920069}
+{"event": "training", "epoch": 3, "batch": 1, "batches": 1012, "mean_document_balanced_window_ce": 0.0011170411889906973, "elapsed_seconds": 0.05082080001011491}
+{"event": "training", "epoch": 3, "batch": 51, "batches": 1012, "mean_document_balanced_window_ce": 0.001216656390312767, "elapsed_seconds": 2.4206591000547633}
+{"event": "training", "epoch": 3, "batch": 101, "batches": 1012, "mean_document_balanced_window_ce": 0.0027629570540739223, "elapsed_seconds": 4.6963369000004604}
+{"event": "training", "epoch": 3, "batch": 151, "batches": 1012, "mean_document_balanced_window_ce": 0.0022917914900743514, "elapsed_seconds": 7.01431700005196}
+{"event": "training", "epoch": 3, "batch": 201, "batches": 1012, "mean_document_balanced_window_ce": 0.004208797154721801, "elapsed_seconds": 9.294828000012785}
+{"event": "training", "epoch": 3, "batch": 251, "batches": 1012, "mean_document_balanced_window_ce": 0.00430931812394895, "elapsed_seconds": 11.705812800035346}
+{"event": "training", "epoch": 3, "batch": 301, "batches": 1012, "mean_document_balanced_window_ce": 0.004170859992244917, "elapsed_seconds": 14.058213700016495}
+{"event": "training", "epoch": 3, "batch": 351, "batches": 1012, "mean_document_balanced_window_ce": 0.003761585460079704, "elapsed_seconds": 16.414757600054145}
+{"event": "training", "epoch": 3, "batch": 401, "batches": 1012, "mean_document_balanced_window_ce": 0.003955675906974121, "elapsed_seconds": 18.67992750002304}
+{"event": "training", "epoch": 3, "batch": 451, "batches": 1012, "mean_document_balanced_window_ce": 0.00364450527034481, "elapsed_seconds": 21.02708310005255}
+{"event": "training", "epoch": 3, "batch": 501, "batches": 1012, "mean_document_balanced_window_ce": 0.00357945545975761, "elapsed_seconds": 23.334457500022836}
+{"event": "training", "epoch": 3, "batch": 551, "batches": 1012, "mean_document_balanced_window_ce": 0.00335307210369834, "elapsed_seconds": 25.634873100032564}
+{"event": "training", "epoch": 3, "batch": 601, "batches": 1012, "mean_document_balanced_window_ce": 0.004166619623056143, "elapsed_seconds": 28.011188900039997}
+{"event": "training", "epoch": 3, "batch": 651, "batches": 1012, "mean_document_balanced_window_ce": 0.004575678120923399, "elapsed_seconds": 30.29213570000138}
+{"event": "training", "epoch": 3, "batch": 701, "batches": 1012, "mean_document_balanced_window_ce": 0.004513116123897779, "elapsed_seconds": 32.67588460003026}
+{"event": "training", "epoch": 3, "batch": 751, "batches": 1012, "mean_document_balanced_window_ce": 0.004557387591476544, "elapsed_seconds": 35.06548750004731}
+{"event": "training", "epoch": 3, "batch": 801, "batches": 1012, "mean_document_balanced_window_ce": 0.004672375163032614, "elapsed_seconds": 37.36698740004795}
+{"event": "training", "epoch": 3, "batch": 851, "batches": 1012, "mean_document_balanced_window_ce": 0.004998089112145099, "elapsed_seconds": 39.70581930002663}
+{"event": "training", "epoch": 3, "batch": 901, "batches": 1012, "mean_document_balanced_window_ce": 0.005097118901172108, "elapsed_seconds": 41.96377940004459}
+{"event": "training", "epoch": 3, "batch": 951, "batches": 1012, "mean_document_balanced_window_ce": 0.004994113304468561, "elapsed_seconds": 44.184905000030994}
+{"event": "training", "epoch": 3, "batch": 1001, "batches": 1012, "mean_document_balanced_window_ce": 0.004928781977851558, "elapsed_seconds": 46.41116529999999}
+{"event": "training", "epoch": 3, "batch": 1012, "batches": 1012, "mean_document_balanced_window_ce": 0.004932600693247239, "elapsed_seconds": 46.879969400004484}
+{"event": "search_scored", "split": "search_temporary_threshold", "documents": 4065, "seconds": 3.545726399985142}
+{"event": "search_scored", "split": "search_candidate_scoring", "documents": 4107, "seconds": 4.090961600013543}
+{"event": "epoch_complete", "epoch": 3, "primary": {"threshold": 0.005549266934394836, "temporary_threshold_benign": {"level": "document", "threshold": 0.005549266934394836, "attack_rule": "score > threshold", "documents": 1355, "attacks": 0, "benign": 1355, "tp": 0, "fn": 0, "fp": 13, "tn": 1342, "recall": null, "fpr": 0.00959409594095941, "accuracy": 0.9904059040590406}, "candidate_scoring": {"level": "document", "threshold": 0.005549266934394836, "attack_rule": "score > threshold", "documents": 4107, "attacks": 2738, "benign": 1369, "tp": 2738, "fn": 0, "fp": 18, "tn": 1351, "recall": 1.0, "fpr": 0.013148283418553688, "accuracy": 0.9956172388604821}}, "mean_doc_bce": 0.0051465056318497505}
+{
+  "event": "complete",
+  "selected_epoch": 3,
+  "checkpoint": "checkpoints\\floating\\epoch_3",
+  "threshold": 0.005549266934394836,
+  "primary": {
+    "threshold": 0.005549266934394836,
+    "temporary_threshold_benign": {
+      "level": "document",
+      "threshold": 0.005549266934394836,
+      "attack_rule": "score > threshold",
+      "documents": 1355,
+      "attacks": 0,
+      "benign": 1355,
+      "tp": 0,
+      "fn": 0,
+      "fp": 13,
+      "tn": 1342,
+      "recall": null,
+      "fpr": 0.00959409594095941,
+      "accuracy": 0.9904059040590406
+    },
+    "candidate_scoring": {
+      "level": "document",
+      "threshold": 0.005549266934394836,
+      "attack_rule": "score > threshold",
+      "documents": 4107,
+      "attacks": 2738,
+      "benign": 1369,
+      "tp": 2738,
+      "fn": 0,
+      "fp": 18,
+      "tn": 1351,
+      "recall": 1.0,
+      "fpr": 0.013148283418553688,
+      "accuracy": 0.9956172388604821
+    }
+  },
+  "timing_means": {
+    "preparation_ms": 0.5005468738090713,
+    "host_to_device_ms": 0.18197187455371022,
+    "inference_and_aggregation_ms": 5.10013437269663,
+    "result_transfer_ms": 0.05375312684918754,
+    "total_ms": 5.836406247908599
+  }
+}

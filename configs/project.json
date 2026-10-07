@@ -5,8 +5,8 @@
   "models": {
     "detector": {
       "id": "google/bert_uncased_L-4_H-256_A-4",
-      "revision": null,
-      "tokenizer_revision": null,
+      "revision": "387825ce42dbb39b87911cdf8e383ee3b25184f8",
+      "tokenizer_revision": "387825ce42dbb39b87911cdf8e383ee3b25184f8",
       "labels": {
         "benign": 0,
         "injection": 1
@@ -18,17 +18,42 @@
       "authorized": false
     },
     "target": {
-      "id": "Qwen/Qwen3-4B-Instruct-2507",
+      "provider": "institutional_openai",
+      "id": "deepseek-ai/DeepSeek-V4-Flash-0731",
       "revision": null,
-      "endpoint": null,
+      "endpoint": "https://llm.iiia.es/v1",
       "max_new_tokens": 256,
-      "do_sample": false
+      "temperature": 0,
+      "thinking_level": "low",
+      "credential_environment_variable": "IIIA_API_KEY",
+      "selection_status": "Completed 120-request development pilot on 2026-09-26; all returned the exact selected model label; immutable served weights revision unresolved",
+      "supersedes": "Gemini target per explicit user decision; prior Gemini results remain separate",
+      "revision_kind": "Dated requested model ID; actual served weights revision unresolved",
+      "credential_access_verified": "Authenticated model listing and 120 actual generation responses succeeded; external key remains outside repository",
+      "served_model_label": "deepseek-ai/DeepSeek-V4-Flash-0731",
+      "first_generation_response_id": "chatcmpl-8904ab8ced20ea70"
+    },
+    "gemini_pilot_reference": {
+      "provider": "gemini",
+      "id": "gemini-3.8-flash",
+      "revision": "gemini-3.8-flash",
+      "endpoint": "https://generativelanguage.googleapis.com/v1beta",
+      "max_new_tokens": 256,
+      "temperature": 0,
+      "thinking_level": "low",
+      "selection_status": "first successful real generation returned modelVersion gemini-3.8-flash on 2026-09-26",
+      "supersedes": "Qwen/Qwen3-4B-Instruct-2507 per explicit user instruction on 2026-09-26",
+      "api_model_metadata_version": "3.0",
+      "credential_environment_variable": "GEMINI_API_KEY_SENTRY",
+      "credential_access_verified": "models.get HTTP200 and actual generation STOP response confirmed; key remains external",
+      "revision_kind": "provider-returned modelVersion label; provider did not supply an immutable weight revision",
+      "evidence_directory": "results/goal2/application"
     }
   },
   "data": {
     "application": "BIPIA EmailQA",
-    "source_revision": null,
-    "training_source": null,
+    "source_revision": "a004b69ec0dd446e0afd461d98cb5e96e120a5d0",
+    "training_source": "AESLC email bodies with BIPIA text-attack insertions (injection-presence labels)",
     "development_pairs": 100,
     "split_unit": "original source group including variants",
     "fallback_split_fractions": {
@@ -41,9 +66,17 @@
       "temporary_threshold",
       "candidate_scoring"
     ],
-    "search_subset_allocation": null,
+    "search_subset_allocation": "AESLC official train 20% split 1:1; BIPIA non-test groups: 6 temporary-threshold, 8 final-calibration, remainder candidate-scoring",
     "benign_test_target_distinct_documents": 3000,
-    "notinject_separate": true
+    "notinject_separate": true,
+    "preparation": {
+      "bipia_revision": "a004b69ec0dd446e0afd461d98cb5e96e120a5d0",
+      "aeslc_revision": "7afc087a1cc234d07121f0d4a2d87102ddceabc2",
+      "notinject_revision": "1b5751e88bf7475acbedfc8eda795ce060307c84",
+      "aeslc_train_fraction": 0.8,
+      "bipia_final_calibration_groups": 8,
+      "bipia_temporary_threshold_groups": 6
+    }
   },
   "evaluation": {
     "fpr_target": 0.01,
@@ -68,8 +101,12 @@
     "weight_decay": 0.01,
     "effective_batch": 32,
     "epochs": 3,
-    "microbatch": null,
-    "gradient_accumulation": null
+    "microbatch": 32,
+    "gradient_accumulation": "variable: all window microbatches for each 32-document effective batch; normalized per document",
+    "microbatch_unit": "windows",
+    "effective_batch_unit": "documents",
+    "loss": "cross_entropy on known-span window labels; mean within document then across documents",
+    "numerical_format": "float32, TF32 disabled"
   },
   "quantization": {
     "weight_bits": [
@@ -85,15 +122,63 @@
       "ffn_output"
     ],
     "group_count": 16,
-    "other_operation_formats": null,
-    "scales_rounding_clipping_accumulators": null,
-    "note": "Resolve and calibrate all non-search formats in Goal 3; share with hardware and evaluation."
+    "other_operation_formats": {
+      "embeddings": "FP32",
+      "pooler": "FP32",
+      "classifier": "FP32",
+      "biases": "FP32 after dequantized dot product",
+      "residual_add": "FP32",
+      "attention_matmuls": "FP32",
+      "softmax": "FP32",
+      "layer_norm": "FP32",
+      "gelu": "FP32",
+      "selected_linear_accumulators": "exact signed integer dot products, int32 range; software FP32 integer-valued emulation with TF32/AMP disabled and bounded K"
+    },
+    "scales_rounding_clipping_accumulators": {
+      "weights": "static per-output-channel maxabs/positive_qmax, separately for W4/W8 from selected floating checkpoint, frozen through QAT",
+      "activations": "static per-tensor input A8 maxabs/127, train-only calibration, padding excluded, common across maps and QAT",
+      "rounding": "nearest, ties to even",
+      "zero_point": 0,
+      "clipping": "full signed saturation, W4 [-8,7], W8/A8 [-128,127]",
+      "zero_range_scale": 1.0,
+      "accumulator": "signed int32; selected BERT inner dimension at most1024 bounds sum absolute integer products by2^24; independent int64 CPU reference",
+      "bias": "FP32 after rescale",
+      "calibration_windows": 256,
+      "calibration_path": "results/goal3/calibration.json",
+      "implementation": "Brevitas 0.13.4 IntQuant/STE plus fixed-BERT linear wrappers",
+      "status": "calibrated on 256 training-only windows; prescribed arithmetic check and real-input reference agreement passed"
+    },
+    "note": "Names W4A8/W8A8 refer to selected encoder linear blocks only. Other operations remain explicitly FP32. Software integer emulation is not measured accelerated INT4 execution; include full detector costs in future FPGA mapping."
   },
   "methods": {
-    "published_baseline": null,
-    "A": "existing method with conventional objective",
-    "B": "same method with protection requirements during selection",
-    "C": "B plus one evidence-supported mechanism",
+    "published_baseline": {
+      "id": "quasar_vit_fixed_bert_evolution",
+      "source": "https://arxiv.org/abs/2407.18175",
+      "doi": "10.1145/3650200.3656622",
+      "status": "selected restricted adaptation; search implementation belongs to Goal 5",
+      "selection": "elite-parent crossover and precision mutation with candidate-time hardware constraints",
+      "hardware_allocation": "shared 4-bit atomic engines; optimize compute-unit allocation under measured DSP/LUT/memory constraints; characterize A8 packing in Goal 4",
+      "project_search_defaults": {
+        "initial_population": 16,
+        "initial_anchors": [
+          "W8A8",
+          "W4A8"
+        ],
+        "initial_random_maps": 14,
+        "crossover_children_per_generation": 4,
+        "mutation_children_per_generation": 4,
+        "mutation_probability_per_group": 0.0625,
+        "crossover_unit": "four precision groups of one encoder layer",
+        "elites_per_latency_cap": 2,
+        "latency_cap_count_max": 4,
+        "latency_cap_values": null,
+        "latency_cap_rule": "freeze from common Goal 4 cost table before any comparative run",
+        "latency_cap_unit": "ms"
+      }
+    },
+    "A": "Quasar-derived evolution: maximize document accuracy at fixed 0.5 decision threshold within common preregistered latency caps",
+    "B": "Same evolution and resource allocator; protection feasibility changes candidate/elite selection; minimize complete checking latency among feasible designs",
+    "C": "B plus one mechanism chosen from Goals 3-5 evidence; unresolved in Goal 1",
     "proposed_mechanism": null,
     "max_unique_maps_per_method": 64,
     "max_engine_profiles": 3,
@@ -111,18 +196,365 @@
       "uniform",
       "B",
       "C"
-    ]
+    ],
+    "cost_table_path": null,
+    "approved_score_identity": {
+      "arithmetic_identity": null,
+      "execution_identity": null
+    },
+    "approved_floating_score_identity": {
+      "arithmetic_identity": null,
+      "execution_identity": null
+    }
   },
   "hardware": {
-    "allocated_board": null,
-    "part": null,
-    "interface": null,
-    "clock_objective_mhz": null,
-    "resource_limits": null,
-    "tool_versions": null,
-    "execution_host": null,
+    "allocated_board": "AMD VEK280",
+    "part": "xcve2802-vsvh1760-2MP-e-S",
+    "interface": "Vivado PL IP: three AXI4 memory-mapped master bundles (activations, weights, outputs) and one AXI4-Lite control bundle; board DDR/NoC and host connection integration pending.",
+    "clock_objective_mhz": 200,
+    "resource_limits": {
+      "DSP": 918,
+      "LUT_ELEMENTS": 364492,
+      "FLIPFLOPS": 728985,
+      "BLOCK_RAMS": 420,
+      "ULTRA_RAMS": 184
+    },
+    "tool_versions": {
+      "vitis-run": "2025.2, SW Build 6295257 (2025-11-13)",
+      "vivado": "2025.2, SW Build 6299465, IP Build 6300035"
+    },
+    "execution_host": "Ubuntu 24.04.1 under WSL2, kernel 6.6.114.1-microsoft-standard-WSL2 on current Windows PC",
     "programming_authorized": false,
-    "initial_implementation": "programmable logic"
+    "initial_implementation": "programmable logic",
+    "hls": {
+      "tool_executable": "/home/jp19126/Xilinx/2025.2/Vitis/bin/vitis-run",
+      "driver": "vitis-run",
+      "flow_target": "vivado",
+      "interface_tcl": "hardware/vek280_linear_interfaces.tcl",
+      "profiles": [
+        {
+          "id": "lanes4",
+          "lanes": 4,
+          "tile_rows": 4,
+          "tile_outputs": 16,
+          "tile_inner": 64,
+          "max_rows": 256
+        },
+        {
+          "id": "lanes8",
+          "lanes": 8,
+          "tile_rows": 4,
+          "tile_outputs": 16,
+          "tile_inner": 64,
+          "max_rows": 256
+        },
+        {
+          "id": "lanes16",
+          "lanes": 16,
+          "tile_rows": 4,
+          "tile_outputs": 16,
+          "tile_inner": 64,
+          "max_rows": 256
+        }
+      ],
+      "vivado_executable": "/home/jp19126/Xilinx/2025.2/Vivado/bin/vivado",
+      "clock_uncertainty_ns": 0.5,
+      "configuration_note": "200 MHz target, 0.5 ns uncertainty, 70 percent PL budget and three lane profiles are engineering choices for bounded characterization, not achieved board measurements.",
+      "characterization_points": [
+        {
+          "id": "target_l4_k256_n256_w4",
+          "profile": "lanes4",
+          "role": "target",
+          "rows": 16,
+          "inner": 256,
+          "outputs": 256,
+          "weight_bits": 4,
+          "repetitions": 2
+        },
+        {
+          "id": "target_l4_k256_n1024_w8",
+          "profile": "lanes4",
+          "role": "target",
+          "rows": 16,
+          "inner": 256,
+          "outputs": 1024,
+          "weight_bits": 8,
+          "repetitions": 2
+        },
+        {
+          "id": "target_l4_k1024_n256_w4",
+          "profile": "lanes4",
+          "role": "target",
+          "rows": 16,
+          "inner": 1024,
+          "outputs": 256,
+          "weight_bits": 4,
+          "repetitions": 2
+        },
+        {
+          "id": "target_l8_k256_n256_w8",
+          "profile": "lanes8",
+          "role": "target",
+          "rows": 16,
+          "inner": 256,
+          "outputs": 256,
+          "weight_bits": 8,
+          "repetitions": 2
+        },
+        {
+          "id": "target_l8_k256_n1024_w4",
+          "profile": "lanes8",
+          "role": "target",
+          "rows": 16,
+          "inner": 256,
+          "outputs": 1024,
+          "weight_bits": 4,
+          "repetitions": 2
+        },
+        {
+          "id": "target_l8_k1024_n256_w8",
+          "profile": "lanes8",
+          "role": "target",
+          "rows": 16,
+          "inner": 1024,
+          "outputs": 256,
+          "weight_bits": 8,
+          "repetitions": 2
+        },
+        {
+          "id": "target_l16_k256_n256_w4",
+          "profile": "lanes16",
+          "role": "target",
+          "rows": 16,
+          "inner": 256,
+          "outputs": 256,
+          "weight_bits": 4,
+          "repetitions": 2
+        },
+        {
+          "id": "target_l16_k256_n1024_w8",
+          "profile": "lanes16",
+          "role": "target",
+          "rows": 16,
+          "inner": 256,
+          "outputs": 1024,
+          "weight_bits": 8,
+          "repetitions": 2
+        },
+        {
+          "id": "target_l16_k1024_n256_w4",
+          "profile": "lanes16",
+          "role": "target",
+          "rows": 16,
+          "inner": 1024,
+          "outputs": 256,
+          "weight_bits": 4,
+          "repetitions": 2
+        },
+        {
+          "id": "reserved_l4_k256_n256_w8",
+          "profile": "lanes4",
+          "role": "reserved",
+          "rows": 256,
+          "inner": 256,
+          "outputs": 256,
+          "weight_bits": 8,
+          "repetitions": 2
+        },
+        {
+          "id": "reserved_l8_k256_n1024_w8",
+          "profile": "lanes8",
+          "role": "reserved",
+          "rows": 256,
+          "inner": 256,
+          "outputs": 1024,
+          "weight_bits": 8,
+          "repetitions": 2
+        },
+        {
+          "id": "reserved_l16_k1024_n256_w8",
+          "profile": "lanes16",
+          "role": "reserved",
+          "rows": 256,
+          "inner": 1024,
+          "outputs": 256,
+          "weight_bits": 8,
+          "repetitions": 2
+        }
+      ],
+      "fixed_fp32_service": {
+        "id": "fixed_fp32_shared4",
+        "lanes": 4,
+        "max_elements": 32768,
+        "max_reduction": 512,
+        "dot_output_limit": 64,
+        "layer_norm_width": 256,
+        "layer_norm_epsilon": 1e-12,
+        "math": "FP32 separate add/multiply, erf GELU, ascending per-output reductions; numerical model equivalence pending",
+        "planned_synthesis_attempts": 1,
+        "shared_across_integer_profiles": true,
+        "max_streaming_width": 1024
+      },
+      "synthesis_attempts_completed": 12,
+      "synthesis_attempts_note": "All12 initial HLS syntheses completed:3 original integer,5 FP32 revisions,3 original cached profiles,1 static-bank64 repair. No initial synthesis allowance remains. Static repair passed Csim/HLS; runtime validation pending. Pre-synthesis setup/linker failures separately logged.",
+      "active_kernel_variant": "weight_cache_pilot",
+      "cached_linear": {
+        "status": "common baseline characterization; no final cost-table feasibility yet",
+        "profiles": [
+          {
+            "id": "lanes16",
+            "lanes": 16,
+            "tile_rows": 4,
+            "tile_outputs": 16,
+            "tile_inner": 64,
+            "max_rows": 256
+          },
+          {
+            "id": "lanes32",
+            "lanes": 32,
+            "tile_rows": 4,
+            "tile_outputs": 16,
+            "tile_inner": 64,
+            "max_rows": 256
+          },
+          {
+            "id": "lanes64",
+            "lanes": 64,
+            "tile_rows": 4,
+            "tile_outputs": 16,
+            "tile_inner": 64,
+            "max_rows": 256
+          }
+        ],
+        "characterization_points": [
+          {
+            "id": "target_l16_k256_n256_w4",
+            "profile": "lanes16",
+            "role": "target",
+            "rows": 16,
+            "inner": 256,
+            "outputs": 256,
+            "weight_bits": 4,
+            "repetitions": 2
+          },
+          {
+            "id": "target_l16_k256_n1024_w8",
+            "profile": "lanes16",
+            "role": "target",
+            "rows": 16,
+            "inner": 256,
+            "outputs": 1024,
+            "weight_bits": 8,
+            "repetitions": 2
+          },
+          {
+            "id": "target_l16_k1024_n256_w4",
+            "profile": "lanes16",
+            "role": "target",
+            "rows": 16,
+            "inner": 1024,
+            "outputs": 256,
+            "weight_bits": 4,
+            "repetitions": 2
+          },
+          {
+            "id": "reserved_l16_k1024_n256_w8",
+            "profile": "lanes16",
+            "role": "reserved",
+            "rows": 256,
+            "inner": 1024,
+            "outputs": 256,
+            "weight_bits": 8,
+            "repetitions": 2
+          },
+          {
+            "id": "target_l32_k256_n256_w4",
+            "profile": "lanes32",
+            "role": "target",
+            "rows": 16,
+            "inner": 256,
+            "outputs": 256,
+            "weight_bits": 4,
+            "repetitions": 2
+          },
+          {
+            "id": "target_l32_k256_n1024_w8",
+            "profile": "lanes32",
+            "role": "target",
+            "rows": 16,
+            "inner": 256,
+            "outputs": 1024,
+            "weight_bits": 8,
+            "repetitions": 2
+          },
+          {
+            "id": "reserved_l32_k1024_n256_w8",
+            "profile": "lanes32",
+            "role": "reserved",
+            "rows": 256,
+            "inner": 1024,
+            "outputs": 256,
+            "weight_bits": 8,
+            "repetitions": 2
+          },
+          {
+            "id": "target_l64_k256_n256_w4",
+            "profile": "lanes64",
+            "role": "target",
+            "rows": 16,
+            "inner": 256,
+            "outputs": 256,
+            "weight_bits": 4,
+            "repetitions": 2
+          },
+          {
+            "id": "target_l64_k256_n1024_w8",
+            "profile": "lanes64",
+            "role": "target",
+            "rows": 16,
+            "inner": 256,
+            "outputs": 1024,
+            "weight_bits": 8,
+            "repetitions": 2
+          },
+          {
+            "id": "reserved_l64_k1024_n256_w8",
+            "profile": "lanes64",
+            "role": "reserved",
+            "rows": 256,
+            "inner": 1024,
+            "outputs": 256,
+            "weight_bits": 8,
+            "repetitions": 2
+          }
+        ],
+        "note": "Same3 physical lane/tile profiles are available to A/B/C. Source association is explicit in profile_kernel_variants: original cached16/32 and arithmetic-equivalent static_bank_index_v1 at64. Original64 remains historical. Both static64 targets and the reserved case passed twice, with zero error against the pre-dispatch complete prediction. No C novelty is claimed from this common repair.",
+        "profile_kernel_variants": {
+          "lanes16": "weight_cache_pilot",
+          "lanes32": "weight_cache_pilot",
+          "lanes64": "weight_cache_static_bank"
+        }
+      },
+      "synthesis_attempts_in_progress": 0
+    },
+    "allocation_note": "User confirmed VEK280 on 2026-09-26; board cannot be physically connected for a few days. Offline Goal 4 simulation/synthesis does not require a connected board; programming and board measurements remain later work.",
+    "board_definition": {
+      "board_definition_path": "/home/jp19126/Xilinx/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/production/1.2/board.xml",
+      "board_part": "xilinx.com:vek280:part0:1.2",
+      "part_name": "xcve2802-vsvh1760-2MP-e-S",
+      "device_resources": {
+        "DSP": 1312,
+        "LUT_ELEMENTS": 520704,
+        "FLIPFLOPS": 1041408,
+        "BLOCK_RAMS": 600,
+        "ULTRA_RAMS": 264
+      },
+      "status": "Actual Vivado catalog query succeeded; physical unit revision remains to be checked before deployment."
+    },
+    "resource_allocation_note": "Declared 70 percent of catalog PL resources, reserving 30 percent for system integration; these are design budgets, not measured use. BLOCK_RAMS counts 36 Kb blocks.",
+    "internal_integration_result": "results/goal4/internal_integration/2026-09-26T21_29_59_195754_00_00/run.json",
+    "prepared_real_input_arena": "results/goal4/internal_integration/arena_w8_qat_real_input_v1/preparation.json",
+    "real_input_rtl_prefix_result": "results/goal4/numerical_bridge/rtl_prefix_v1/run.json"
   },
   "measurement": {
     "primary_length": 256,
@@ -163,7 +595,110 @@
     "hardware": "hardware"
   },
   "access": {
-    "paid_api_budget": null
+    "paid_api_budget": {
+      "currency": "USD",
+      "amount": 0
+    },
+    "institutional_api": {
+      "base_url": "https://llm.iiia.es/v1",
+      "protocol": "openai-compatible",
+      "credential_environment_variable": "IIIA_API_KEY",
+      "model_listing_verified": true,
+      "model_listing_evidence": "results/goal2/institutional_model_access.json",
+      "selected_study_model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+      "hosted_model_cost": "free per supplied CSIC documentation",
+      "numeric_quotas": null,
+      "generation_calls": 120,
+      "billing_evidence": "reports/institutional_api_access.md (user-supplied CSIC docs, updated2026-08-05)"
+    },
+    "gemini_observed_quota": {
+      "metric": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+      "limit": 20,
+      "model": "gemini-3.8-flash",
+      "observed_utc": "2026-09-26T12:58:44.019326+00:00",
+      "source": "actual HTTP429 response attempt-0022",
+      "daily_reset_timezone": "America/Los_Angeles",
+      "next_daily_reset_utc": "2026-09-27T07:00:00+00:00",
+      "note": "Daily quota violation takes precedence over generic15-second retry hint. No automatic retry before dailyreset."
+    }
   },
-  "configuration_state": "Preparation defaults, not frozen experimental protocol. Resolve nulls at the relevant goal and record changes before comparisons."
+  "configuration_state": "User explicitly resumed. Reuse passing lanes4 HLS result and continue remaining Goal4 profiles, runtime RTL characterization and complete-model cost work. Institutional DeepSeek remains selected; completed pilot needs no API calls.",
+  "application_pilot": {
+    "authorized": true,
+    "max_api_calls": 120,
+    "max_input_tokens": 153296,
+    "max_output_tokens_total": 30720,
+    "input_usd_per_million": 0,
+    "output_usd_per_million": 0,
+    "price_valid_through": null,
+    "request_timeout_seconds": 90,
+    "min_request_interval_seconds": 12,
+    "billing_tier": "institutional_included",
+    "pacing_note": "12-second conservative spacing; institutional numeric quota unresolved. Stop on quota/auth/config errors; no automatic paid fallback.",
+    "billing_basis": "CSIC supplied documentation: institution-hosted models free to users; no commercial usage authorized",
+    "status": "Complete: all 120 planned requests and response-specific judgments saved; four-condition report regenerated offline. No further pilot dispatch needed; original attempt cap exhausted.",
+    "output_directory": "results/goal2/application_deepseek",
+    "report_path": "reports/application_pilot_deepseek.md"
+  },
+  "execution_control": {
+    "authorized_goals": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "pause_on_codex_usage_reset": true,
+    "usage_reference": {
+      "used_percent": 0,
+      "reset_timestamp": 1791049884
+    },
+    "continuation_instruction_date": "2026-09-26",
+    "credential_policy": "environment variable or user-provided location outside repository; never log values",
+    "last_observed_usage": {
+      "used_percent": 89,
+      "reset_timestamp": 1791049884,
+      "reset_detected": false,
+      "observed_utc": "2026-09-26T22:30:56.161863+00:00"
+    },
+    "benchmark_dispatch_stopped_by_user": false,
+    "model_selection_comparison_stopped_by_user": true,
+    "study_resumed_by_user_utc": "2026-09-26T18:10:40.045379+00:00",
+    "last_reset_pause_observation": {
+      "observed_utc": "2026-09-26T17:52:35.834235+00:00",
+      "previous_used_percent": 92,
+      "previous_reset_timestamp": 1790753409,
+      "used_percent": 0,
+      "reset_timestamp": 1791049884,
+      "reset_detected": true,
+      "note": "Actual usage reset detected: 92 percent to 0 percent and reset timestamp 1790753409 to 1791049884. Paused under the user standing instruction; no reset was invoked by the agent."
+    },
+    "pause_when_weekly_remaining_percent_at_most": 15,
+    "pause_when_weekly_used_percent_at_least": 85,
+    "usage_threshold_instruction_utc": "2026-09-26T21:14:56.676551+00:00",
+    "conditional_usage_extension": {
+      "trigger_used_percent": 85,
+      "maximum_additional_percentage_points": 7,
+      "hard_stop_used_percent": 92,
+      "condition": "Continue past85 percent only when the current offline task is expected to finish within7 further weekly percentage points; otherwise pause at85. Pause on a new reset regardless.",
+      "extension_activated": true,
+      "activated_at_used_percent": 85,
+      "activated_utc": "2026-09-26T22:02:23.329424+00:00",
+      "bounded_task": "Existing real-input embedding/LN/first query A8 RTL prefix: six calls in three unchanged-snapshot invocations; then save handoff and pause.",
+      "estimated_additional_percentage_points": 2,
+      "state": "completed_then_paused",
+      "completed_at_used_percent": 89,
+      "additional_percentage_points_used": 4,
+      "completed_utc": "2026-09-26T22:30:56.161863+00:00",
+      "evidence": "results/goal4/numerical_bridge/rtl_prefix_v1/run.json"
+    },
+    "current_pause": {
+      "reason": "Completed bounded task under user conditional usage extension; preserve weekly reserve.",
+      "observed_utc": "2026-09-26T22:30:56.161863+00:00",
+      "used_percent": 89,
+      "reset_timestamp": 1791049884
+    }
+  }
 }

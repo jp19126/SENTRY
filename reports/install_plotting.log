@@ -1,0 +1,47 @@
+Collecting matplotlib
+  Downloading matplotlib-3.11.2-cp311-cp311-win_amd64.whl.metadata (80 kB)
+     ---------------------------------------- 80.3/80.3 kB 4.7 MB/s eta 0:00:00
+Collecting PyMuPDF
+  Downloading pymupdf-1.28.2-cp310-abi3-win_amd64.whl.metadata (26 kB)
+Collecting contourpy>=1.0.1 (from matplotlib)
+  Downloading contourpy-1.3.3-cp311-cp311-win_amd64.whl.metadata (5.5 kB)
+Collecting cycler>=0.10 (from matplotlib)
+  Downloading cycler-0.12.1-py3-none-any.whl.metadata (3.8 kB)
+Collecting fonttools>=4.28.2 (from matplotlib)
+  Downloading fonttools-4.66.0-cp311-cp311-win_amd64.whl.metadata (131 kB)
+     -------------------------------------- 131.7/131.7 kB 8.1 MB/s eta 0:00:00
+Collecting kiwisolver>=1.3.1 (from matplotlib)
+  Downloading kiwisolver-1.5.1-cp311-cp311-win_amd64.whl.metadata (5.2 kB)
+Requirement already satisfied: numpy>=1.25 in c:\research\gate\.venv\lib\site-packages (from matplotlib) (2.4.6)
+Requirement already satisfied: packaging>=20.0 in c:\research\gate\.venv\lib\site-packages (from matplotlib) (26.3)
+Collecting pillow>=9 (from matplotlib)
+  Downloading pillow-12.3.0-cp311-cp311-win_amd64.whl.metadata (9.3 kB)
+Collecting pyparsing>=3 (from matplotlib)
+  Downloading pyparsing-3.3.3-py3-none-any.whl.metadata (5.9 kB)
+Collecting python-dateutil>=2.7 (from matplotlib)
+  Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+Collecting six>=1.5 (from python-dateutil>=2.7->matplotlib)
+  Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Downloading matplotlib-3.11.2-cp311-cp311-win_amd64.whl (9.3 MB)
+   ---------------------------------------- 9.3/9.3 MB 59.4 MB/s eta 0:00:00
+Downloading pymupdf-1.28.2-cp310-abi3-win_amd64.whl (19.8 MB)
+   ---------------------------------------- 19.8/19.8 MB 81.8 MB/s eta 0:00:00
+Downloading contourpy-1.3.3-cp311-cp311-win_amd64.whl (225 kB)
+   ---------------------------------------- 225.2/225.2 kB ? eta 0:00:00
+Downloading cycler-0.12.1-py3-none-any.whl (8.3 kB)
+Downloading fonttools-4.66.0-cp311-cp311-win_amd64.whl (1.6 MB)
+   ---------------------------------------- 1.6/1.6 MB 108.3 MB/s eta 0:00:00
+Downloading kiwisolver-1.5.1-cp311-cp311-win_amd64.whl (70 kB)
+   ---------------------------------------- 70.7/70.7 kB ? eta 0:00:00
+Downloading pillow-12.3.0-cp311-cp311-win_amd64.whl (7.2 MB)
+   ---------------------------------------- 7.2/7.2 MB 66.3 MB/s eta 0:00:00
+Downloading pyparsing-3.3.3-py3-none-any.whl (126 kB)
+   ---------------------------------------- 126.4/126.4 kB ? eta 0:00:00
+Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+   --------------------------------------- 229.9/229.9 kB 13.7 MB/s eta 0:00:00
+Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+Installing collected packages: six, pyparsing, PyMuPDF, pillow, kiwisolver, fonttools, cycler, contourpy, python-dateutil, matplotlib
+Successfully installed PyMuPDF-1.28.2 contourpy-1.3.3 cycler-0.12.1 fonttools-4.66.0 kiwisolver-1.5.1 matplotlib-3.11.2 pillow-12.3.0 pyparsing-3.3.3 python-dateutil-2.9.0.post0 six-1.17.0
+
+[notice] A new release of pip is available: 24.0 -> 26.2.1
+[notice] To update, run: C:\research\GATE\.venv\Scripts\python.exe -m pip install --upgrade pip

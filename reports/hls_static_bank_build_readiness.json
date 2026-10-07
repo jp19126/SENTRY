@@ -1,0 +1,380 @@
+{
+  "recorded_utc": "2026-09-26T20:28:41.307689+00:00",
+  "state": "vendor_tool_returned",
+  "missing": [],
+  "actual_encoder_shapes": {
+    "256->256": 16,
+    "256->1024": 4,
+    "1024->256": 4
+  },
+  "selected_profile": {
+    "id": "lanes64",
+    "lanes": 64,
+    "tile_rows": 4,
+    "tile_outputs": 16,
+    "tile_inner": 64,
+    "max_rows": 256
+  },
+  "hardware": {
+    "allocated_board": "AMD VEK280",
+    "part": "xcve2802-vsvh1760-2MP-e-S",
+    "interface": "Vivado PL IP: three AXI4 memory-mapped master bundles (activations, weights, outputs) and one AXI4-Lite control bundle; board DDR/NoC and host connection integration pending.",
+    "clock_objective_mhz": 200,
+    "resource_limits": {
+      "DSP": 918,
+      "LUT_ELEMENTS": 364492,
+      "FLIPFLOPS": 728985,
+      "BLOCK_RAMS": 420,
+      "ULTRA_RAMS": 184
+    },
+    "tool_versions": {
+      "vitis-run": "2025.2, SW Build 6295257 (2025-11-13)",
+      "vivado": "2025.2, SW Build 6299465, IP Build 6300035"
+    },
+    "execution_host": "Ubuntu 24.04.1 under WSL2, kernel 6.6.114.1-microsoft-standard-WSL2 on current Windows PC",
+    "programming_authorized": false,
+    "initial_implementation": "programmable logic",
+    "hls": {
+      "tool_executable": "/home/jp19126/Xilinx/2025.2/Vitis/bin/vitis-run",
+      "driver": "vitis-run",
+      "flow_target": "vivado",
+      "interface_tcl": "hardware/vek280_linear_interfaces.tcl",
+      "profiles": [
+        {
+          "id": "lanes4",
+          "lanes": 4,
+          "tile_rows": 4,
+          "tile_outputs": 16,
+          "tile_inner": 64,
+          "max_rows": 256
+        },
+        {
+          "id": "lanes8",
+          "lanes": 8,
+          "tile_rows": 4,
+          "tile_outputs": 16,
+          "tile_inner": 64,
+          "max_rows": 256
+        },
+        {
+          "id": "lanes16",
+          "lanes": 16,
+          "tile_rows": 4,
+          "tile_outputs": 16,
+          "tile_inner": 64,
+          "max_rows": 256
+        }
+      ],
+      "vivado_executable": "/home/jp19126/Xilinx/2025.2/Vivado/bin/vivado",
+      "clock_uncertainty_ns": 0.5,
+      "configuration_note": "200 MHz target, 0.5 ns uncertainty, 70 percent PL budget and three lane profiles are engineering choices for bounded characterization, not achieved board measurements.",
+      "characterization_points": [
+        {
+          "id": "target_l4_k256_n256_w4",
+          "profile": "lanes4",
+          "role": "target",
+          "rows": 16,
+          "inner": 256,
+          "outputs": 256,
+          "weight_bits": 4,
+          "repetitions": 2
+        },
+        {
+          "id": "target_l4_k256_n1024_w8",
+          "profile": "lanes4",
+          "role": "target",
+          "rows": 16,
+          "inner": 256,
+          "outputs": 1024,
+          "weight_bits": 8,
+          "repetitions": 2
+        },
+        {
+          "id": "target_l4_k1024_n256_w4",
+          "profile": "lanes4",
+          "role": "target",
+          "rows": 16,
+          "inner": 1024,
+          "outputs": 256,
+          "weight_bits": 4,
+          "repetitions": 2
+        },
+        {
+          "id": "target_l8_k256_n256_w8",
+          "profile": "lanes8",
+          "role": "target",
+          "rows": 16,
+          "inner": 256,
+          "outputs": 256,
+          "weight_bits": 8,
+          "repetitions": 2
+        },
+        {
+          "id": "target_l8_k256_n1024_w4",
+          "profile": "lanes8",
+          "role": "target",
+          "rows": 16,
+          "inner": 256,
+          "outputs": 1024,
+          "weight_bits": 4,
+          "repetitions": 2
+        },
+        {
+          "id": "target_l8_k1024_n256_w8",
+          "profile": "lanes8",
+          "role": "target",
+          "rows": 16,
+          "inner": 1024,
+          "outputs": 256,
+          "weight_bits": 8,
+          "repetitions": 2
+        },
+        {
+          "id": "target_l16_k256_n256_w4",
+          "profile": "lanes16",
+          "role": "target",
+          "rows": 16,
+          "inner": 256,
+          "outputs": 256,
+          "weight_bits": 4,
+          "repetitions": 2
+        },
+        {
+          "id": "target_l16_k256_n1024_w8",
+          "profile": "lanes16",
+          "role": "target",
+          "rows": 16,
+          "inner": 256,
+          "outputs": 1024,
+          "weight_bits": 8,
+          "repetitions": 2
+        },
+        {
+          "id": "target_l16_k1024_n256_w4",
+          "profile": "lanes16",
+          "role": "target",
+          "rows": 16,
+          "inner": 1024,
+          "outputs": 256,
+          "weight_bits": 4,
+          "repetitions": 2
+        },
+        {
+          "id": "reserved_l4_k256_n256_w8",
+          "profile": "lanes4",
+          "role": "reserved",
+          "rows": 256,
+          "inner": 256,
+          "outputs": 256,
+          "weight_bits": 8,
+          "repetitions": 2
+        },
+        {
+          "id": "reserved_l8_k256_n1024_w8",
+          "profile": "lanes8",
+          "role": "reserved",
+          "rows": 256,
+          "inner": 256,
+          "outputs": 1024,
+          "weight_bits": 8,
+          "repetitions": 2
+        },
+        {
+          "id": "reserved_l16_k1024_n256_w8",
+          "profile": "lanes16",
+          "role": "reserved",
+          "rows": 256,
+          "inner": 1024,
+          "outputs": 256,
+          "weight_bits": 8,
+          "repetitions": 2
+        }
+      ],
+      "fixed_fp32_service": {
+        "id": "fixed_fp32_shared4",
+        "lanes": 4,
+        "max_elements": 32768,
+        "max_reduction": 512,
+        "dot_output_limit": 64,
+        "layer_norm_width": 256,
+        "layer_norm_epsilon": 1e-12,
+        "math": "FP32 separate add/multiply, erf GELU, ascending per-output reductions; numerical model equivalence pending",
+        "planned_synthesis_attempts": 1,
+        "shared_across_integer_profiles": true,
+        "max_streaming_width": 1024
+      },
+      "synthesis_attempts_completed": 11,
+      "synthesis_attempts_note": "3 original integer +5 common FP32 +3 cached integer syntheses completed. One final initial attempt remains, allocated to an equivalent static-bank index repair of cached64. Pre-synthesis setup/linker failures separately logged.",
+      "active_kernel_variant": "weight_cache_pilot",
+      "cached_linear": {
+        "status": "common baseline characterization; no final cost-table feasibility yet",
+        "profiles": [
+          {
+            "id": "lanes16",
+            "lanes": 16,
+            "tile_rows": 4,
+            "tile_outputs": 16,
+            "tile_inner": 64,
+            "max_rows": 256
+          },
+          {
+            "id": "lanes32",
+            "lanes": 32,
+            "tile_rows": 4,
+            "tile_outputs": 16,
+            "tile_inner": 64,
+            "max_rows": 256
+          },
+          {
+            "id": "lanes64",
+            "lanes": 64,
+            "tile_rows": 4,
+            "tile_outputs": 16,
+            "tile_inner": 64,
+            "max_rows": 256
+          }
+        ],
+        "characterization_points": [
+          {
+            "id": "target_l16_k256_n256_w4",
+            "profile": "lanes16",
+            "role": "target",
+            "rows": 16,
+            "inner": 256,
+            "outputs": 256,
+            "weight_bits": 4,
+            "repetitions": 2
+          },
+          {
+            "id": "target_l16_k256_n1024_w8",
+            "profile": "lanes16",
+            "role": "target",
+            "rows": 16,
+            "inner": 256,
+            "outputs": 1024,
+            "weight_bits": 8,
+            "repetitions": 2
+          },
+          {
+            "id": "target_l16_k1024_n256_w4",
+            "profile": "lanes16",
+            "role": "target",
+            "rows": 16,
+            "inner": 1024,
+            "outputs": 256,
+            "weight_bits": 4,
+            "repetitions": 2
+          },
+          {
+            "id": "reserved_l16_k1024_n256_w8",
+            "profile": "lanes16",
+            "role": "reserved",
+            "rows": 256,
+            "inner": 1024,
+            "outputs": 256,
+            "weight_bits": 8,
+            "repetitions": 2
+          },
+          {
+            "id": "target_l32_k256_n256_w4",
+            "profile": "lanes32",
+            "role": "target",
+            "rows": 16,
+            "inner": 256,
+            "outputs": 256,
+            "weight_bits": 4,
+            "repetitions": 2
+          },
+          {
+            "id": "target_l32_k256_n1024_w8",
+            "profile": "lanes32",
+            "role": "target",
+            "rows": 16,
+            "inner": 256,
+            "outputs": 1024,
+            "weight_bits": 8,
+            "repetitions": 2
+          },
+          {
+            "id": "reserved_l32_k1024_n256_w8",
+            "profile": "lanes32",
+            "role": "reserved",
+            "rows": 256,
+            "inner": 1024,
+            "outputs": 256,
+            "weight_bits": 8,
+            "repetitions": 2
+          },
+          {
+            "id": "target_l64_k256_n256_w4",
+            "profile": "lanes64",
+            "role": "target",
+            "rows": 16,
+            "inner": 256,
+            "outputs": 256,
+            "weight_bits": 4,
+            "repetitions": 2
+          },
+          {
+            "id": "target_l64_k256_n1024_w8",
+            "profile": "lanes64",
+            "role": "target",
+            "rows": 16,
+            "inner": 256,
+            "outputs": 1024,
+            "weight_bits": 8,
+            "repetitions": 2
+          },
+          {
+            "id": "reserved_l64_k1024_n256_w8",
+            "profile": "lanes64",
+            "role": "reserved",
+            "rows": 256,
+            "inner": 1024,
+            "outputs": 256,
+            "weight_bits": 8,
+            "repetitions": 2
+          }
+        ],
+        "note": "Only these at most3 cached profiles are the intended active comparison space. Legacy hls.profiles/characterization_points preserve the initial tiled characterization unchanged. Same cached hardware space is available to A/B/C; no novelC claimed."
+      }
+    },
+    "allocation_note": "User confirmed VEK280 on 2026-09-26; board cannot be physically connected for a few days. Offline Goal 4 simulation/synthesis does not require a connected board; programming and board measurements remain later work.",
+    "board_definition": {
+      "board_definition_path": "/home/jp19126/Xilinx/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/production/1.2/board.xml",
+      "board_part": "xilinx.com:vek280:part0:1.2",
+      "part_name": "xcve2802-vsvh1760-2MP-e-S",
+      "device_resources": {
+        "DSP": 1312,
+        "LUT_ELEMENTS": 520704,
+        "FLIPFLOPS": 1041408,
+        "BLOCK_RAMS": 600,
+        "ULTRA_RAMS": 264
+      },
+      "status": "Actual Vivado catalog query succeeded; physical unit revision remains to be checked before deployment."
+    },
+    "resource_allocation_note": "Declared 70 percent of catalog PL resources, reserving 30 percent for system integration; these are design budgets, not measured use. BLOCK_RAMS counts 36 Kb blocks."
+  },
+  "numerical_contract": "gate_quant.py signed W4/W8 x A8, int32 accumulation; FP32 rescale/bias outside this integer kernel",
+  "software_arithmetic_evidence": "reports/quant_arithmetic_check.json (reused; not HLS validation)",
+  "hls_c_simulation_performed": true,
+  "hls_synthesis_performed": true,
+  "hardware_measurements": null,
+  "kernel_variant": "weight_cache_static_bank",
+  "source_revision": "static_bank_index_v1",
+  "source_header": "hardware/linear_engine_cached_static_bank.hpp",
+  "source_snapshot": "build/linear_hls_cached_static_bank/lanes64/linear_engine_cached_static_bank.hpp",
+  "testbench_snapshot": "build/linear_hls_cached_static_bank/lanes64/linear_engine_tb.cpp",
+  "command": [
+    "/home/jp19126/Xilinx/2025.2/Vitis/bin/vitis-run",
+    "--mode",
+    "hls",
+    "--tcl",
+    "/home/jp19126/Projects/GATE/build/linear_hls_cached_static_bank/lanes64/build_linear.tcl"
+  ],
+  "action": "synthesize",
+  "point": null,
+  "returncode": 0,
+  "note": "A zero tool exit is not timing closure or complete-model cost evidence; inspect actual reports.",
+  "synthesis_report": "/home/jp19126/Projects/GATE/build/linear_hls_cached_static_bank/lanes64/project/solution/syn/report/gate_linear_top_csynth.xml"
+}

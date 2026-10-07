@@ -1,6 +1,27 @@
 # Windows handoff
 
-## Paste this into the next session
+> Historical initial-PC setup instructions. Read [STATUS.md](STATUS.md) for the
+> current research pause, completed evidence, budgets and next actions. Read
+> [README.md](README.md#environment-and-paths) for current checkout paths and
+> commands. The original one-goal text and `GATE` clone/setup examples below are
+> historical; they do not restart Goal 1 or authorize research resumption.
+
+## Current FPGA handoff
+
+Use WSL Python with the existing configured Vitis/Vivado 2025.2 installation.
+The VEK280 catalog part and tool execution have recorded evidence; current board
+connection, physical memory/host integration and programming authorization remain
+unresolved or unavailable. [STATUS.md](STATUS.md#current-offline-fpga-evidence)
+links the completed synthesis, RTL, controller and real-input-prefix results.
+Reuse those artifacts; all 12 initial HLS syntheses have been used.
+
+The saved RTL measurements use a declared simulated-memory model. Neither those
+measurements nor the controller checks with arithmetic stubs establish a working
+full FPGA detector. The [numerical bridge](reports/goal4_numerical_bridge.md) and
+[remaining measurements](reports/unfinished_measurements.md) describe the open
+work. No additional pilot API call is needed.
+
+## Historical one-goal startup text
 
 ```text
 This is the prepared Mixed-Precision FPGA Co-Design for LLM Guards project.
@@ -21,7 +42,7 @@ access needs and the reproduction command. Ask only for essential access,
 physical work, a budget extension or a substantive research change.
 ```
 
-## Sync on the Windows PC
+## Original sync procedure (historical)
 
 For a new checkout:
 
@@ -34,7 +55,7 @@ For an existing checkout, commit or preserve local changes, then run
 `git pull --ff-only` from that checkout. Python environments and generated
 research artifacts are machine-local and are not transferred by Git.
 
-## Setup the session should perform
+## Original setup procedure (historical; preserve the working environments)
 
 Use a short writable local path, e.g. `C:\research\GATE`. Preserve an existing
 working environment if compatible. Otherwise use 64-bit Python 3.11 (a
@@ -78,12 +99,12 @@ Primary platform references checked during preparation (2026-09-26):
 - [AMD tool-specific installer and OS support](https://www.amd.com/en/support/adaptive-socs-and-fpgas/installer-info-general.html)
 - [Vivado 2025.2 supported OS](https://docs.amd.com/r/2025.2-English/ug973-vivado-release-notes-install-license/Supported-Operating-Systems)
 
-Check the release actually installed on the PC. VEK280 and laboratory Alveo are
-proposal candidates, not allocated devices. Discover or obtain the actual part,
-interface, license and allocation before building/programming. Keep FPGA
-computation and target-LLM execution separate as the proposal requires.
+The installed 2025.2 toolchain, VEK280 catalog part and initial profiles are now
+configured. Goal 4 C simulation and first HLS synthesis passed without a connected
+board. Physical connection is required later for programming and board measurements.
+Keep FPGA computation and target-LLM execution separate as the proposal requires.
 
-## Goal 1 evidence still to produce
+## Original preparation checklist (historical)
 
 - Environment note for this PC, actual data-source/version and label definition.
 - 100 EmailQA development pairs, adequate separate training data, grouped
@@ -94,6 +115,6 @@ computation and target-LLM execution separate as the proposal requires.
 - Read actual HAO and Quasar-ViT methods and needed related sources; select one
   faithful baseline adaptation with explicit A/B/C roles and protocol report.
 
-No source algorithms or publication claims have been verified in this preparation.
+At the original preparation stage, source algorithms and publication claims had not yet been verified. Current completed evidence is recorded in `STATUS.md`.
 No credentials are included. Prompt Guard access and a target endpoint, if needed,
 are separate access questions; no paid usage is authorized by this package.

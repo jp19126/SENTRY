@@ -1,0 +1,71 @@
+Collecting transformers==4.57.3
+  Downloading transformers-4.57.3-py3-none-any.whl.metadata (43 kB)
+     --------------------------------------- 44.0/44.0 kB 43.2 kB/s eta 0:00:00
+Requirement already satisfied: filelock in c:\research\gate\.venv\lib\site-packages (from transformers==4.57.3) (3.32.3)
+Collecting huggingface-hub<1.0,>=0.34.0 (from transformers==4.57.3)
+  Downloading huggingface_hub-0.36.2-py3-none-any.whl.metadata (15 kB)
+Collecting numpy>=1.17 (from transformers==4.57.3)
+  Downloading numpy-2.4.6-cp311-cp311-win_amd64.whl.metadata (6.6 kB)
+Collecting packaging>=20.0 (from transformers==4.57.3)
+  Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+Collecting pyyaml>=5.1 (from transformers==4.57.3)
+  Downloading pyyaml-6.0.3-cp311-cp311-win_amd64.whl.metadata (2.4 kB)
+Collecting regex!=2019.12.17 (from transformers==4.57.3)
+  Downloading regex-2026.9.10-cp311-cp311-win_amd64.whl.metadata (41 kB)
+     ---------------------------------------- 41.6/41.6 kB 2.1 MB/s eta 0:00:00
+Collecting requests (from transformers==4.57.3)
+  Downloading requests-2.34.2-py3-none-any.whl.metadata (4.8 kB)
+Collecting tokenizers<=0.23.0,>=0.22.0 (from transformers==4.57.3)
+  Downloading tokenizers-0.22.2-cp39-abi3-win_amd64.whl.metadata (7.4 kB)
+Collecting safetensors>=0.4.3 (from transformers==4.57.3)
+  Downloading safetensors-0.8.0-cp310-abi3-win_amd64.whl.metadata (4.2 kB)
+Collecting tqdm>=4.27 (from transformers==4.57.3)
+  Downloading tqdm-4.70.1-py3-none-any.whl.metadata (57 kB)
+     ---------------------------------------- 57.4/57.4 kB 2.9 MB/s eta 0:00:00
+Requirement already satisfied: fsspec>=2023.5.0 in c:\research\gate\.venv\lib\site-packages (from huggingface-hub<1.0,>=0.34.0->transformers==4.57.3) (2026.7.0)
+Requirement already satisfied: typing-extensions>=3.7.4.3 in c:\research\gate\.venv\lib\site-packages (from huggingface-hub<1.0,>=0.34.0->transformers==4.57.3) (4.16.0)
+Collecting colorama (from tqdm>=4.27->transformers==4.57.3)
+  Downloading colorama-0.4.6-py2.py3-none-any.whl.metadata (17 kB)
+Collecting charset_normalizer<4,>=2 (from requests->transformers==4.57.3)
+  Downloading charset_normalizer-3.5.1-cp311-cp311-win_amd64.whl.metadata (46 kB)
+     ---------------------------------------- 46.7/46.7 kB 2.3 MB/s eta 0:00:00
+Collecting idna<4,>=2.5 (from requests->transformers==4.57.3)
+  Downloading idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+Collecting urllib3<3,>=1.26 (from requests->transformers==4.57.3)
+  Downloading urllib3-2.8.0-py3-none-any.whl.metadata (7.4 kB)
+Collecting certifi>=2023.5.7 (from requests->transformers==4.57.3)
+  Downloading certifi-2026.7.22-py3-none-any.whl.metadata (2.5 kB)
+Downloading transformers-4.57.3-py3-none-any.whl (12.0 MB)
+   ---------------------------------------- 12.0/12.0 MB 59.8 MB/s eta 0:00:00
+Downloading huggingface_hub-0.36.2-py3-none-any.whl (566 kB)
+   ---------------------------------------- 566.4/566.4 kB 9.0 MB/s eta 0:00:00
+Downloading numpy-2.4.6-cp311-cp311-win_amd64.whl (12.6 MB)
+   ---------------------------------------- 12.6/12.6 MB 81.8 MB/s eta 0:00:00
+Downloading packaging-26.3-py3-none-any.whl (129 kB)
+   ---------------------------------------- 130.0/130.0 kB ? eta 0:00:00
+Downloading pyyaml-6.0.3-cp311-cp311-win_amd64.whl (158 kB)
+   ---------------------------------------- 158.8/158.8 kB ? eta 0:00:00
+Downloading regex-2026.9.10-cp311-cp311-win_amd64.whl (278 kB)
+   ---------------------------------------- 278.3/278.3 kB ? eta 0:00:00
+Downloading safetensors-0.8.0-cp310-abi3-win_amd64.whl (355 kB)
+   --------------------------------------- 355.5/355.5 kB 21.6 MB/s eta 0:00:00
+Downloading tokenizers-0.22.2-cp39-abi3-win_amd64.whl (2.7 MB)
+   ---------------------------------------- 2.7/2.7 MB 59.5 MB/s eta 0:00:00
+Downloading tqdm-4.70.1-py3-none-any.whl (80 kB)
+   ---------------------------------------- 80.2/80.2 kB ? eta 0:00:00
+Downloading requests-2.34.2-py3-none-any.whl (73 kB)
+   ---------------------------------------- 73.1/73.1 kB 3.9 MB/s eta 0:00:00
+Downloading certifi-2026.7.22-py3-none-any.whl (136 kB)
+   ---------------------------------------- 137.0/137.0 kB ? eta 0:00:00
+Downloading charset_normalizer-3.5.1-cp311-cp311-win_amd64.whl (206 kB)
+   ---------------------------------------- 206.7/206.7 kB ? eta 0:00:00
+Downloading idna-3.20-py3-none-any.whl (69 kB)
+   ---------------------------------------- 69.6/69.6 kB ? eta 0:00:00
+Downloading urllib3-2.8.0-py3-none-any.whl (135 kB)
+   ---------------------------------------- 135.7/135.7 kB 7.8 MB/s eta 0:00:00
+Downloading colorama-0.4.6-py2.py3-none-any.whl (25 kB)
+Installing collected packages: urllib3, safetensors, regex, pyyaml, packaging, numpy, idna, colorama, charset_normalizer, certifi, tqdm, requests, huggingface-hub, tokenizers, transformers
+Successfully installed certifi-2026.7.22 charset_normalizer-3.5.1 colorama-0.4.6 huggingface-hub-0.36.2 idna-3.20 numpy-2.4.6 packaging-26.3 pyyaml-6.0.3 regex-2026.9.10 requests-2.34.2 safetensors-0.8.0 tokenizers-0.22.2 tqdm-4.70.1 transformers-4.57.3 urllib3-2.8.0
+
+[notice] A new release of pip is available: 24.0 -> 26.2.1
+[notice] To update, run: C:\research\GATE\.venv\Scripts\python.exe -m pip install --upgrade pip

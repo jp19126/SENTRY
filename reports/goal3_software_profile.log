@@ -1,0 +1,35 @@
+You're using a BertTokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+{"event": "cpu_timing", "format": "float32", "threads": 1, "means": {"preparation_ms": 0.542634374141926, "inference_and_aggregation_ms": 21.659318743331823, "host_to_device_ms": 0.0, "result_transfer_ms": 0.0021718769858125597, "total_ms": 22.204124994459562}}
+{"event": "cpu_timing", "format": "float32", "threads": 4, "means": {"preparation_ms": 0.5287812582537299, "inference_and_aggregation_ms": 9.659087503678165, "host_to_device_ms": 0.0, "result_transfer_ms": 0.0018437458493281156, "total_ms": 10.189712507781223}}
+{"event": "cpu_timing", "format": "float32", "threads": 8, "means": {"preparation_ms": 0.6116437452874379, "inference_and_aggregation_ms": 7.863903130783001, "host_to_device_ms": 0.0, "result_transfer_ms": 0.0019593753677327186, "total_ms": 8.477506251438172}}
+{"event": "cpu_search_scored", "format": "float32", "split": "search_temporary_threshold", "seconds": 44.45286780002061}
+{"event": "cpu_search_scored", "format": "float32", "split": "search_candidate_scoring", "seconds": 44.97084999998333}
+C:\research\GATE\scripts\profile_software.py:149: DeprecationWarning: torch.ao.quantization is deprecated and will be removed in 2.10. 
+For migrations of users: 
+1. Eager mode quantization (torch.ao.quantization.quantize, torch.ao.quantization.quantize_dynamic), please migrate to use torchao eager mode quantize_ API instead 
+2. FX graph mode quantization (torch.ao.quantization.quantize_fx.prepare_fx,torch.ao.quantization.quantize_fx.convert_fx, please migrate to use torchao pt2e quantization API instead (prepare_pt2e, convert_pt2e) 
+3. pt2e quantization has been migrated to torchao (https://github.com/pytorch/ao/tree/main/torchao/quantization/pt2e) 
+see https://github.com/pytorch/ao/issues/2259 for more details
+  quantized=torch.ao.quantization.quantize_dynamic(model,qconfig_spec=qconfig,dtype=torch.qint8,inplace=False).eval()
+{"event": "cpu_timing", "format": "dynamic_qint8", "threads": 1, "means": {"preparation_ms": 0.5327781291271094, "inference_and_aggregation_ms": 17.01953749943641, "host_to_device_ms": 0.0, "result_transfer_ms": 0.0017874954210128635, "total_ms": 17.554103123984532}}
+{"event": "cpu_timing", "format": "dynamic_qint8", "threads": 4, "means": {"preparation_ms": 0.5269781231618254, "inference_and_aggregation_ms": 9.17269999627024, "host_to_device_ms": 0.0, "result_transfer_ms": 0.0017406327970093116, "total_ms": 9.701418752229074}}
+{"event": "cpu_timing", "format": "dynamic_qint8", "threads": 8, "means": {"preparation_ms": 0.6739531290804734, "inference_and_aggregation_ms": 9.492028117165319, "host_to_device_ms": 0.0, "result_transfer_ms": 0.0018312548490939662, "total_ms": 10.167812501094886}}
+{"event": "cpu_search_scored", "format": "dynamic_qint8", "split": "search_temporary_threshold", "seconds": 50.752149700012524}
+{"event": "cpu_search_scored", "format": "dynamic_qint8", "split": "search_candidate_scoring", "seconds": 53.41387119999854}
+{
+  "event": "complete",
+  "formats": {
+    "float32": {
+      "status": "measured",
+      "threads": 8,
+      "protection": false,
+      "total_ms": 8.477506251438172
+    },
+    "dynamic_qint8": {
+      "status": "measured",
+      "threads": 4,
+      "protection": false,
+      "total_ms": 9.701418752229074
+    }
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "scope": "small prescribed CPU arithmetic check; no detector quality or hardware timing",
+  "device": "CPU",
+  "torch": "2.9.1+cu128",
+  "settings": {
+    "float32_matmul_precision": "highest",
+    "cuda_matmul_allow_tf32": false,
+    "cudnn_allow_tf32": false,
+    "autocast": false
+  },
+  "format": {
+    "scheme_id": "static_symmetric_encoder_linear_w4w8a8_fp32_other_v1",
+    "brevitas": "0.13.4",
+    "quantizer": "brevitas.core.quant.IntQuant",
+    "search_scope": "24 encoder linears in 16 fixed groups; W4/W8 and A8 inputs",
+    "weight_scale": "static FP-checkpoint row max_abs/(2**(b-1)-1), separately W4/W8",
+    "activation_scale": "static training valid-token max_abs/127, common across maps/QAT",
+    "zero_tensor_scale": 1.0,
+    "zero_point": 0,
+    "rounding": "nearest even via Brevitas RoundSte/torch.round",
+    "clipping": "full signed range [-2**(b-1), 2**(b-1)-1]",
+    "accumulator": "signed int32; exact integer-valued FP32 emulation requires K<=1024",
+    "rescale": "FP32 accumulator * (input_scale * per-row weight_scale), then FP32 bias",
+    "other_operations": "fixed FP32 embeddings, attention matmuls, residuals, LayerNorm, GELU, softmax, pooler, classifier",
+    "qat": "STE for quantized codes; scales frozen; same one-epoch allowance",
+    "performance_claim": "software integer emulation, not accelerated INT4/INT8 timing",
+    "fp32_settings": {
+      "float32_matmul_precision": "highest",
+      "cuda_matmul_allow_tf32": false,
+      "cudnn_allow_tf32": false,
+      "autocast": false
+    }
+  },
+  "checks": [
+    {
+      "name": "signed_limits_rounding_saturation",
+      "passed": true,
+      "w4_expected": [
+        -8,
+        -8,
+        -8,
+        -8,
+        -2,
+        0,
+        0,
+        2,
+        6,
+        7,
+        7,
+        7
+      ],
+      "a8_expected": [
+        -128,
+        -128,
+        -128,
+        -128,
+        -2,
+        -2,
+        0,
+        0,
+        2,
+        2,
+        126,
+        127,
+        127,
+        127
+      ]
+    },
+    {
+      "name": "hand_calculated_signed_dot_products",
+      "passed": true,
+      "w4_expected": [
+        [
+          1914,
+          -1015
+        ],
+        [
+          -1024,
+          754
+        ]
+      ],
+      "w8_expected": [
+        [
+          32514,
+          -16255
+        ],
+        [
+          -16384,
+          15874
+        ]
+      ]
+    },
+    {
+      "name": "signed_high_unsigned_low_w8_decomposition",
+      "passed": true,
+      "w8_codes": 256,
+      "activation_values": 5
+    },
+    {
+      "name": "K1024_exact_accumulator_bound_and_guard",
+      "passed": true,
+      "maximum_absolute_sum": 16777216,
+      "declared_accumulator": "int32"
+    },
+    {
+      "name": "emulation_reference_equality_and_fixed_scale_STE_step",
+      "passed": true,
+      "max_absolute_difference": 0.0
+    }
+  ],
+  "passed": true,
+  "command": "python scripts/check_quant_arithmetic.py"
+}
