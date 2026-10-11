@@ -84,3 +84,9 @@ Estimated complete checking latency remains an estimate, not board timing. Embed
 ## Proposed method boundary
 
 No B-to-C mechanism is selected. Goal 3 error/sensitivity findings, actual Goal 4 costs and the bounded A/B campaign must support one concrete change and its nearest prior mechanism before C or its single removal comparison is defined. Protection-aware selection, complete-network rescoring, provisional leads and correcting the shared adapter are not claimed as new research contributions.
+
+## Board-free runner implementation, 2026-10-08
+
+`scripts/run_precision_campaign.py` now supplies A/B execution and resume around the existing adapter: pending proposals/RNG are saved before scoring, active maps are charged to their own arm, compatible new scores are shared, actual common-estimator rows are used, and at most two frozen shortlist maps per arm use the existing one-epoch QAT dispatcher. Matching completed QAT weights may be reused; their historical score files are not relabelled. Global/campaign pauses reach the existing QAT resume boundary. Saved scores must match the exact assigned prepared document IDs/order/labels/groups, and unresolved profile eligibility fails before model dispatch.
+
+Executed verification: native preview; execute-one-map prerequisite rejection(exit2 before creating a campaign directory); existing adapter check; source compilation; assigned membership checks against4,065 temporary-threshold and4,107 scoring records plus deliberate mismatch rejection. No campaign map, new development score, training, source selection or C mechanism was executed. Numerical approvals, complete costs and numerical caps remain independent gates. These implementation checks do not satisfy the bounded experiment requirement.

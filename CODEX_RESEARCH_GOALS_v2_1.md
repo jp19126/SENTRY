@@ -1,5 +1,7 @@
-> **Current handoff:** [STATUS.md](STATUS.md) records the later research pause and
-> completed work. The dated notes and `/goal` example below are historical context,
+> Scoped override (2026-10-11): Goal R1 in `SENTRY_next_goal_prompt.md` executed the bounded detector challenge and ended at Checkpoint 2: stop the legacy serial PL route; redesigned FPGA/Versal investment remains inconclusive. See `reports/goal_r1_decision.md` for executed evidence and the next scoped experiment. The user's no-usage-limit instruction governed this run; experiment ceilings and resource floors remained. Old Goal 4/5 stays paused, final partitions and board/API work stay closed, and historical results/canonical model are unchanged.
+
+> **Current handoff:** [STATUS.md](STATUS.md) records the current decision and
+> historical paused campaign. The dated notes and `/goal` example below are historical context,
 > not new execution requests. Use this document for scientific defaults and goal
 > completion criteria; use [README.md](README.md) for current paths and commands.
 

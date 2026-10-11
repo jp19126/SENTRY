@@ -186,12 +186,16 @@ def score_documents(
     batch_size: int = 8,
     device: Any = None,
     config: Mapping[str, Any] | None = None,
+    *,
+    risk_function: Any = None,
 ) -> dict[str, Any]:
     """Batched binary inference, returning raw window and aggregated document scores.
 
     Inputs use document_id (or id), text (or context), label, optional injection_spans.
     The caller owns model loading, model revision, seed and saved experiment records.
     This helper neither calibrates a threshold nor opens another data partition.
+    An explicit risk_function(logits) may select a qualified arithmetic path;
+    the default retains the historical torch.softmax computation.
     """
     import torch
     config = load_config() if config is None else config
@@ -234,7 +238,14 @@ def score_documents(
                     raise ValueError("Expected a binary classification head with two logits.")
                 if not torch.isfinite(logits).all():
                     raise ValueError("Model produced nonfinite logits.")
-                risks = torch.softmax(logits.float(), dim=-1)[:, 1].cpu().tolist()
+                risk_tensor = (torch.softmax(logits.float(), dim=-1)[:, 1]
+                               if risk_function is None else risk_function(logits.float()))
+                if (not isinstance(risk_tensor, torch.Tensor)
+                        or risk_tensor.shape != (logits.shape[0],)
+                        or not bool(torch.isfinite(risk_tensor).all())
+                        or bool(((risk_tensor < 0) | (risk_tensor > 1)).any())):
+                    raise ValueError("Risk function must return one finite probability per window.")
+                risks = risk_tensor.cpu().tolist()
                 raw_logits = logits.float().cpu().tolist()
                 for window, risk, pair in zip(current, risks, raw_logits):
                     output_windows.append({

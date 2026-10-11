@@ -1,4 +1,4 @@
-"""Fixed L256 detector command/buffer plan; no hardware allocation or execution.
+"""BERT-Mini L128/256/512 command plans; default retains the validated L256 plan.
 
 Only this BERT-Mini study is supported. Offsets describe a proposed 64 MiB DDR
 arena. Generated AXI-Lite offsets are read from actual successful HLS builds.
@@ -75,20 +75,25 @@ def write_rtl_plan(plan, folder):
                   "binary_mask_to_fp32_repeated_rows": 3}[c["mode"]]
             w[:10] = [3, op, c["source"]["arena_offset"] if isinstance(c["source"], dict) else 0,
                       c["destination"]["arena_offset"], c["rows"], c["columns"],
-                      c.get("source_stride_bytes") or 0, c.get("destination_stride_bytes") or 1024,
+                      c.get("source_stride_bytes") or 0, c.get("destination_stride_bytes") or c["columns"] * 4,
                       c.get("index_limit", 0), int(c.get("index_source") == "local_type_ids")]
         elif c["name"] == "read_risk_and_update_document":
             w[:2] = [4, c["source"]["arena_offset"]]
         records.append("".join(f"{v:08x}" for v in reversed(w)))
     (folder / "command_plan.mem").write_text("\n".join(records) + "\n")
-    constants = [f"localparam integer PLAN_COUNT = {len(records)};", f"localparam [63:0] ARENA_BYTES = 64'd{ARENA};"]
+    constants = [f"localparam integer PLAN_LENGTH = {plan['buffers']['token_ids']['shape'][0]};",
+                 f"localparam integer PLAN_COUNT = {len(records)};", f"localparam [63:0] ARENA_BYTES = 64'd{ARENA};"]
     for name in ("token_ids", "type_ids", "attention_mask", "input_scales"):
         constants.append(f"localparam [31:0] {name.upper()}_OFFSET = 32'd{plan['buffers'][name]['offset']};")
     (folder / "command_plan_constants.svh").write_text("\n".join(constants) + "\n")
     return len(records)
 
 
-def create_plan(config):
+def create_plan(config, length=256):
+    if type(length) is not int or length not in (128, 256, 512):
+        raise ValueError('Supported single-window lengths are 128, 256 and 512.')
+    L = length
+    query_rows = min(128, CAP // L)
     model = read(ROOT / "checkpoints/quantized/qat_w8_a8/config.json")
     if (model["vocab_size"], model["type_vocab_size"], model["max_position_embeddings"],
         model["hidden_size"], model["num_hidden_layers"], model["num_attention_heads"],
@@ -181,7 +186,7 @@ def create_plan(config):
     allocate("attention_mask", L, "u8", [L], "host binary key mask")
     allocate("word_table", model["vocab_size"]*D*4, "f32", [30522,D], "frozen word embedding")
     allocate("type_table", 2*D*4, "f32", [2,D], "frozen type embedding")
-    allocate("position_table", 512*D*4, "f32", [512,D], "frozen position embedding; positions0..255 used")
+    allocate("position_table", 512*D*4, "f32", [512,D], f"frozen position embedding; positions0..{L-1} used")
     allocate("input_scales", 24*4, "f32", [24], "frozen per-matrix A8 input scales, copied once per window")
     for layer in range(4):
         for suffix, k, n, group in (("query",D,D,"qkv"),("key",D,D,"qkv"),("value",D,D,"qkv"),
@@ -205,8 +210,8 @@ def create_plan(config):
         allocate(name, L*FF*4, "f32", [L,FF], "working FFN buffer")
     allocate("a8", L*FF, "i8", [L,FF], "one reusable full integer-input code buffer")
     allocate("accumulator", L*FF*4, "i32", [L,FF], "one reusable full integer-output buffer")
-    for name, shape in (("key_head",[L,HD]),("value_head_transposed",[HD,L]),("query_slab",[128,HD]),
-                        ("attention_tile",[128,HD]),("scores",[128,L]),("probabilities",[128,L]),("mask_slab",[128,L]),
+    for name, shape in (("key_head",[L,HD]),("value_head_transposed",[HD,L]),("query_slab",[query_rows,HD]),
+                        ("attention_tile",[query_rows,HD]),("scores",[query_rows,L]),("probabilities",[query_rows,L]),("mask_slab",[query_rows,L]),
                         ("pooler_output",[1,D]),("pooled",[1,D]),("logits",[1,2]),("class_probabilities",[1,2])):
         allocate(name, shape[0]*shape[1]*4, "f32", shape, "working or final output")
     dummy = ref("dummy_zero")
@@ -243,9 +248,12 @@ def create_plan(config):
                x=ref(source,first*k*4,rows*k*4),codes=ref("a8",first*k,rows*k),scale=scale)
         weights=ref(name+"_weights",0,n*k)
         weights["valid_payload_bytes_by_bits"]={"4":n*k//2,"8":n*k}
-        args=dict(ACTIVATIONS=ref("a8",0,L*k),WEIGHTS=weights,OUTPUT_R=ref("accumulator",0,L*n*4),
-                  ROWS=L,INNER=k,OUTPUTS=n,WEIGHT_BITS=dict(frozen_precision_group=group,allowed=[4,8]))
-        service("integer",name,args,precision_group=group)
+        for first in range(0, L, 256):
+            rows = min(256, L-first)
+            args=dict(ACTIVATIONS=ref("a8",first*k,rows*k),WEIGHTS=weights,
+                      OUTPUT_R=ref("accumulator",first*n*4,rows*n*4),
+                      ROWS=rows,INNER=k,OUTPUTS=n,WEIGHT_BITS=dict(frozen_precision_group=group,allowed=[4,8]))
+            service("integer",name if first==0 else name+f"_rows{first}",args,precision_group=group)
         scales=dict(select_by_frozen_precision_group=group,
                     alternatives={"4":ref(name+"_weight_scale4",0,n*4),"8":ref(name+"_weight_scale8",0,n*4)})
         for first in range(0,L,CAP//n):
@@ -253,18 +261,18 @@ def create_plan(config):
             fp(f"{name}_rescale_rows{first}","RESCALE_BIAS",rows,n,y=scales,z=ref(name+"_bias",0,n*4),
                accumulators=ref("accumulator",first*n*4,rows*n*4),output=ref(destination,first*n*4,rows*n*4),scale=scale)
 
-    append("control","validate_window_and_load_inputs", useful_read_bytes=256*(4+4+1)+24*4,
+    append("control","validate_window_and_load_inputs", useful_read_bytes=L*(4+4+1)+24*4,
            inputs=[ref("token_ids",0,L*4),ref("type_ids",0,L*4),ref("attention_mask",0,L),ref("input_scales",0,96)],
-           checks=["token IDs<30522; type IDs<2; mask bytes0/1; sum(mask)=valid_length in1..256",
+           checks=[f"token IDs<30522; type IDs<2; mask bytes0/1; sum(mask)=valid_length in1..{L}",
                    "24 scales finite and positive; fixed precision map valid; document/window IDs in sequence"],
-           local_storage_bytes=256*(4+4+1)+24*4)
+           local_storage_bytes=L*(4+4+1)+24*4)
     for kind in ("word","type"):
         move("indexed_embedding_rows",f"gather_{kind}_embeddings",ref(kind+"_table",0,buffers[kind+"_table"]["bytes"]),
              ref("embedding_"+kind,0,L*D*4),L,D,source_stride=D*4,destination_stride=D*4,
              index_source="local_token_ids" if kind=="word" else "local_type_ids", index_limit=30522 if kind=="word" else 2)
-    append("movement","expand_attention_mask",mode="binary_mask_to_fp32_repeated_rows", rows=128,columns=L,
-           source="local_attention_mask",destination=ref("mask_slab",0,128*L*4),
-           valid_mask_bits="0x80000000",invalid_mask_bits="0xff7fffff",useful_read_bytes=0,useful_write_bytes=128*L*4)
+    append("movement","expand_attention_mask",mode="binary_mask_to_fp32_repeated_rows", rows=query_rows,columns=L,
+           source="local_attention_mask",destination=ref("mask_slab",0,query_rows*L*4),
+           valid_mask_bits="0x80000000",invalid_mask_bits="0xff7fffff",useful_read_bytes=0,useful_write_bytes=query_rows*L*4)
     elements("embedding_sum","EMBED_ADD","embedding_word","residual",D,"embedding_type","position_table")
     norm("embedding_ln","residual","hidden","embedding_ln")
     for layer in range(4):
@@ -277,21 +285,21 @@ def create_plan(config):
                  L,HD,source_stride=D*4,destination_stride=HD*4)
             move("transpose_f32_tiles16",f"{prefix}_head{head}_value_transpose",ref("value",column,(L-1)*D*4+HD*4),
                  ref("value_head_transposed",0,L*HD*4),L,HD,source_stride=D*4,destination_stride=L*4,tile=[16,16])
-            for first in (0,128):
+            for first in range(0,L,query_rows):
                 tag=f"{prefix}_head{head}_queries{first}"
-                move("rectangle",tag+"_query_gather",ref("query",first*D*4+column,127*D*4+HD*4),ref("query_slab",0,128*HD*4),
-                     128,HD,source_stride=D*4,destination_stride=HD*4)
+                move("rectangle",tag+"_query_gather",ref("query",first*D*4+column,(query_rows-1)*D*4+HD*4),ref("query_slab",0,query_rows*HD*4),
+                     query_rows,HD,source_stride=D*4,destination_stride=HD*4)
                 for panel in range(0,L,64):
-                    fp(tag+f"_qk_panel{panel}","DOT",128,HD,x=ref("query_slab",0,128*HD*4),
-                       y=ref("key_head",panel*HD*4,64*HD*4),output=ref("attention_tile",0,128*64*4),outputs=64)
-                    move("rectangle",tag+f"_scores_scatter{panel}",ref("attention_tile",0,128*64*4),
-                         ref("scores",panel*4,127*L*4+64*4),128,64,source_stride=64*4,destination_stride=L*4)
-                fp(tag+"_softmax","SOFTMAX",128,L,x=ref("scores",0,128*L*4),y=ref("mask_slab",0,128*L*4),
-                   output=ref("probabilities",0,128*L*4),scale=dict(f32_bits=float_bits(8)))
-                fp(tag+"_av","DOT",128,L,x=ref("probabilities",0,128*L*4),y=ref("value_head_transposed",0,HD*L*4),
-                   output=ref("attention_tile",0,128*HD*4),outputs=HD)
-                move("rectangle",tag+"_context_scatter",ref("attention_tile",0,128*HD*4),
-                     ref("context",first*D*4+column,127*D*4+HD*4),128,HD,source_stride=HD*4,destination_stride=D*4)
+                    fp(tag+f"_qk_panel{panel}","DOT",query_rows,HD,x=ref("query_slab",0,query_rows*HD*4),
+                       y=ref("key_head",panel*HD*4,64*HD*4),output=ref("attention_tile",0,query_rows*64*4),outputs=64)
+                    move("rectangle",tag+f"_scores_scatter{panel}",ref("attention_tile",0,query_rows*64*4),
+                         ref("scores",panel*4,(query_rows-1)*L*4+64*4),query_rows,64,source_stride=64*4,destination_stride=L*4)
+                fp(tag+"_softmax","SOFTMAX",query_rows,L,x=ref("scores",0,query_rows*L*4),y=ref("mask_slab",0,query_rows*L*4),
+                   output=ref("probabilities",0,query_rows*L*4),scale=dict(f32_bits=float_bits(8)))
+                fp(tag+"_av","DOT",query_rows,L,x=ref("probabilities",0,query_rows*L*4),y=ref("value_head_transposed",0,HD*L*4),
+                   output=ref("attention_tile",0,query_rows*HD*4),outputs=HD)
+                move("rectangle",tag+"_context_scatter",ref("attention_tile",0,query_rows*HD*4),
+                     ref("context",first*D*4+column,(query_rows-1)*D*4+HD*4),query_rows,HD,source_stride=HD*4,destination_stride=D*4)
         linear(prefix+"_attention_output","context","projected")
         elements(prefix+"_attention_residual","RESIDUAL_ADD","projected","residual",D,"hidden")
         norm(prefix+"_attention_ln","residual","normalized",prefix+"_attention_ln")
@@ -314,13 +322,13 @@ def create_plan(config):
            output="sample_id, document_id, window_index, window_risk; on last window document_max_risk, strict_reject, status")
     counts=Counter(c.get("engine") for c in commands if c["kind"]=="service")
     fp_counts=[sum(c.get("operation")==name for c in commands) for name in OPS]
-    if counts != {"integer":24,"fp32":411} or fp_counts != EXPECTED_CALLS:
+    if L == 256 and (counts != {"integer":24,"fp32":411} or fp_counts != EXPECTED_CALLS):
         raise ValueError("Fixed service schedule differs from24 integer+411 FP32 calls.")
     movements=[c for c in commands if c["kind"]=="movement"]
     reads=sum(c.get("useful_read_bytes",0) for c in movements)
     writes=sum(c.get("useful_write_bytes",0) for c in movements)
     service_writes=sum(len(c["register_writes"]) for c in commands if c["kind"]=="service")
-    return dict(recorded_utc=datetime.now(timezone.utc).isoformat(),identity="bert_mini_l256_internal_plan_v1",
+    return dict(recorded_utc=datetime.now(timezone.utc).isoformat(),identity=f"bert_mini_l{L}_internal_plan_v1",
         status="fixed relative offsets and commands; no physical arena allocation; controller validation is separately recorded",
         arithmetic_boundary="ordered FP32 service panel_cache_batched_attention_v1; signed W4/W8 x A8 integer contract; broader numerical acceptance unresolved",
         arena=dict(planned_bytes=ARENA,used_end_offset=cursor,free_bytes=ARENA-cursor,physical_base=None,allocation_confirmed=False,alignment_bytes=4096),
@@ -336,12 +344,12 @@ def create_plan(config):
         actual_register_offsets=dict(integer=integer_registers,fp32=fp_registers),buffers=buffers,matrices=matrices,
         initial_control_setup=dict(writes_per_engine=[dict(offset=4,value=1),dict(offset=8,value=1)],
                                   precondition="both engines and sequencer reset/idle, IRQ status zero, auto_restart disabled"),
-        counts=dict(commands=len(commands),integer_calls=24,fp32_calls=411,fp32_calls_by_op=dict(zip(OPS,fp_counts)),
+        counts=dict(commands=len(commands),integer_calls=counts["integer"],fp32_calls=counts["fp32"],fp32_calls_by_op=dict(zip(OPS,fp_counts)),
                     movement_commands=len(movements),control_commands=2,
-                    service_argument_start_writes=service_writes,completion_reads=435*2,interrupt_clear_writes=435,
+                    service_argument_start_writes=service_writes,completion_reads=sum(counts.values())*2,interrupt_clear_writes=sum(counts.values()),
                     interrupt_setup_writes_once_per_reset=4,
                     movement_useful_read_bytes=reads,movement_useful_write_bytes=writes,
-                    control_data_read_bytes=256*9+96+4),
+                    control_data_read_bytes=L*9+96+4),
         memory_model="None assigned. Byte counts are planned useful traffic; AXI bursts, NoC/DDR stalls, controller cycles and complete latency remain unmeasured.",
         commands=commands)
 
@@ -381,14 +389,30 @@ def markdown(plan):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--write",action="store_true",help="Save the fixed source-derived plan; never executes hardware")
+    parser.add_argument("--write",action="store_true",help="Save source-derived plan and ROM; never executes hardware")
+    parser.add_argument("--length",type=int,choices=(128,256,512),default=256)
+    parser.add_argument("--output",type=Path,help="Alternate JSON path; existing differing evidence is preserved")
     args=parser.parse_args()
-    plan=create_plan(read(ROOT/"configs/project.json"))
+    plan=create_plan(read(ROOT/"configs/project.json"),args.length)
+    target=args.output
+    if target is None:
+        target=OUT if args.length==256 else ROOT/"results/goal4/internal_integration/workloads_v1"/f"l{args.length}"/"command_plan.json"
+    elif not target.is_absolute():
+        target=ROOT/target
+    written=False
     if args.write:
-        OUT.parent.mkdir(parents=True,exist_ok=True)
-        OUT.write_text(json.dumps(plan,indent=2)+"\n")
-        REPORT.write_text(markdown(plan))
-    print(json.dumps(dict(written=args.write,arena=plan["arena"],counts=plan["counts"]),indent=2))
+        if target.exists():
+            previous=read(target)
+            if {k:v for k,v in previous.items() if k!="recorded_utc"} != {k:v for k,v in plan.items() if k!="recorded_utc"}:
+                raise ValueError("Preserve existing differing plan; select a fresh --output path.")
+        else:
+            target.parent.mkdir(parents=True,exist_ok=True)
+            target.write_text(json.dumps(plan,indent=2)+"\n")
+            write_rtl_plan(plan,target.parent)
+            written=True
+    print(json.dumps(dict(written=written,length=args.length,output=str(target),
+                         arena=plan["arena"],counts=plan["counts"],
+                         scope="Schedule preparation; numerical/controller qualification is separate"),indent=2))
 
 
 if __name__=="__main__":

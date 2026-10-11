@@ -171,7 +171,12 @@
         "crossover_unit": "four precision groups of one encoder layer",
         "elites_per_latency_cap": 2,
         "latency_cap_count_max": 4,
-        "latency_cap_values": null,
+        "latency_cap_values": [
+          7624,
+          7642,
+          7660,
+          7679
+        ],
         "latency_cap_rule": "freeze from common Goal 4 cost table before any comparative run",
         "latency_cap_unit": "ms"
       }
@@ -197,15 +202,19 @@
       "B",
       "C"
     ],
-    "cost_table_path": null,
+    "cost_table_path": "results/goal4/cost_table_nominal_caps_7624_7642_7660_7679_v1.json",
     "approved_score_identity": {
-      "arithmetic_identity": null,
-      "execution_identity": null
+      "arithmetic_identity": "bert_mini_ordered_fp32_frozen_quant_v1",
+      "execution_identity": "torch_2.9.1+cu128__cpu_eager_fp32_threads4_tf32off_autocastoff_flushdenormalfalse__document_score_batch32_tail_actual"
     },
     "approved_floating_score_identity": {
-      "arithmetic_identity": null,
-      "execution_identity": null
-    }
+      "arithmetic_identity": "bert_mini_ordered_fp32_floating_v1",
+      "execution_identity": "torch_2.9.1+cu128__cpu_eager_fp32_threads4_tf32off_autocastoff_flushdenormalfalse__document_score_batch32_tail_actual"
+    },
+    "ordered_scoring_batch_size": 32,
+    "mixed_numerical_review_path": "results/goal4/numerical_bridge/mixed_campaign_review_v1/reviewed_scope.json",
+    "mixed_qat_numerical_review_path": "results/goal4/numerical_bridge/mixed_campaign_review_v1/reviewed_qat_scope.json",
+    "c_decision_path": "results/goal5/campaign_ab_v1/c_decision.json"
   },
   "hardware": {
     "allocated_board": "AMD VEK280",
@@ -552,9 +561,22 @@
       "status": "Actual Vivado catalog query succeeded; physical unit revision remains to be checked before deployment."
     },
     "resource_allocation_note": "Declared 70 percent of catalog PL resources, reserving 30 percent for system integration; these are design budgets, not measured use. BLOCK_RAMS counts 36 Kb blocks.",
-    "internal_integration_result": "results/goal4/internal_integration/2026-09-26T21_29_59_195754_00_00/run.json",
+    "internal_integration_result": "results/goal4/internal_integration/2026-10-08T02_09_52_942713_00_00/run.json",
     "prepared_real_input_arena": "results/goal4/internal_integration/arena_w8_qat_real_input_v1/preparation.json",
-    "real_input_rtl_prefix_result": "results/goal4/numerical_bridge/rtl_prefix_v1/run.json"
+    "real_input_rtl_prefix_result": "results/goal4/numerical_bridge/rtl_prefix_v1/run.json",
+    "previous_internal_integration_result": "results/goal4/internal_integration/2026-10-08T00_16_28_469057_00_00/run.json",
+    "workload_shape_control_results": {
+      "128": "results/goal4/internal_integration/2026-10-08T02_07_46_773530_00_00/run.json",
+      "256": "results/goal4/internal_integration/2026-10-08T02_09_52_942713_00_00/run.json",
+      "512": "results/goal4/internal_integration/2026-10-08T02_12_55_601201_00_00/run.json"
+    },
+    "whole_check_cost_model": "hardware/vek280_full_check_model.json",
+    "last_integrated_closure_inspection": "build/vek280_system/l256/lanes64/20261008T010142_995462Z_implement/closure_inspection.json",
+    "previous_workload_shape_control_results": {
+      "128": "results/goal4/internal_integration/2026-10-08T00_14_32_923471_00_00/run.json",
+      "256": "results/goal4/internal_integration/2026-10-08T00_16_28_469057_00_00/run.json",
+      "512": "results/goal4/internal_integration/2026-10-08T00_15_06_938353_00_00/run.json"
+    }
   },
   "measurement": {
     "primary_length": 256,
@@ -585,7 +607,25 @@
     "challenge_tasks": 20,
     "max_variants_per_task": 3,
     "extension": "one additional task OR one additional small encoder",
-    "application_chunks_when_naturally_available": 5
+    "application_chunks_when_naturally_available": 5,
+    "development_freeze_path": "results/goal5/development_freeze.json",
+    "quality_evaluation_ready": false,
+    "quality_evaluation_hold_reason": "Qualified numerical computations and actual method/finalist freeze are incomplete; no held-out quality work is authorized by this flag yet.",
+    "single_extension_task": "BIPIA TableQA",
+    "new_target_generation_calls_authorized": 0,
+    "single_extension_choice": {
+      "chosen_utc": "2026-10-08T11:22:03.013824+00:00",
+      "source_revision": "a004b69ec0dd446e0afd461d98cb5e96e120a5d0",
+      "source_task": "benchmark/table/test.jsonl",
+      "distinct_source_groups": 20,
+      "existing_attack_variants_per_group_at_most": 2,
+      "reason": "One original-scope public BIPIA task selected before method findings and extension scoring; no realized NewsQA selection existed and its licensed input was unavailable. TableQA is a distinct public task, not reconstructed NewsQA.",
+      "realized_source_selection_frozen": false,
+      "method_development_influence_allowed": false,
+      "additional_extensions_authorized": 0,
+      "target_generation_calls_authorized": 0,
+      "evidence_directory": "results/goal7/tableqa_extension_source_v1"
+    }
   },
   "paths": {
     "data": "data",
@@ -622,7 +662,7 @@
       "note": "Daily quota violation takes precedence over generic15-second retry hint. No automatic retry before dailyreset."
     }
   },
-  "configuration_state": "User explicitly resumed. Reuse passing lanes4 HLS result and continue remaining Goal4 profiles, runtime RTL characterization and complete-model cost work. Institutional DeepSeek remains selected; completed pilot needs no API calls.",
+  "configuration_state": "Board-free continuation explicitly resumed 2026-10-08 under data/SENTRY_BOARD_FREE_COMPLETION_PROMPT.md. Reuse completed experiments; finish numerical qualification, actual service integration, complete costs, bounded methods and deployment preparation. Physical-board activity and additional target API generation are excluded.",
   "application_pilot": {
     "authorized": true,
     "max_api_calls": 120,
@@ -652,16 +692,17 @@
     ],
     "pause_on_codex_usage_reset": true,
     "usage_reference": {
-      "used_percent": 0,
-      "reset_timestamp": 1791049884
+      "used_percent": 6,
+      "reset_timestamp": 1791959439
     },
-    "continuation_instruction_date": "2026-09-26",
+    "continuation_instruction_date": "2026-10-08",
     "credential_policy": "environment variable or user-provided location outside repository; never log values",
     "last_observed_usage": {
-      "used_percent": 89,
-      "reset_timestamp": 1791049884,
+      "used_percent": 84,
+      "reset_timestamp": 1791959439,
       "reset_detected": false,
-      "observed_utc": "2026-09-26T22:30:56.161863+00:00"
+      "observed_utc": "2026-10-08T19:58:08+00:00",
+      "observation_note": "Actual84%used/16%remaining; explicit user90%pause; no reset."
     },
     "benchmark_dispatch_stopped_by_user": false,
     "model_selection_comparison_stopped_by_user": true,
@@ -675,8 +716,8 @@
       "reset_detected": true,
       "note": "Actual usage reset detected: 92 percent to 0 percent and reset timestamp 1790753409 to 1791049884. Paused under the user standing instruction; no reset was invoked by the agent."
     },
-    "pause_when_weekly_remaining_percent_at_most": 15,
-    "pause_when_weekly_used_percent_at_least": 85,
+    "pause_when_weekly_remaining_percent_at_most": 10,
+    "pause_when_weekly_used_percent_at_least": 90,
     "usage_threshold_instruction_utc": "2026-09-26T21:14:56.676551+00:00",
     "conditional_usage_extension": {
       "trigger_used_percent": 85,
@@ -692,13 +733,952 @@
       "completed_at_used_percent": 89,
       "additional_percentage_points_used": 4,
       "completed_utc": "2026-09-26T22:30:56.161863+00:00",
-      "evidence": "results/goal4/numerical_bridge/rtl_prefix_v1/run.json"
+      "evidence": "results/goal4/numerical_bridge/rtl_prefix_v1/run.json",
+      "scope": "Historical completed 2026-09-26 task; not the current usage threshold."
     },
-    "current_pause": {
+    "current_pause": null,
+    "previous_pause": {
       "reason": "Completed bounded task under user conditional usage extension; preserve weekly reserve.",
       "observed_utc": "2026-09-26T22:30:56.161863+00:00",
       "used_percent": 89,
       "reset_timestamp": 1791049884
+    },
+    "usage_threshold_instruction_date": "2026-10-08",
+    "usage_threshold_note": "Latest explicit user instruction to pause at 10 percent weekly remaining overrides historical 85/92 conditional extension during this continuation.",
+    "board_free_continuation": {
+      "prompt_path": "SENTRY_BOARD_FREE_COMPLETION_PROMPT.md",
+      "starting_revision": "a81928a2c6d68942826f1a932ce9119253af4224",
+      "physical_board_activity_authorized": false,
+      "additional_target_api_calls_authorized": false,
+      "initial_micro_synthesis_allowance_remaining": 0,
+      "offline_build_scope": "Missing full-system U/B/C implementation and necessary cause-identified corrective builds only; no renewed profile sweep.",
+      "state": "paused_at_explicit_user_weekly_usage_limit",
+      "purpose_specific_build_list": [
+        {
+          "id": "connected_saved_input_rtl",
+          "purpose": "Replay actual unchanged static64 integer and FP32 services, reusing completed prefix; compile file-input harness only as necessary.",
+          "bounded_integration_check": {
+            "route": "Reuse run_detector_arithmetic.py actual synthesized static64/FP32 plus current sequencer/mover; fresh simulator compile preserves old build",
+            "work": "16 saved input rows: real gather, embedding add, full256-wide LN, A8, query integer and rescale; preceding actual outputs feed next service",
+            "purpose": "Bounded real-arithmetic/control/movement integration complementary to complete checked-C propagation and selected synthesized partitions",
+            "first_runtime_cap_seconds": 900,
+            "review_before_dispatch": true,
+            "full_detector_rtl_claim": false,
+            "optional_seeded_tail": "Only explicit actual checked-C layer3 CLS seed; pooler/tanh/classifier/softmax/strict completion has partial seeded scope"
+          }
+        },
+        {
+          "id": "integrated_baseline",
+          "purpose": "Actual real-service integration and selected CIPS/NoC full-system implementations for each of the three already characterized common integer profiles; no new micro-characterization.",
+          "fixed_l256_profiles": [
+            "cached16",
+            "cached32",
+            "static_bank64"
+          ],
+          "maximum_initial_l256_implementations": 3,
+          "corrective_rebuild_rule": "Only cause-identified corrections to these selected systems; retain every attempt."
+        },
+        {
+          "id": "mover_validation_pipeline_correction",
+          "purpose": "Repair actual routed 200MHz setup failure at mover command span/overflow/overlap validation by registering unchanged-width span products, sums, endpoint carries and range checks. Reuse existing static64 integer and FP32 HLS products; no new micro-synthesis.",
+          "diagnosed_attempt": "build/vek280_system/l256/lanes64/20261008T010142_995462Z_implement/closure_inspection.json",
+          "observed_wns_ns": -1.697,
+          "affected_checks": [
+            "mover L128/L256/L512",
+            "control integration L128/L256/L512"
+          ],
+          "corrective_implementations": [
+            "L256 static_bank64 with registered mover validation"
+          ],
+          "dispatch_rule": "After prior vendor final export terminates and all affected RTL checks pass; jobs1/maxThreads2/CPU0..5, read-only matching IP cache, preserve every attempt."
+        },
+        {
+          "id": "distinct_finalists",
+          "purpose": "Only distinct arithmetic/layout implementation required by frozen U/B/C; reuse compatible weights/configuration builds. Dispatch list refined before execution."
+        },
+        {
+          "id": "required_length_variants",
+          "purpose": "TrueL128/L512 deployment generation for selected uniform/frozen finalist compatible arithmetic; same host and parameter packing, full-L attention; reuse identical implemented hardware if actually compatible.",
+          "lengths": [
+            128,
+            512
+          ],
+          "dispatch": "After L256 baseline closure; no renewed profile tuning.",
+          "selected_profile": "static_bank64",
+          "maximum_initial_required_length_implementations": 2,
+          "fixed_builds": [
+            {
+              "length": 128,
+              "lanes": 64,
+              "purpose": "UniformW8trueL128completeattention/scheduledeployment"
+            },
+            {
+              "length": 512,
+              "lanes": 64,
+              "purpose": "UniformW8trueL512completeattention/scheduledeployment"
+            }
+          ],
+          "source_preparation_authorized": true,
+          "vendor_execution_state": "Both required static64L128/L512 initial implementations completed and routed closure accepted",
+          "recorded_utc": "2026-10-08T05:37:11.955642+00:00",
+          "reuse_rule": "Unchanged integer/FP32source reused. Length-specificcore/mailbox/commandROM regenerate. CompatiblefrozenU/B/Cweights/maps mayreuse actualmatchinglength/profile aftertheirnumericalapproval. No profile sweep.",
+          "actual_source_preparations": {
+            "l128": "build/vek280_system/l128/lanes64/20261008T053723_898626Z_implement",
+            "l512": "build/vek280_system/l512/lanes64/20261008T053736_205512Z_implement"
+          },
+          "source_preparation_only": false,
+          "actual_implementation_runs": 2,
+          "actual_implementation_attempts": {
+            "l128": "build/vek280_system/l128/lanes64/20261008T065700_369382Z_implement",
+            "l512": "build/vek280_system/l512/lanes64/20261008T093118_039498Z_implement"
+          },
+          "resource_scope_correction": {
+            "recorded_utc": "2026-10-08T08:18:10.708038+00:00",
+            "maximum_new_paged_core_retries": 1,
+            "prior_failure": "core_ooc_direct_source_v2/run.json",
+            "reason": "ObservednestedoptimizerpeakexceededunchangedWindows2GiBfloorwithCheldandprojectparentremoved",
+            "source": "build/vek280_system/l128/lanes64/20261008T065700_369382Z_implement/core_ooc_direct_source_v3",
+            "memory_high_gib": 3,
+            "memory_max_gib": 4,
+            "memory_swap_max_gib": 16,
+            "existing_swap_only": true,
+            "arithmetic_constraints_threads_unchanged": true,
+            "actual_paged_core_completed": true,
+            "paged_stock_resume": {
+              "maximum_dispatches": 1,
+              "existing_project": "build/vek280_system/l128/lanes64/20261008T065700_369382Z_implement",
+              "purpose": "Retain all3completedOOCs and finish existing trueL128 top/route with exactcgroupmemorycontainment",
+              "release": "build/vek280_system/l128/lanes64/20261008T065700_369382Z_implement/core_ooc_direct_source_v3/next_service_execution_v1/root_stock_resume_release_v1.json",
+              "source": "build/vek280_system/l128/lanes64/20261008T065700_369382Z_implement/core_ooc_direct_source_v3/next_service_execution_v1/guard_stock_resume_service.py",
+              "recorded_utc": "2026-10-08T08:52:23.407622+00:00",
+              "memory_high_gib": 3,
+              "memory_max_gib": 4,
+              "memory_swap_max_gib": 16,
+              "original_floors_threads_affinity_unchanged": true
+            }
+          },
+          "actual_closure_inspections": {
+            "l128": "build/vek280_system/l128/lanes64/20261008T065700_369382Z_implement/root_closure_inspection_v1.json",
+            "l512": "build/vek280_system/l512/lanes64/20261008T093118_039498Z_implement/root_closure_inspection_v1.json"
+          },
+          "root_completion_acceptances": {
+            "l128": "build/vek280_system/l128/lanes64/20261008T065700_369382Z_implement/root_routed_completion_acceptance_v1.json",
+            "l512": "build/vek280_system/l512/lanes64/20261008T093118_039498Z_implement/root_routed_completion_acceptance_v1.json"
+          },
+          "l512_paged_initial_dispatch": {
+            "maximum_dispatches": 1,
+            "source": "results/goal4/required_length_implementation_v1/l512_paged_dispatch_v1/guard_l512_builder_service.py",
+            "release": "results/goal4/required_length_implementation_v1/l512_paged_dispatch_v1/root_l512_dispatch_release_v1.json",
+            "state": "completed_root_closure_accepted",
+            "recorded_utc": "2026-10-08T09:30:56.398434+00:00",
+            "memory_high_gib": 3,
+            "memory_max_gib": 4,
+            "memory_swap_max_gib": 16,
+            "original_floors_threads_affinity_unchanged": true,
+            "actual_build_directory": "build/vek280_system/l512/lanes64/20261008T093118_039498Z_implement",
+            "invocation_id": "689c8b483925465994866fb39bf580ea",
+            "main_pid": 947704,
+            "vendor_pid": 947723,
+            "started_utc": "2026-10-08T09:31:17.967384+00:00",
+            "completed_utc": "2026-10-08T10:30:03.241175+00:00",
+            "root_acceptance": "build/vek280_system/l512/lanes64/20261008T093118_039498Z_implement/root_routed_completion_acceptance_v1.json"
+          }
+        }
+      ],
+      "identical_prompt_copy": "data/SENTRY_BOARD_FREE_COMPLETION_PROMPT.md",
+      "resource_partition": {
+        "basis": "WSL8logicalCPUs, approximately24GiB installed and20GiB available measured earlier; confirm before dispatch.",
+        "vendor_cpu_affinity": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "vendor_jobs": 1,
+        "connected_c_cpu_affinity": [
+          6,
+          7
+        ],
+        "connected_c_peak_memory_basis_mib": 483.023,
+        "native_torch_concurrent": false,
+        "rule": "At most two independent checked-C functional workers on disjoint CPUs6/7 while vendor remains jobs1/maxThreads2 onCPUs0..5. Preflight and runtime guard require WSL available>=4GiB and Windows free>=2GiB; guard terminates only the assigned C child group and preserves all diagnostics. No concurrent native Torch timing/training or model diagnostics.",
+        "observed_performance_claim": false,
+        "vendor_max_threads": 2,
+        "correction_reason": "Observed jobs4 concurrent out-of-context synthesis exhausted RAM; exact assigned vendor group stopped and same frozen project will resume with jobs1, preserving completed products.",
+        "connected_c_max_workers": 2,
+        "connected_c_affinity_per_worker": "One independent mode per core; never two writers to the same output tree.",
+        "connected_c_memory_guard": {
+          "minimum_wsl_available_kib": 4194304,
+          "minimum_windows_free_kib": 2097152
+        },
+        "parallel_c_basis": "Actual core synthesis completed; at2026-10-08T01:32:12Z WSL available18757672KiB and Windows free10585864KiB; actual C peak approximately483MiB per worker. Hardware worker independently reviewed this bounded partition.",
+        "vendor_synthesis_workers": 1,
+        "vendor_runtime_memory_guard": {
+          "minimum_wsl_available_kib": 4194304,
+          "minimum_windows_free_kib": 2097152,
+          "sample_seconds": 5,
+          "stop_scope": "Assigned vendor child process group only"
+        },
+        "vendor_preflight_memory": {
+          "minimum_wsl_available_kib": 8388608,
+          "minimum_windows_free_kib": 4194304
+        },
+        "current_scheduling_note": "Allrequired vendorbuilds and two offline trueLbootpackages completed. At most2checkedCworkers remainCPU6/7, no nativeTorch overlap. MainL256 ordinary bounded chunks may request<=6newwindows; each unchanged first-discrepancy stop,900s perwindow,5soriginalmemoryguard/assignedPGcleanup still applies. TrueLinitial Cbringup remains1forward.",
+        "main_l256_numerical_dispatch_bound": {
+          "recorded_utc": "2026-10-08T10:45:28.749361+00:00",
+          "maximum_new_windows": 6,
+          "previous_operational_chunk_default": 3,
+          "scope": "Existing66window frozen L256W8/W4/mixed qualification only; actual fixed total unchanged",
+          "rationale": "README/CLI allow positive boundedN;3was coordinator scheduling default, not prompt budget. Six reduces repeated read-only saved-case validation overhead. No added model forwards,changed numerical criteria,source,affinity,workers,memoryfloors or perwindowtimeout. Any firstunknown difference stillstops.",
+          "per_window_timeout_seconds": 900,
+          "maximum_workers": 2,
+          "first_unexplained_discrepancy_stops": true
+        }
+      },
+      "current_numerical_handoff": {
+        "observed_utc": "2026-10-08T21:26:14.620454+00:00",
+        "w8_completed_saved_windows": 66,
+        "w8_state": "exactuniformW8QATboundedL256qualification rootaccepted; genericquantizedscoreapprovalpending",
+        "w8_unrecognized_window": null,
+        "w8_causal_review": "ExactvalidL1FFNstraddle-2/-3 fullyobserved;137702A8changes incl66111valid, ownterminalrecipesexact, complete2/2documentwinner1/rejectagree, no globalapproval or prospectiveclasschange.",
+        "floating_completed_saved_windows": 66,
+        "floating_state": "bounded L256 reference accepted by root; actual matching scoring pending quantized readiness gate",
+        "score_approvals": {
+          "floating": {
+            "arithmetic_identity": "bert_mini_ordered_fp32_floating_v1",
+            "execution_identity": "torch_2.9.1+cu128__cpu_eager_fp32_threads4_tf32off_autocastoff_flushdenormalfalse__document_score_batch32_tail_actual"
+          },
+          "quantized": {
+            "arithmetic_identity": "bert_mini_ordered_fp32_frozen_quant_v1",
+            "execution_identity": "torch_2.9.1+cu128__cpu_eager_fp32_threads4_tf32off_autocastoff_flushdenormalfalse__document_score_batch32_tail_actual"
+          },
+          "mixed_ptq_scope": "results/goal4/numerical_bridge/mixed_campaign_review_v1/reviewed_scope.json",
+          "mixed_qat_scope_approved": false,
+          "development_only": true
+        },
+        "w4_b1_exported_windows": 66,
+        "w4_b32_equivalence": "results/goal4/numerical_bridge/precision_qualification_source_v1/uniform_w4_qat_actual_dispatch/completed_validation.json",
+        "w8_case5_review": "results/goal4/numerical_bridge/connected_bounds_review_v2/reviewed_w8_case05_window000.json",
+        "floating_current_session": null,
+        "w8_current_session": null,
+        "w4_completed_saved_windows": 66,
+        "w4_state": "complete exactuniformW4boundedqualification rootaccepted; genericquantizedapprovalpending",
+        "w4_current_review": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/w4_case30_window003_v1",
+        "w4_first_checked_c_build": "build/precision_qualification_bounds_tail_v2/compiled.json",
+        "w8_active_window": null,
+        "floating_active_window": null,
+        "w4_active_window": null,
+        "w8_case7_review": "results/goal4/numerical_bridge/connected_bounds_review_v2/w8_case07_window000_review_v1/reviewed_resolution.json",
+        "w4_case1_review": "results/goal4/numerical_bridge/connected_bounds_review_v2/w4_case01_window000_review_v1/reviewed_resolution.json",
+        "introduced_path_final_review_helper": "results/goal4/numerical_bridge/connected_bounds_review_v2/precision_final_review_source_v1/prepare_precision_final_review.py",
+        "w8_exact_dispatch_bug_recovery": "results/goal4/numerical_bridge/connected_bounds_review_v2/exact_capture_dispatch_fix_v1/root_exact_stop_recovery.json",
+        "w4_padding_diagnostic_policy": "results/goal4/numerical_bridge/connected_bounds_review_v2/recognized_w4_padding_dispatch_policy_v1.json",
+        "w4_current_session": null,
+        "w4_case3_review": "results/goal4/numerical_bridge/connected_bounds_review_v2/w4_case03_window000_review_v1/reviewed_resolution.json",
+        "w4_case4_review": "results/goal4/numerical_bridge/connected_bounds_review_v2/w4_case04_window000_review_v1/reviewed_resolution.json",
+        "w4_case6_review_in_progress": "results/goal4/numerical_bridge/connected_bounds_review_v2/w4_case06_window000_review_v1",
+        "w4_partial_seven_window_review": "results/goal4/numerical_bridge/connected_bounds_review_v2/precision_final_review_source_v1/actual_seven_w4_windows_partial.json",
+        "native_reference_captures": {
+          "completed": true,
+          "root_inspection": "results/goal4/numerical_bridge/connected_bounds_review_v2/native_reference_capture_dispatch_v1/root_completion_inspection_v1.json",
+          "cases": [
+            "w8_case09_window002",
+            "w4_case06_window000"
+          ],
+          "all_original31_capture_bytes_exact": true,
+          "additional_forwards": 2,
+          "independent_causal_review": "Both exact cases independently reviewed and root resolutions attached; no prospective class expansion."
+        },
+        "floating_completed_documents": 32,
+        "floating_root_acceptance": "results/goal4/numerical_bridge/connected_bounds_review_v2/floating_final_root_acceptance_v1.json",
+        "w8_case9_review": "results/goal4/numerical_bridge/connected_bounds_review_v2/w8_case09_window002_review_v1/reviewed_resolution.json",
+        "w4_case6_review": "results/goal4/numerical_bridge/connected_bounds_review_v2/w4_case06_window000_review_v1/reviewed_resolution.json",
+        "true_length_cpu_exports": {
+          "lengths": [
+            128,
+            512
+          ],
+          "modes": [
+            "w8",
+            "floating"
+          ],
+          "documents_per_mode": 2,
+          "genuine_windows_per_mode": {
+            "128": 21,
+            "512": 4
+          },
+          "all_eight_stages_complete": true,
+          "independent_review": "results/goal4/numerical_bridge/real_length_source_review_v1/actual_export_independent_v1/review.json",
+          "actual_tensor_comparisons": 3648,
+          "actual_compared_bytes": 537921792,
+          "C_service_status": "All four actual C routes complete and bounded root accepted: L128floating21/W821; L512floating4/W84.50windows/eight outcomes on same2documents only.",
+          "numerical_acceptance": null
+        },
+        "mixed_exemplar": {
+          "proposal": 6,
+          "tuple": "4488884884844448",
+          "source": "ptq",
+          "output_name": "campaign_ptq_p4488884884844448",
+          "native_session": null,
+          "state": "complete66/32; rootboundedacceptance and separatePTQsharedscoringscope adopted",
+          "logical_campaign_consultations": 0,
+          "numerical_acceptance": null,
+          "root_inspection": "results/goal4/numerical_bridge/mixed_campaign_review_v1/source_preparation_v1/native_mixed_ptq_export_dispatch_v2/root_completion_inspection_v1.json",
+          "current_session": null,
+          "operational_recovery": "results/goal4/numerical_bridge/mixed_campaign_review_v1/case30_window001_operational_recovery_v1/recovery_journal.json",
+          "active_window": null,
+          "completed_saved_windows": 66,
+          "current_exact_resolution": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/mixed_ptq_case32_window000_v1/reviewed_resolution.json"
+        },
+        "remaining_reference_preinputs": {
+          "completed": true,
+          "additional_diagnostic_forwards": 174,
+          "by_path": {
+            "w8_qat": 51,
+            "w4_qat": 57,
+            "mixed_ptq": 66
+          },
+          "all_original31_exact_recorded_before_new_writes": true,
+          "all_native_pids_gone": true,
+          "root_inspection": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/root_completion_inspection_v1.json",
+          "independent_saved_code_check": {
+            "passed": true,
+            "path": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/independent_capture_validation_v1.json",
+            "arrays": 2088,
+            "values": 273678336,
+            "bytes": 1094713344,
+            "elapsed_seconds": 148.95757399103604,
+            "torch_imported": false,
+            "root_source_and_result_reviewed": true
+          },
+          "numerical_acceptance": null,
+          "score_approval": null
+        },
+        "w8_case10_review": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/w8_case10_window000_v2/reviewed_resolution.json",
+        "w4_case9_review": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/w4_case09_window001_v1/reviewed_resolution.json",
+        "w8_case11_review": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/w8_case11_window000_v1/reviewed_resolution.json",
+        "w4_case13_review": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/w4_case13_window000_v1/reviewed_resolution.json",
+        "w8_case14_review": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/w8_case14_window000_v1/reviewed_resolution.json",
+        "w8_case15_review": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/w8_case15_window000_v1/reviewed_resolution.json",
+        "w8_case16_review": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/w8_case16_window000_v1/reviewed_resolution.json",
+        "w8_case16_window1_review": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/w8_case16_window001_v1/reviewed_resolution.json",
+        "w4_case16_window1_review": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/w4_case16_window001_v1/reviewed_resolution.json",
+        "w4_case16_document": {
+          "complete": true,
+          "windows": 3,
+          "label": 0,
+          "actual_max": 0.001218681805767119,
+          "reference_max": 0.0012186829699203372,
+          "actual_winner": 0,
+          "reference_winner": 0,
+          "strict_reject": false,
+          "reference_strict_reject": false
+        },
+        "w8_case16_window2_review": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/w8_case16_window002_v1/reviewed_resolution.json",
+        "w8_case16_document": {
+          "complete": true,
+          "windows": 3,
+          "label": 0,
+          "actual_max": 0.0016850308747962117,
+          "reference_max": 0.00168503075838089,
+          "actual_winners": [
+            0
+          ],
+          "reference_winners": [
+            0
+          ],
+          "strict_reject": false,
+          "reference_strict_reject": false
+        },
+        "w8_latest_exact_root_review": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/w8_case25_window003_v1/reviewed_resolution.json",
+        "w4_latest_exact_root_review": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/w4_case30_window001_v1/reviewed_resolution.json",
+        "quantized_final_review_source": "results/goal4/numerical_bridge/connected_bounds_review_v2/uniform_final_review_source_v1/review_uniform_saved_bytes.py",
+        "true_length_selected_capture_source_acceptance": "results/goal4/numerical_bridge/real_length_bringup_v1/selected_reference_preinputs_v1/post_adapter_association_fix_v1/root_source_acceptance_v1.json",
+        "main_l256_max_new_windows_per_dispatch": 6,
+        "w8_latest_root_resolution": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/w8_case29_window000_v1/reviewed_resolution.json",
+        "w4_latest_root_resolution": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/w4_case30_window003_v1/reviewed_resolution.json",
+        "actual_windows_available_memory_observation": {
+          "observed_utc": "2026-10-08T16:36:23.637893+00:00",
+          "available_bytes": 4731764736,
+          "available_gib": 4.40679931640625,
+          "native_8gib_preflight_met": false,
+          "only_preflight_blocker": "Windows physical floor",
+          "blocking_process_count": 0,
+          "wsl_available_bytes": 22295179264,
+          "evidence": "results/goal4/numerical_bridge/real_length_bringup_v1/selected_reference_preinputs_v1/post_adapter_association_fix_v1/root_idle_preflight_observation_v8.json",
+          "action": "No full-model capture or resource/floor change"
+        },
+        "w8_current_review": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/w8_case29_window000_v1",
+        "mixed_first_actual_c": {
+          "name": "campaign_ptq_p4488884884844448",
+          "saved_windows": 1,
+          "parent_session": 96598,
+          "parent_exitcode": 0,
+          "child_elapsed_seconds": 186.18901585997082,
+          "propagated_a8_differences": 0,
+          "logits_and_risk_exact": true,
+          "uniform_policy_used": false,
+          "numerical_acceptance": null,
+          "logical_campaign_consultations": 0
+        },
+        "true_length_current_c": {
+          "length": 128,
+          "mode": "floating",
+          "stage": "c-compile plus first window only",
+          "cpu": 6,
+          "parent_session": 51738,
+          "active": false,
+          "source_review": "results/goal4/numerical_bridge/real_length_bringup_v1/next_c_dispatch_review_v1/review.md",
+          "no_reprepare_or_native_export": true,
+          "parent_exitcode": 1,
+          "actual_child_returncode": 0,
+          "actual_child_elapsed_seconds": 75.49047756008804,
+          "stopped_key": "c01_w000",
+          "state": "actual terminal difference under independent causal review",
+          "numerical_acceptance": null
+        },
+        "w4_final_root_acceptance": "results/goal4/numerical_bridge/connected_bounds_review_v2/uniform_w4_final_root_acceptance_v1.json",
+        "mixed_completed_saved_windows": 66,
+        "mixed_current_session": null,
+        "mixed_current_review": "results/goal4/numerical_bridge/mixed_campaign_review_v1/final_saved_review_source_v1/actual_complete_review_v1/root_bounded_acceptance_v1.json",
+        "mixed_state": "complete_pending_acceptance; exact exemplar root bounded accepted and separately PTQ shared scoring scope adopted",
+        "mixed_active_window": null,
+        "true_length_active_c": null,
+        "mixed_latest_root_resolution": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/mixed_ptq_case32_window000_v1/reviewed_resolution.json",
+        "true_length_saved_progress": {
+          "l128_floating": {
+            "saved_windows": 21,
+            "complete": true,
+            "stopped_key": null,
+            "numerical_acceptance": null
+          },
+          "l128_w8": {
+            "saved_windows": 21,
+            "complete": true,
+            "stopped_key": null,
+            "numerical_acceptance": null
+          },
+          "l512_floating": {
+            "saved_windows": 4,
+            "complete": true,
+            "stopped_key": null,
+            "numerical_acceptance": null
+          },
+          "l512_w8": {
+            "saved_windows": 4,
+            "complete": true,
+            "stopped_key": null,
+            "numerical_acceptance": null
+          }
+        },
+        "mixed_adapter_source_work": {
+          "path": "results/goal4/numerical_bridge/mixed_campaign_review_v1/exact_exemplar_adapter_source_v1",
+          "canonical_W4_runner_unchanged_required": true,
+          "root_policy_adopted": true,
+          "numerical_acceptance": null,
+          "root_source_acceptance": "results/goal4/numerical_bridge/mixed_campaign_review_v1/exact_exemplar_adapter_source_v1/root_source_acceptance_v1.json",
+          "policy": "results/goal4/numerical_bridge/mixed_campaign_review_v1/exact_exemplar_adapter_source_v1/root_prospective_policy_v1.json",
+          "actual_wrapper_runtime_verified": true,
+          "prospective_exact_exemplar_only": true,
+          "first_actual_dispatch_review": "results/goal4/numerical_bridge/mixed_campaign_review_v1/exact_exemplar_adapter_source_v1/first_actual_dispatch_root_review_v1.json",
+          "positive_classification_runtime_verified": true,
+          "first_positive_runtime_root_acceptance": "results/goal4/numerical_bridge/mixed_campaign_review_v1/exact_exemplar_adapter_source_v1/first_positive_runtime_independent_v1/root_runtime_acceptance_v1.json"
+        },
+        "usage_current_observation": {
+          "used_percent": 88,
+          "remaining_percent": 12,
+          "reset_timestamp": 1791959439,
+          "reset_detected": false,
+          "observed_utc": "2026-10-08T21:14:39+00:00",
+          "observation_note": "Actual88%used; userpause90."
+        },
+        "w8_final_root_acceptance": "results/goal4/numerical_bridge/connected_bounds_review_v2/uniform_w8_final_root_acceptance_v1.json",
+        "true_length_latest_root_resolutions": {
+          "floating": "results/goal4/numerical_bridge/real_length_bringup_v1/true_length_case_review_v1/l128_floating_c18_w016/reviewed_resolution.json",
+          "w8": "results/goal4/numerical_bridge/real_length_bringup_v1/true_length_case_review_v1/l128_w8_c18_w002/reviewed_resolution.json",
+          "l512_floating": "results/goal4/numerical_bridge/real_length_bringup_v1/true_length_case_review_v1/l512_floating_c18_w001/reviewed_resolution.json",
+          "l128_w8": "results/goal4/numerical_bridge/real_length_bringup_v1/true_length_case_review_v1/l128_w8_c18_w017_v1/reviewed_resolution.json",
+          "l512_w8": "results/goal4/numerical_bridge/real_length_bringup_v1/true_length_case_review_v1/l512_w8_c18_w002_v1/replay_paired_inputs_v1/reviewed_resolution.json"
+        },
+        "true_length_l512_w8_first_case_root_review": "results/goal4/numerical_bridge/real_length_bringup_v1/true_length_case_review_v1/l512_w8_c01_w000/root_case_evidence_acceptance_v1.json",
+        "true_length_selected_reference_capture_pending": {
+          "length": 128,
+          "mode": "w8",
+          "key": "c18_w003",
+          "actual_A8_changes": 14,
+          "state": "Source rootaccepted22author+41peerchecks; freshL128v4/L512v2request==plan TRUE; unexecuted. Original8GiB idlefloor17:28:15 unmet Windows4482363392B,WSL22286450688B/0Cvendor; nofloor/resourcechanges.",
+          "exclusive_native_required": true,
+          "windows_preflight_GiB": 8,
+          "plan": "results/goal4/numerical_bridge/real_length_bringup_v1/selected_reference_preinputs_v1/l128_w8_c18_w003_v4/plan.json",
+          "source_acceptance": "results/goal4/numerical_bridge/real_length_bringup_v1/selected_reference_preinputs_v1/launcher_chain_fix_v1/root_source_acceptance_v1.json",
+          "l512_plan": "results/goal4/numerical_bridge/real_length_bringup_v1/selected_reference_preinputs_v1/l512_w8_c18_w000_v2/plan.json",
+          "latest_idle_preflight": "results/goal4/numerical_bridge/real_length_bringup_v1/selected_reference_preinputs_v1/launcher_chain_fix_v1/root_idle_preflight_observation_v9.json"
+        },
+        "shape_adapter_source_work": {
+          "path": "scripts/run_shape_exemplar_qualification.py",
+          "policy_adopted": true,
+          "actual_dispatch": true,
+          "state": "Source and actual positive/negative runtime independently/root verified; exact four-shape diagnostics only; complete qualification pending",
+          "canonical_shapes_source_unchanged_required": true,
+          "root_source_acceptance": "results/goal4/numerical_bridge/real_length_bringup_v1/shape_adapter_source_v1/root_source_acceptance_v1.json",
+          "policy": "results/goal4/numerical_bridge/real_length_bringup_v1/shape_adapter_source_v1/root_prospective_policy_v1.json",
+          "negative_class_runtime_verified": true,
+          "negative_class_runtime_root_acceptance": "results/goal4/numerical_bridge/real_length_bringup_v1/shape_adapter_source_v1/first_actual_runtime_independent_v1/root_runtime_acceptance_v1.json",
+          "positive_class_runtime_verified": true,
+          "positive_class_runtime_review": "results/goal4/numerical_bridge/real_length_bringup_v1/shape_adapter_source_v1/first_positive_runtime_independent_v1/root_runtime_acceptance_v1.json"
+        },
+        "resource_checkpoint": {
+          "all_C_parents_naturally_exited": true,
+          "last_parent": 68196,
+          "last_exitcode": 1,
+          "observed_utc": "2026-10-08T16:36:23.637893+00:00",
+          "current_scheduling": "No C/native/vendor active; exact reference-tail primitive replay source preparation pending acceptance. Full-modelcapture8GiBpreflight unchanged/unmet."
+        },
+        "true_length_complete_review_source": "results/goal4/numerical_bridge/real_length_bringup_v1/final_saved_review_source_v1/root_source_acceptance_v1.json",
+        "true_length_selected_reference_capture_plans": [
+          {
+            "length": 128,
+            "mode": "w8",
+            "key": "c18_w003",
+            "actual_A8_changes": 14,
+            "plan": "results/goal4/numerical_bridge/real_length_bringup_v1/selected_reference_preinputs_v1/l128_w8_c18_w003_v3/plan.json",
+            "capture_executed": false
+          },
+          {
+            "length": 512,
+            "mode": "w8",
+            "key": "c18_w000",
+            "actual_A8_changes": 848597,
+            "plan": "results/goal4/numerical_bridge/real_length_bringup_v1/selected_reference_preinputs_v1/l512_w8_c18_w000_v1/plan.json",
+            "capture_executed": false
+          }
+        ],
+        "mixed_case16_completed_document_root_review": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/mixed_ptq_case16_window001_v1/root_complete_document_later_v1.json",
+        "mixed_case18_completed_document_root_review": "results/goal4/numerical_bridge/mixed_campaign_review_v1/root_case18_complete_document_v1.json",
+        "mixed_case23_completed_document_root_review": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/mixed_ptq_case23_window002_v1/root_raw_review_v1.json",
+        "native_tail_primitive_replay_release": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/mixed_ptq_case24_window001_v1/native_tail_replay_source_v1/root_source_acceptance_and_primitive_release_v1.json",
+        "native_tail_primitive_replay_first_failure": {
+          "attempt": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/mixed_ptq_case24_window001_v1/native_tail_replay_source_v1/attempt_v1",
+          "parent_returncode": 1,
+          "assigned_Popen_pid": 70436,
+          "assigned_Popen_exited": true,
+          "elapsed_seconds": 2.655999999959022,
+          "failure": "Child parent/plan/group association beforeTorch",
+          "Torch_replay_count": 0,
+          "source_inputs_post_request_equal": true,
+          "cause": "Actual Windows process-chain diagnosis pending; no presumed numeric failure",
+          "retry_released": false
+        },
+        "native_tail_primitive_replay_v2": {
+          "runtime_review": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/mixed_ptq_case24_window001_v1/native_tail_replay_source_v1/root_runtime_review_v2.json",
+          "post_exit_request_equals_plan": true,
+          "terminal_logits_and_risk_bytes_exact": true,
+          "parent_seconds": 9.672000000020489,
+          "child_seconds": 6.3439999998081475,
+          "assigned_processes_absent": true,
+          "original_reference_intermediates_captured": false,
+          "original_full_model_floor_GiB": 8,
+          "numerical_acceptance": null,
+          "case_resolution_released": true,
+          "independent_causal_review": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/mixed_ptq_case24_window001_v1/native_tail_replay_source_v1/independent_runtime_review_v2.json",
+          "native_vs_host_TANH_changes": 2,
+          "replay_pre_all256_bits_exact": true,
+          "native_post_classifier_both_saved_logits_exact": true,
+          "reviewed_resolution": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/mixed_ptq_case24_window001_v1/reviewed_resolution.json"
+        },
+        "mixed_case24_window1_root_resolution": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/mixed_ptq_case24_window001_v1/reviewed_resolution.json",
+        "mixed_current_stop": {
+          "recorded_utc": "2026-10-08T17:28:54.672935+00:00",
+          "saved_windows": 44,
+          "case_index": 24,
+          "window_index": 2,
+          "parent": 1884526,
+          "parent_naturally_exited": true,
+          "tool_session": 13814,
+          "actual_C_elapsed_seconds": 179.25365037703887,
+          "changed_A8": 402511,
+          "state": "historicalstopresolved; all66/32complete",
+          "main_and_independent_case_audit_pending": false,
+          "numerical_acceptance": null,
+          "score_approval": null,
+          "reviewed_resolution": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/mixed_ptq_case24_window002_v1/reviewed_resolution.json",
+          "root_raw_review": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/mixed_ptq_case24_window002_v1/root_raw_review_v1.json"
+        },
+        "mixed_live_progress": {
+          "completed_saved_windows": 66,
+          "total_windows": 66,
+          "state": "complete_pending_acceptance",
+          "active_window": null,
+          "tool_session": null,
+          "last_tool_session": 17701,
+          "parent_exitcode": 1,
+          "CPU": 6,
+          "numerical_acceptance": null,
+          "score_approval": null,
+          "max_new_windows": 6,
+          "reviewed_resolution": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/mixed_ptq_case30_window000_v1/reviewed_resolution.json"
+        },
+        "mixed_case24_complete_document_root_review": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/mixed_ptq_case24_window002_v1/root_complete_document_after_resume_v1.json",
+        "l128_w8_live_progress": {
+          "completed_saved_windows": 11,
+          "total_windows": 21,
+          "state": "bounded_running",
+          "active_window": "c18_w009",
+          "CPU": 7,
+          "root_resolution_attached": true,
+          "review_directory": "results/goal4/numerical_bridge/real_length_bringup_v1/true_length_case_review_v1/l128_w8_c18_w008_v1",
+          "cause": "7nonQKVchanges/bitexactlogits+risk; NEWexactREPLAY provenance accepted; pairedaudit inprogress",
+          "numerical_acceptance": null,
+          "tool_session": 5159,
+          "max_forwards": 6,
+          "reviewed_resolution": "results/goal4/numerical_bridge/real_length_bringup_v1/true_length_case_review_v1/l128_w8_c18_w008_v1/replay_paired_inputs_v1/reviewed_resolution.json"
+        },
+        "l512_w8_live_progress": {
+          "completed_saved_windows": 4,
+          "total_windows": 4,
+          "state": "stopped_numerical_discrepancy",
+          "active_window": "c18_w002",
+          "CPU": 7,
+          "tool_session": null,
+          "max_forwards": 1,
+          "reviewed_resolution": "results/goal4/numerical_bridge/real_length_bringup_v1/true_length_case_review_v1/l512_w8_c18_w001_v1/reviewed_resolution.json",
+          "root_resolution_attached": false,
+          "numerical_acceptance": null,
+          "prior_tool_session": 15944,
+          "parent_returncode": 1,
+          "cause": "361009A8changes/full512attention/349valid163pad; earliestL0attention_output; genuinepaired12nonQKVrefs missing; exactmaskedprimitive sourceprep underway",
+          "review_directory": "results/goal4/numerical_bridge/real_length_bringup_v1/true_length_case_review_v1/l512_w8_c18_w002_v1"
+        },
+        "mixed_case25_complete_document_root_review": {
+          "path": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/mixed_ptq_case25_window006_v1/root_raw_review_v1.json",
+          "windows": 7,
+          "actual_max": 0.999457061290741,
+          "reference_max": 0.999457061290741,
+          "actual_winners": [
+            0
+          ],
+          "reference_winners": [
+            0
+          ],
+          "strict_reject_both": true,
+          "not_global_approval": true
+        },
+        "true_length_latest_root_resolutions_attachment_state": "L128w17 root producer EXIT0/1.591s; attached via active tool43236, max1 lastw18. L512 complete4/4.",
+        "true_length_final_bounded_acceptance": "results/goal4/numerical_bridge/real_length_bringup_v1/final_saved_review_source_v1/actual_complete_review_v1/root_bounded_acceptance_v1.json",
+        "true_length_completed_progress": {
+          "l128_floating": 21,
+          "l128_w8": 21,
+          "l512_floating": 4,
+          "l512_w8": 4,
+          "total_windows": 50,
+          "distinct_documents": 2,
+          "accepted_bounded_bringup": true
+        }
+      },
+      "current_corrective_build": null,
+      "resource_recovery_handoff": {
+        "observed_utc": "2026-10-08T02:38:51.337825+00:00",
+        "vendor_assigned_group_stopped": 3494254,
+        "vendor_reason": "Observed Windowsavailablememory below2GiB; outerjobs1 still allowed two internal hierarchical synthesis workers",
+        "vendor_preserved_run": "build/vek280_system/l256/lanes64/20261008T021823_617528Z_implement/run.json",
+        "preserved_temporary_marker": "build/vek280_system/l256/lanes64/20261008T021823_617528Z_implement/resource_pause_20261008T023535.request",
+        "vendor_resume_authorized_now": true,
+        "floating_completed_saved_windows": 15,
+        "floating_interrupted_unaccepted_window": [
+          9,
+          3
+        ],
+        "floating_reason": "Actual Windowsmemory1302556KiB below2097152KiB guard; assigned Cchild3542469 terminated",
+        "permitted_next_work": "Vendor routing remains on CPUs0..5; ordinary floating checked C continues on CPU6 and one W8 next-window diagnostic on CPU7. Original memory guards remain unchanged; no native Torch or XSIM compile overlap.",
+        "vendor_current_resume": "build/vek280_system/l256/lanes64/20261008T021823_617528Z_implement/resume_20261008T031638_361764Z/run.json",
+        "clean_cache_recovery": "results/goal4/numerical_bridge/connected_bounds_review_v2/wsl_cache_recovery_20261008T0308.json",
+        "floating_latest_resource_retry_review": "results/goal4/numerical_bridge/connected_bounds_review_v2/reviewed_floating_030525_resource_retry.json",
+        "w8_latest_resource_retry_review": "results/goal4/numerical_bridge/connected_bounds_review_v2/reviewed_w8_030525_resource_retry.json",
+        "second_clean_cache_recovery": "results/goal4/numerical_bridge/connected_bounds_review_v2/wsl_cache_recovery_20261008T032349.json",
+        "actual_synthesis_worker_completion": "build/vek280_system/l256/lanes64/20261008T021823_617528Z_implement/resume_20261008T031638_361764Z/worker_phase_completion_0326.json",
+        "third_clean_cache_failed_parse": "results/goal4/numerical_bridge/connected_bounds_review_v2/wsl_cache_recovery_20261008T040114.json",
+        "third_clean_cache_recovery": "results/goal4/numerical_bridge/connected_bounds_review_v2/wsl_cache_recovery_20261008T040208_corrected.json",
+        "fourth_clean_cache_recovery": "results/goal4/numerical_bridge/connected_bounds_review_v2/wsl_cache_recovery_20261008T043512Z.json",
+        "fifth_clean_cache_recovery": "results/goal4/numerical_bridge/connected_bounds_review_v2/wsl_cache_recovery_20261008T050839Z.json"
+      },
+      "actual_bringup_arena_preparations": {
+        "128": "results/goal4/internal_integration/deployment_w8_l128_v1/preparation.json",
+        "256": "results/goal4/internal_integration/deployment_w8_l256_v1/preparation.json",
+        "512": "results/goal4/internal_integration/deployment_w8_l512_v1/preparation.json"
+      },
+      "actual_bringup_host_links": {
+        "128": "build/vek280_host/l128/20261008T024705_734722Z_link/run.json",
+        "256": "build/vek280_host/l256/20261008T024706_226803Z_link/run.json",
+        "512": "build/vek280_host/l512/20261008T024706_731803Z_link/run.json"
+      },
+      "actual_eligible_integrated_closures": {
+        "static_bank64": "build/vek280_system/l256/lanes64/20261008T021823_617528Z_implement/closure_inspection.json",
+        "cached16": "build/vek280_system/l256/lanes16/20261008T035407_843265Z_implement/closure_inspection.json",
+        "cached32": "build/vek280_system/l256/lanes32/20261008T045204_080320Z_implement/closure_inspection.json"
+      },
+      "actual_bringup_boot_package": "build/deployment/l256_uniform_w8_boot_v1/package_readback.json",
+      "current_vendor_work": {
+        "state": "idle",
+        "last_completed_build": "build/vek280_system/l512/lanes64/20261008T093118_039498Z_implement",
+        "root_acceptance": "build/vek280_system/l512/lanes64/20261008T093118_039498Z_implement/root_routed_completion_acceptance_v1.json",
+        "recorded_utc": "2026-10-08T10:30:03.241175+00:00",
+        "physical_board_activity": false
+      },
+      "actual_connected_prefix16_run": "results/goal4/real_arithmetic_integration/20261008T044038_758292Z/run.json",
+      "actual_connected_prefix16_independent_check": "results/goal4/real_arithmetic_integration/20261008T044038_758292Z/independent_trace_checker_v1/check.json",
+      "frozen_common_cost_handoff": {
+        "observed_utc": "2026-10-08T05:42:32.645254+00:00",
+        "table": "results/goal4/cost_table_nominal_caps_7624_7642_7660_7679_v1.json",
+        "validation": "results/goal4/cost_table_nominal_caps_7624_7642_7660_7679_validation_v1.json",
+        "caps_ms": [
+          7624,
+          7642,
+          7660,
+          7679
+        ],
+        "cap_rule": "Rounded Q1/Q2/Q3 cost-interval points plusceilupper from cheapestnominaluniformW4/W8, fixedbeforecomparison",
+        "scope": "OnecompletewarmL256/B1window, everydocumentwindowsummed, coldseparate; analyticalassumptionsconditional",
+        "actual_profiles_eligible": 3,
+        "numerical_approval": null,
+        "campaign_maps_consulted": 0,
+        "accepted_figure": "results/goal4/figures/offline_cost_v2/offline_cost.svg",
+        "figure_qa": "results/goal4/figures/offline_cost_v2/figure_qa.md"
+      },
+      "required_length_boot_packaging": {
+        "recorded_utc": "2026-10-08T10:31:21.132226+00:00",
+        "purpose": "Existing uniformW8bringup offlinepackages for actual acceptedrequiredL128/L512implementations",
+        "lengths": [
+          128,
+          512
+        ],
+        "maximum_new_packages": 2,
+        "outputs": [
+          "build/deployment/l128_uniform_w8_boot_v1",
+          "build/deployment/l512_uniform_w8_boot_v1"
+        ],
+        "source": "scripts/pack_deployment_model.py",
+        "new_synthesis": false,
+        "native_torch": false,
+        "physical_board_activity": false,
+        "numerical_acceptance": null,
+        "state": "Both existingartifact trueL uniformW8bootpackages completed and rootreadback accepted",
+        "minimum_windows_free_kib": 2097152,
+        "minimum_wsl_available_kib": 4194304,
+        "bootgen_timeout_seconds": 120,
+        "actual_packages": {
+          "l128": "build/deployment/l128_uniform_w8_boot_v1/package.json",
+          "l512": "build/deployment/l512_uniform_w8_boot_v1/package.json"
+        },
+        "root_acceptances": {
+          "l128": "build/deployment/l128_uniform_w8_boot_v1/root_packaging_acceptance_v1.json",
+          "l512": "build/deployment/l512_uniform_w8_boot_v1/root_packaging_acceptance_v1.json"
+        },
+        "new_packages_completed": 2,
+        "completed_utc": "2026-10-08T10:39:45.460714+00:00"
+      },
+      "offline_evaluation_driver_source_handoff": {
+        "native_qat_loader_source_acceptance": "results/goal7/native_qat_loader_source_v1/root_source_acceptance_v1.json",
+        "native_qat_actual_runtime_verified": false,
+        "final_timing_grid_source_acceptance": "results/goal7/final_timing_grid_source_v1/root_source_acceptance_v1.json",
+        "timing_measurements_executed": false,
+        "single_extension": "BIPIA TableQA",
+        "extension_actual_source_rows": 100,
+        "extension_distinct_normalized_contexts": 84,
+        "extension_realized_selection": false,
+        "extension_source_review": "results/goal7/tableqa_extension_source_v1",
+        "extension_root_source_acceptance": "results/goal7/tableqa_extension_source_v1/root_source_acceptance_v1.json",
+        "extension_quality_scores_complete": false,
+        "standalone_mixed_score_gate_fix": "results/goal5/standalone_mixed_score_gate_fix_v1/root_source_acceptance_v1.json"
+      },
+      "native_tail_primitive_replay": {
+        "release": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/mixed_ptq_case24_window001_v1/native_tail_replay_source_v1/root_source_acceptance_and_primitive_release_v2.json",
+        "max_dispatches": 1,
+        "state": "v2_exact_terminal_replay_and_causal_review_rootaccepted_for_case24w1_only; mixedC_resumed_max6_CPU6",
+        "whole_model_capture_floor_unchanged": true,
+        "recorded_utc": "2026-10-08T17:15:36.129756+00:00",
+        "actual_parent_attempts": 2,
+        "actual_Torch_replays": 1,
+        "failed_attempt": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/mixed_ptq_case24_window001_v1/native_tail_replay_source_v1/attempt_v1/dispatch.json",
+        "actual_runtime_review": "results/goal4/numerical_bridge/remaining_reference_preinputs_v1/future_case_audit_v1/mixed_ptq_case24_window001_v1/native_tail_replay_source_v1/root_runtime_review_v2.json"
+      },
+      "selected_primitive_preinput_replay": {
+        "state": "Both actual selected L128/L512 replays root accepted as REPLAY provenance; L128 exact-case resolution attached and C resumed",
+        "helper": "results/goal4/numerical_bridge/real_length_bringup_v1/selected_primitive_preinputs_v1/replay_selected_preinputs.py",
+        "root_source_review": "results/goal4/numerical_bridge/real_length_bringup_v1/selected_primitive_preinputs_v1/root_source_review_and_preflight_v1.json",
+        "release": "results/goal4/numerical_bridge/real_length_bringup_v1/selected_primitive_preinputs_v1/root_l128_release_v1.json",
+        "native_tool_session": null,
+        "source_checks": {
+          "author": 51,
+          "independent": 44
+        },
+        "allocation": {
+          "windows_preflight_bytes": 4294967296,
+          "windows_runtime_bytes": 2147483648,
+          "wsl_runtime_bytes": 4294967296,
+          "cpus": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "torch_threads": 4,
+          "whole_parent_cap_seconds": 900,
+          "full_capture_floor_unchanged_bytes": 8589934592
+        },
+        "original31_closure_pending": false,
+        "output_provenance": "REPLAY only, never original full-forward capture",
+        "numerical_acceptance": null,
+        "score_approval": null,
+        "root_runtime_acceptances": [
+          "results/goal4/numerical_bridge/real_length_bringup_v1/selected_primitive_preinputs_v1/root_l128_runtime_acceptance_v1.json",
+          "results/goal4/numerical_bridge/real_length_bringup_v1/selected_primitive_preinputs_v1/root_l512_runtime_acceptance_v1.json"
+        ],
+        "actual_output_FP32_bytes": {
+          "l128": 3145728,
+          "l512": 12582912
+        },
+        "actual_work": {
+          "l128": {
+            "child_seconds": 58.563,
+            "parent_seconds": 82.344
+          },
+          "l512": {
+            "child_seconds": 33.421,
+            "parent_seconds": 46.0
+          }
+        },
+        "all_owned_native_processes_absent": true
+      },
+      "selected_primitive_c18_w008_replay": {
+        "state": "completed_root_REPLAY_provenance_accepted",
+        "recorded_utc": "2026-10-08T18:56:51.690198+00:00",
+        "root_acceptance": "results/goal4/numerical_bridge/real_length_bringup_v1/selected_primitive_c18_w008_v1/root_runtime_acceptance_v1.json",
+        "original31_exact": true,
+        "new_REPLAY_preinputs": 12,
+        "independently_requantized_values": 786432,
+        "child_seconds": 60.40599999995902,
+        "parent_seconds": 83.875,
+        "source_operands98_exact": true,
+        "all3_native_identities_absent": true,
+        "fresh_WSL_inventory_clear": true,
+        "original_full_capture_floor_unchanged_GiB": 8,
+        "numerical_acceptance": null,
+        "score_approval": null
+      },
+      "guarded_campaign_first_job_source_review": {
+        "path": "results/goal5/campaign_next_execution_review_v2/guarded_campaign_dispatch_v1",
+        "state": "Final392line guard and85line probe source reviewed; actual probe003 PASS/root operational acceptance, all ten observed PIDs absent. Historical001/002 failures retained. No scoring allocation or scientific approval.",
+        "probe001_completed": false,
+        "probe002_completed": false,
+        "actual_job_assignment_before_ACK_verified": true,
+        "actual_probe002_empty_job_and_cleanup_verified": true,
+        "resource_allocation_adopted": false,
+        "scientific_score_approval": null,
+        "probe003_completed": true,
+        "probe003_elapsed_seconds": 1.625,
+        "root_operational_acceptance": "results/goal5/campaign_next_execution_review_v2/guarded_campaign_dispatch_v1/job_probe_attempt003/root_operational_acceptance_v1.json"
+      },
+      "selected_primitive_l512_c18_w002_replay": {
+        "completed": true,
+        "length": 512,
+        "key": "c18_w002",
+        "valid_tokens": 349,
+        "padding_tokens": 163,
+        "kind": "REPLAY never original capture",
+        "original31_byte_exact": true,
+        "independent12_own_A8_exact": true,
+        "child_seconds": 34.297,
+        "whole_parent_seconds": 46.141,
+        "root_acceptance": "results/goal4/numerical_bridge/real_length_bringup_v1/selected_primitive_l512_c18_w002_v1/root_runtime_acceptance_v1.json",
+        "paired_root_review": "results/goal4/numerical_bridge/real_length_bringup_v1/true_length_case_review_v1/l512_w8_c18_w002_v1/replay_paired_inputs_v1/root_raw_review_v1.json",
+        "changed_codes": 361009,
+        "valid_changes": 221747,
+        "padding_changes": 139262,
+        "CLS_changes": 751,
+        "numerical_acceptance": null,
+        "score_approval": null
+      },
+      "latest_weekly_usage": {
+        "observed_utc": "2026-10-08T22:04:12+00:00",
+        "used_percent": 90,
+        "remaining_percent": 10,
+        "resets_at": 1791959439,
+        "pause_at_used_percent": 90,
+        "basis": "Actual usage tool returned90%; explicit user pause instruction. Timestamp is clock read immediately following the usage observation."
+      },
+      "native_scoring_handoff": {
+        "state": "paused_at_user_weekly_limit; first_A_compact_plan002_prepared; no_release_or_dispatch",
+        "plan": "results/goal5/campaign_next_execution_review_v2/guarded_campaign_dispatch_v1/first_A_attempt002/plan.json",
+        "actual_plan_tool_session": 95153,
+        "actual_plan_exitcode": 0,
+        "latest_inventory": "results/goal5/campaign_next_execution_review_v2/guarded_campaign_dispatch_v1/first_A_attempt002/root_exclusive_handoff_v2.json",
+        "windows_available_bytes": 3632664576,
+        "windows_preflight_floor_bytes": 4294967296,
+        "wsl_available_bytes": 22100799488,
+        "process_blockers": [],
+        "resource_release_authored": false,
+        "scoring_started": false,
+        "source_note": "ExtendedUNC accesses all94currentRTL files; no frozen-cost changes. Existing fullscope snapshots retain exactbytebinding; compactplanmetadata correction removes duplicate full213MB JSON only.",
+        "plan_bytes": 5040280,
+        "root_plan_review": "results/goal5/campaign_next_execution_review_v2/guarded_campaign_dispatch_v1/first_A_attempt002/root_plan_review_v1.json",
+        "wsl_available_bytes_last_full_inventory": 22100799488,
+        "idle_observation": "results/goal5/campaign_next_execution_review_v2/guarded_campaign_dispatch_v1/first_A_attempt002/root_idle_memory_observation_v1.json",
+        "idle_seconds": 300,
+        "idle_Windows_observations": 15,
+        "idle_windows_min_bytes": 3704627200,
+        "idle_windows_max_bytes": 3903287296,
+        "compact_source_acceptance": "results/goal5/campaign_next_execution_review_v2/guarded_campaign_dispatch_v1/small_approval_plan_binding_v1/root_source_acceptance_v1.json",
+        "resource_blocked_goal_turn_audit": {
+          "consecutive_turns": 1,
+          "reason": "First goalturn at this actualWindowsmemoryfloor blocker; multiple within-turn observations are not additional goalturns."
+        },
+        "next": "Explicit user resume required. Then fresh actual weekly usage and passing resource/process inventory; validate existing002 plan, exact one-job root release and guardedexecute. Unchanged scientific approvals and resource floors."
+      },
+      "weekly_usage_pause": {
+        "record": "results/goal5/campaign_next_execution_review_v2/guarded_campaign_dispatch_v1/first_A_attempt002/root_weekly_usage_pause_v1.json",
+        "recorded_utc": "2026-10-08T22:05:20.790425+00:00",
+        "reason": "Explicit user weekly usage threshold reached",
+        "goal_status": "paused",
+        "resume_requires_explicit_user_resume": true
+      }
+    },
+    "goal_r1": {
+      "prompt": "SENTRY_next_goal_prompt.md",
+      "state": "decision_complete_at_checkpoint_2",
+      "date": "2026-10-11",
+      "usage_limit": null,
+      "usage_override": "User: you have no usage limit for this run; historical percentage/reset usage stops do not govern R1.",
+      "old_campaign_resumed": false,
+      "maximum_initial_challenger_runs": 2,
+      "maximum_additional_learning_runs": 1,
+      "maximum_hardware_mappings": 2,
+      "maximum_prototype_routes": 1,
+      "maximum_prototype_configurations": 2,
+      "maximum_corrective_rebuilds_per_configuration": 1,
+      "maximum_local_pivots": 1,
+      "physical_board_authorized": false,
+      "target_api_calls_authorized": false,
+      "final_partitions_open": false,
+      "report": "reports/goal_r1_decision.md",
+      "artifacts": "results/goal_r1",
+      "completed_utc": "2026-10-11T00:05:18Z",
+      "recommendation": "INCONCLUSIVE-BLOCKED for redesigned FPGA/Versal; STOP-CURRENT-ROUTE for legacy serial PL and W8-only AIE substitution",
+      "provisional_detector": "BERT W8-QAT native INT8 CUDA Graph",
+      "complete_warm_software_mean_ms": 1.7072250002456713,
+      "initial_learning_runs_completed": 2,
+      "additional_learning_runs_completed": 0,
+      "analytic_hardware_mappings": 2,
+      "hardware_prototype_routes_started": 0,
+      "hardware_prototype_configurations_started": 0,
+      "hardware_corrective_rebuilds": 0,
+      "local_format_pivots_used": 1,
+      "bf16_attention_reference_development_passed": true,
+      "bf16_exact_AIE_identity": false,
+      "cpu_complete_quality_established": false,
+      "stage_c_reached": false,
+      "next_research_action": "Separately authorized representative encoder-block feasibility experiment with matched exact-format software and common-engineered PL baseline; see report acceptance criteria"
     }
   }
 }

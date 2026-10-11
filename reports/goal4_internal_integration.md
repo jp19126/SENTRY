@@ -2,7 +2,7 @@
 
 This simulation connects the new fixed sequencer and data mover to the actual generated integer and FP32 AXI-Lite register blocks. Explicit completion stubs replace arithmetic datapaths. It is control/layout evidence, not a full detector numerical run or physical DDR measurement.
 
-Execution state: **returned**. Passed: **True**. Evidence: `results/goal4/internal_integration/2026-09-26T21_29_59_195754_00_00/run.json`.
+Execution state: **returned**. Passed: **True**. Evidence: `results/goal4/internal_integration/2026-10-08T02_09_52_942713_00_00/run.json`.
 
 The frozen deployment configuration contains a model ID, W4/W8 group mask, exact FP32 threshold bits and arena base. Changes require reset and a matching cold load of weights/scales. The simulation address is deliberately synthetic and crosses a 32-bit pointer boundary; no address has been allocated on the board.
 
@@ -14,19 +14,19 @@ The DUT also exposes categories for AXI-Lite request/response states, interrupt-
 
 | Case | Status | Sampled elapsed cycles | Stub intervals | Control/layout cycles | Read beats | Write beats |
 |---|---:|---:|---:|---:|---:|---:|
-| document_first_above | 0 | 5402825 | 3480 | 5399345 | 2228825 | 2260992 |
-| document_last_preserves_max | 0 | 5402825 | 3480 | 5399345 | 2228825 | 2260992 |
-| new_document_equal_threshold | 0 | 5402825 | 3480 | 5399345 | 2228825 | 2260992 |
+| document_first_above | 0 | 5403985 | 3480 | 5400505 | 2228825 | 2260992 |
+| document_last_preserves_max | 0 | 5403985 | 3480 | 5400505 | 2228825 | 2260992 |
+| new_document_equal_threshold | 0 | 5403985 | 3480 | 5400505 | 2228825 | 2260992 |
 | noncontiguous_index | 2 | 1 | 0 | 1 | 0 | 0 |
 | arena_overflow | 2 | 1 | 0 | 1 | 0 | 0 |
 | arena_alignment | 2 | 1 | 0 | 1 | 0 | 0 |
 | invalid_valid_length | 2 | 1 | 0 | 1 | 0 | 0 |
-| full_width_token_id | 3 | 732 | 0 | 732 | 600 | 0 |
-| full_width_type_id | 3 | 732 | 0 | 732 | 600 | 0 |
-| binary_mask_validation | 3 | 732 | 0 | 732 | 600 | 0 |
-| finite_scale_validation | 3 | 732 | 0 | 732 | 600 | 0 |
-| mover_read_error | 4 | 23 | 0 | 23 | 16 | 0 |
-| nonfinite_final_risk | 7 | 5402825 | 3480 | 5399345 | 2228825 | 2260992 |
+| full_width_token_id | 3 | 752 | 0 | 752 | 600 | 0 |
+| full_width_type_id | 3 | 752 | 0 | 752 | 600 | 0 |
+| binary_mask_validation | 3 | 752 | 0 | 752 | 600 | 0 |
+| finite_scale_validation | 3 | 752 | 0 | 752 | 600 | 0 |
+| mover_read_error | 4 | 28 | 0 | 28 | 16 | 0 |
+| nonfinite_final_risk | 7 | 5403985 | 3480 | 5400505 | 2228825 | 2260992 |
 
 Each complete schedule must issue 24 integer and 411 FP32 calls, 8,508 argument/start/IRQ-clear writes and 870 completion/status reads. Four IRQ-enable writes occur once during configuration and are excluded from warm-window counts. The TB checks every actual generated-register argument against the plan, both high and low pointer words, mixed group precision, local scales, source IDs, strict threshold equality, document maximum/reset, invalid IDs/masks/scales, address alignment/overflow and nonfinite final risk. Any error returns unusable status and requires reset.
 
@@ -34,4 +34,7 @@ Traffic reconciliation: movement useful reads are 8,912,896 bytes and writes 9,0
 
 No controller/mover synthesis, integrated timing closure, NoC/DDR contention, host latency, board measurement or broad detector numerical acceptance is established. Conditional addition of the control/layout term to the saved sequential service costs remains an analytical model, not observed complete execution.
 
-Offline preflight also compared the fixed plan to `results/goal4/numerical_bridge/ordered_torch_v1/summary.json`: all 411 ordered (operation, rows, width, outputs) tuples and all 24 integer matrix names matched. Movement destination extents passed their row/transpose bounds. The existing calibrated threshold round-tripped exactly to `0x3b955a95`; an arbitrary double `0.1` was rejected. These checks read existing artifacts without inference.
+
+## Required length implementation closure — 2026-10-08T10:33:09.513933+00:00
+
+Actual static64 L128 and L512 implementations now meet the5ns routed objective with clean timing checks and DRC. L128 WNS/WHS+0.029/+0.014ns, LUT66305/FF60398/BRAM103/DSP111/URAM0. L512 WNS/WHS+0.017/+0.017ns, LUT69267/FF63417/BRAM119/DSP111/URAM0. Sourceplans have302/3076commands respectively and full-length attention; both have realPDI/XSA and embedded NoCOPTIMAL seven achieved positive read/write paths, analytical only. Exact root acceptances are `build/vek280_system/l128/lanes64/20261008T065700_369382Z_implement/root_routed_completion_acceptance_v1.json` and `build/vek280_system/l512/lanes64/20261008T093118_039498Z_implement/root_routed_completion_acceptance_v1.json`. The L128 stockresume returned0 while its outer guard stopped only on XMLoutputdeclarations; that failure remains unchanged with a factualcompanion. L512 stockbuilder and ownedguard returned0,551originalfloorsamples/noOOM, all42PGs/340PIDs absent after3219.408s under7200. Requiredlength initialbuildlist2/2used; no renewed characterization/profile sweep. Genuine trueL nativeB1/B8/B32exports/hostELFs/arenas are reused; Ccompile/replay/numerical shape acceptance still pending. No physical allocation, detectorperformance or modelapproval is inferred.

@@ -1,7 +1,13 @@
 `timescale 1ns/1ps
 // Integration/control test only: real generated control registers, explicit
 // arithmetic completion stubs, real mover and a bounded synthetic memory.
+`ifndef GATE_TOKENS
+`define GATE_TOKENS 256
+`endif
 module gate_detector_control_tb;
+ localparam integer TOKENS=`GATE_TOKENS;
+ localparam integer VALID_TOKENS=TOKENS==256 ? 239 : TOKENS;
+ `include "integration_fixture_constants.svh"
  localparam [63:0] BASE=64'h00000001fffff000;
  localparam integer DEPTH=67108864;
  logic  clk;
@@ -18,7 +24,7 @@ module gate_detector_control_tb;
  logic [63:0] window_arena_base;
  logic [31:0] window_index;
  logic  window_last;
- logic [8:0] window_valid_length;
+ logic [$clog2(TOKENS+1)-1:0] window_valid_length;
  logic  result_valid;
  logic  result_ready;
  logic [7:0] result_status;
@@ -61,8 +67,8 @@ module gate_detector_control_tb;
  logic  mover_rsp_valid;
  logic  mover_rsp_ready;
  logic [3:0] mover_rsp_status;
- logic [7:0] mover_index_addr;
- logic [7:0] mover_mask_addr;
+ logic [$clog2(TOKENS)-1:0] mover_index_addr;
+ logic [$clog2(TOKENS)-1:0] mover_mask_addr;
  logic [31:0] mover_index_value;
  logic [7:0] mover_mask_value;
  logic  mover_rd_valid;
@@ -110,7 +116,7 @@ module gate_detector_control_tb;
  logic window_active;
  logic [31:0] desired_risk;
  integer observed_calls,completed_cases;
- logic [31:0] expected[0:8699]; // 435 calls, each 20 exact argument words.
+ logic [31:0] expected[0:EXPECTED_CALLS*20-1]; // Each service has 20 exact argument words.
  logic [63:0] stub_pointer[0:1][0:5];
  logic [31:0] stub_rows[0:1],stub_inner[0:1],stub_outputs[0:1],stub_extra[0:1];
  logic [31:0] fp_op,fp_scale;
@@ -130,7 +136,9 @@ module gate_detector_control_tb;
  assign ctl_rresp=control_fault==2 ? 2'b10:slave_rresp[ctl_target];
  assign ctl_rdata=slave_rdata[ctl_target];
  gate_detector_sequencer dut(.*);
+ defparam dut.TOKENS=TOKENS;
  gate_data_mover mover(.clk(clk),.resetn(resetn),.cmd_valid(mover_cmd_valid),.cmd_ready(mover_cmd_ready),.cmd_op(mover_cmd_op),.cmd_src(mover_cmd_src),.cmd_dst(mover_cmd_dst),.cmd_rows(mover_cmd_rows),.cmd_cols(mover_cmd_cols),.cmd_src_stride(mover_cmd_src_stride),.cmd_dst_stride(mover_cmd_dst_stride),.cmd_limit(mover_cmd_limit),.rsp_valid(mover_rsp_valid),.rsp_ready(mover_rsp_ready),.rsp_status(mover_rsp_status),.index_addr(mover_index_addr),.index_value(mover_index_value),.mask_addr(mover_mask_addr),.mask_value(mover_mask_value),.rd_valid(mover_rd_valid),.rd_ready(mover_rd_ready),.rd_data(mover_rd_data),.rd_last(mover_rd_last),.m_axi_araddr(m_axi_araddr),.m_axi_arlen(m_axi_arlen),.m_axi_arsize(m_axi_arsize),.m_axi_arburst(m_axi_arburst),.m_axi_arvalid(m_axi_arvalid),.m_axi_arready(m_axi_arready),.m_axi_rdata(m_axi_rdata),.m_axi_rresp(m_axi_rresp),.m_axi_rlast(m_axi_rlast),.m_axi_rvalid(m_axi_rvalid),.m_axi_rready(m_axi_rready),.m_axi_awaddr(m_axi_awaddr),.m_axi_awlen(m_axi_awlen),.m_axi_awsize(m_axi_awsize),.m_axi_awburst(m_axi_awburst),.m_axi_awvalid(m_axi_awvalid),.m_axi_awready(m_axi_awready),.m_axi_wdata(m_axi_wdata),.m_axi_wstrb(m_axi_wstrb),.m_axi_wlast(m_axi_wlast),.m_axi_wvalid(m_axi_wvalid),.m_axi_wready(m_axi_wready),.m_axi_bresp(m_axi_bresp),.m_axi_bvalid(m_axi_bvalid),.m_axi_bready(m_axi_bready));
+ defparam mover.TOKENS=TOKENS;
  gate_mover_axi_memory #(.DEPTH(DEPTH),.BASE(BASE),.STALL(0),.PIPELINED_READ(1)) memory(.*);
  gate_linear_top_control_s_axi registers_0(
   .ACLK(clk),
@@ -214,12 +222,11 @@ module gate_detector_control_tb;
  function automatic [31:0] get_word(input integer offset);
   get_word={memory.mem[offset+3],memory.mem[offset+2],memory.mem[offset+1],memory.mem[offset]};
  endfunction
- `include "integration_fixture_constants.svh"
  task initialize_inputs;
   begin
-   for(integer i=0;i<256;i=i+1)begin
+   for(integer i=0;i<TOKENS;i=i+1)begin
     put_word(TOKEN_IDS_OFFSET+i*4,i*113%30522);put_word(TYPE_IDS_OFFSET+i*4,i%2);
-    memory.mem[ATTENTION_MASK_OFFSET+i]=(i<239);
+    memory.mem[ATTENTION_MASK_OFFSET+i]=(i<VALID_TOKENS);
    end
    for(integer i=0;i<24;i=i+1)put_word(INPUT_SCALES_OFFSET+i*4,32'h3e800000+i);
   end
@@ -227,7 +234,7 @@ module gate_detector_control_tb;
  task check_call(input integer e);
   integer k,b;
   begin
-   if(observed_calls>=435)$fatal(1,"Too many service calls");
+   if(observed_calls>=EXPECTED_CALLS)$fatal(1,"Too many service calls");
    b=observed_calls*20;
    if(expected[b]!==e)$fatal(1,"Service order mismatch at %d",observed_calls);
    if(e==0)begin
@@ -246,6 +253,8 @@ module gate_detector_control_tb;
   if(!resetn)begin cycle<=0;window_active=0;stub_sum=0;result_elapsed=0;dones<=0;idles<=3;stub_ticks[0]<=0;stub_ticks[1]<=0;end
   else begin
    cycle<=cycle+1;dones<=0;
+   if(mover_rsp_valid && mover_rsp_ready && mover_rsp_status!=0)
+    $display("GATE_INTEGRATION_MOVER_ERROR command=%0d op=%0d rows=%0d cols=%0d ss=%0d ds=%0d src=%h dst=%h status=%0d",command_index,mover_cmd_op,mover_cmd_rows,mover_cmd_cols,mover_cmd_src_stride,mover_cmd_dst_stride,mover_cmd_src,mover_cmd_dst,mover_rsp_status);
    if(window_valid&&window_ready)begin
     accepted_cycle=cycle;window_active=1;stub_sum=0;result_elapsed=0;read_start=memory.read_beats;write_start=memory.write_beats;
    end
@@ -279,7 +288,7 @@ module gate_detector_control_tb;
    wait(window_ready);@(negedge clk);
   end
  endtask
- task submit(input logic[63:0] doc,input logic[31:0] idx,input logic last,input logic[63:0] base,input logic[8:0] n);
+ task submit(input logic[63:0] doc,input logic[31:0] idx,input logic last,input logic[63:0] base,input logic[$clog2(TOKENS+1)-1:0] n);
   begin
    wait(window_ready);@(negedge clk);window_document_id=doc;window_sample_id=64'hfedcba9876540000+completed_cases;
    window_index=idx;window_last=last;window_arena_base=base;window_valid_length=n;window_valid=1;
@@ -293,9 +302,13 @@ module gate_detector_control_tb;
    wait(result_valid);@(posedge clk);@(negedge clk);
    if(result_status!==status || result_sample_id!==window_sample_id || result_document_id!==window_document_id || result_window_index!==window_index || result_last!==window_last || result_model_id!==config_model_id)$fatal(1,"Result identity/status mismatch %s status=%0d",name,result_status);
    if(result_risk_bits!==risk || result_max_bits!==maximum || result_reject!==reject_bit)$fatal(1,"Result probability mismatch %s risk=%h max=%h reject=%b",name,result_risk_bits,result_max_bits,result_reject);
-   if(complete_window && (integer_calls!=24 || fp32_calls!=411 || observed_calls!=435 || control_write_count!=8508 || control_read_count!=870))$fatal(1,"Full control counts mismatch %s int=%0d fp=%0d calls=%0d wr=%0d rd=%0d",name,integer_calls,fp32_calls,observed_calls,control_write_count,control_read_count);
+   if(complete_window)begin
+    for(integer r=0;r<EXPECTED_MASK_ROWS;r=r+1)for(integer c=0;c<TOKENS;c=c+1)
+     if(get_word(MASK_SLAB_OFFSET+(r*TOKENS+c)*4)!==(c<VALID_TOKENS ? 32'h80000000 : 32'hff7fffff))$fatal(1,"Expanded mask layout differs from the full-length attention buffer");
+   end
+   if(complete_window && (integer_calls!=EXPECTED_INTEGER_CALLS || fp32_calls!=EXPECTED_FP32_CALLS || observed_calls!=EXPECTED_CALLS || control_write_count!=EXPECTED_CONTROL_WRITES || control_read_count!=EXPECTED_CONTROL_READS))$fatal(1,"Full control counts mismatch %s int=%0d fp=%0d calls=%0d wr=%0d rd=%0d",name,integer_calls,fp32_calls,observed_calls,control_write_count,control_read_count);
    if(result_elapsed!=total_cycles+1)$fatal(1,"Inclusive timing boundary differs");
-   if(complete_window && (memory.read_beats-read_start!=2228825 || memory.write_beats-write_start!=2260992))$fatal(1,"Planned mover traffic mismatch reads=%0d writes=%0d",memory.read_beats-read_start,memory.write_beats-write_start);
+   if(complete_window && (memory.read_beats-read_start!=EXPECTED_READ_BEATS || memory.write_beats-write_start!=EXPECTED_WRITE_BEATS))$fatal(1,"Planned mover traffic mismatch reads=%0d writes=%0d",memory.read_beats-read_start,memory.write_beats-write_start);
    saved_max=result_max_bits;saved_risk=result_risk_bits;
    repeat(3)begin @(negedge clk);if(!result_valid || result_max_bits!==saved_max || result_risk_bits!==saved_risk)$fatal(1,"Result changed under backpressure");end
    $display("GATE_INTEGRATION_CASE {\"id\":\"%s\",\"status\":%0d,\"complete_window\":%s,\"total_cycles\":%0d,\"inclusive_cycles\":%0d,\"stub_interval_cycles\":%0d,\"control_layout_cycles\":%0d,\"control_cycles\":%0d,\"interrupt_wait_cycles\":%0d,\"movement_cycles\":%0d,\"control_writes\":%0d,\"control_reads\":%0d,\"integer_calls\":%0d,\"fp32_calls\":%0d,\"read_beats\":%0d,\"write_beats\":%0d}",name,status,complete_window?"true":"false",total_cycles,result_elapsed,stub_sum,result_elapsed-stub_sum,control_cycles,interrupt_wait_cycles,movement_cycles,control_write_count,control_read_count,integer_calls,fp32_calls,memory.read_beats-read_start,memory.write_beats-write_start);
@@ -310,6 +323,15 @@ module gate_detector_control_tb;
   // treating these words as arithmetic inputs to the completion stubs.
   for(integer i=0;i<DEPTH;i=i+4)put_word(i,32'h3f000000+(i>>2)%65536);
   initialize_inputs();reset_and_configure();
+  if(TOKENS!=256)begin
+   desired_risk=32'h3b955a95;submit(88,0,1,BASE,VALID_TOKENS);consume("shape_full_length_equal_threshold",0,desired_risk,desired_risk,0,1);
+   reset_and_configure();put_word(TOKEN_IDS_OFFSET+(TOKENS-1)*4,32'h80000001);submit(99,0,1,BASE,VALID_TOKENS);consume("shape_last_token_validation",3,0,0,0,0);initialize_inputs();
+   reset_and_configure();put_word(TYPE_IDS_OFFSET+(TOKENS-1)*4,32'h80000000);submit(99,0,1,BASE,VALID_TOKENS);consume("shape_last_type_validation",3,0,0,0,0);initialize_inputs();
+   reset_and_configure();memory.mem[ATTENTION_MASK_OFFSET+TOKENS-1]=2;submit(99,0,1,BASE,VALID_TOKENS);consume("shape_last_mask_validation",3,0,0,0,0);initialize_inputs();
+   reset_and_configure();submit(99,0,1,BASE,TOKENS+1);consume("shape_valid_length_limit",2,0,0,0,0);
+   if(completed_cases!=5)$fatal(1,"Missing shape integration case");
+   $display("PASS gate_detector_control 5 shape cases; arithmetic completion stubs only");$finish;
+  end
   desired_risk=32'h3b955a96;submit(77,0,0,BASE,239);consume("document_first_above",0,desired_risk,desired_risk,0,1);
   observed_calls=0;desired_risk=32'h3b955a95;submit(77,1,1,BASE,239);consume("document_last_preserves_max",0,desired_risk,32'h3b955a96,1,1);
   observed_calls=0;desired_risk=32'h3b955a95;submit(88,0,1,BASE,239);consume("new_document_equal_threshold",0,desired_risk,desired_risk,0,1);

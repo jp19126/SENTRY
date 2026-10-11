@@ -1,8 +1,8 @@
 `timescale 1ns/1ps
-// Fixed BERT-Mini L256 control, not a general command processor.
+// Fixed BERT-Mini L128/L256/L512 control, not a general command processor.
 // The ROM comes only from scripts/plan_detector_commands.py. Arithmetic engines
 // remain the existing HLS modules. No arithmetic or physical-DDR timing is here.
-module gate_detector_sequencer (
+module gate_detector_sequencer #(parameter integer TOKENS=256) (
  input wire clk, resetn,
  input wire config_valid, output wire config_ready,
  input wire [15:0] config_w8_mask, input wire [31:0] config_threshold_bits,
@@ -10,7 +10,7 @@ module gate_detector_sequencer (
  input wire window_valid, output wire window_ready,
  input wire [63:0] window_sample_id, window_document_id, window_arena_base,
  input wire [31:0] window_index, input wire window_last,
- input wire [8:0] window_valid_length,
+ input wire [$clog2(TOKENS+1)-1:0] window_valid_length,
  output wire result_valid, input wire result_ready,
  output reg [7:0] result_status,
  output reg [63:0] result_sample_id, result_document_id, result_model_id,
@@ -29,7 +29,7 @@ module gate_detector_sequencer (
  output reg [15:0] mover_cmd_rows, mover_cmd_cols,
  output reg [31:0] mover_cmd_src_stride, mover_cmd_dst_stride, mover_cmd_limit,
  input wire mover_rsp_valid, output wire mover_rsp_ready, input wire [3:0] mover_rsp_status,
- input wire [7:0] mover_index_addr, mover_mask_addr,
+ input wire [$clog2(TOKENS)-1:0] mover_index_addr, mover_mask_addr,
  output wire [31:0] mover_index_value, output wire [7:0] mover_mask_value,
  input wire mover_rd_valid, output wire mover_rd_ready,
  input wire [31:0] mover_rd_data, input wire mover_rd_last,
@@ -37,7 +37,16 @@ module gate_detector_sequencer (
  output reg [31:0] control_write_count, control_read_count, integer_calls, fp32_calls,
  output reg [15:0] command_index
 );
- `include "command_plan_constants.svh"
+ `ifndef GATE_COMMAND_PLAN_CONSTANTS
+ `define GATE_COMMAND_PLAN_CONSTANTS "command_plan_constants.svh"
+ `endif
+ `include `GATE_COMMAND_PLAN_CONSTANTS
+ localparam integer TOKEN_ADDR_WIDTH=$clog2(TOKENS);
+ localparam integer TOKEN_COUNT_WIDTH=$clog2(TOKENS+1);
+ initial begin
+  if(TOKENS!=128 && TOKENS!=256 && TOKENS!=512)$fatal(1,"Unsupported fixed detector length");
+  if(PLAN_LENGTH!=TOKENS)$fatal(1,"Command plan length differs from controller caches/ports");
+ end
  reg [511:0] plan_rom [0:PLAN_COUNT-1];
  initial $readmemh("command_plan.mem", plan_rom);
  reg [511:0] descriptor;
@@ -57,16 +66,16 @@ module gate_detector_sequencer (
  reg [31:0] threshold, document_max, expected_window;
  reg [63:0] arena_base, deployed_base, active_document, active_base;
  reg document_active, selected_engine, index_is_type;
- reg [8:0] valid_length;
+ reg [TOKEN_COUNT_WIDTH-1:0] valid_length;
  reg [1:0] setup_index, load_index;
  reg [1:0] move_role; // 0 input read, 1 layout operation, 2 final risk read.
- reg [8:0] received_words;
- reg [9:0] mask_sum;
+ reg [TOKEN_COUNT_WIDTH-1:0] received_words;
+ reg [TOKEN_COUNT_WIDTH:0] mask_sum;
  reg input_bad, stream_bad;
  reg [31:0] risk_received;
  reg [4:0] argument_index;
- reg [31:0] token_cache[0:255], type_cache[0:255], scale_cache[0:23];
- reg [7:0] mask_cache[0:255];
+ reg [31:0] token_cache[0:TOKENS-1], type_cache[0:TOKENS-1], scale_cache[0:23];
+ reg [7:0] mask_cache[0:TOKENS-1];
  assign mover_index_value=index_is_type ? type_cache[mover_index_addr] : token_cache[mover_index_addr];
  assign mover_mask_value=mask_cache[mover_mask_addr];
  assign config_ready=(state==CFG);
@@ -195,14 +204,14 @@ module gate_detector_sequencer (
     if (received_words>=mover_cmd_cols) stream_bad<=1;
     else if(move_role==2) risk_received<=mover_rd_data;
     else case(load_index)
-     0:begin token_cache[received_words[7:0]]<=mover_rd_data;if(mover_rd_data>=30522) input_bad<=1;end
-     1:begin type_cache[received_words[7:0]]<=mover_rd_data;if(mover_rd_data>=2) input_bad<=1;end
+     0:begin token_cache[received_words[TOKEN_ADDR_WIDTH-1:0]]<=mover_rd_data;if(mover_rd_data>=30522) input_bad<=1;end
+     1:begin type_cache[received_words[TOKEN_ADDR_WIDTH-1:0]]<=mover_rd_data;if(mover_rd_data>=2) input_bad<=1;end
      2:begin
       for(j=0;j<4;j=j+1) begin
        mask_cache[received_words*4+j]<=mover_rd_data[j*8+:8];
        if(mover_rd_data[j*8+:8]>1) input_bad<=1;
       end
-      mask_sum<=mask_sum+{9'd0,mover_rd_data[0]}+{9'd0,mover_rd_data[8]}+{9'd0,mover_rd_data[16]}+{9'd0,mover_rd_data[24]};
+      mask_sum<=mask_sum+{TOKEN_COUNT_WIDTH'(0),mover_rd_data[0]}+{TOKEN_COUNT_WIDTH'(0),mover_rd_data[8]}+{TOKEN_COUNT_WIDTH'(0),mover_rd_data[16]}+{TOKEN_COUNT_WIDTH'(0),mover_rd_data[24]};
      end
      3:begin scale_cache[received_words]<=mover_rd_data;
       if(mover_rd_data[31] || mover_rd_data[30:0]==0 || mover_rd_data[30:23]==8'hff) input_bad<=1;
@@ -228,7 +237,7 @@ module gate_detector_sequencer (
      total_cycles<=0;control_cycles<=0;interrupt_wait_cycles<=0;movement_cycles<=0;
      control_write_count<=0;control_read_count<=0;integer_calls<=0;fp32_calls<=0;
      arena_end={1'b0,window_arena_base}+{1'b0,ARENA_BYTES};
-     if(window_arena_base!=deployed_base || window_arena_base[11:0]!=0 || arena_end[64] || window_valid_length==0 || window_valid_length>256 ||
+     if(window_arena_base!=deployed_base || window_arena_base[11:0]!=0 || arena_end[64] || window_valid_length==0 || window_valid_length>TOKENS ||
         (!document_active && window_index!=0) || (document_active && (window_document_id!=active_document || window_arena_base!=active_base || window_index!=expected_window)) ||
         (!window_last && window_index==32'hffffffff)) fail(2);
      else begin
@@ -240,9 +249,9 @@ module gate_detector_sequencer (
     LOAD_PREP:begin
      mover_cmd_op<=4;mover_cmd_rows<=1;mover_cmd_dst<=0;mover_cmd_src_stride<=0;mover_cmd_dst_stride<=0;mover_cmd_limit<=0;
      case(load_index)
-      0:begin mover_cmd_src<=arena_base+TOKEN_IDS_OFFSET;mover_cmd_cols<=256;end
-      1:begin mover_cmd_src<=arena_base+TYPE_IDS_OFFSET;mover_cmd_cols<=256;end
-      2:begin mover_cmd_src<=arena_base+ATTENTION_MASK_OFFSET;mover_cmd_cols<=64;end
+      0:begin mover_cmd_src<=arena_base+TOKEN_IDS_OFFSET;mover_cmd_cols<=TOKENS;end
+      1:begin mover_cmd_src<=arena_base+TYPE_IDS_OFFSET;mover_cmd_cols<=TOKENS;end
+      2:begin mover_cmd_src<=arena_base+ATTENTION_MASK_OFFSET;mover_cmd_cols<=TOKENS/4;end
       3:begin mover_cmd_src<=arena_base+INPUT_SCALES_OFFSET;mover_cmd_cols<=24;end
      endcase
      received_words<=0;stream_bad<=0;move_role<=0;state<=MOVE_SEND;

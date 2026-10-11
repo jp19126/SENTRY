@@ -1,4 +1,4 @@
-"""Fixed L256 sequencer/control/mover simulation; arithmetic completion stubs only.
+"""Fixed L128/L256/L512 sequencer/control/mover simulation; arithmetic completion stubs only.
 
 No new HLS synthesis, board project, NoC setup, physical allocation or inference.
 --execute compiles existing control-register RTL and the new bounded integration.
@@ -29,8 +29,16 @@ def read(path):
 def prepare(plan, folder):
     write_rtl_plan(plan, folder)
     constants = []
-    for name in ('token_ids', 'type_ids', 'attention_mask', 'input_scales'):
+    for name in ('token_ids', 'type_ids', 'attention_mask', 'input_scales', 'mask_slab'):
         constants.append(f"localparam integer {name.upper()}_OFFSET = {plan['buffers'][name]['offset']};")
+    counts = plan['counts']
+    expected_counts = dict(EXPECTED_MASK_ROWS=plan['buffers']['mask_slab']['shape'][0], EXPECTED_CALLS=counts['integer_calls'] + counts['fp32_calls'],
+        EXPECTED_INTEGER_CALLS=counts['integer_calls'], EXPECTED_FP32_CALLS=counts['fp32_calls'],
+        EXPECTED_CONTROL_WRITES=counts['service_argument_start_writes'] + counts['interrupt_clear_writes'],
+        EXPECTED_CONTROL_READS=counts['completion_reads'],
+        EXPECTED_READ_BEATS=(counts['movement_useful_read_bytes'] + counts['control_data_read_bytes']) // 4,
+        EXPECTED_WRITE_BEATS=counts['movement_useful_write_bytes'] // 4)
+    constants += [f"localparam integer {key} = {value};" for key, value in expected_counts.items()]
     (folder / 'integration_fixture_constants.svh').write_text('\n'.join(constants) + '\n')
 
     def value(v):
@@ -56,11 +64,13 @@ def prepare(plan, folder):
             x = value(write['value'])
             record.append((x >> 32 if write.get('part') == 'high32' else x) & 0xFFFFFFFF)
         expected += record + [0] * (20 - len(record))
-    assert len(expected) == 435 * 20
+    assert len(expected) == expected_counts['EXPECTED_CALLS'] * 20
     (folder / 'expected_arguments.mem').write_text('\n'.join(f'{v:08x}' for v in expected) + '\n')
 
 
 def report(record, path):
+    if record.get('length', 256) != 256:
+        return  # Shape evidence stays in its run.json; preserve the L256 report.
     lines = ['# Fixed L256 internal control and movement integration', '',
         'This simulation connects the new fixed sequencer and data mover to the actual generated integer and FP32 AXI-Lite register blocks. Explicit completion stubs replace arithmetic datapaths. It is control/layout evidence, not a full detector numerical run or physical DDR measurement.', '',
         f"Execution state: **{record['state']}**. Passed: **{record['passed']}**. Evidence: `{path.relative_to(ROOT).as_posix()}`.", '',
@@ -83,11 +93,14 @@ def report(record, path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--execute', action='store_true')
+    parser.add_argument('--length', type=int, choices=(128, 256, 512), default=256)
     args = parser.parse_args()
     config = read(ROOT / 'configs/project.json')
-    plan = create_plan(config)
+    plan = create_plan(config, length=args.length)
+    case_count = CASES if args.length == 256 else 5
+    service_count = plan['counts']['integer_calls'] + plan['counts']['fp32_calls']
     if not args.execute:
-        print(json.dumps({'execute': False, 'cases': CASES, 'commands': plan['counts'],
+        print(json.dumps({'execute': False, 'length': args.length, 'cases': case_count, 'commands': plan['counts'],
                           'arithmetic': 'explicit completion stubs', 'synthesis': False}, indent=2))
         return
     if os.name == 'nt':
@@ -110,7 +123,7 @@ def main():
     (out / 'command_plan.json').write_text(json.dumps(plan, indent=2) + '\n')
     (out / 'run.tcl').write_text('run all\nquit\n')
     record = dict(state='running', passed=False, recorded_utc=datetime.now(timezone.utc).isoformat(),
-        arithmetic='explicit bounded completion stubs; no detector math', source_files=list(FILES),
+        arithmetic='explicit bounded completion stubs; no detector math', length=args.length, case_count=case_count, source_files=list(FILES),
         actual_control_sources=controls, synthesis_performed=False, physical_arena_allocated=False,
         clock_ns=5, memory_mode=dict(STALL=0, PIPELINED_READ=1, extra_DDR_delay=False),
         fixture_model_id='0xbf04010000000001', fixture_map='0xa55a', fixture_threshold='0x3b955a95',
@@ -118,7 +131,7 @@ def main():
     def save():
         (out / 'run.json').write_text(json.dumps(record, indent=2) + '\n')
     save()
-    commands = [['xvlog', '--sv', *FILES, *[Path(name).name for name in controls]],
+    commands = [['xvlog', '--sv', '--define', f'GATE_TOKENS={args.length}', *FILES, *[Path(name).name for name in controls]],
                 ['xelab', '--debug', 'off', 'gate_detector_control_tb', '-s', 'gate_detector_control_sim'],
                 ['xsim', 'gate_detector_control_sim', '-tclbatch', 'run.tcl']]
     env = os.environ.copy()
@@ -144,11 +157,12 @@ def main():
         text = (out / 'xsim.stdout.log').read_text(errors='replace')
         cases = [json.loads(line.split(' ', 1)[1]) for line in text.splitlines() if line.startswith('GATE_INTEGRATION_CASE ')]
         stubs = [json.loads(line.split(' ', 1)[1]) for line in text.splitlines() if line.startswith('GATE_INTEGRATION_STUB ')]
-        if len(cases) != CASES or len({r['id'] for r in cases}) != CASES or 'PASS gate_detector_control 13 cases;' not in text:
+        if (len(cases) != case_count or len({r['id'] for r in cases}) != case_count
+                or f'PASS gate_detector_control {case_count} ' not in text):
             raise RuntimeError('Missing complete bounded integration evidence.')
         for index, case in enumerate(cases):
             measured = [s for s in stubs if s['case_index'] == index]
-            if case['complete_window'] and len(measured) != 435:
+            if case['complete_window'] and len(measured) != service_count:
                 raise RuntimeError('Missing sampled service boundaries.')
             if any(s['latency_cycles'] != s['done_cycle'] - s['start_cycle'] for s in measured):
                 raise RuntimeError('Inconsistent stub edge record.')

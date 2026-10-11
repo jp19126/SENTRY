@@ -226,6 +226,161 @@ def estimate(config, label, precision, profile, fixed, control):
             "scope": "Known service subtotal under bounded AXI memory; all missing costs remain explicit, no measured board result"}
 
 
+def estimate_candidate_cost(precision, config):
+    """Campaign API: actual frozen component evidence, optional full model.
+
+    A missing model or integrated eligibility evidence stays unresolved. The
+    caller may cache this exact row; it must not turn nulls into sentinels.
+    """
+    keys = names(config)
+    if set(precision) != set(keys) or any(type(b) is not int or b not in (4, 8) for b in precision.values()):
+        raise ValueError("Expected exactly the sixteen configured W4/W8 decisions")
+    fixed = fixed_evidence()
+    control = measured_integration(config, planned_integration(config, fixed))
+    model_path = config["hardware"].get("whole_check_cost_model")
+    model = read(ROOT / model_path) if model_path else None
+    rows = []
+    for profile in config["hardware"]["hls"]["cached_linear"]["profiles"]:
+        item = estimate(config, "campaign_candidate", precision, profile, fixed, control)
+        if model is not None:
+            item.update(full_check_terms(config, item, model))
+        rows.append(item)
+    return {"precision_map": dict(precision), "profiles": rows}
+
+
+def source_derived_mover_requests(plan):
+    """Exact fixed-plan burst counts from gate_data_mover.burst_size.
+
+    All gather rows are 1024 bytes aligned; token IDs therefore change addresses,
+    not burst lengths. This counts the implemented 16-beat and 4KiB splitting.
+    """
+    reads=writes=read_beats=write_beats=0
+    def segments(address, words, second=None):
+        count=0
+        while words:
+            n=min(16,words,(4096-address%4096)//4)
+            if second is not None:n=min(n,(4096-second%4096)//4)
+            if n<1:raise ValueError("Unaligned mover plan")
+            count+=1;words-=n;address+=n*4
+            if second is not None:second+=n*4
+        return count
+    for c in plan["commands"]:
+        if c["kind"]=="control":
+            if c["name"]=="validate_window_and_load_inputs":
+                for b in c["inputs"]:
+                    reads+=segments(b["arena_offset"],b["extent_bytes"]//4)
+                    read_beats+=b["extent_bytes"]//4
+            elif c["name"]=="read_risk_and_update_document":
+                reads+=segments(c["source"]["arena_offset"],1);read_beats+=1
+            continue
+        if c["kind"]!="movement":continue
+        rows,cols=c["rows"],c["columns"]
+        mode=c["mode"];dst=c["destination"]["arena_offset"];ds=c.get("destination_stride_bytes") or 1024
+        if mode=="binary_mask_to_fp32_repeated_rows":
+            writes+=sum(segments(dst+r*ds,cols) for r in range(rows));write_beats+=rows*cols
+            continue
+        src=c["source"]["arena_offset"];ss=c.get("source_stride_bytes") or 1024
+        if mode=="indexed_embedding_rows":
+            if src%1024 or ss!=1024 or cols!=256:
+                raise ValueError("Gather alignment no longer supports index-invariant bursts")
+            # Every possible selected row starts at a 1024-byte boundary.
+            counts=sum(segments(src,cols,dst+r*ds) for r in range(rows))
+            reads+=counts;writes+=counts
+        elif mode=="rectangle":
+            counts=sum(segments(src+r*ss,cols,dst+r*ds) for r in range(rows))
+            reads+=counts;writes+=counts
+        elif mode=="transpose_f32_tiles16":
+            if rows%16 or cols%16:raise ValueError("Transpose tile shape changed")
+            for tr in range(0,rows,16):
+                for tc in range(0,cols,16):
+                    reads+=sum(segments(src+(tr+i)*ss+tc*4,16) for i in range(16))
+                    writes+=sum(segments(dst+(tc+i)*ds+tr*4,16) for i in range(16))
+        else:raise ValueError("Unexpected mover operation")
+        read_beats+=rows*cols;write_beats+=rows*cols
+    counts=plan["counts"]
+    if (read_beats*4!=counts["movement_useful_read_bytes"]+counts["control_data_read_bytes"]
+            or write_beats*4!=counts["movement_useful_write_bytes"]):
+        raise ValueError("Source-derived mover traffic does not reconcile with executed plan")
+    return dict(read_bursts=reads,write_bursts=writes,read_beats=read_beats,write_beats=write_beats,
+                basis="analytical exact plan/unchanged mover burst-size loop; byte totals match saved control integration")
+
+
+def full_check_terms(config, item, model):
+    """One serialized on-chip A72/NoC design; no nominal traffic double charge.
+
+    Request-level extra wait estimates are explicitly additional to the nominal
+    registered AXI response already in RTL cycles. They are an analytical sum
+    (conservative without credited overlap), not a physical memory observation.
+    """
+    import math
+    def positive(value, label, zero=False):
+        if (type(value) not in (int, float) or not math.isfinite(value)
+                or value < 0 or (not zero and value == 0)):
+            raise ValueError("Invalid complete-model " + label)
+        return value
+    if model.get("identity") != "vek280_a72_noc_lpddr4_serial_v1":
+        raise ValueError("Unsupported full-check architecture")
+    for path in model["source_reports"]:
+        if not (ROOT / path).is_file():
+            raise ValueError("Missing cost-model source " + path)
+    host = read(ROOT / model["host_preprocessing_record"])
+    if not host.get("passed") or host.get("length") != 256:
+        raise ValueError("Passing actual L256 host preparation evidence required")
+    host_ms = positive(host["median_single_window_document_preprocessing_ms"], "host preparation")
+    nominal = model["nominal"]
+    read_extra = positive(nominal["additional_read_response_cycles"], "extra read cycles", True)
+    write_extra = positive(nominal["additional_write_response_cycles"], "extra write cycles", True)
+    # The integer source performs one A8 read burst per one-byte activation
+    # request, 64-byte weight preload bursts and one full-word output burst.
+    integer = item["integer"]["traffic"]
+    read_requests = integer["activation_axi_read_beats"] + sum(
+        (c["traffic"]["source_weight_read_bytes"] + 63) // 64 for c in item["integer"]["calls"])
+    write_requests = integer["output_bytes"] // 4
+    fp = item["fixed_fp32"]["axi_traffic_by_rep"]
+    if len(fp) != 2 or fp[0] != fp[1]:
+        raise ValueError("Repeated FP32 traffic differs")
+    read_requests += fp[0]["totals"]["read_bursts"]
+    write_requests += fp[0]["totals"]["write_bursts"]
+    plan=read(ROOT/"results/goal4/internal_integration/command_plan.json")
+    mover=source_derived_mover_requests(plan)
+    read_requests+=mover["read_bursts"];write_requests+=mover["write_bursts"]
+    extra_cycles = read_requests * read_extra + write_requests * write_extra
+    baud = positive(nominal["uart_baud"], "UART baud")
+    packet_bytes = 256 * (4 + 4 + 1) + nominal["request_header_bytes"] + nominal["response_bytes"]
+    wire_ms = packet_bytes * 10 * 1000 / baud
+    supervisor_ms = positive(nominal["supervisor_sync_ms"], "A72 synchronization")
+    clock = config["hardware"]["clock_objective_mhz"]
+    latency = item["modeled_internal_ms_at_clock_objective"] + extra_cycles/(clock*1000) + host_ms + wire_ms + supervisor_ms
+    profile_evidence = model["integrated_profiles"].get(item["profile_id"])
+    eligible = None
+    if profile_evidence:
+        actual = read(ROOT / profile_evidence)
+        if (actual.get("part") != config["hardware"]["part"]
+                or actual.get("clock_objective_mhz") != clock
+                or actual.get("profile_id") != item["profile_id"] or actual.get("length") != 256):
+            raise ValueError("Integrated build identity differs")
+        limits = config["hardware"]["resource_limits"]
+        used = actual.get("resources", {})
+        if type(actual.get("integrated_eligible")) is not bool:
+            raise ValueError("Actual integrated eligibility unresolved; reparse completed routed evidence")
+        eligible = bool(actual["integrated_eligible"] is True
+                        and set(used) == set(limits)
+                        and all(positive(v, "resource", True) <= limits[k] for k, v in used.items())
+                        and actual.get("timing_met") is True
+                        and actual.get("bandwidth_feasible") is True)
+    return {"estimated_complete_checking_ms": latency, "feasible": eligible,
+            "complete_model_status": "analytical warm-window estimate; physical calibration pending",
+            "complete_cost_model_identity": model["identity"],
+            "complete_check_terms": {"internal_ms": item["modeled_internal_ms_at_clock_objective"],
+                "host_preprocessing_ms": host_ms, "uart_transport_ms": wire_ms,
+                "supervisor_sync_ms": supervisor_ms,
+                "additional_memory_wait_ms": extra_cycles/(clock*1000),
+                "additional_memory_read_requests": read_requests,
+                "additional_memory_write_requests": write_requests},
+            "cold_boundary": model["cold_boundary"],
+            "document_rule": "Sum complete warm-window work for every document window; max aggregation is in FPGA sequencer; sequential batches receive no parallel speedup"}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--precision-map", type=Path)

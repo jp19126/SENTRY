@@ -1,0 +1,2 @@
+# Needed only by the separately authorized later serial measurement branch.
+pyserial==3.5

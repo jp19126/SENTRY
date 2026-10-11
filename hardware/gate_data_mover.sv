@@ -2,7 +2,7 @@
 // Fixed-study AXI32 mover; no arithmetic interpretation of float payloads.
 // Commands/cache inputs must remain semantically stable until rsp handshake.
 // Reset while active requires the system to reset its connected AXI fabric too.
-module gate_data_mover(
+module gate_data_mover #(parameter integer TOKENS=256) (
  input logic clk, resetn,
  input logic cmd_valid, output logic cmd_ready,
  input logic [2:0] cmd_op,
@@ -10,8 +10,8 @@ module gate_data_mover(
  input logic [15:0] cmd_rows, cmd_cols,
  input logic [31:0] cmd_src_stride, cmd_dst_stride, cmd_limit,
  output logic rsp_valid, input logic rsp_ready, output logic [3:0] rsp_status,
- output logic [7:0] index_addr, input logic [31:0] index_value,
- output logic [7:0] mask_addr, input logic [7:0] mask_value,
+ output logic [$clog2(TOKENS)-1:0] index_addr, input logic [31:0] index_value,
+ output logic [$clog2(TOKENS)-1:0] mask_addr, input logic [7:0] mask_value,
  output logic rd_valid, input logic rd_ready,
  output logic [31:0] rd_data, output logic rd_last,
  output logic [63:0] m_axi_araddr, output logic [7:0] m_axi_arlen,
@@ -27,8 +27,12 @@ module gate_data_mover(
  input logic [1:0] m_axi_bresp, input logic m_axi_bvalid,
  output logic m_axi_bready
 );
+ localparam integer TOKEN_ADDR_WIDTH=$clog2(TOKENS);
+ localparam integer TOKEN_COUNT_WIDTH=$clog2(TOKENS+1);
+ localparam integer MAX_COLUMNS=TOKENS>256 ? TOKENS : 256;
+ initial if(TOKENS!=128 && TOKENS!=256 && TOKENS!=512)$fatal(1,"Unsupported fixed mover length");
  localparam [2:0] RECT=0,GATHER=1,TRANSPOSE16=2,MASK=3,READ_WORDS=4;
- typedef enum logic [4:0] {IDLE,VALIDATE,CHECK_INDEX,CHECK_MASK,COPY_PREP,
+ typedef enum logic [4:0] {IDLE,SPAN_PREP,SPAN_MULT,SPAN_ADD,SPAN_END,SPAN_CHECK,VALIDATE,CHECK_INDEX,CHECK_MASK,COPY_PREP,
  COPY_WRITE,COPY_NEXT,T_READ_PREP,T_READ_NEXT,T_WRITE_PREP,T_WRITE_NEXT,
  MASK_PREP,MASK_NEXT,STREAM_PREP,STREAM_NEXT,R_ADDR,R_DATA,R_DRAIN,
  W_ADDR,W_DATA,W_RESP,DONE} state_t;
@@ -37,12 +41,19 @@ module gate_data_mover(
  logic [63:0] src,dst,ra,wa;
  logic [15:0] rows,cols,row,col,tr,tc,inner,segment;
  logic [31:0] ss,ds,limit;
- logic [8:0] check_pos;
+ logic [TOKEN_COUNT_WIDTH-1:0] check_pos;
  logic [3:0] error;
  logic [4:0] nbeats,beat;
  logic [7:0] tile_offset;
  logic [31:0] tile[0:255];
  logic [63:0] source_address,destination_address,source_span,destination_span;
+ // Actual routed validation previously chained stride multiplication, span/end
+ // addition and overflow/overlap comparison into one state transition. Separate
+ // those registered stages without changing accepted commands or AXI traffic.
+ logic [15:0] span_source_rows,span_destination_rows,span_destination_words;
+ logic [47:0] source_product,destination_product;
+ logic [63:0] source_end,destination_end;
+ logic source_overflow,destination_overflow,bad_ranges;
  logic bad_command;
  integer i;
  function automatic logic [4:0] burst_size(input logic [63:0] a,b,
@@ -70,32 +81,23 @@ module gate_data_mover(
   source_address=src+64'(row)*64'(ss)+64'(col)*4;
   if(op==GATHER) source_address=src+64'(index_value)*1024+64'(col)*4;
   destination_address=dst+64'(row)*64'(ds)+64'(col)*4;
-  source_span=64'(rows-1)*64'(ss)+64'(cols)*4;
-  destination_span=64'(rows-1)*64'(ds)+64'(cols)*4;
-  if(op==GATHER) source_span=64'(limit)*1024;
-  if(op==TRANSPOSE16) destination_span=64'(cols-1)*64'(ds)+64'(rows)*4;
-  if(op==READ_WORDS) source_span=64'(cols)*4;
-  if(op==MASK) source_span=0;
-  bad_command=(op>READ_WORDS || rows==0 || rows>256 || cols==0 || cols>256);
-  if(op!=MASK) bad_command |= (src[1:0]!=0 || src>64'hffffffffffffffff-source_span);
+  bad_command=(op>READ_WORDS || rows==0 || rows>TOKENS || cols==0 || cols>MAX_COLUMNS);
+  if(op!=MASK) bad_command |= (src[1:0]!=0);
   if(op!=READ_WORDS) begin
-   bad_command |= (dst[1:0]!=0 || ds[1:0]!=0 || dst>64'hffffffffffffffff-destination_span);
+   bad_command |= (dst[1:0]!=0 || ds[1:0]!=0);
    bad_command |= (ds<(op==TRANSPOSE16 ? 32'(rows)*4 : 32'(cols)*4));
   end
   if(op==RECT || op==TRANSPOSE16) bad_command |= (ss[1:0]!=0 || ss<32'(cols)*4);
   if(op==GATHER) bad_command |= (cols!=256 || limit==0 || limit>30522);
   if(op==TRANSPOSE16) bad_command |= (rows[3:0]!=0 || cols[3:0]!=0);
-  if(op==MASK) bad_command |= (cols!=256 || rows>128);
-  if(op==READ_WORDS) bad_command |= (rows!=1);
-  // In-place/overlapping memory transforms are outside this fixed schedule.
-  if(op!=READ_WORDS && op!=MASK)
-   bad_command |= (src<dst+destination_span && dst<src+source_span);
+  if(op==MASK) bad_command |= (cols!=TOKENS || rows>128);
+  if(op==READ_WORDS) bad_command |= (rows!=1 || cols>TOKENS);
  end
  assign cmd_ready=state==IDLE;
  assign rsp_valid=state==DONE;
  assign rsp_status=error;
- assign index_addr=state==CHECK_INDEX ? check_pos[7:0] : row[7:0];
- assign mask_addr=state==CHECK_MASK ? check_pos[7:0] : (col[7:0]+{3'b0,beat});
+ assign index_addr=TOKEN_ADDR_WIDTH'(state==CHECK_INDEX ? check_pos : row);
+ assign mask_addr=TOKEN_ADDR_WIDTH'(state==CHECK_MASK ? check_pos : (col+beat));
  assign m_axi_araddr=ra; assign m_axi_arlen={3'b0,nbeats}-1;
  assign m_axi_arsize=3'd2; assign m_axi_arburst=2'b01;
  assign m_axi_arvalid=state==R_ADDR;
@@ -120,13 +122,46 @@ module gate_data_mover(
    state<=IDLE;error<=0;op<=0;src<=0;dst<=0;rows<=0;cols<=0;ss<=0;ds<=0;limit<=0;
    ra<=0;wa<=0;nbeats<=0;beat<=0;row<=0;col<=0;tr<=0;tc<=0;inner<=0;segment<=0;
    tile_offset<=0;check_pos<=0;after_read<=IDLE;after_write<=IDLE;
+   span_source_rows<=0;span_destination_rows<=0;span_destination_words<=0;
+   source_product<=0;destination_product<=0;source_span<=0;destination_span<=0;
+   source_end<=0;destination_end<=0;source_overflow<=0;destination_overflow<=0;bad_ranges<=0;
   end else case(state)
    IDLE: if(cmd_valid) begin
     op<=cmd_op;src<=cmd_src;dst<=cmd_dst;rows<=cmd_rows;cols<=cmd_cols;
     ss<=cmd_src_stride;ds<=cmd_dst_stride;limit<=cmd_limit;error<=0;
-    row<=0;col<=0;tr<=0;tc<=0;inner<=0;segment<=0;check_pos<=0;state<=VALIDATE;
+    row<=0;col<=0;tr<=0;tc<=0;inner<=0;segment<=0;check_pos<=0;state<=SPAN_PREP;
    end
-   VALIDATE: if(bad_command) begin error<=1;state<=DONE;end
+   SPAN_PREP: begin
+    span_source_rows<=rows-1;
+    span_destination_rows<=op==TRANSPOSE16 ? cols-1 : rows-1;
+    span_destination_words<=op==TRANSPOSE16 ? rows : cols;
+    state<=SPAN_MULT;
+   end
+   SPAN_MULT: begin
+    source_product<=48'(span_source_rows)*48'(ss);
+    destination_product<=48'(span_destination_rows)*48'(ds);
+    state<=SPAN_ADD;
+   end
+   SPAN_ADD: begin
+    source_span<=64'(source_product)+64'(cols)*4;
+    if(op==GATHER)source_span<=64'(limit)*1024;
+    if(op==READ_WORDS)source_span<=64'(cols)*4;
+    if(op==MASK)source_span<=0;
+    destination_span<=64'(destination_product)+64'(span_destination_words)*4;
+    state<=SPAN_END;
+   end
+   SPAN_END: begin
+    {source_overflow,source_end}<={1'b0,src}+{1'b0,source_span};
+    {destination_overflow,destination_end}<={1'b0,dst}+{1'b0,destination_span};
+    state<=SPAN_CHECK;
+   end
+   SPAN_CHECK: begin
+    bad_ranges<=((op!=MASK && source_overflow) ||
+                 (op!=READ_WORDS && destination_overflow) ||
+                 (op!=READ_WORDS && op!=MASK && src<destination_end && dst<source_end));
+    state<=VALIDATE;
+   end
+   VALIDATE: if(bad_command || bad_ranges) begin error<=1;state<=DONE;end
     else if(op==GATHER) state<=CHECK_INDEX;
     else if(op==MASK) state<=CHECK_MASK;
     else if(op==TRANSPOSE16) state<=T_READ_PREP;
@@ -135,7 +170,7 @@ module gate_data_mover(
    CHECK_INDEX: if(index_value>=limit) begin error<=2;state<=DONE;end
     else if(check_pos==rows-1) state<=COPY_PREP;else check_pos<=check_pos+1;
    CHECK_MASK: if(mask_value>1) begin error<=2;state<=DONE;end
-    else if(check_pos==255) state<=MASK_PREP;else check_pos<=check_pos+1;
+    else if(check_pos==TOKENS-1) state<=MASK_PREP;else check_pos<=check_pos+1;
    COPY_PREP: launch_read(source_address,burst_size(source_address,destination_address,cols-col,1),0,COPY_WRITE);
    COPY_WRITE: launch_write(destination_address,nbeats,COPY_NEXT);
    COPY_NEXT: if(col+nbeats==cols) begin

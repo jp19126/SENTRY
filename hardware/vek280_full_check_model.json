@@ -1,0 +1,52 @@
+{
+  "identity": "vek280_a72_noc_lpddr4_serial_v1",
+  "state": "Selected analytical nominal model; all three common L256 profiles have actual qualifying integrated closures; physical calibration pending",
+  "source_reports": [
+    "reports/goal4_platform_architecture.md",
+    "reports/hardware_cost_model.md",
+    "reports/goal4_internal_integration.md",
+    "reports/goal4_fixed_fp32_results.md"
+  ],
+  "host_preprocessing_record": "results/goal4/host_preparation/l256_b1/run.json",
+  "nominal": {
+    "additional_read_response_cycles": 16,
+    "additional_write_response_cycles": 16,
+    "uart_baud": 115200,
+    "request_header_bytes": 64,
+    "response_bytes": 64,
+    "supervisor_sync_ms": 1.0
+  },
+  "sensitivity": {
+    "additional_read_response_cycles": [
+      4,
+      16,
+      40
+    ],
+    "additional_write_response_cycles": [
+      4,
+      16,
+      40
+    ],
+    "supervisor_sync_ms": [
+      0.1,
+      1.0,
+      2.0
+    ]
+  },
+  "nominal_basis": "Engineering design assumptions; 80ns additional request latency is conservatively summed without overlap, 8N1 wire serialization is exact at selected baud, supervisor1ms is an unmeasured allowance. Nominal memory service already in RTL cycles is not charged again.",
+  "integrated_profiles": {
+    "lanes64": "build/vek280_system/l256/lanes64/20261008T021823_617528Z_implement/closure_inspection.json",
+    "lanes16": "build/vek280_system/l256/lanes16/20261008T035407_843265Z_implement/closure_inspection.json",
+    "lanes32": "build/vek280_system/l256/lanes32/20261008T045204_080320Z_implement/closure_inspection.json"
+  },
+  "cold_boundary": {
+    "arena_image_bytes": 67108864,
+    "transport": "SD1 cold arena/model load before checking; excluded from warm checking and separately reported",
+    "nominal_sd_bytes_per_second": 10485760,
+    "analytical_sd_load_ms": 6400.0,
+    "physical_sd_load_ms": null,
+    "tokenizer_initialization_ms": null,
+    "cold_configuration_ms": null,
+    "physical_memory_allocated": false
+  }
+}

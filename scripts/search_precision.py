@@ -1,4 +1,4 @@
-"""Goal 5 A/B evolutionary adapter core; no model execution or campaign CLI.
+"""Goal 5 A/B evolutionary adapter core; execution in run_precision_campaign.py.
 
 Default: report missing Goal 4 costs/caps. --score-bringup recomputes metrics
 from the two existing PTQ anchor score files without consulting any search map.
@@ -175,10 +175,28 @@ def ranked_pool(arm, consulted, cap, floating_recall, config, *, fill_provisiona
     return strict + provisional if fill_provisional or not strict else strict
 
 
+def validate_document_rows(scored_rows, documents, split, *, complete=True):
+    """Bind saved rows to the assigned prepared partition by ordinary source IDs."""
+    if split not in SPLITS or any(doc.get("split") != "search" or
+            doc.get("search_subset") != split.removeprefix("search_") for doc in documents):
+        raise ValueError("Document score association uses a different prepared partition.")
+    ids = [doc["document_id"] for doc in documents]
+    if len(ids) != len(set(ids)):
+        raise ValueError("Prepared partition contains duplicate document IDs.")
+    if len(scored_rows) > len(documents) or (complete and len(scored_rows) != len(documents)):
+        raise ValueError("Saved document scores omit or add assigned partition members.")
+    for actual, expected in zip(scored_rows, documents):
+        for field in ("document_id", "label", "source_group_id"):
+            if field not in actual or field not in expected or actual[field] != expected[field]:
+                raise ValueError(f"Saved document {field}/order differs from the assigned {split} partition.")
+
+
 def recompute_metrics(folder, config):
-    """Read document maxima already scored by the shared full-network evaluator."""
+    """Read assigned document maxima already scored by the shared evaluator."""
     threshold_rows, scoring_rows = [
         rows(folder / f"{split}_documents.jsonl") for split in SPLITS]
+    for split, scored in zip(SPLITS, (threshold_rows, scoring_rows)):
+        validate_document_rows(scored, rows(ROOT / "data/prepared" / f"{split}.jsonl"), split)
     benign = [row["risk_score"] for row in threshold_rows if row["label"] == 0]
     threshold = fit_threshold(benign, config["evaluation"]["fpr_target"])
     scores = [row["risk_score"] for row in scoring_rows]
@@ -292,6 +310,22 @@ class CostTable:
             if key in self.lookup:
                 raise ValueError("Duplicate precision-map cost rows.")
             self.lookup[key] = row["profiles"]
+        # Reject unresolved profile eligibility before a runner can score even
+        # the floating reference; absent map rows may still be estimated later.
+        limits = self.config["hardware"]["resource_limits"]
+        for profile in self.profiles.values():
+            used = profile["resources"]
+            if set(used) != set(limits):
+                raise ValueError("Profile resource accounting must cover every allocated limit.")
+            if any(not isinstance(value, (int, float)) or isinstance(value, bool)
+                   or not math.isfinite(value) or value < 0
+                   for value in list(used.values()) + list(limits.values())):
+                raise ValueError("Resources require actual finite nonnegative values.")
+            if any(type(profile[field]) is not bool for field in ("timing_met", "bandwidth_feasible")):
+                raise RuntimeError("Common profile timing or bandwidth feasibility remains unresolved.")
+        self.lookups = 0
+        for row in table["candidates"]:
+            self.feasible_profiles(row["precision_map"])
         self.lookups = 0
 
     def feasible_profiles(self, precision):
@@ -314,11 +348,15 @@ class CostTable:
                    or value < 0 for value in values):
                 raise ValueError("Resources require actual finite nonnegative values.")
             resource_ok = all(used[name] <= limits[name] for name in limits)
+            if any(type(value) is not bool for value in
+                   (profile["timing_met"], profile["bandwidth_feasible"], item["feasible"])):
+                raise RuntimeError("Map/profile timing, bandwidth or feasibility remains unresolved.")
             if (not resource_ok or profile["timing_met"] is not True
                     or profile["bandwidth_feasible"] is not True or item["feasible"] is not True):
                 continue
             latency = item["estimated_complete_checking_ms"]
-            if not isinstance(latency, (int, float)) or not math.isfinite(latency) or latency <= 0:
+            if (not isinstance(latency, (int, float)) or isinstance(latency, bool)
+                    or not math.isfinite(latency) or latency <= 0):
                 raise ValueError("Complete-checking estimates must be actual positive table values.")
             result.append({"profile_id": item["profile_id"],
                            "estimated_complete_checking_ms": latency})

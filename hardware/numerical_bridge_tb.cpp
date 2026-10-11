@@ -24,8 +24,8 @@ extern "C" void gate_fixed_fp32_top(
 namespace {
 using F = std::vector<float>;
 constexpr int L=256, D=256, H=4, HD=64, FF=1024, CAP=32768;
-std::string directory, output_directory;
-bool first_divergence_diagnostic=false;
+std::string directory, output_directory, parameter_directory, case_identity="aeslc:train:panus-s_inbox_1.subject:clean";
+bool first_divergence_diagnostic=false, floating_reference=false;
 long long calls[9]={0};
 long long same_input_codes_checked=0, exact_accumulators_checked=0;
 struct Error {std::string name; size_t count; double maximum, mean, rms;};
@@ -35,6 +35,9 @@ std::vector<IntegerCheck> integer_checks;
 
 template<class T> std::vector<T> read_binary(const std::string& name,size_t count) {
     std::ifstream file(directory+"/"+name+".bin",std::ios::binary);
+    if(!file && !parameter_directory.empty()) {
+        file.clear();file.open(parameter_directory+"/"+name+".bin",std::ios::binary);
+    }
     if(!file) throw std::runtime_error("missing binary "+name);
     std::vector<T> result(count);
     file.read(reinterpret_cast<char*>(result.data()),count*sizeof(T));
@@ -129,10 +132,29 @@ std::vector<std::int8_t> quantize(const F& x,int rows,int width,float scale) {
     return result;
 }
 F linear(const std::string& name,const F& x,int k,int n) {
+    if(floating_reference) {
+        const F weights=read_binary<float>(name+"_float_weight",n*k);
+        const F bias=read_binary<float>(name+"_float_bias",n);
+        F result(L*n);
+        // Ordinary unquantized reference projection, not a physical DOT-service claim.
+        // Full ascending K and separately rounded multiply/add match ordered CPU.
+        for(int r=0;r<L;++r) for(int o=0;o<n;++o) {
+            float total=0.0f;
+            for(int j=0;j<k;++j) total=gate::fp32_add(total,gate::fp32_mul(x[r*k+j],weights[o*k+j]));
+            result[r*n+o]=gate::fp32_add(total,bias[o]);
+        }
+        finite(result,"floating encoder projection");
+        return result;
+    }
     const auto weights=read_binary<std::int8_t>(name+"_w8",n*k);
     const F parameters=read_binary<float>(name+"_params",1+2*n);
     const auto a=quantize(x,L,k,parameters[0]);
     const auto original=read_binary<std::int8_t>(name+"_reference_a8",L*k);
+    {
+        std::ofstream captured(output_directory+"/actual_"+name+"_a8.bin",std::ios::binary);
+        captured.write(reinterpret_cast<const char*>(a.data()),a.size());
+        if(!captured) throw std::runtime_error("cannot save actual A8 "+name);
+    }
     long long changed=0;
     for(size_t i=0;i<a.size();++i) {
         changed+=a[i]!=original[i];
@@ -151,6 +173,7 @@ F linear(const std::string& name,const F& x,int k,int n) {
     }
     if(first_divergence_diagnostic && name=="layer1_attention_output")
         write_binary("diagnostic_layer1_attention_context",x);
+    if(changed) write_binary("changed_"+name+"_input",x);
     std::vector<std::int32_t> accumulators(L*n);
     // Optimized ordinary C++ loops, not another full ap_int hardware simulation.
     // Direct signed dot and signed-high/unsigned-low decomposition must agree.
@@ -220,9 +243,10 @@ void write_report(const F& logits,float risk,float threshold,bool same_decision)
     const float reference_risk=read_binary<float>("reference_risk",1)[0];
     std::ofstream file(output_directory+"/bridge_summary.json");
     file<<std::setprecision(17);
-    file<<"{\n  \"completed\":true,\n  \"case\":\"aeslc:train:panus-s_inbox_1.subject:clean\",\n"
+    file<<"{\n  \"completed\":true,\n  \"case\":\""<<case_identity<<"\",\n"
         <<"  \"source_revision\":\""<<GATE_FIXED_FP32_SCHEDULE_REVISION<<"\",\n"
-        <<"  \"same_input_quantization_exact\":true,\n  \"integer_accumulators_exact\":true,\n"
+        <<"  \"encoder_arithmetic\":\""<<(floating_reference?"ordinary_floating_reference":"w8_a8_integer_contract")<<"\",\n"
+        <<"  \"same_input_quantization_exact\":"<<(floating_reference?"null":"true")<<",\n  \"integer_accumulators_exact\":"<<(floating_reference?"null":"true")<<",\n"
         <<"  \"same_input_codes_checked\":"<<same_input_codes_checked<<",\n"
         <<"  \"exact_accumulators_checked\":"<<exact_accumulators_checked<<",\n"
         <<"  \"logits\":["<<logits[0]<<","<<logits[1]<<"],\n"
@@ -233,7 +257,7 @@ void write_report(const F& logits,float risk,float threshold,bool same_decision)
         <<"  \"reference_strict_reject\":"<<(reference_risk>threshold?"true":"false")<<",\n"
         <<"  \"strict_decision_agrees\":"<<(same_decision?"true":"false")<<",\n"
         <<"  \"end_to_end_score_tolerance\":null,\n"
-        <<"  \"scope\":\"One numerical C-sim bridge, CPU exact integer contract, actual common FP32 service; not full RTL, FPGA orchestration, latency or board evidence\",\n"
+        <<"  \"scope\":\"Connected actual common FP32 C service; unquantized CPU projections or checked integer contract as explicitly selected; not full RTL, FPGA orchestration, latency or board evidence\",\n"
         <<"  \"service_calls_by_op\":[";
     for(int op=0;op<9;++op)file<<(op?",":"")<<calls[op];
     file<<"],\n  \"intermediate_errors\":[\n";
@@ -263,6 +287,10 @@ int main() {
         const char* location=std::getenv("GATE_NUMERICAL_BRIDGE_DIR");
         if(!location)throw std::runtime_error("GATE_NUMERICAL_BRIDGE_DIR missing");
         directory=location;
+        floating_reference=std::getenv("GATE_NUMERICAL_BRIDGE_FLOATING")!=nullptr;
+        if(const char* p=std::getenv("GATE_NUMERICAL_BRIDGE_PARAMETER_DIR"))parameter_directory=p;
+        if(const char* p=std::getenv("GATE_NUMERICAL_BRIDGE_CASE"))case_identity=p;
+        if(case_identity.find_first_of("\"\\\n\r")!=std::string::npos)throw std::runtime_error("unsupported case identity");
         const char* diagnostic=std::getenv("GATE_NUMERICAL_BRIDGE_DIAGNOSTIC_DIR");
         first_divergence_diagnostic=diagnostic!=nullptr;
         output_directory=diagnostic?diagnostic:directory;
@@ -305,7 +333,7 @@ int main() {
         const F risk{probabilities[1]};
         compare("risk",risk);
         long long total_calls=0;for(auto count:calls)total_calls+=count;
-        if(total_calls!=411 || integer_checks.size()!=24)
+        if(total_calls!=(floating_reference?267:411) || integer_checks.size()!=(floating_reference?0u:24u))
             throw std::runtime_error("fixed schedule call count differs");
         const float threshold=read_binary<float>("threshold",1)[0];
         const float reference_risk=read_binary<float>("reference_risk",1)[0];

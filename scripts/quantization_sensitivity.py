@@ -266,7 +266,7 @@ def choose_pairs(single_records):
 
 
 def qat_one_epoch(model, tokenizer, train_windows, config, args, name, destination,
-                  checkpoint_dir, calibration, selection):
+                  checkpoint_dir, calibration, selection, pause_check=None):
     import torch
     import torch.nn.functional as F
     optimizer = torch.optim.AdamW(model.parameters(), lr=config["training"]["learning_rate"],
@@ -310,7 +310,7 @@ def qat_one_epoch(model, tokenizer, train_windows, config, args, name, destinati
                    resume_dir / "training_state.pt")
 
     for batch_index in range(first_batch, total_batches):
-        if pause_requested(destination):
+        if pause_requested(destination) or (pause_check is not None and pause_check()):
             save_resume(batch_index)
             print(json.dumps({"event": "paused", "name": name, "next_batch": batch_index}), flush=True)
             raise SystemExit(0)

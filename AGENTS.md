@@ -35,3 +35,14 @@ keep detailed attempts in the existing reports/execution_log.md. Update README
 when entry points, setup or paths change, and the relevant report/configuration
 when protocol or measured facts change. Keep progress and experiment history out
 of this file. Documentation edits do not trigger research reruns.
+
+For `STATUS.md` and `reports/board_handoff.md`, future agent updates must use
+`scripts/update_handoff.py --write PATH --from-file CANDIDATE`. Save the candidate
+inside this repository as explicit UTF-8; the helper checks before replacing.
+It rejects files above 128 KiB, lines above 8 KiB, invalid UTF-8, common mojibake,
+NUL/replacement/BOM characters and detected concurrent changes. Run its read-only
+`--check` after each handoff update. Do not round-trip these files through
+PowerShell's default-encoding `Get-Content`/`Set-Content` or console output,
+and do not attempt repeated automatic encoding repairs. Use explicit UTF-8 for
+other repository text reads/writes. An already-corrupt file requires a separate
+preserved-original repair; do not weaken these limits to rewrite it.
