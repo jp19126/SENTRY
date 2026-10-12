@@ -1,31 +1,34 @@
 # Status
 
-Updated: **2026-10-11 — research-purpose correction; documentation only.**
+Updated: **2026-10-13 — FPGA-centrality correction; documentation only.**
 
-**RESEARCH-DIRECTION REVIEW REQUIRED.** The user's instruction is to prevent
-purpose drift, not to launch another experiment. The purpose and decision rules
-in [AGENTS.md](AGENTS.md) govern the next goal. The current entry point is
+**FPGA-CENTERED QUESTION TO SELECT.** The 2026-10-13 user clarification
+reaffirms that SENTRY is FPGA architecture/co-design research for LLM security,
+not a search for a new software-only guard. This updates purpose, not experiment
+authorization. [AGENTS.md](AGENTS.md) governs; the current entry point is
 [SENTRY_next_goal_prompt.md](SENTRY_next_goal_prompt.md).
 
 ## Research contract
 
-- **Question and authority:** retain the original high-novelty FPGA-enabled LLM
-  protection objective, reinforced by the user's 2026-10-11 correction. No
-  specific new scientific hypothesis or next experiment has been approved.
-- **Closest prior approach:** the original safety-matched Quasar-derived B and
-  relevant prior-art reports are existing references, not proof of a new gap.
-  The appropriate nearest comparator depends on the proposed contribution.
-- **Hypothesis/difference:** unselected. Recent suggestions about numerical
-  vulnerabilities or threshold-tail protection are proposals, not adopted goals.
-- **Scientific outcome:** a differentiated, falsifiable contribution relevant to
-  protection and legitimate-task usefulness; supporting cost metrics remain
-  separate. No central new method or architecture has yet been established.
-- **Hardware role:** FPGA-enabled protection remains the research focus. BERT,
-  CNN, CUDA and AIE-ML are possible instruments; 1.707 ms is a measured control,
-  not the definition of scientific success or a reason to abandon the mission.
-- **Next discriminator:** prepare a concise contribution proposal using existing
-  evidence and focused prior-art checks; request approval of the question and
-  bounded experiment before launching new research runs.
+- **Question and authority:** FPGA-centered protection is fixed by the user's
+  2026-10-13 clarification. A specific new FPGA hypothesis/experiment is
+  **unselected and not authorized**.
+- **Closest prior approach:** the original Quasar-derived B and R1 guards are
+  prior security/method references. Closest FPGA hardware/co-design prior art
+  depends on the proposed design; a new scientific gap is not yet established.
+- **Hypothesis/difference:** unselected. Security-constrained mixed precision,
+  FPGA placement or streaming architecture are candidates, not adopted novelty.
+  No new LLM-security algorithm is required.
+- **Scientific outcome:** a differentiated FPGA design/co-design contribution
+  that preserves an appropriate protection/utility requirement and accounts for
+  hardware resources, full costs and security claim limits. A software result
+  or routine port alone cannot complete the research.
+- **Hardware role:** FPGA implementation is required. Match an equally engineered
+  FPGA baseline and use CPU/GPU implementations as practical comparators, not
+  replacement objectives. Actual board claims remain blocked by physical access.
+- **Next discriminator:** propose at most two FPGA-specific questions using saved
+  R1/hardware evidence and focused prior art, then seek approval for a bounded
+  hardware-centered test before substantial execution.
 
 ## Completed evidence to reuse
 
@@ -56,8 +59,8 @@ again only as a bounded test of an explicit scientific question. Do not rerun
 R1, automatically finish Goal 4, optimise CUDA further, or start a hardware
 redesign merely to fill a milestone or beat a baseline latency.
 
-The next agent should follow the contribution-first entry point and return the
-scientific decision for user approval. This change approves no new budgets,
+The next agent should follow the FPGA-centered entry point and return a
+specific hardware/co-design scientific decision for user approval. This change approves no new budgets,
 models, threat scopes, methods or experiments and invents no current usage reading.
 
 ## History and reproduction

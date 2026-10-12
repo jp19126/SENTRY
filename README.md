@@ -1,26 +1,30 @@
 # SENTRY: Mixed-Precision FPGA Co-Design for LLM Guards
 
-SENTRY studies whether one improvement to precision allocation or FPGA execution
-can reduce the complete cost of checking external documents for indirect prompt
-injection at the same protection requirement. The detector is BERT-Mini; the
-application is BIPIA EmailQA. The target LLM runs separately on an authorized
-endpoint, not on the FPGA.
+SENTRY is an **FPGA-centered project** developing original hardware architectures
+and algorithm–hardware co-design for LLM security. Existing security detectors
+can be used; a new LLM-security algorithm is not a prerequisite. FPGA is central
+to the research question, design, implementation and evaluation, not an optional
+backend. Routine BERT porting and CUDA benchmarking alone are not the objective.
 
-The selected baseline is a restricted Quasar-ViT adaptation. A uses its ordinary
-quality criterion; B incorporates the low-FPR protection requirement during
-selection; C will add one evidence-supported change. **B-to-C is the main method
-test.** C and the actual A/B/C campaign remain unfinished.
+The pilot uses BERT-Mini to detect indirect prompt injection in external
+documents (BIPIA EmailQA); the target LLM runs separately on an authorized
+endpoint. The pilot does not establish general training/model poisoning defense.
 
-Start with [STATUS.md](STATUS.md) for the current objective, evidence and next
-steps. The current bounded detector/architecture study is
-[Goal R1](SENTRY_next_goal_prompt.md), with executed evidence in
-[the R1 decision report](reports/goal_r1_decision.md). It supersedes the priority
-to finish the old implementation; the old campaign remains paused. The user
-previously resumed board-free work on 2026-10-08 under
-[SENTRY_BOARD_FREE_COMPLETION_PROMPT.md](SENTRY_BOARD_FREE_COMPLETION_PROMPT.md). Goals 1
-and 2 and the available Goal 3 software work have saved results. Goal 4 has real
-component synthesis/RTL evidence, but full-detector numerical acceptance,
-complete checking costs and board measurements remain unresolved.
+The inherited precision-study protocol adapts Quasar-ViT: A uses its ordinary
+quality criterion; B adds the low-FPR protection requirement; C would introduce
+an evidence-supported improvement. The intended B-to-C method study remains
+unfinished, but it is not automatically approved as the next research question.
+
+**Current instructions:** [AGENTS.md](AGENTS.md) fixes the FPGA-centered
+purpose; [STATUS.md](STATUS.md) records evidence and current authority; and
+[SENTRY_next_goal_prompt.md](SENTRY_next_goal_prompt.md) defines selection of a
+specific hardware/co-design question. [Goal R1](reports/goal_r1_decision.md)
+is a completed detector/architecture decision study, not the final research
+result. The older [board-free prompt](SENTRY_BOARD_FREE_COMPLETION_PROMPT.md)
+remains historical, not authorization to restart experiments. Goals 1 and 2
+and the available Goal 3 software work have saved evidence; Goal 4 has component
+synthesis/RTL evidence, but full-detector numerical acceptance, complete costs
+and physical-board measurements remain unresolved.
 
 ## Repository map
 
@@ -34,7 +38,7 @@ complete checking costs and board measurements remain unresolved.
 | `data/raw/`, `data/prepared/` | Downloaded sources; grouped JSONL partitions, development pairs, separate NotInject and `summary.json` |
 | `checkpoints/`, `results/goal*/`, `build/` | Models; scores, API ledgers, measurements and figures; generated vendor projects/snapshots |
 | [reports/](reports/), [paper/draft.md](paper/draft.md) | Protocol, evidence and detailed execution log; interim manuscript |
-| [research goals](CODEX_RESEARCH_GOALS_v2_1.md), [proposal PDF](docs/FPGA_LLM_Security_Research_Plan_CN_v2_1.pdf) | Operational defaults and scientific requirements |
+| [research goals](CODEX_RESEARCH_GOALS_v2_1.md), [proposal PDF](docs/FPGA_LLM_Security_Research_Plan_CN_v2_1.pdf) | Historical research protocol and defaults; current purpose governed by AGENTS.md |
 
 The implemented path is prepared documents -> shared window/evaluation code ->
 floating detector -> quantized development candidates. Hardware drivers exercise
@@ -42,7 +46,7 @@ separate integer/FP32 services and control integration; the complete deployed
 detector and host link are not yet validated. `search_precision.py` has an A/B
 adapter and a gated resumable campaign runner; its numerical/cost prerequisites
 remain unresolved and zero comparison maps have run. The application pilot
-combines saved guard scores with target responses in four clean/attacked Ãƒâ€”
+combines saved guard scores with target responses in four clean/attacked ×
 checked/unchecked conditions.
 
 `data/`, `checkpoints/`, `results/`, `build/` and environments are Git-ignored;

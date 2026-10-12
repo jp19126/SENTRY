@@ -1,92 +1,90 @@
-# SENTRY — Contribution-first next-goal entry point
+# SENTRY — FPGA-centered next-goal entry point
 
-**2026-10-11 research-purpose correction.** Read the research contract in
-AGENTS.md and the current STATUS.md before acting. This entry point replaces
-the completed R1 execution prompt, preserved verbatim at
-reports/goal_r1_prompt.md. R1 and the older board-free prompt must not be replayed
-or used to renew budgets. Their results remain evidence, not current authority.
+**2026-10-13 purpose correction.** Read AGENTS.md and STATUS.md before acting.
+The user has reaffirmed that SENTRY is about **developing an original FPGA
+architecture or algorithm–hardware co-design method for LLM security**.
+FPGA is a mandatory part of the research, not an optional accelerator.
+This clarification supersedes conflicting priorities in older run prompts.
+Goal R1 is complete (see reports/goal_r1_decision.md); its prompt is archived at
+reports/goal_r1_prompt.md and does not renew allowances.
 
-## Current task: establish the scientific question before more implementation
+## Fixed scientific purpose
 
-The project exists to produce a high-novelty, FPGA-enabled contribution to LLM
-protection, not to establish that BERT works on CUDA or can be ported to an FPGA.
-A binary detector is one possible component; a faster component does not by
-itself establish protection, retained utility, or a new scientific contribution.
+Develop and evaluate an FPGA-based guard implementation or co-design method
+with a differentiated hardware contribution. The security algorithm may be
+established, including BERT-Mini or another justified detector. **Inventing a
+new LLM-security algorithm is not required.** Novelty may lie in original FPGA
+dataflow, scheduling, storage/streaming, numerical representation, precision
+allocation, or security-constrained hardware–algorithm integration.
 
-No specific new hypothesis has been approved. Do not silently adopt an assistant's
-suggestion about numerical vulnerabilities, threshold margins, AIE-ML, a new
-model, or a broader poisoning threat. The current pilot's scope remains indirect
-prompt injection in external documents; broader claims need an explicit decision.
+An off-the-shelf BERT-to-FPGA port and a generic CUDA comparison are not, by
+themselves, this project's intended research contribution. CPU/GPU references
+are deployment controls. The primary hardware claim needs relevant FPGA prior
+art and an equally engineered FPGA comparison. Do not claim an automatic FPGA
+win, but do not abandon FPGA because one implementation loses to CUDA.
 
-When asked to continue under the present handoff:
+The current pilot concerns indirect prompt injection in external documents.
+Do not assert protection against general training/model poisoning without a
+separate threat-model decision. Detector scores alone do not demonstrate
+end-to-end application protection or retained legitimate usefulness.
 
-1. Reuse STATUS.md, reports/goal_r1_decision.md, the original research objective,
-   reports/protocol.md and the relevant prior-art/evidence reports. Identify the
-   unresolved scientific gap, not just the next incomplete implementation task.
-   Read only additional sources needed to distinguish the closest competing
-   mechanism. Do not repeat the broad literature review or run experiments.
+No specific new FPGA hypothesis, experiment, threat expansion, or budget was
+authorized by the documentation correction.
 
-2. Put at most two candidate questions in a concise proposal in STATUS.md and
-   recommend one. For each, state the closest prior mechanism with a source,
-   the concrete suspected limitation, our proposed difference or discovery
-   question, and what result would refute it. Mark uncertainty honestly: lack
-   of a known paper is not proof of novelty. Do not invent a promising hypothesis
-   merely to justify continuing the project.
+## Current task: select a specific FPGA contribution
 
-3. Specify the smallest discriminating experiment, a finite proposed budget,
-   the fair comparison and the positive/negative/inconclusive branches. Explain
-   FPGA's role and why the experiment informs protection or its useful cost.
-   Separate application outcomes, detector proxies and hardware measurements.
-   A new architectural mechanism is eligible; routine buffering/porting is not
-   relabelled as new. Existing techniques and competent baselines receive the
-   same common implementation improvements.
+1. Reuse STATUS.md, reports/goal_r1_decision.md, prior hardware evidence,
+   reports/protocol.md and relevant existing results. Inspect focused FPGA
+   accelerator/co-design literature and guard prior art where needed. R1's
+   1.707-ms CUDA Graph timing is a measured control, not the objective or an
+   automatic reason to terminate FPGA research.
 
-4. Return that scientific choice for explicit user approval. Routine discussion
-   and source inspection are allowed; this handoff authorizes no new training,
-   scoring campaign, HLS/AIE build, simulation, board operation or target API call.
-   Missing central novelty is a research-direction issue, not a reason to finish
-   the old hardware. No entry in a file can stand in for the user's approval.
+2. Propose **at most two FPGA-centered, falsifiable research questions** and
+   recommend one. For each, explain the security task, the proposed concrete
+   architecture/co-design change, what FPGA-specific problem it solves, the
+   nearest known hardware method and the difference to be tested. Existing
+   detectors are allowed; a new security algorithm must not be invented solely
+   to satisfy a mistaken novelty requirement.
 
-The proposal is preparation, not completion of the scientific goal. If no
-candidate is defensibly differentiated, say so and identify the missing knowledge
-instead of proposing another generic benchmark or manufacturing a C method.
+3. Give a serious same-security-requirement FPGA baseline with common
+   implementation improvements, a separate practical software comparator,
+   measurable protection/utility requirements and complete checking-cost
+   boundaries. State what would falsify the contribution. Examples such as
+   security-aware mixed precision, streaming or data placement are **candidate
+   ideas**, not accepted novel mechanisms.
 
-## After approval of a scoped question and experiment
+4. Identify the smallest bounded experiment, using existing evidence or
+   board-free HLS/RTL/AIE design where it can discriminate the hypothesis.
+   State tools, budget, measurements, physical-board dependencies and the
+   meaning of positive, negative or inconclusive results. No generic FPGA
+   port merely to complete an obsolete milestone.
 
-Record the actual approval and bounded experiment in the short Research contract
-in STATUS.md. Then execute the authorized work autonomously. Do not demand a
-proven new theorem, successful accelerator or guaranteed speedup before a small
-discovery experiment; its purpose may be to establish or falsify the mechanism.
+5. Submit the recommended specific scientific question and bounded experiment
+   for user approval. Research planning and focused source inspection are
+   permitted here; this file does **not** authorize a new training/scoring
+   campaign, HLS/AIE build, simulation, target-LLM call or board programming.
 
-Every substantial implementation step must either test the question or be a
-minimal, bounded prerequisite for a named test. Explain that link once at the
-checkpoint, not in a log entry for every edit. Assign subagents the same question,
-non-goals and allowance; keep one coordinator responsible for scientific direction.
+## After approval
 
-At the handoff, or when findings would materially change expenditure or purpose,
-compare observed evidence with the prediction. Report scientific findings,
-supporting engineering and unresolved claims separately. A faster known baseline,
-an AIE port, passed checks, or equal development confusion counts are not by
-themselves the central contribution. The 1.707-ms result is a control, not the
-sole go/no-go criterion. Do not swap to energy or another success measure after
-an unfavourable result without a user-approved scientific change.
+Record the approved research contract and budget in STATUS.md. Then execute
+routine authorized work autonomously: software/security reference, original
+FPGA design, numerical qualification, synth/simulation, matched architecture
+comparison and actual board evaluation once access and permission exist.
 
-An implementation error gets a cause-identified correction within the allowance.
-Negative evidence stops the unsupported route. Missing access or evidence is
-inconclusive, not proof against FPGA or a model family. A change of question,
-threat, contribution, primary success criterion or FPGA's role returns to the
-user; routine choices within the approved question do not. A generic "continue"
-continues the approved contract, not an agent-selected new objective.
+Hardware novelty and deployment competitiveness are separate conclusions.
+Assess equal-quality FPGA-to-FPGA differences for the former, and competent
+CPU/GPU references for the latter; FPGA is not required to beat GPU in every
+scenario. Measure guard quality and legitimate-task impact as required, and
+report timing/throughput, utilization, startup, transfers and full cost where
+actually supported. Never label simulation a physical measurement.
 
-## Keep execution lightweight
+A failed FPGA route is a legitimate negative result, not permission for an
+automatic software-only pivot or unbounded attempts to secure a win. Scientific
+scope, primary objective, threat, or FPGA centrality changes require explicit
+approval. Preserve R1 evidence, frozen datasets, security thresholds, numerical
+identities, used allowances and board/API restrictions. Do not automatically
+resume the older A/B/C campaign or Goal 4/5 simply because it is unfinished.
 
-Preserve existing source-group splits, closed final partitions, numerical
-identities, complete-cost boundaries, resource limits and access restrictions.
-Reuse saved experiments. Do not widen error tolerances or change thresholds,
-seeds or models to force a win. A differently named task does not renew its budget.
-
-Use the existing STATUS.md, evidence reports and reports/execution_log.md.
-No new CI, novelty-scoring script, approval database, review committee, integrity
-manifest or recurring audit is required. Instructions cannot mechanically prove
-novelty: the concrete safeguard is a visible scientific contract and an explicit
-user decision at a genuine purpose change, followed by bounded execution.
+Keep execution lightweight: use AGENTS.md, STATUS.md and
+reports/execution_log.md. No new audits, review machinery, CI or repeated
+environment scans. Delegate routine work under the same FPGA research question.
