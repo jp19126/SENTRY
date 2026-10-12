@@ -1,3 +1,15 @@
+> **Governing purpose clarification (2026-10-13):** SENTRY is an
+> FPGA-centered project developing original FPGA architectures or
+> algorithm–hardware co-design methods for LLM security. Its scientific
+> contribution may be in hardware even when the guard algorithm is established;
+> a new LLM-security algorithm is not required. FPGA implementation is
+> mandatory, not optional. A routine BERT port, CUDA benchmark, or software-only
+> defense cannot fulfil the project. [AGENTS.md](AGENTS.md), [STATUS.md](STATUS.md)
+> and [SENTRY_next_goal_prompt.md](SENTRY_next_goal_prompt.md) govern active
+> purpose, selection and authorization. All numbered goals, dated resumptions
+> and A/B/C instructions below are retained as historical/proposed protocol,
+> not automatic permission to finish the old campaign or silently change scope.
+
 > Scoped override (2026-10-11): Goal R1 in `SENTRY_next_goal_prompt.md` executed the bounded detector challenge and ended at Checkpoint 2: stop the legacy serial PL route; redesigned FPGA/Versal investment remains inconclusive. See `reports/goal_r1_decision.md` for executed evidence and the next scoped experiment. The user's no-usage-limit instruction governed this run; experiment ceilings and resource floors remained. Old Goal 4/5 stays paused, final partitions and board/API work stay closed, and historical results/canonical model are unchanged.
 
 > **Current handoff:** [STATUS.md](STATUS.md) records the current decision and
