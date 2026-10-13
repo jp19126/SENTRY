@@ -1,82 +1,92 @@
-# Status
+# SENTRY status
 
-Updated: **2026-10-13 — FPGA-aware methodological contribution clarified; documentation only.**
+**Updated: 2026-10-13 — documentation reorganization; no new experiment.**
 
-**METHOD-LEVEL RESEARCH QUESTION STILL TO SELECT.** The user reaffirmed on
-2026-10-13 that SENTRY must contribute a **new FPGA-aware guard algorithm or
-algorithm–hardware co-design method**, not merely implement established BERT
-or another successful CPU/GPU detector on FPGA. The strengthened
-[AGENTS.md](AGENTS.md) is binding; [SENTRY_next_goal_prompt.md](SENTRY_next_goal_prompt.md)
-is the active decision handoff. This change authorizes no new experiment.
+**Scientific purpose approved; specific new method NOT selected.** The
+approved direction is described in [RESEARCH_SCOPE.md](RESEARCH_SCOPE.md):
+SENTRY requires a substantive new FPGA-aware guard algorithm or
+algorithm–hardware co-design method. An unchanged BERT or other established
+detector on FPGA is supporting work, not the scientific contribution.
+[AGENTS.md](AGENTS.md) defines execution rules, not research goals.
 
-## Research contract
+No new method, model-training campaign, API spending, build campaign or
+physical-board action is approved by this status update. A future execution
+prompt must establish its specific task and authorization separately.
 
-- **Question and authority:** substantive methodological novelty in FPGA-aware
-  LLM protection is now fixed. A specific new method, experiment, budget and
-  scientific hypothesis remain **unselected and not approved**.
-- **Closest prior approaches:** Quasar-derived B, existing guard baselines and
-  relevant FPGA architecture/co-design literature must be compared for the
-  actual proposed mechanism. No novel gap has yet been established.
-- **Hypothesis/difference:** unselected. A proposed method must change the
-  guard's computation, representation, decision rule or joint hardware-aware
-  design procedure; a routine existing-model port or new kernel alone is not it.
-- **Scientific outcome:** demonstrate a method-attributable, useful
-  security–hardware trade-off with prospectively bounded protection and
-  legitimate-utility loss if quality is traded for cost. Report complete
-  latency/throughput/resources and claim limits; speed alone is insufficient.
-- **Hardware role:** implement the new method on FPGA/PL or heterogeneous
-  FPGA–AIE-ML as appropriate. Compare established and proposed algorithms on
-  competent implementations, conventional FPGA mappings and method ablations.
-  Board measurements remain blocked until physical access/authorization.
-- **Next discriminator:** identify at most two method-level candidates from
-  saved evidence and focused prior art; recommend one falsifiable, bounded
-  experiment for approval. Existing BERT/HLS work is supporting baseline
-  evidence, not the automatic continuation goal.
+## Current research decision
+
+| Question | State |
+|---|---|
+| Method-level scientific hypothesis | **Unselected**; a differentiated FPGA-aware mechanism and falsifier are needed |
+| Closest competing methods and hardware co-design | Must be checked for the actual candidate; [existing review](reports/prior_art.md) is bounded, not an exhaustive novelty clearance |
+| Security/utility versus full hardware cost | Must be compared with suitable baselines and prospective quality bounds; no method-attributable benefit established |
+| FPGA realization | Required by scope; offline hardware components exist, but end-to-end board validation is not available |
+| Next research decision | **Unresolved:** selection of a defensibly new method and a bounded experiment; neither has execution authorization |
+
+The old precision-allocation A/B/C campaign, further CUDA optimization, an
+encoder-block prototype, and an unchanged-model FPGA port are **not automatic
+next steps**. They can be proposed only when they answer the approved method
+question and have an explicit endpoint.
 
 ## Completed evidence to reuse
 
-[Goal R1](reports/goal_r1_decision.md) completed its bounded decision study.
-Its measurements and source remain unchanged:
+The bounded [Goal R1 study](reports/goal_r1_decision.md) is complete. Its
+source, inputs and recorded results are unchanged:
 
 | Finding | Evidence boundary |
 |---|---|
-| Feature classifier: TP/FN/FP/TN = 2639/99/20/1349 | Fails the existing recall and FPR screen; one recipe. |
-| Compact CNN: 2738/0/24/1345 | Passes recall but fails FPR; not a general CNN rejection. |
-| Native W8-QAT BERT/CUDA Graph: 2738/0/13/1356; warm mean 1.707225 ms | Development screen and 32 matched single-window checks, not a scientific contribution or final deployment result. |
-| BF16-attention reference: 2738/0/13/1356 after its own calibration | Changed arithmetic/scores; no AIE equivalence or accelerated BF16 timing claim. |
-| R1 hardware work | Two mappings analysed; zero AIE/HLS prototypes. A redesigned accelerator remains untested. |
+| Feature classifier: TP/FN/FP/TN = 2639/99/20/1349 | Fails the recorded recall/FPR screen; one recipe |
+| Compact CNN: 2738/0/24/1345 | Passes recall, fails FPR; not a general CNN rejection |
+| Native W8-QAT BERT/CUDA Graph: 2738/0/13/1356; warm mean 1.707225 ms | Development screen and 32 matched single-window checks, not a new scientific method or full deployment cost |
+| BF16-attention reference: 2738/0/13/1356 after separate calibration | Changed arithmetic/scores; no AIE equivalence or accelerated BF16 timing claim |
+| R1 hardware work | Two analytic mappings; zero new AIE/HLS prototypes and no validated redesigned accelerator |
 
-All 55 development attack templates were seen in training. Final calibration,
-final test and NotInject remain closed. R1 added no downstream target-LLM study;
-its detector results do not establish utility-preserving protection.
+All 55 development attack templates appeared in training. Final calibration,
+final test and NotInject remain closed. R1 did not add a downstream target-LLM
+protection/utility study. Its classification measurements alone do not prove
+end-to-end safe and useful operation.
 
-The legacy serial PL route remains stopped. Earlier board-free implementation
-and numerical evidence is preserved, not rerun or discarded. The original
-Goal 5 campaign, board work and further target-LLM calls remain paused.
+The legacy serial PL approach was stopped. Its saved software, numerical and
+offline hardware evidence should be reused where valid, not discarded or
+misrepresented as a functioning deployed detector. The earlier Goal 5 campaign,
+board evaluation and additional target-LLM calls remain paused.
 
-## What is no longer the automatic next step
+## Current offline FPGA evidence
 
-R1's recommended encoder-block experiment is a **historical recommendation**,
-not the current research priority or execution authorization. It can be proposed
-again only as a bounded test of an explicit scientific question. Do not rerun
-R1, automatically finish Goal 4, optimise CUDA further, or start a hardware
-redesign merely to fill a milestone or beat a baseline latency.
+The earlier Goal 4 work includes synthesis, partial RTL/component integration,
+routed closures and conditional cost modeling, described in
+[reports/goal4_platform_architecture.md](reports/goal4_platform_architecture.md),
+[reports/goal4_numerical_bridge.md](reports/goal4_numerical_bridge.md) and
+[reports/unfinished_measurements.md](reports/unfinished_measurements.md).
+These are not equivalent to complete numerical acceptance, physical board
+execution or measured end-to-end protection. The detailed
+[board handoff](reports/board_handoff.md) records historical readiness checks
+and access limits; its October 8 first-A plan does **not** override today's
+method-selection decision or restart paused work.
 
-The next agent should follow the method-first FPGA entry point and return
-a concrete scientific hypothesis and bounded test for user approval. Do not
-automatically complete the existing BERT FPGA port, expand CUDA studies, or
-relabel routine accelerator work as methodological novelty. This change
-approves no new budgets, models, threats, methods or experiments.
+## Unresolved decision and authorization
+
+The next scientific decision concerns a specific FPGA-aware method and a
+prospectively bounded test that can distinguish its contribution from an
+unchanged existing guard or conventional accelerator. A method hypothesis,
+nearest-prior-art distinction, comparisons, prospective security/utility
+limits and resource requirements have **not yet been selected or approved**.
+The completed R1 study and earlier hardware reports are evidence for a future
+decision, not a standing execution order.
+
+The earlier pause and budget/access restrictions remain in effect. Prior
+goal numbers, prepared work, available machines and promising baselines do not
+independently authorize continuation.
 
 ## History and reproduction
 
-The complete previous STATUS.md is preserved verbatim in
-[the pre-correction handoff](reports/status_before_purpose_lock_20261011.md).
-The completed R1 prompt is preserved verbatim in
-[the R1 prompt archive](reports/goal_r1_prompt.md). These copies come from commit
-`6c06973e5a568ad484ec0e9b779876bca1ec9626`; their old next-step commands are
-historical, not instructions to resume work.
-
-Use reports/goal_r1_decision.md and reports/execution_log.md for measurements,
-source paths, exact numerical scopes and historical allowances. No experimental
-code, configuration, data, checkpoint or result was changed by this correction.
+The previous full status is preserved verbatim in
+[reports/status_before_purpose_lock_20261011.md](reports/status_before_purpose_lock_20261011.md).
+The executed R1 prompt is preserved in
+[reports/goal_r1_prompt.md](reports/goal_r1_prompt.md); the later method-first
+handoff is in [docs/archive/](docs/archive/). The pre-correction status and R1
+prompt were copied from commit `6c06973e5a568ad484ec0e9b779876bca1ec9626`.
+Consult [reports/execution_log.md](reports/execution_log.md) and individual
+reports for exact commands, numerical identities, limits and artifact paths.
+No experimental code, datasets, checkpoints, configuration or measurements are
+changed by the documentation cleanup.
