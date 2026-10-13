@@ -1,34 +1,37 @@
 # Status
 
-Updated: **2026-10-13 — FPGA-centrality correction; documentation only.**
+Updated: **2026-10-13 — FPGA-aware methodological contribution clarified; documentation only.**
 
-**FPGA-CENTERED QUESTION TO SELECT.** The 2026-10-13 user clarification
-reaffirms that SENTRY is FPGA architecture/co-design research for LLM security,
-not a search for a new software-only guard. This updates purpose, not experiment
-authorization. [AGENTS.md](AGENTS.md) governs; the current entry point is
-[SENTRY_next_goal_prompt.md](SENTRY_next_goal_prompt.md).
+**METHOD-LEVEL RESEARCH QUESTION STILL TO SELECT.** The user reaffirmed on
+2026-10-13 that SENTRY must contribute a **new FPGA-aware guard algorithm or
+algorithm–hardware co-design method**, not merely implement established BERT
+or another successful CPU/GPU detector on FPGA. The strengthened
+[AGENTS.md](AGENTS.md) is binding; [SENTRY_next_goal_prompt.md](SENTRY_next_goal_prompt.md)
+is the active decision handoff. This change authorizes no new experiment.
 
 ## Research contract
 
-- **Question and authority:** FPGA-centered protection is fixed by the user's
-  2026-10-13 clarification. A specific new FPGA hypothesis/experiment is
-  **unselected and not authorized**.
-- **Closest prior approach:** the original Quasar-derived B and R1 guards are
-  prior security/method references. Closest FPGA hardware/co-design prior art
-  depends on the proposed design; a new scientific gap is not yet established.
-- **Hypothesis/difference:** unselected. Security-constrained mixed precision,
-  FPGA placement or streaming architecture are candidates, not adopted novelty.
-  No new LLM-security algorithm is required.
-- **Scientific outcome:** a differentiated FPGA design/co-design contribution
-  that preserves an appropriate protection/utility requirement and accounts for
-  hardware resources, full costs and security claim limits. A software result
-  or routine port alone cannot complete the research.
-- **Hardware role:** FPGA implementation is required. Match an equally engineered
-  FPGA baseline and use CPU/GPU implementations as practical comparators, not
-  replacement objectives. Actual board claims remain blocked by physical access.
-- **Next discriminator:** propose at most two FPGA-specific questions using saved
-  R1/hardware evidence and focused prior art, then seek approval for a bounded
-  hardware-centered test before substantial execution.
+- **Question and authority:** substantive methodological novelty in FPGA-aware
+  LLM protection is now fixed. A specific new method, experiment, budget and
+  scientific hypothesis remain **unselected and not approved**.
+- **Closest prior approaches:** Quasar-derived B, existing guard baselines and
+  relevant FPGA architecture/co-design literature must be compared for the
+  actual proposed mechanism. No novel gap has yet been established.
+- **Hypothesis/difference:** unselected. A proposed method must change the
+  guard's computation, representation, decision rule or joint hardware-aware
+  design procedure; a routine existing-model port or new kernel alone is not it.
+- **Scientific outcome:** demonstrate a method-attributable, useful
+  security–hardware trade-off with prospectively bounded protection and
+  legitimate-utility loss if quality is traded for cost. Report complete
+  latency/throughput/resources and claim limits; speed alone is insufficient.
+- **Hardware role:** implement the new method on FPGA/PL or heterogeneous
+  FPGA–AIE-ML as appropriate. Compare established and proposed algorithms on
+  competent implementations, conventional FPGA mappings and method ablations.
+  Board measurements remain blocked until physical access/authorization.
+- **Next discriminator:** identify at most two method-level candidates from
+  saved evidence and focused prior art; recommend one falsifiable, bounded
+  experiment for approval. Existing BERT/HLS work is supporting baseline
+  evidence, not the automatic continuation goal.
 
 ## Completed evidence to reuse
 
@@ -59,9 +62,11 @@ again only as a bounded test of an explicit scientific question. Do not rerun
 R1, automatically finish Goal 4, optimise CUDA further, or start a hardware
 redesign merely to fill a milestone or beat a baseline latency.
 
-The next agent should follow the FPGA-centered entry point and return a
-specific hardware/co-design scientific decision for user approval. This change approves no new budgets,
-models, threat scopes, methods or experiments and invents no current usage reading.
+The next agent should follow the method-first FPGA entry point and return
+a concrete scientific hypothesis and bounded test for user approval. Do not
+automatically complete the existing BERT FPGA port, expand CUDA studies, or
+relabel routine accelerator work as methodological novelty. This change
+approves no new budgets, models, threats, methods or experiments.
 
 ## History and reproduction
 
