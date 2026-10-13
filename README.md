@@ -1,30 +1,38 @@
 # SENTRY: Mixed-Precision FPGA Co-Design for LLM Guards
 
-SENTRY is an **FPGA-centered project** developing original hardware architectures
-and algorithm–hardware co-design for LLM security. Existing security detectors
-can be used; a new LLM-security algorithm is not a prerequisite. FPGA is central
-to the research question, design, implementation and evaluation, not an optional
-backend. Routine BERT porting and CUDA benchmarking alone are not the objective.
+**Scientific objective:** Develop and evaluate a **substantive new FPGA-aware
+guard algorithm or algorithm–hardware co-design method** for LLM security.
+The method must change the guard's computation, representation, decision
+procedure or its joint algorithm/FPGA design. FPGA implementation is central;
+merely porting a successful existing BERT or other detector to FPGA/AIE-ML is
+not the intended research contribution. Established detectors remain useful
+baselines, teachers or components, not automatic answers.
 
-The pilot uses BERT-Mini to detect indirect prompt injection in external
-documents (BIPIA EmailQA); the target LLM runs separately on an authorized
+The goal is a defensible security–hardware trade-off, potentially permitting
+prospectively bounded degradation in detection quality or legitimate-task
+utility when a significant measured FPGA benefit warrants it. Neither the
+novelty nor superiority of any proposed method is presumed. A completely new
+pretrained language model is not required.
+
+The current pilot uses BERT-Mini to detect indirect prompt injection in external
+documents (BIPIA EmailQA). The target LLM runs separately on an authorized
 endpoint. The pilot does not establish general training/model poisoning defense.
 
-The inherited precision-study protocol adapts Quasar-ViT: A uses its ordinary
-quality criterion; B adds the low-FPR protection requirement; C would introduce
-an evidence-supported improvement. The intended B-to-C method study remains
-unfinished, but it is not automatically approved as the next research question.
+The prior precision-search protocol adapts Quasar-ViT: A uses ordinary quality,
+B adds a low-FPR constraint and C was intended to test an added method. This
+historical B-to-C protocol is unfinished and **not a command to continue the
+existing-model implementation**. No particular new algorithm/co-design method
+or experiment is yet approved.
 
-**Current instructions:** [AGENTS.md](AGENTS.md) fixes the FPGA-centered
-purpose; [STATUS.md](STATUS.md) records evidence and current authority; and
-[SENTRY_next_goal_prompt.md](SENTRY_next_goal_prompt.md) defines selection of a
-specific hardware/co-design question. [Goal R1](reports/goal_r1_decision.md)
-is a completed detector/architecture decision study, not the final research
-result. The older [board-free prompt](SENTRY_BOARD_FREE_COMPLETION_PROMPT.md)
-remains historical, not authorization to restart experiments. Goals 1 and 2
-and the available Goal 3 software work have saved evidence; Goal 4 has component
-synthesis/RTL evidence, but full-detector numerical acceptance, complete costs
-and physical-board measurements remain unresolved.
+**Current instructions:** [AGENTS.md](AGENTS.md) defines the required
+method-level novelty and FPGA role; [STATUS.md](STATUS.md) records evidence
+and authority; [SENTRY_next_goal_prompt.md](SENTRY_next_goal_prompt.md)
+governs selection of a concrete method and bounded test. [Goal R1](reports/goal_r1_decision.md)
+is a completed detector/architecture decision study, not a scientific
+completion. The [old board-free prompt](SENTRY_BOARD_FREE_COMPLETION_PROMPT.md)
+is historical. Goals 1 and 2 and available Goal 3 software work retain useful
+evidence; Goal 4 has component synthesis/RTL evidence but complete numerical
+acceptance, full checking costs and board measurements remain unresolved.
 
 ## Repository map
 
