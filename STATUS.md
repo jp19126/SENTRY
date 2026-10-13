@@ -10,8 +10,9 @@ detector on FPGA is supporting work, not the scientific contribution.
 [AGENTS.md](AGENTS.md) defines execution rules, not research goals.
 
 No new method, model-training campaign, API spending, build campaign or
-physical-board action is approved by this status update. A future execution
-prompt must establish its specific task and authorization separately.
+physical-board action is approved by this status update. The staged
+[Codex execution prompt](SENTRY_codex_execution_prompt.md) is available,
+but its substantive experiments require a separate method/budget approval.
 
 ## Current research decision
 

@@ -19,6 +19,7 @@ or general proof against LLM/model poisoning.
 | [RESEARCH_SCOPE.md](RESEARCH_SCOPE.md) | Approved scientific purpose, application boundary and criteria for a contribution |
 | [AGENTS.md](AGENTS.md) | Standing execution and evidence rules; deliberately **no specific research goals** |
 | [STATUS.md](STATUS.md) | Current findings, unresolved claims, permissions and next decision |
+| [SENTRY_codex_execution_prompt.md](SENTRY_codex_execution_prompt.md) | Current staged Codex research prompt; substantial experiments remain contingent on approval |
 | [Experimental protocol](reports/protocol.md) | Saved pilot data, split, threshold, numerical and evaluation definitions |
 | [Execution log](reports/execution_log.md) | Detailed historical actions and evidence paths |
 | [Documentation archive](docs/archive/README.md) | Old goal documents, execution prompts and setup handoffs |
