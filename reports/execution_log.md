@@ -2703,3 +2703,25 @@ distinctunsuccessfulattempts; confirmationCSV33rows. Latestofficialusage36%used,
 belowexplicit60%ceiling; noreset consumed. PrincipalreportUIopen returnedqueued,
 notconfirmed visible. The authorizedfirststage iscomplete; generalization,
 targetprotection, nativeINT8, physicalFPGA andnewco-designclaims remainunresolved.
+
+
+## 2026-10-14 CNN adoption progress and synchronization
+
+User authorized execution of the adoption prompt, later raised the account
+usage ceiling from50% to60% used and explicitly requested Git synchronization.
+Data construction, frozen memberships and independent token checks are saved
+under results/cnn_adoption_v1 (Git-ignored);44,570 documents/60,453 windows.
+Protocol SHA256:8370d8455b9d43b160c9a699bec9f50222b05a39139f8fb441eab1dbdf2e43aa.
+Data check59.188s; CPU training replay check18.207s; CUDA check8.0984067s;
+packed native backend successful process5.4138543s/internal2.37546s. Earlier
+backend attempts failed on a removed import (2.906805s) and small matrix kernel
+constraint (5.4456218s); corrected loader and minimum32 matrix padding.
+All qualification is supporting implementation evidence. Original TextCNN
+development command: python -B scripts/cnn_adoption_evaluate.py --plan
+configs/cnn_adoption_v1.json --reference-id original_textcnn_01 --stage
+development --device cuda --batch-windows 1 --max-seconds 3600. Terminal exit0;
+primary threshold .9999271631240845; TP1/FN399/FP1/TN799. Saved outputs remain
+local. No new candidate fit or confirmation scoring completed. Pending work
+includes remaining frozen baselines, supervised adaptation and final comparison.
+The original pretraining snapshot remains preserved; the later user ceiling
+change does not alter frozen data or scientific thresholds.

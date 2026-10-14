@@ -1,54 +1,50 @@
 # SENTRY status
 
-**Updated: 2026-10-14 - authorized offline CNN exploration complete.**
+**Updated: 2026-10-14 - CNN adoption study executing locally.**
 
-The user submitted SENTRY_CNN_development_prompt.md for execution and raised
-this execution's account usage ceiling to 60% used (initial observation 28%).
-The completed stage is architecture discovery supporting the FPGA-centered
-scientific purpose in RESEARCH_SCOPE.md; it does not complete that purpose.
+The user submitted SENTRY_CNN_adoption_prompt.md for execution, with a 60%-used
+account ceiling (raised explicitly by the user; initial observation36%). It authorizes a new board-free
+adaptation/BERT comparison and adoption decision, including a separately
+constructed confirmation holdout. The completed broad exploration and its
+negative/unstable primary outcomes remain unchanged.
 
-## Current evidence and decision
+## Active authorized work
 
-The study executed 96 short screens across 16 structural branches (94 distinct
-forward computations), 23 full inner fits, one capacity-aware replacement and
-24 frozen three-seed full-training fits: 144 unique learning runs. All families
-received a representative twelve-epoch inner opportunity. Frozen confirmation
-checked 24 FP32 and nine fake8 variants, complete raw-document identities,
-benign-only calibration, scores/counts and numerical decision changes. Eight
-warm complete-document profiles and eight fresh-process cold observations are
-complete; independent checks passed, with unchanged cold/warm decisions.
+The prospective contract is in reports/cnn_adoption_study.md and the single
+configuration configs/cnn_adoption_v1.json. Natural mail/article data and human-authored payload provenance are frozen
+into five separate roles, with source/thread/article and payload/author ancestry.
+Independent checks passed for44,570 documents/60,453 windows. Confirmation
+scores stay unopened until candidate/format/rule freeze. No new candidate fit
+has run.
 
-No architecture meets the unchanged primary empirical screen in all three
-seeds. Local/context passes two seeds but detects only 1-6/64 authored attacks;
-DPCNN misses all 64 in every seed. The matched contextual/replacement FPR
-interval includes zero, so fusion benefit is not established. The all-seed
-feasible frontier is empty. Recorded accelerator process walls total 4.632h;
-known omissions remain explicit. No vendor or physical CNN build was run.
+Shared document-max BCE training is implemented for four existing CNNs and
+pretrained small BERT. Focused CPU checks passed exact loss/gradient/RNG replay,
+masks, ties and finite updates. The first packed W8/A8 CNN reference/export and
+native CUDA integer-dot adapter passed bounded old-FIT checks; these are
+implementation evidence, not adoption quality or hardware measurements.
 
-The bounded next research choices retain an economical conventional stack,
-the contextual candidate with its capacity-matched residual control, and a
-parked byte/storage alternative. These are research comparisons, not a selected
-deployment or authorization for a new campaign. Independent generalization and
-one falsifiable FPGA-aware mechanism remain the next scientific decision.
+CUDA training and packed integer-backend qualification passed. Original TextCNN
+development at primary alpha=.005 yielded TP1/FN399/FP1/TN799; this is not an
+adoption verdict. Next: finish remaining frozen-original development evaluations,
+then execute competent common supervised adaptation. Root owns
+serial heavy jobs. Optional distillation/repairs depend on development evidence;
+final repeats use seeds42/1337/2026 and predeclared priority/checkpoint rules.
+Adoption remains unproven until the full prospective requirements are executed.
 
-See [CNN study](reports/cnn_study.md), [completion audit](reports/cnn_completion_audit.md)
-and [mapping note](reports/cnn_mapping_note.md). Scores, checkpoints, full tables,
-failures, source snapshots and checks are under results/cnn_study_v1. Detailed
-commands and limits are in reports/execution_log.md. Changes remain local.
+## Preserved limits and findings
 
-## Preserved findings and limits
+The broad exploration completed144 learning runs and24 three-seed confirmations;
+no CNN passed the old primary screen in all three seeds. Authored diagnostics
+revealed severe limitations and the contextual/replacement interval crossedzero.
+The earlier span-coupled pilot and R1 evidence remain separate historical studies.
 
-The previous span-coupled pilot closed with a negative candidate result: quality,
-mechanism and FPGA-resource gates failed. SoPa and complete RTL/timing comparisons
-remained unresolved. This study did not restart that campaign. Goal R1 retained
-a development W8-QAT BERT/CUDA Graph baseline but established no new FPGA method.
-Earlier hardware evidence remains component/synthesis or partial RTL evidence.
+Project final-calibration, final-test and NotInject (including redistributed
+copies) remain closed. No paid service, target-LLM API, physical hardware is authorized. The user explicitly authorized Git
+synchronization of the current incomplete study state. Detector labels are not target compromise or
+legitimate-task protection evidence. FPGA-centered scientific purpose is unchanged.
 
-Final calibration, final test and NotInject remain closed. No new target-LLM API
-calls, paid services, physical board actions or GitHub synchronization occurred.
-Detector labels do not demonstrate attack success, blocking, sanitization or
-legitimate-task preservation. Native INT8 performance, physical FPGA advantage
-and a defensible new co-design contribution remain unresolved.
+The preceding status is archived verbatim in
+[status_before_cnn_adoption_20261014.md](reports/status_before_cnn_adoption_20261014.md).
 
 ## History
 

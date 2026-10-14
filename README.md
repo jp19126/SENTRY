@@ -19,7 +19,7 @@ or general proof against LLM/model poisoning.
 | [RESEARCH_SCOPE.md](RESEARCH_SCOPE.md) | Approved scientific purpose, application boundary and criteria for a contribution |
 | [AGENTS.md](AGENTS.md) | Standing execution and evidence rules; deliberately **no specific research goals** |
 | [STATUS.md](STATUS.md) | Current findings, unresolved claims, permissions and next decision |
-| [SENTRY_codex_execution_prompt.md](SENTRY_codex_execution_prompt.md) | Current authorized broad CNN exploration prompt; earlier method-first instructions are archived |
+| [SENTRY_codex_execution_prompt.md](SENTRY_codex_execution_prompt.md) | Current authorized CNN adoption prompt; earlier exploration and method-first prompts are archived |
 | [Method study](reports/method_study.md) | Verified prior art, approved span-coupled experiment contract, executed results and limitations |
 | [CNN study](reports/cnn_study.md) | Authorized broad architecture exploration, current offline execution and evidence boundaries |
 | [Experimental protocol](reports/protocol.md) | Saved pilot data, split, threshold, numerical and evaluation definitions |
@@ -50,6 +50,13 @@ or generated vendor builds.** Keep these separate artifacts and their
 identities when attempting reproduction.
 
 ## Latest bounded study
+
+The [CNN adoption study](reports/cnn_adoption_study.md) is now executing under
+the separately submitted adoption prompt. It prepares new grouped development
+and confirmation data, compares supervised CNN adaptation with historical and
+matched-data BERT, and requires a qualified numerical/export and hardware-cost
+case before adopting a research backbone. This new study has not yet reached
+an adoption verdict; it preserves the completed exploration below.
 
 The [CNN architecture exploration](reports/cnn_study.md) completed its authorized
 offline stage on 14 October 2026: 96 screens, 23 longer inner fits, one matched
