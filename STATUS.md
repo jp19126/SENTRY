@@ -1,6 +1,6 @@
 # SENTRY status
 
-**Updated: 2026-10-15 - CNN adoption study executing locally.**
+**Updated: 2026-10-15 - CNN confirmation verified; final handoff in progress.**
 
 The user submitted SENTRY_CNN_adoption_prompt.md for execution, with a 60%-used
 account ceiling (raised explicitly by the user; initial observation36%). It authorizes a new board-free
@@ -29,18 +29,31 @@ recall/FPR across seeds42/1337/2026: LocalPCA+KD51.75%/.875%,64%/2.375%,
 47%/.375%,75.75%/.125%. All fail99% pooled/email recall. Independent score
 checks passed; every seed42 final model exactly reproduces its selected parent.
 
-Six final CNN CPU exports completed with corrected FIT calibration. Fresh
-native integer checks, full intended-format scores and complete raw-document
-CPU/GPU/eager/graph/cold profiling are now running serially. FP32 benchmark
-restoration avoids redundant pretrained-weight and optimizer loads; identical
-states/buffers/logits were verified. No historical timing is inherited.
+All sixteen frozen confirmation evaluations completed and passed independent
+saved-score checks. Scientific conclusion: DO NOT ADOPT THESE CNNs YET.
+Intended LocalContext recall/FPR across seeds 42/1337/2026 is 41.3%/2.05%,
+50.3%/2.45%, 41.7%/2.2%; C98 is 34.3%/1.45%, 32.3%/2.9%, 21.8%/1.5%.
+Matched BERT FP32 is 78.2%/1.75%, 45.5%/1.15%, 74.5%/1.1%. All fail primary
+and email recall; all CNN seeds also fail hard benign and adequately populated
+code-mechanism recall. Role/encoding ancestry remains sparse and uncertain.
+FP32 companions fail too, so conversion does not explain the main deficit.
 
-PriorityLocalContext thenC98, deploymentseed42; intendedCNNW8/A8 and BERTFP32.
-FP32CNN companions cannotrescue failed intendedformat orseed. No further tuning.
-Actual prospective checkpoint/format/policy freeze remains required before
-once-only heldout scoring. Confirmation is unopened; no adoption verdict exists.
-Accountusage last observed48% against user-raised60%, noresetused.
-Local Git commit38c294b exists. Push awaits explicit remote/branch approval
+The exact 16-target freeze remains unchanged, SHA256
+6252a2f357edc9fe62690da3dd375ea1c795fd9d28c5c4accfd7c8e1e07a5aaa.
+Priority is LocalContext then C98, deployment seed 42; intended CNN W8/A8 and
+BERT FP32. No further tuning or threshold/format/seed rescue is allowed.
+Actual exports and fourteen matched warm/five cold profiling routes are
+qualified; intended CNN Graph means show no GPU latency win over BERT FP32.
+BERT CPU timing remains unqualified. Conditional payload savings do not prove
+target allocation, clock closure, transport integration or physical advantage.
+
+Six paired confirmation uncertainty analyses are running from saved scores,
+after the full independent audit. Final report, resource reconciliation and
+requirement-by-requirement completion handoff remain pending; the goal is active.
+Failed resource preflights and focused verification-helper corrections remain
+preserved. Scoring sources, models and scientific choices were unchanged.
+Account usage last observed 53% against the user-raised 60% cap; no reset used.
+Local Git commits 38c294b and 6e566a0 exist. Push awaits explicit remote/branch approval
 after automatic review rejected egress; scientific work continues locally.
 
 ## Preserved limits and findings

@@ -1,6 +1,6 @@
 {
   "study_id": "cnn_adoption_v1",
-  "phase": "final_numerical_and_profile_qualification_before_freeze",
+  "phase": "frozen_once_confirmation_evaluation",
   "execution_authority": "User submitted SENTRY_CNN_adoption_prompt.md; local adoption study only",
   "usage_cap_used_percent": 60,
   "initial_used_percent": 36,
@@ -740,8 +740,8 @@
     "physical_hardware": false,
     "new_git_sync": false
   },
-  "confirmation_freeze": null,
-  "confirmation_freeze_sha256": null,
+  "confirmation_freeze": "results/cnn_adoption_v1/confirmation_freeze.json",
+  "confirmation_freeze_sha256": "6252a2f357edc9fe62690da3dd375ea1c795fd9d28c5c4accfd7c8e1e07a5aaa",
   "quality_gates": {
     "minimum_recall": 0.99,
     "maximum_fpr": 0.01,

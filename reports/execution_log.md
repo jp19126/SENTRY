@@ -3022,3 +3022,93 @@ b05b6664129286bac67639fad24f5524b68ce54548cfcb9f77d5e41fadedd9e8.
 SavedcanonicalN4107, TP2738/FN0; alpha .005/.01/.02 FP4/13/43 per1369benign.
 Thresholds .41116243600845337/.004557917360216379/.0004980998346582055.
 Originalalpha.01threshold is preserved separately from new-panel recalibration.
+
+### 2026-10-15: final integer audit and profiling resource interruption
+
+All six final CNN native arithmetic checks and intended W8/A8 development
+evaluations completed. Independent saved-score checks passed, with a focused
+in-memory verifier correction for final checkpoint filename `checkpoint_latest.pt`;
+the original verifier, exact patch and failed attempts remain preserved under
+`results/cnn_adoption_v1/independent_integer_audit_r2/`. The aggregate is
+`six_final_integer_development_audit_r2.json`. No scoring source was changed.
+LocalContext attack true positives across seeds 42/1337/2026 were 211/255/178
+of 400, with 8/18/8 false positives of 800. C98 had 172/162/113 true positives
+and 7/16/7 false positives. Every seed fails the primary recall requirement.
+These are development outcomes, not confirmation results or an adoption verdict.
+
+The first LocalContext integer CUDA Graph cold-start attempt stopped before
+model loading because Windows available memory was 2.59 GiB, below the existing
+4 GiB preflight floor. An independent subsequent observation fell further;
+read-only process telemetry showed unrelated Vivado processes consuming memory.
+No external process was stopped and the safety floor was retained. Once actual
+telemetry recovered to 10,627,358,720 available bytes, profiling resumed using
+`results/cnn_adoption_v1/resume_final_qualification.py`. The failed dispatch/log
+remain unchanged; the explicit retry completed successfully. The queue skips
+successful dispatches and checks the unchanged configuration digest before each
+remaining job. Remaining C98 and matched-BERT profiles continue serially.
+
+Fixed final development paired comparisons now run from saved scores only via
+`results/cnn_adoption_v1/compare_final_development.py`: each CNN family, both
+FP32 and intended integer format, all three fixed seeds, and the matched-data
+BERT FP32 comparator. Each uses 1,000 source/payload/calibration sensitivity
+draws; confirmation remains unopened. Account usage was observed at 50%, below
+the explicitly user-raised 60% ceiling. Git sync produced local commit 6e566a0;
+automatic approval review rejected the push to origin/main, which remains pending.
+
+Matched BERT CPU1 subsequently failed the unchanged saved-risk qualification
+tolerance: two windows differed from the saved CUDA FP32 scores, maximum
+absolute risk delta 0.000023126602172851562 against 0.00001. All fixed-threshold
+document decisions agreed, but this does not pass the numerical route gate.
+The failed dispatch and `qualification_failure.json` are retained. The bound
+`bert_cpu_profile_exclusion_r2.json` records CPU cold and CPU4 as not executed;
+no CPU-BERT timing or cross-device speedup is claimed. CUDA eager qualification
+then passed, and CUDA Graph/cold qualification continued serially. No scoring
+source, checkpoint, tolerance, threshold policy or intended format was changed.
+
+The remaining CUDA eager/Graph/cold profiles completed. Coordinator inspection
+confirmed the exact 16-target nomination: two CNN families, three seeds and
+both FP32 diagnostic/intended W8/A8 formats, three matched-BERT FP32 seeds,
+and the historical W8 anchor. Priority LocalContext then C98 and deployment
+seed 42 remain fixed. `scripts/cnn_adoption_freeze.py` completed in 20.594 seconds,
+writing `results/cnn_adoption_v1/confirmation_freeze.json` with SHA256
+6252a2f357edc9fe62690da3dd375ea1c795fd9d28c5c4accfd7c8e1e07a5aaa.
+Reserved files were verified as opaque bytes, without decoding document rows.
+The configuration was bound to that freeze after archiving its previous bytes.
+
+Once-only confirmation dispatch started via
+`results/cnn_adoption_v1/serial_confirmation.py`. Its first attempt failed the
+Budget preflight at 3,717,332,992 Windows available bytes, before the evaluator
+loaded reserved rows or created a confirmation output directory. The failed
+record/log were preserved. After a measured 5,396,992,000-byte availability
+passed the unchanged floor, the inspected retry started serial scoring. The
+driver checks fixed configuration/freeze hashes and refuses partial-result
+rescoring. No frozen choice or scoring source changed. Confirmation results
+and the final decision remain pending.
+
+While the frozen confirmation queue continued, a retrospective development-only
+score-separation diagnostic ran without inference or new threshold choices:
+`results/cnn_adoption_v1/development_score_separation.py` writes
+`final_development_score_separation_r2.json`. At the strict evaluation-label
+oracle allowing at most 8/800 benign rejections, intended LocalContext recall
+across seeds is 53.5%/41.75%/44.5%, C98 47.75%/27.75%/29.25%, and matched BERT
+94%/69.25%/94.5%. No target reaches 396/400 attack detections and at most eight
+false positives at any strict score tier on this observed development panel.
+Independent whole-tier enumeration and mixed-class/saturated-score tie tests
+passed; exact input/score identities are bound in
+`development_score_separation_independent_check_r2.json`. These cuts are
+descriptive oracle quantities, not calibration/deployment thresholds, candidate
+choices, held-out evidence or population guarantees. Original process wall was
+4.099 seconds; independent review was 4.526860 seconds, with nested internal
+timers retained separately. This identifies score overlap in addition to
+calibration transfer; no frozen model, format, seed, policy or source changed.
+
+The independent profiling reconciliation completed fourteen warm routes,
+8,120 retained repetitions, five cold routes and ten child observations with
+exact shared sample/checkpoint/format hashes. `final_profiling_audit_r2.json`
+SHA256 468555bf01d4a8c469d5b51e8f1d6cfab76e38dfe82275ec61b6d80074147df5
+retains length/stress/stage summaries and failed/omitted-route evidence. Intended
+integer Graph means are 5.211408 ms LocalContext and 5.601936 ms C98 versus
+5.106404 ms matched BERT FP32 Graph, so no intended-format GPU latency win is
+claimed. The prompt requirement audit remains explicitly incomplete pending
+all sixteen confirmation evaluations, released saved-score checks, paired
+analyses, the frozen-rule verdict and final documentation handoff.

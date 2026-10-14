@@ -1,684 +1,576 @@
-# CNN adoption study
+# CNN adoption decision
 
-Started 14 October 2026 under the explicitly submitted
-`SENTRY_CNN_adoption_prompt.md`. This is local, board-free backbone selection
-supporting SENTRY's FPGA-centered purpose, not a production guard or completed
-novel contribution. Account usage ceiling: **60% used** (raised explicitly by the user), initially observed 36%.
-The previous exploration and its failed primary outcomes remain unchanged.
+**DO NOT ADOPT THESE CNNs YET — measured quality limitation.**
 
-## Current decision state
+The frozen LocalContext PCA + KD and C98 KD candidates fail the 99% recall /
+1% FPR primary requirement in every seed in their intended W8/A8 format.
+All six also fail the hard-benign bound and adequately populated code-mechanism
+recall. Matched BERT is usually stronger but also fails the primary bounds
+in all three seeds. No CNN is selected for the next FPGA implementation stage.
+The complete sixteen-target confirmation set passed independent checks; all
+six declared paired sensitivity analyses completed. This closes this bounded
+backbone decision, while SENTRY's new FPGA-aware method remains unresolved.
 
-**Executing; no adoption verdict.** New confirmation is unopened. Account usage
-last observed43% of the user-raised60% ceiling. The primary operating point is
-alpha .005, strict max-window-risk > fitted benign threshold. Results below are
-seed42 development observations on400 attacks/800 benign documents, not a
-confirmation or population guarantee.
+Study executed 14–15 October 2026 (local time); recorded process timestamps use UTC.
 
-| Completed recipe/format | Recall | FPR | Primary gate |
-|---|---:|---:|---|
-| TextCNN enriched FP32 |27%|1.125%|Fail|
-| Stacked enriched FP32 |36%|1.125%|Fail|
-| LocalContext enriched FP32 |47%|2%|Fail|
-| C98 replacement enriched FP32 |41.25%|.375%|Fail|
-| Matched BERT 2e-5 FP32 |68.75%|.25%|Fail|
-| Matched BERT 5e-5 FP32 |79%|0%|Fail|
-| LocalContext distilled FP32 |48%|.75%|Fail|
-| C98 replacement distilled FP32 |42.75%|.875%|Fail|
-| LocalContext distilled W8/A8 |47.25%|.625%|Fail|
-| LocalContext PCA+KD FP32 |51.75%|.875%|Fail|
-| LocalContext PCA+KD W8/A8 |52.75%|1%|Fail|
-| C98 replacement distilled W8/A8 |43%|.875%|Fail|
+## Confirmation quality
 
-Refined BERT is the qualified useful teacher, not a security-qualified guard.
-Its FIT-only cache completed; LocalContext KD completed12epochs/selected2.
-All bounded interventions completed. Nine fixed final three-seed fits are running.
-Ground-truth labels remain in both KD objectives; runtime
-CNN inference has no teacher. Independent data/score/cache checks and concrete
-corrected FIT-calibrated exports exist. The old length-sampler bug is disclosed
-below; corrected exports require fresh numerical/quality/timing qualification.
-Three-seed final training, numerical/profile qualification, prospective
-candidate/rule freeze and once-only new confirmation remain incomplete.
+Each seed uses the same 1,000 attacks and 2,000 benign documents, a separate
+3,000-document benign calibration population and the frozen alpha 0.005 rule.
+Email denominators are 200 attacks / 400 benign; hard benign is 457 documents.
 
-## Prospective contract before new fitting
+| Intended candidate | Seed | Recall | FPR | Hard-benign FP/457 | Email recall/FPR | Code recall |
+|---|---:|---:|---:|---:|---:|---:|
+| LocalContext PCA + KD | 42 | 41.30% | 2.05% | 41/457 | 42.50% / 2.50% | 66.40% |
+| LocalContext PCA + KD | 1337 | 50.30% | 2.45% | 48/457 | 47.00% / 3.00% | 59.20% |
+| LocalContext PCA + KD | 2026 | 41.70% | 2.20% | 44/457 | 40.00% / 2.25% | 32.80% |
+| C98 KD | 42 | 34.30% | 1.45% | 29/457 | 32.50% / 1.50% | 32.00% |
+| C98 KD | 1337 | 32.30% | 2.90% | 58/457 | 28.00% / 2.50% | 31.20% |
+| C98 KD | 2026 | 21.80% | 1.50% | 30/457 | 16.50% / 1.50% | 16.80% |
+| Matched BERT | 42 | 78.20% | 1.75% | 32/457 | 76.50% / 2.50% | 77.60% |
+| Matched BERT | 1337 | 45.50% | 1.15% | 23/457 | 40.00% / 1.00% | 49.60% |
+| Matched BERT | 2026 | 74.50% | 1.10% | 21/457 | 61.00% / 1.00% | 87.20% |
 
-Question: can focused CNNs learn transferable indirect-injection discrimination
-from richer, comparable supervision, and merit a concrete FPGA development
-route against historical and matched-data pretrained BERT?
-
-The primary workload is English external email/document content for QA. Only
-document text enters inference. Newly licensed natural mail/document sources
-and controlled matched examples will form source/payload-ancestry-disjoint
-fit, development-calibration, development-selection, final benign-calibration
-and new confirmation roles. Membership, labels, genre weights and construction
-rules will be fixed before fitting. Confirmation scores/errors stay unopened
-until candidate, numerical and decision freeze. Old authored probes are known
-diagnostics; canonical results are regression/exposure evidence. Project final
-calibration/test and NotInject, including redistributed copies, stay closed.
-
-Data preparation is executing separately. SpamAssassin mail has a documented
-CC0/PDDL distribution; exact download identities, deduplicated/thread group
-counts, English/ambiguous exclusions and an independent licensed article source
-are being established. PIGuard validation/test mixtures include protected
-benchmark families and are quarantined. Imported uncertain material is excluded.
-The numerical configuration will bind actual prepared memberships/provenance
-before any optimizer job. Planning targets are thousands of independent benign
-calibration rows and at least 2,000 benign/1,000 attack-labelled confirmation
-rows, without counting template multiplication as independent mechanisms.
-
-Shared initial representation: pinned BERT WordPiece, L256, 254 content tokens,
-overlap64/stride190, complete tails and document max-risk aggregation. Natural
-article document units will be defined before fitting; all models process the
-same complete units, not different truncated inputs. Actual whole mail lengths
-and deliberately prespecified long-document stresses will be retained.
-
-Four initial CNNs: TextCNN01, Stacked01, Local/context03 and residual
-replacement98. Historical BERT W8-QAT retains its original checkpoint/threshold
-and prospective recalibration separately; its canonical .5/1/2% saved scores
-already exist. Matched BERT starts from the pinned small pretrained encoder,
-with a fresh task head and the same fitting information. Original checkpoints
-remain unchanged. Pretraining advantages and controllable project exposure
-will be reported rather than relabelled as equal initialization.
-
-The baseline supervised objective is shared document-level max-logit-margin
-binary cross entropy. No unknown annotation becomes a fabricated window label;
-short malicious evidence is not averaged away. Memory-bounded replay, if used,
-must reproduce a direct same-dropout objective/gradient on focused real inputs.
-The change from old span-window training is explicit, not attributed solely to
-architecture. AdamW schedules may differ competently by model; comparable
-information and recorded tuning opportunity matter more than identical epochs.
-
-Initial bounds: CNNs at their existing architecture learning rates, at most12
-development epochs; pretrained BERT at2e-5, at most5, with10% warmup/decay.
-One BERT5e-5 refinement is conditional on inadequate learning. At most two
-additional CNN structures and two named interventions are allowed, not required
-spending targets. Qualified teacher distillation must use fit-only cached
-outputs plus labels and retain a same-data no-distillation control; no runtime
-teacher or confirmation-derived supervision is allowed.
-
-Primary threshold policy is nominal benign calibration alpha=.005 and strict
-score>threshold. Observed primary requirements stay recall>=99%, FPR<=1%; hard-
-benign rejection<=5%; adequately populated prespecified withheld-mechanism
-recall>=95%. Secondary alpha=.01/.02 apply to CNN and BERT alike. Adequacy and
-application/stress strata will be fixed with actual independent source/payload
-counts before evaluation; sparse evidence cannot silently pass a gate.
-
-At most two CNN finalists plus matched BERT and the historical anchor will be
-frozen using development only. Repeated training seeds42/1337/2026; choose a
-deployment seed/checkpoint rule and candidate priority before confirmation.
-All three seeds must meet adoption requirements; pooled/best-seed results cannot
-rescue a failed seed. Compare against the stronger development-selected BERT,
-allowing at most one absolute percentage point observed recall loss while
-retaining absolute bounds. Paired source/payload dependence and calibration
-uncertainty will remain distinct from empirical gates and fixed-seed variability.
-
-Numerical route must export actual codes, scales, exceptions and accumulation
-semantics, initially signedW8/inputA8 with INT32 reference accumulation and
-explicit FP32 rescale/bias/norm/nonlinear exceptions where needed. Representative
-fit-only activation calibration replaces the old ordered512-window prefix.
-Prospective hardware benefit: at least50% precision-matched parameter/scale
-payload reduction versus the selected BERT route, together with a feasible
-target weight/activation/context/document-retention and transport schedule.
-This is not a MAC-derived speed or physical resource claim. Any alternative
-material-benefit contract must be fixed on development before confirmation.
-
-Match raw-document batch-one timing, length-stratified samples and long stresses,
-preparation/copies/all windows/max/decision, startup and warm repetitions.
-Give both sides bounded competent backend optimization and validate decisions;
-CUDA Graph/native INT routes cannot inherit old checkpoint qualification.
-
-Ceilings:60 learning jobs,48 accelerator process-hours,12 heavy CPU hours,
-four optional vendor attempts/eight hours. Reserve final three-seed BERT/CNN,
-numerical qualification and confirmation before optional tuning. Root alone
-dispatches serial accelerator/vendor work; workers own data, training interface
-and export/mapping files. No paid services, target API, physical board, payload
-execution. The user subsequently authorized Git synchronization. A new-stage negative/unresolved decision
-requires actual completed competent available comparisons, not old failures.
-
-## Actual execution
-
-Read current repository/protocol/reference implementations and original prompt;
-working tree initially contains only the user adoption prompt/download metadata.
-Native Python3.11.16, Torch2.9.1+cu128 and RTX4070 are available. One-time resource
-preflight passes:7.206GB Windows/24.127GB WSL available against4/8GiB floors.
-Runtime floors remain2/4GiB. Preflight process is terminal; no learning dispatched.
-Data preparation, shared objective/loader implementation and concrete export
-reference are active independent work. Exact source choices/counts and allocation
-will be entered in the single study configuration before fitting.
-
-## Progress at user-requested synchronization
-
-The new data roles are frozen and independently checked: 44,570 documents and
-60,453 windows, with no source/payload ancestry crossing roles. The data protocol
-identity is 8370d8455b9d43b160c9a699bec9f50222b05a39139f8fb441eab1dbdf2e43aa.
-Confirmation contains 2,000 benign and 1,000 attack-labelled documents; encoding
-and role-delimiter payload ancestry remain underpowered. Confirmation scores
-remain unopened. Exact membership and checks are local ignored artifacts in
-results/cnn_adoption_v1/data_protocol.json and data_check.json.
-
-CUDA document-loss/gradient/RNG qualification passed for all five trainable
-models. The packed integer backend passed 19 exact dot-product checks and
-bounded CPU/GPU logit comparisons. These are implementation checks. The first
-frozen original TextCNN development evaluation completed: primary alpha=.005,
-threshold .9999271631240845, TP1/FN399/FP1/TN799. This fails the development
-quality gate; it is not a final adoption result. No new candidate fit or
-confirmation scoring has run. Remaining original baselines and common supervised
-adaptation are pending. Git synchronization preserves this incomplete state.
-
-## Frozen-original development comparison completed
-
-All six saved references finished before new supervised fitting. The following
-counts use the same 1,000 benign development-calibration and 1,200 selection
-documents (400 attack/800 benign), strict score>threshold, alpha=.005.
-
-| Reference | Threshold | TP/FN | FP/TN |
+| Descriptive fixed-seed summary | Pooled recall/FPR | Worst recall | Worst FPR |
 |---|---:|---:|---:|
-| historical_bert_fp32 | 0.999423384666 | 5/395 | 1/799 |
-| historical_bert_w8 | 0.999802529812 | 7/393 | 3/797 |
-| original_local_context_03 | 0.995144784451 | 17/383 | 2/798 |
-| original_local_context_03_residual_replace_c98 | 0.98744904995 | 10/390 | 0/800 |
-| original_stacked_01 | 0.998128354549 | 1/399 | 3/797 |
-| original_textcnn_01 | 0.999927163124 | 1/399 | 1/799 |
+| LocalContext PCA + KD | 44.43% / 2.23% | 41.30% | 2.45% |
+| C98 KD | 29.47% / 1.95% | 21.80% | 2.90% |
+| Matched BERT | 66.07% / 1.33% | 45.50% | 1.75% |
 
-All fail the primary development gate. Historical W8 unchanged threshold
-.004557917360216379 gives TP118/FN282/FP62/TN738, separately from recalibration.
-Independent TextCNN saved-score audit passed all 2,296 rows, input/window and
-checkpoint/source identities, exact max aggregation and threshold/count
-recomputation (3.047 CPU seconds). Primary natural-email counts TP0/FN100/FP0/TN200.
-The top20 calibration risks include16 retrospective instruction discussions;
-4of5 primary calibration rejections are retrospective examples. All239
-single-window attacks and all21 attacks with >=4windows are missed. This does
-not implicate missing tails. These descriptive associations motivate enriched
-supervision without changing labels, construction or thresholds.
+Pooled values describe three predictions on the same documents. They are not
+3,000 independent attacks, 6,000 independent benign units or a sampled-seed
+population; every individual seed still controls readiness.
 
-The fixed five supervised recipes are dispatched serially by
-results/cnn_adoption_v1/serial_development_queue.py, stopping on any error.
-Per-job exact commands, terminal codes and walls are in queue_logs. TextCNN
-fitting has started; final outcomes are pending. Actual account usage39% used
-against the explicitly updated60% ceiling; no reset consumed.
+## Decision requirements
 
-## Verified construction fault: original new panel superseded for adoption
+| Requirement | LocalContext | C98 | Evidence/implication |
+|---|---|---|---|
+| Primary 99% recall / 1% FPR, every seed | Fail | Fail | All six intended-format rows fail both bounds |
+| Primary email 99% recall / 1% FPR | Fail | Fail | All seeds fail recall; all intended CNN email FPRs exceed 1% |
+| Hard-benign FPR at most 5% | Fail | Fail | Every intended CNN seed exceeds 22/457 allowable false positives |
+| Adequate withheld code recall at least 95% | Fail | Fail | 125 attacks / 125 backgrounds / 21 payload groups, every seed below 95% |
+| Role-delimiter / encoding mechanism readiness | Uncertain | Uncertain | Only 4 / 13 payload groups, below the frozen minimum 20; never passed by default |
+| At most 1 pp observed recall loss versus matched BERT | Fail across seeds | Fail across seeds | Local loses 36.9 / -4.8 / 32.8 pp; C98 loses 43.9 / 13.2 / 52.7 pp |
+| Reproducible intended export and actual arithmetic | Qualified | Qualified | Six actual packed exports, native checks, full intended-format scoring |
+| Bounded competent software route | Qualified | Qualified | Matched complete-document CUDA Graph and CPU routes; no intended-format GPU latency win |
+| Material target-specific hardware benefit | Conditional; unproven | Conditional; unproven | >69.7% hypothetical precision-matched payload saving; target allocation/closure/transport remain unmeasured |
+| Physical FPGA/energy/protection or novel-method claim | Not established | Not established | Separate later claims, not prerequisites for this negative backbone decision |
 
-Independent inspection found six repeated POSITIVE_CONTEXT and six disjoint
-BENIGN_CONTEXT framing sentences in scripts/cnn_adoption_data.py. These
-label-exclusive framings cross fit/development roles and can identify class
-without interpreting the human-authored payload. Transport balancing does not
-remove this shortcut. All reported original-panel scores remain preserved but
-cannot establish the requested beyond-template generalization. Supervised
-TextCNN early perfect development scores are affected and do not qualify a
-candidate. The serial queue was stopped by verified process identity; last
-saved epoch and interruption record are in construction_fault_stop.json.
-One interrupted learning job counts against the60-job allowance; measured
-process time will be charged rather than treating the interruption as free.
-No confirmation scores were opened. A focused construction repair will preserve
-source/payload role memberships and scientific gates, use distinct revision
-paths, and freeze before new fitting. The previously recorded data check verified
-token/ancestry mechanics, not the absence of semantic construction shortcuts.
+A measured primary failure is sufficient for this negative decision. Sparse
+mechanisms and unresolved hardware feasibility remain explicit; they do not
+turn the completed quality comparison into an unexecuted or positive result.
 
-Focused repair authorized within the original fault-correction allowance:
-remove positive intros; use common neutral transports and30 reviewed authored
-benign discourse-ancestry families allocated6perrole, with grouped wording
-realizations. Retain original source/TT memberships, labels, counts, quotas and
-gates. Old files remain untouched; revised raw/protocol and packed inputs will
-use revision_r2/ and prepared/token_r2/. The label evidence remains controlled
-context recognition on natural backgrounds, not natural historical incident
-records or evidence of broad population generalization. Revised ancestry and
-shortcut checks must pass before scoring/fitting. Resource accounting currently
-charges one interrupted learning job and a conservative323.747s fit-process
-upper bound; scoring/qualification intervals are explicitly distinguished from
-whole-process walls in results/cnn_adoption_v1/resource_accounting.json.
+## Exact frozen checkpoint, format and threshold identities
 
-CUDA Graph complete-raw-document profiling pipeline bring-up passed on the
-preserved original TextCNN development inputs:15 stratified/stress documents,
-45 repetitions; all-window/eager/saved-risk and fixed-decision checks passed.
-This is implementation qualification on the superseded panel, not adoption
-quality or a latency claim for a future checkpoint. CLI: python -B
-scripts/cnn_adoption_profile.py --plan
-results/cnn_adoption_v1/config_r1_before_repair.json --reference-id
-original_textcnn_01 --stage development --format fp32 --device cuda --backend
-cuda_graph --mode warm --sample-per-stratum 1 --long-stress-per-label 1
---warmups 1 --repeats 3 --max-seconds 600. SourceSHA256
-9b6fc7f710246a6073c661052596a5657a2168bd1ab4c88d4d8a507b2fdaa3b9.
-Four-original analytical target mappings now record actual shape/identity checks,
-2.139/2.106/3.445/3.445MB proposed packed payloads and complete-window scaling.
-The hypothetical precision-matched BERT payload11.377MB is unqualified
-numerically; reductions69.7–81.5% do not establish measured resources or speed.
+Priority was LocalContext then C98, with deployment seed 42 fixed beforehand.
+The following rejected candidate references are retained for reproducibility:
 
-The same bounded CUDA Graph profiler check also passed historical FP32 BERT
-(15documents/45timedobservations). This qualifies the explicit-mask graph
-route only for that checkpoint/input panel, with all saved calibration and
-development windows/decisions checked; a new matched-data checkpoint must be
-qualified again. The repaired context bank was inspected and released before
-new raw construction:30 controlled families/60realizations, zero exact cross-
-role templates, maximum token3shingle Jaccard.0625. Semantic themes and one
-construction author remain shared limitations, not independent natural sources.
+- **LocalContext PCA + KD, seed 42:** `results/cnn_adoption_v1/runs/local_context_03_final_s42_r2/checkpoint_latest.pt`;
+  checkpoint SHA256 `50eefbb95597519ef268d0e7262c05f470b947076c167c7603f762a5060a08eb`;
+  format `w8a8_export`, global threshold `0.9998701810836792`.
+  Export-manifest SHA256 `e6b79b363f74c23bdefd4a796084ff770782aab0d55f7668e6ae38ddbf547744`.
+- **C98 KD, seed 42:** `results/cnn_adoption_v1/runs/local_context_03_residual_replace_c98_final_s42_r2/checkpoint_latest.pt`;
+  checkpoint SHA256 `ecf5a25b99bd810ce624cad9eac95682af2db5e7de6d8623b1c6a0d67183ce72`;
+  format `w8a8_export`, global threshold `0.9997296929359436`.
+  Export-manifest SHA256 `58137128fe2652a037e4d6f20bd6ff59579268c87331bd83e4b4b98cd43d7adf`.
+- **Matched BERT, seed 42:** `results/cnn_adoption_v1/runs/bert_matched_final_s42_r2/checkpoint_latest.pt`;
+  checkpoint SHA256 `3b395574f25722ecb9b96954fec21bbd8e5b56cb1b9d7735e4e2170c34de64ce`;
+  format `fp32`, global threshold `0.9996341466903687`.
 
-Fresh-process cold profiling bring-up also completed for the shortest/longest
-shared original TextCNN warm-sample documents (two children), with saved warm
-risks/decisions matched. Model/tokenizer loading and graph capture remain
-separate from the warm raw-document interval; operating-system caches were
-not flushed. Source and matched-warm identities are recorded in
-profiling/development/original_textcnn_01/fp32/cuda_graph/cuda/
-cold_process_complete.json. No latency result is assigned to a revised fit.
+| Frozen target | Primary threshold |
+|---|---:|
+| `local_context_03_final_s42_r2:fp32` | `0.9998902082443237` |
+| `local_context_03_final_s42_r2:w8a8_export` | `0.9998701810836792` |
+| `local_context_03_final_s1337_r2:fp32` | `0.9997723698616028` |
+| `local_context_03_final_s1337_r2:w8a8_export` | `0.9997743964195251` |
+| `local_context_03_final_s2026_r2:fp32` | `0.999937891960144` |
+| `local_context_03_final_s2026_r2:w8a8_export` | `0.9999349117279053` |
+| `local_context_03_residual_replace_c98_final_s42_r2:fp32` | `0.9997135996818542` |
+| `local_context_03_residual_replace_c98_final_s42_r2:w8a8_export` | `0.9997296929359436` |
+| `local_context_03_residual_replace_c98_final_s1337_r2:fp32` | `0.999708354473114` |
+| `local_context_03_residual_replace_c98_final_s1337_r2:w8a8_export` | `0.9997016787528992` |
+| `local_context_03_residual_replace_c98_final_s2026_r2:fp32` | `0.9999077320098877` |
+| `local_context_03_residual_replace_c98_final_s2026_r2:w8a8_export` | `0.9999077320098877` |
+| `bert_matched_final_s42_r2:fp32` | `0.9996341466903687` |
+| `bert_matched_final_s1337_r2:fp32` | `0.9998801946640015` |
+| `bert_matched_final_s2026_r2:fp32` | `0.9998262524604797` |
+| `historical_bert_w8_final_r2:historical_w8_qat` | `0.9984118938446045` |
 
-## Repaired r2 execution released
+All nine final checkpoint digests and all six manifest/blob identities are
+also bound in the prospective freeze and independent audit, without relying
+on mutable aliases. The teacher checkpoint SHA256 is
+`95025bfc0e29163efea613d556d7da0b516ec1bb6c6fac9d9c4c9c6f1f373525`;
+FIT-only teacher-cache SHA256 is
+`3e97743cb216568d31d7f463b4428d25dca72e89afc92cceb2ed64578896c182`.
+The raw-pretrained PCA initializer SHA256 is
+`e76ae0743036d41cfebf706f060264742d6628ee92e7706692248ca3248f5100`.
 
-R2 token preparation completed47.000s; core independent token/association/tail
-check59.469s, with additional raw-block/context checks outside that core timer.
-44,570documents/60,226windows verified. All3,400 newly constructed positive
-blocks equal the original transformed TT text with common transport only;
-all1,760 benign discussion blocks match the released role-exclusive bank;
-removing each of5,160 constructed blocks recovers its exact original background.
-Source/payload/context role intersections and exact normalized-document role
-matches are zero. R2 source/TT memberships and labels equal the original panel.
-The protocol freeze precedes every r2 fit; the earlier interrupted r1 fit and
-its known development outcomes remain disclosed, not erased by this repair.
+## Secondary operating points and own-format effects
 
-Protocol:c84c7c0ca42b3099a95e7f48471788e221873ef694bf4e7cf96fe6d3f7a62cb7.
-Independentcheck:0844e039d7b3216a27936a07661cc5dd2c86abefbc07d46c06205488858fabe2.
-Pretrainingcontract:e47f997b1bcc53f6fd079da74d29ef169ebd741bd20399e0b12a4082fa30b785.
-All are under results/cnn_adoption_v1, with revised raw/protocol inrevision_r2
-and prepared inputs inprepared/token_r2. Config now binds exact manifest/raw/
-artifact hashes. Required-stratum display aliases were corrected to actual
-role_delimiter_spoof/encoded_instruction/code_simulation metadata keys before
-r2 scoring; the same prespecified minima apply. Payloadgroup counts4/13/21
-respectively retain sparse evidence for the first two.
+Nominal 1% and 2% are secondary calibration settings, not alternative passes.
+FP32 CNN rows are diagnostic companions; they cannot replace intended W8/A8.
 
-The guarded serial_development_queue_r2.py was dispatched after terminalcheck
-exit0; session17071 starts original_textcnn_01_r2, then the other five saved
-references, followed by allfive unchanged supervised recipes with_r2 IDs.
-All prior r1 models/scores/data are retained; no r2 confirmation scored.
-
-## Repaired frozen-original development results
-
-All six original-checkpoint r2 evaluations completed exit0 before supervised
-r2 fitting. Same1,000 benign development calibration and1,200 selection rows.
-
-| Reference | Primary TP/FN | Primary FP/TN | Threshold |
+| Target | Alpha .005 recall/FPR | Alpha .01 recall/FPR | Alpha .02 recall/FPR |
 |---|---:|---:|---:|
-| historical_bert_fp32_r2 | 13/387 | 1/799 | 0.9994353652 |
-| historical_bert_w8_r2 | 16/384 | 3/797 | 0.999746978283 |
-| original_local_context_03_r2 | 0/400 | 0/800 | 0.999974727631 |
-| original_local_context_03_residual_replace_c98_r2 | 1/399 | 0/800 | 0.999627590179 |
-| original_stacked_01_r2 | 1/399 | 3/797 | 0.998424172401 |
-| original_textcnn_01_r2 | 1/399 | 3/797 | 0.99991953373 |
+| `local_context_03_final_s42_r2:fp32` | 38.20% / 1.85% | 45.70% / 2.45% | 55.00% / 3.05% |
+| `local_context_03_final_s42_r2:w8a8_export` | 41.30% / 2.05% | 46.00% / 2.40% | 56.00% / 3.15% |
+| `local_context_03_final_s1337_r2:fp32` | 49.90% / 2.50% | 55.60% / 3.05% | 67.90% / 5.05% |
+| `local_context_03_final_s1337_r2:w8a8_export` | 50.30% / 2.45% | 56.50% / 3.10% | 68.40% / 4.90% |
+| `local_context_03_final_s2026_r2:fp32` | 40.60% / 2.20% | 49.50% / 2.70% | 56.00% / 3.20% |
+| `local_context_03_final_s2026_r2:w8a8_export` | 41.70% / 2.20% | 49.50% / 2.70% | 56.00% / 3.25% |
+| `local_context_03_residual_replace_c98_final_s42_r2:fp32` | 34.90% / 1.60% | 40.50% / 1.90% | 49.40% / 2.40% |
+| `local_context_03_residual_replace_c98_final_s42_r2:w8a8_export` | 34.30% / 1.45% | 40.30% / 1.90% | 49.70% / 2.55% |
+| `local_context_03_residual_replace_c98_final_s1337_r2:fp32` | 31.80% / 3.00% | 38.10% / 3.35% | 52.40% / 5.90% |
+| `local_context_03_residual_replace_c98_final_s1337_r2:w8a8_export` | 32.30% / 2.90% | 38.90% / 3.55% | 52.90% / 5.85% |
+| `local_context_03_residual_replace_c98_final_s2026_r2:fp32` | 21.80% / 1.55% | 30.10% / 1.90% | 39.70% / 2.30% |
+| `local_context_03_residual_replace_c98_final_s2026_r2:w8a8_export` | 21.80% / 1.50% | 30.70% / 1.95% | 40.00% / 2.30% |
+| `bert_matched_final_s42_r2:fp32` | 78.20% / 1.75% | 85.70% / 2.50% | 93.40% / 4.15% |
+| `bert_matched_final_s1337_r2:fp32` | 45.50% / 1.15% | 69.00% / 2.40% | 82.60% / 3.90% |
+| `bert_matched_final_s2026_r2:fp32` | 74.50% / 1.10% | 83.30% / 1.80% | 90.20% / 2.95% |
+| `historical_bert_w8_final_r2:historical_w8_qat` | 6.90% / 1.10% | 9.70% / 1.40% | 12.90% / 1.90% |
 
-Independent TextCNN/Stacked saved-score checks passed3.547/3.359 CPU seconds.
-TextCNN natural-email TP0/FN100/FP1/TN199. Both saved own-threshold/max/input
-associations match the revised data. Original TextCNN vs historical W8 primary
-paired recall difference is-.0375 (CNN.0025 vs BERT.04), equal FPR.00375.
-Separate95% sensitivity intervals: sourcegroups[-.0595,-.0179], attackpayload
-groups[-.0765,0], paired calibration-source refit[-.06,-.0125]. This is one
-fixed seed, not a sampled seed population or distribution-shift guarantee.
-1000 raw resampling draws and group counts are retained in the comparison JSON.
-The initial comparator integration rejected a nonexistent redundant top-level
-stage before reading rows; it now uses the actual association.stage schema.
-The saved output caption incorrectly said all benigns lack payload ancestry;
-its numeric draws remain valid: payload bootstrap concerns attack recall only,
-and full-panel FPR is undefined because natural benigns lack that ancestry.
-Controlled retrospective benigns can carry TT ancestry. The caption correction
-is preserved in cnn_adoption_compare_execution_attempts.json; source corrected
-for future outputs without overwriting the original comparison.
+At the primary own-format thresholds, float-to-integer LocalContext changes
+TP by +31/+4/+11 and FP by +4/-1/0 across seeds; C98 changes TP by -6/+5/0
+and FP by -3/-2/-1. Changed document decisions number 35/9/15 and 13/15/7.
+These differences include each format's separately fitted benign threshold.
+All FP32 companions also fail, so conversion is not the dominant security
+deficit. Representation, attribution/context and fixed max-window aggregation
+were not causally separated by this bounded study.
 
-Supervised r2 TextCNN remains live. Epoch7 primary TP108/400,FP9/800 at the
-last inspection; this is interim development evidence, not finalist selection.
-Other fixed supervised recipes continue serially after this run.
+## Failure strata and withheld mechanisms
 
-R2 supervised TextCNN completed12epochs, development-selectedepoch7.
-CheckpointSHA256:b068fcc77e25946b904c1d4abf4b61e2ce538a8b4e18eba4324b78f86c1f7056.
-Primarythreshold.9999972581863403;TP108/FN292/FP9/TN791, recall27%,FPR1.125%.
-Training+scoring361.778s (whole subprocesswall in queue_logs_r2). This fails
-the primary gate. Stacked fitting follows. Some late TextCNN FP32-softmax
-calibration scores round to1 (epoch12threshold1/TP0/FP0); a separate
-development-only raw-margin/F64 diagnostic is underway to distinguish rounding
-from actual score overlap. It changes neither primary scores nor thresholds.
+| Candidate/seed | Role-delimiter recall (sparse) | Encoding recall (sparse) | Code recall (adequate) |
+|---|---:|---:|---:|
+| LocalContext PCA + KD / 42 | 40.00% | 17.60% | 66.40% |
+| LocalContext PCA + KD / 1337 | 68.00% | 34.40% | 59.20% |
+| LocalContext PCA + KD / 2026 | 55.20% | 24.80% | 32.80% |
+| C98 KD / 42 | 33.60% | 26.40% | 32.00% |
+| C98 KD / 1337 | 35.20% | 16.80% | 31.20% |
+| C98 KD / 2026 | 25.60% | 16.80% | 16.80% |
+| Matched BERT / 42 | 78.40% | 67.20% | 77.60% |
+| Matched BERT / 1337 | 48.80% | 41.60% | 49.60% |
+| Matched BERT / 2026 | 70.40% | 63.20% | 87.20% |
 
-Independent selected-TextCNN context/window diagnosis completed34.219 CPU
-seconds. All9 selection false-positive winning windows retain BOTH discourse
-framing sides; no retrospective selection/calibration document has an isolated
-payload window. Thus disappearance of both framing sides does not explain
-current development false positives. All20 highest calibration scores are
-retrospective examples;7of9 selection false positives share one payload group
-across five context families. Matched backgrounds:376/400 attack risks exceed
-the paired benign risk,22are lower,2tie. Improved relative ranking does not
-satisfy the absolute low-FPR requirement. FIT separately contains19/400
-retrospective documents with28 isolated payload windows, matching54positive
-windows in24positive fitting documents. This is a local supervision tension,
-not proof of an unavoidable whole-document contradiction. The diagnosis
-artifact retains exact IDs/input hashes and did not access reserved scores.
+Each required mechanism has 125 attack documents and backgrounds, but role
+and encoding have only four and thirteen attacker ancestries. Their values
+remain descriptive and uncertain. Code has twenty-one; all sixteen targets
+fail its 95% recall gate, including the best BERT result 109/125 (87.2%).
 
-## Probability saturation discriminated from low-FPR overlap
+Seed-42 intended CNN false positives are all controlled retrospective
+constructions: LocalContext 41/400 and C98 29/400; neither rejects the 1,600
+raw-natural benign documents in that seed. This limits any claim about
+natural-mail rejection while documenting failure on the predeclared meaningful
+quotation/discussion stress. Across plain/code/quotation attack carriers,
+LocalContext detects 123/174/116 of 334/333/333; C98 detects 68/217/58.
+Long benign documents with at least four windows have 19/120 Local false
+positives and 9/120 C98 false positives. Length association does not establish
+a causal aggregation mechanism. All seeds, source/genre, presentation, position,
+context, benign category, length/window and payload summaries are retained in
+`confirmation_primary_quality_summary_r2.json`, with input identities verified.
 
-Bounded CPU-only TextCNN margin probe completed14.015s, one CPU thread,
-CUDA not initialized, devcal/devselection only. Selectedepoch7 primary counts
-are identical for nativeFP32probability, FP64sigmoid of FP32logits, and raw
-FP32/FP64margin diagnostics:TP108/FN292/FP9/TN791. Its selected result is
-therefore not rescued by preserving more score-order precision. Latestepoch12
-FP32threshold1 producesTP0/FP0; diagnostic FP64probability or rawmargin
-producesTP64/FN336/FP11/TN789 (recall16%,FPR1.375%). Rounding explains the
-lateepoch collapse but not satisfactory discrimination. This does not change
-primary outcomes, model selection, calibration or numerical policy. CPU/CUDA
-comparison limitations and frozen checkpoint hashes are retained in
-margin_probe/textcnn_01_supervised_s42_r2/complete.json.
+## Paired uncertainty
 
-StackedCNN completed12epochs, selectedepoch9:primaryTP144/FN256/FP9/TN791,
-recall36%,FPR1.125%, threshold.9998946189880371, also fails.
-CheckpointSHA882cde263e5b6b0c706e268fc73894e5564517eb96f0f04c493beab2edacd201.
-Training+scoring391.034s; subprocesswall separately saved. LocalContext fitting
-is live; no intervention is selected until the common panel and matchedBERT
-finish.
+Effects are CNN minus the same-seed, development-selected matched BERT.
+Intervals are the 2.5th/97.5th percentiles of 1,000 fixed-seed sensitivity
+draws. Source resampling preserves paired backgrounds; payload resampling
+uses attack ancestry only (no FPR estimate); calibration resampling refits
+each global threshold on the same resampled benign source groups.
 
-Actual enriched Stacked epoch9 W8/A8 export completed CPU1thread7.593s
-(invocationwall~17.1s), CUDA/vendor/physicalfalse.512representativeFITwindows
-from512sourcegroups calibrate activations; codes/scales are hashed and loaded
-from packed bytes, not recomputed weights. Payload:1,982,208W8-codebytes +
-123,140FP32-scalebytes +776FP32parameter/biasbytes =2,106,124bytes. FourFIT
-referencewindows show max/mean absolute logit error.07037/.04206 and4/4
-argmaxagreement. This small reference check is NOT low-FPR quality or
-threshold qualification; own-format development scoring follows whenGPUqueue
-finishes. No finalist is nominated by this bring-up. Output:
-exports/stacked_01_supervised_s42_r2/ under the adoption resultroot.
+| Intended CNN | Seed | Recall difference, pp | Source interval | Payload interval | Calibration-refit interval |
+|---|---:|---:|---:|---:|---:|
+| LocalContext PCA + KD | 42 | -36.90 | [-40.61, -33.30] | [-41.98, -28.01] | [-47.50, -27.50] |
+| LocalContext PCA + KD | 1337 | +4.80 | [1.10, 8.69] | [-5.94, 13.83] | [-11.20, 15.80] |
+| LocalContext PCA + KD | 2026 | -32.80 | [-36.16, -29.27] | [-45.18, -24.75] | [-39.20, -20.70] |
+| C98 KD | 42 | -43.90 | [-47.54, -40.37] | [-50.99, -39.58] | [-50.00, -32.60] |
+| C98 KD | 1337 | -13.20 | [-17.06, -9.34] | [-19.55, -0.83] | [-27.90, -1.10] |
+| C98 KD | 2026 | -52.70 | [-55.93, -49.33] | [-60.06, -49.50] | [-58.40, -39.10] |
 
-LocalContext03 supervised_r2 completed12epochs, selectedepoch4. Primary
-threshold.9990829229354858;TP188/FN212/FP16/TN784, recall47%,FPR2%,
-failingboth absolutebounds. CP SHA256
-ce775d06de3b15b728b604c59e9ef5f660809463371a67c31b0019f8308172f0.
-Training+scoring792.277s; wholeprocesswall separately inqueue_logs_r2.
-Residualreplacement98 fitting is now live, followed bymatched-data BERT.
-Train-only teacher-cache entrypoint is being implemented against the existing
-FIT/cache schema; no teacher has been qualified or queried yet. Any such
-intervention depends on the actual completed matchedBERT development result.
+Local seed 1337 has a positive point difference, but its excessive FPR
+fails the absolute requirement and its payload/calibration intervals include
+zero. Calibration-tail sensitivity remains material. Full FPR intervals,
+all secondary settings, FP32 companions and historical-anchor comparisons
+are retained in the six complete comparison artifacts and original draws.
+The historical anchor is one fixed checkpoint reused across comparisons,
+not three reference fits. These are separate dependence sensitivities, not
+a joint source/payload/context bootstrap, multiple-candidate correction,
+population guarantee or proof of statistical noninferiority. Fixed seeds and
+one-author negative context families remain additional limits.
 
-Residualreplacement98 supervised_r2 completed12epochs, selectedepoch2.
-Primarythreshold.998331606388092;TP165/FN235/FP3/TN797, recall41.25%,
-FPR.375%; meetsFPR butfailsrecall. CheckpointSHA256
-8b5f53c9791b1312a0bdb529aecc9fd220967971bac494a179a4be7c6ffce185.
-Training+scoring816.655s, subprocesswall separately inqueue_logs_r2.
-Allfour common CNN fits are complete; matchedBERT nowruns.
-LocalContext numericalexport produced3,440,780 packedbytes andfourFIT
-referencevectors withmax/mean |logitdelta|.107903/.026414,4/4argmaxagreement,
-CPU1thread11.969s. Its generatedmapping sidecar erroneously reused a
-Stacked-specific schedule; topology/liveness claims are quarantined pending
-focused correction, preserving oldbytes. Packedcodes/scales/config/opgraph
-and theirhashes remain checkpoint-specific. No GPUqualityqualification yet.
-The nativeinteger check now accepts explicitmanifest/FIT/output CLIargs with
-unique-output/preservation guards; help passes, actualnewformatGPUchecks
-wait for theserialtrainingqueue. Teacher FITcache helper andsyntheticchecks
-are ready, but no teacher has beenqualified orqueried.
+The analysis-only adaptor corrected a four-core-input versus six-frozen-file
+metadata comparison. It verifies all frozen bytes before rows and preserves
+the original comparator, exact patch and corruption tests. Independent
+verification also corrected final-checkpoint filename and historical archive
+path/runtime-subset schema faults. Failed checks and original sources remain
+preserved. No frozen scoring source, score, model, format or policy changed.
 
-## Mapping estimate correction
+## Question and evidence boundary
 
-The LocalContext sidecar schedule is now family-specific, preserving the
-invalid oldsidecar andpre-fix exporter inits historydirectory. Packedmanifest,
-codes/scales/reference/opgraph bytes are unchanged. The staticpayload estimator
-also double-counted LayerNorm affine parameters: corrected LocalContext
-3,440,780B (prior3,445,444B), C98replacement3,439,184B (prior3,444,560B).
-TextCNN2,139,148B andStacked2,106,124B unchanged. These corrections supersede
-previous preliminary storage figures; equalconfig/shapes fororiginal and
-enrichedLocalContext nowmatchtheactual3,440,780B payload. The discrepancy
-was accounting, not a silent architecture change. BERTshape-derived storage
-comparison remains hypothetical andnumericallyunqualified; no physicalclaim.
+This study selects a possible backbone for SENTRY's next bounded FPGA
+development stage. It asks whether focused CNN adaptation can transfer to
+source/payload-disjoint indirect-injection examples and justify development
+against a competent pretrained BERT reference. It supports the eventual
+FPGA-aware contribution; neither detector selection nor conventional transfer,
+distillation or quantization establishes that contribution.
 
-Common matchedBERT completed5epochs, selected4:TP275/FN125/FP2/TN798,
-recall68.75%,FPR.25%, threshold.9993425011634827. It improves the practical
-comparison butfailsrecall99%. CP SHA
-13c6814362b39eee0d4a58ae8e6aef51d4e4fb12ae728368cd452042d08f2d4c.
-Training+scoring521.877s. Allfive common selectedCPs nowhavecompleted full
-development+known96 evaluations. The prospectively allowed oneBERT5e-5
-refinement was dispatched afternewformatchecks; no extraBERTsweep.
+The task is English external email/document content for document QA. Model
+inputs contain document text alone. Labels describe constructed assistant
+redirection intent, not successful compromise or preservation of a legitimate
+task. No target-LLM API, paid service, physical hardware, payload execution or
+protected project final-calibration/final-test/NotInject access was used.
 
-Nativeinteger qualification of actual enrichedStacked/LocalContext passed
-19/35exactINT32-dotchecks againstCPUINT64oracles, respectively, plusfourFIT
-packedCPU/nativeCUDA outputchecks underunchanged1e-5logit/1e-6risk tolerances.
-Checkintervals4.627/6.019s; fullprocesswalls separatelylogged. BothW8/A8
-formats completedown-calibration developmentscoring; these are actualmixed
-integer/FP32-exception routes, not fakequant runtime. Qualityresults below:
-stacked_01_supervised_s42_r2 W8/A8:TP142/FN258/FP9/TN791, threshold0.999895572662.
-local_context_03_supervised_s42_r2 W8/A8:TP188/FN212/FP16/TN784, threshold0.999074459076.
+## Data, independence and exposure
 
-These remaindevelopment-only andnotfinalnominations. Accountusage43% used
-againstuser-raised60%; noresetconsumed. Confirmationunopened.
+The natural backgrounds are a pinned SpamAssassin ham redistribution and the
+official WikiText-103 TRAIN release. The inventory retains 3,667 usable English mail units in
+1,568 thread/ancestry groups and 28,938 complete article paragraphs in 28,598
+groups. Mail uses the documented CC0/PDDL distribution; Wikipedia text retains
+CC BY-SA provenance. Article units are whole naturally bounded paragraphs,
+selected by a fixed hash; they are not claims to full Wikipedia-article coverage.
+The SpamAssassin package is stdlib-js revision
+`02b1f0de3ee4ec2320fc0b23035ff994996e81c3`; WikiText is the official Salesforce
+revision `b08601e04326c79dfdd32d625aee71d232d685c3`. License assertions are
+release documentation, not an independent legal adjudication. Exact download
+URLs, byte counts and hashes are retained in `source_cache/acquisition.json`.
+SpamAssassin ancestry joins message/reply/subject identity, substantial shared
+paragraphs and candidate token-shingle near duplicates. Generic footers were
+excluded from the ancestry rule. This is a documented operational grouping,
+not exhaustive semantic paraphrase detection.
 
+Operative attacker text comes from the official Tensor Trust original release:
+36,108 eligible strings from 417 players form 192 author/near-template union
+groups. The giant 33,977-string component was quarantined rather than counted
+as independent templates. Source rights and research-use consent are recorded;
+no unrestricted SPDX license is invented. Only attacker input and grouping
+metadata were used, without target-response/success supervision. The permitted
+old canonical TRAIN contributes 32,370 documents in 10,790 source groups and
+55 known payload groups. PIGuard/BIPIA leads were checked for provenance and
+protected-family overlap; uncertain imports were quarantined rather than
+opening their validation/test partitions.
 
-### Git synchronization checkpoint, 14 October 2026
+The official Tensor Trust input revision is
+`747a75e096761ebc01bd3970158827326b4add23`; raw download SHA256
+`c3af2cb1b812fed72d879e130f2478d22915a2f4834494972418c57a60a2d4f6`.
+The saved consent terms and acquisition manifest bind the research-use basis.
 
-Stage 2 terminated successfully. BERT 5e-5 refinement full development primary
-evaluation: TP316/FN84/FP0/TN800, 79% recall/0% FPR, below fixed 99% recall.
-Checkpoint SHA256: 95025bfc0e29163efea613d556d7da0b516ec1bb6c6fac9d9c4c9c6f1f373525.
-Seven independent common-recipe/format audits passed in 28.000 CPU seconds.
-C98 CPU export: 512 FIT calibration windows, four reference vectors,
-3,439,184 bytes, maximum logit error .059832; no FPGA measurements.
-Independent inspection found export calibration queries content_token_count/
-content_length while R2 supplies content_tokens. Existing exports actually
-balance source/genre with collapsed length strata; advertised length balancing
-is unproven. Saved artifacts/results remain tied to that sampler. Repair needs
-new qualification and preservation of existing artifacts. Confirmation remains
-unopened; distillation and frozen three-seed confirmation are pending.
-The user requested synchronization of this incomplete study state to Git.
+| Role | Benign | Attack | Source groups | Windows |
+|---|---:|---:|---:|---:|
+| FIT, including permitted canonical TRAIN | 12,790 | 23,580 | 12,790 | 47,283 |
+| Development selection | 800 | 400 | 800 | 1,884 |
+| Development benign calibration | 1,000 | 0 | 1,000 | 1,451 |
+| Final benign calibration | 3,000 | 0 | 3,000 | 4,057 |
+| New confirmation | 2,000 | 1,000 | 2,000 | 5,551 |
 
+The confirmation panel pairs attacks with new backgrounds and contains 52
+attacker ancestry groups. Its primary natural-email subset has 400 benign and
+200 attack documents; the article generalization stratum has 1,600/800. The
+final calibration mix has 350 mail and 2,650 article documents. Weights were
+fixed before scoring; one global threshold is used despite differing genre
+weights. Hard benign contains 457 confirmation documents: 400 controlled
+retrospective examples and 57 natural human-recipient requests. Those labels
+do not make every constructed variant an independent discourse population.
 
-### Qualified teacher and bounded distillation dispatch
+An initial construction fault reused class-specific positive introductions
+and negative framing families across roles. The affected TextCNN fit stopped
+after eight saved epochs; its favorable scores and all original r1 artifacts
+are retained but excluded from adoption evidence. The focused r2 correction
+removed every positive introduction and assigned each negative context family
+to one role. Source/attacker memberships, labels, positions, targets and quotas
+were preserved. R2 membership and construction froze at
+2026-10-14T19:20:11.012077 UTC before any r2 fitting, not before the invalid r1
+fit. The protocol explicitly records that distinction.
 
-Independent refined-BERT score audit passed (2.906 CPU seconds): primary
-316/400 attacks, 0/800 benign false positives, hard 0/182, natural-email
-72/100 attacks and 0/200 benign. Common BERT gives 275/400 and 2/800.
-The refined FP32 checkpoint is selected as a useful same-FIT teacher, not a
-security-qualified guard. FIT-only cache binds its exact checkpoint, completed
-development record and FIT identities. Before any distillation fit, weight .3
-and temperature2 were fixed for LocalContext and C98 replacement, with .7
-ground-truth BCE and .3 temperature-squared soft Bernoulli BCE of document-max
-margins. Corresponding supervised runs are same-architecture/data/seed/optimizer
-controls. No inference teacher, new architecture or confirmation access.
+Independent checks verified 44,570 documents, 60,226 windows and every tail,
+with zero cross-role source/payload/context ancestry intersections or exact
+normalized document matches. The 30 negative context families and their 60
+realizations are authored by one person; related themes and a maximum
+cross-role token-trigram Jaccard of 0.0625 do not prove semantic novelty.
+Foundation pretraining exposure remains unknown. Old canonical training and
+teacher exposure are explicit; lexical exclusions do not establish mechanisms
+unseen to all checkpoints. The old 96 probes are now known diagnostics.
 
-FIT-only refined-BERT cache completed: 36,370 documents/47,283 windows,
-26.407 seconds; cache SHA256
-3e97743cb216568d31d7f463b4428d25dca72e89afc92cceb2ed64578896c182.
-Serial distillation queue started with LocalContext; no confirmation access.
+Historical BERT canonical metrics were reused from their saved summary, without
+reopening protected inputs: 2,738 attacks and 1,369 benign documents, all attacks
+detected at alpha 0.005/0.01/0.02, with 4/13/43 false positives respectively.
+The saved summary SHA256 is
+`b05b6664129286bac67639fad24f5524b68ce54548cfcb9f77d5e41fadedd9e8`.
+On the new development population, its unchanged original threshold detects
+95/400 attacks and rejects 56/800 benign documents (23.75% recall, 7% FPR).
+New alpha-0.005 calibration detects only 16/400 with 3/800 false positives.
+Canonical performance therefore does not transfer to this new population;
+recalibration alone does not establish generalization. At the original threshold,
+the known 96 probes give 50/64 attack detections and 16/32 benign rejections,
+which remain descriptive regression evidence.
 
+Three lexical-mechanism strata were withheld from project fitting/selection.
+Each has 125 attack documents on 125 backgrounds. Code simulation has 21
+payload ancestries and meets the prospective adequacy rule of at least
+100 attacks, 100 attack-source groups and 20 payload groups. Encoding has
+13 ancestries and role-delimiter spoofing four, so their readiness remains
+uncertain even when a descriptive recall is reported. These are mechanical
+strata, not a validated new attack taxonomy or semantic-unseen guarantee.
 
-### Corrected calibration and optional transfer feasibility
+## Shared computation and bounded adaptation
 
-The corrected exporter resolves R2 content_tokens and checks aliases explicitly.
-Its actual FIT-only sampler check used 36,370 metadata rows and selected512
-windows/500 source groups, spanning12 source/genre/length strata and all four
-length bins. Two common contextual controls were re-exported into separate
-_length_r3 directories; old manifests/scales/scores were untouched. Shared
-calibration identity:5a11a1c912c7eb2f50ab4763a348348fd327d9e8f76a61b74040913d90c7624e.
-Exporter SHA256:403017af3fae3e95d77edc0538e02101800fd5a2eb566c83b30289ec219c241a.
-Local/C98 packed bytes remain3,440,780/3,439,184; four-vector CPU maximum
-absolute logit deltas are .102971/.102071. These exports do not inherit old
-CUDA qualification or development quality. Their records are in
-results/cnn_adoption_v1/exports/length_r3_control_pair_summary.json.
+The pinned BERT WordPiece representation uses length 256, 254 content tokens,
+64-token overlap and stride 190. Every tail is included and document risk is
+the maximum attack-class probability over all windows. No model receives
+trusted span locations, source identifiers, target responses or quotation
+exemptions. A document-level max-margin binary cross-entropy objective avoids
+fabricating labels for unknown individual windows. Focused same-dropout replay
+and gradient checks verify the bounded-memory implementation.
 
-An isolated transfer-initialization feasibility check completed in2.421 CPU
-seconds without changing the live trainer: raw language-pretrained BERT
-WordPiece embeddings were projected via uniform non-PAD FP64 covariance PCA
-to existingCNN dimensions, signed deterministically and scaled to each seeded
-scratch embedding RMS. Repeated projection and nonembedding weights/RNG were
-bitwise equal; PADzero/trainability/finite backward/mask checks passed for all
-fourCNNs. This standard technique has no demonstrated task-quality benefit.
-No fitting/development text, frequencies or task-finetuned weights enter PCA;
-pretraining exposure remains unknown. The raw96-dimensional projection is
-e76ae0743036d41cfebf706f060264742d6628ee92e7706692248ca3248f5100.
-No integration or second training intervention has been executed/adopted yet.
+The original TextCNN, Stacked CNN, LocalContext and C98 replacement were first
+evaluated on repaired development data, alongside historical BERT W8 and FP32.
+All originals failed the new primary recall requirement. The common enriched
+study then trained all four CNNs and a pretrained four-layer, 256-hidden,
+four-head BERT on the same FIT information. CNNs received twelve development
+epochs with their recorded architecture learning rates; BERT received five,
+AdamW, 10% warmup and linear decay. One bounded BERT refinement raised its
+learning rate from 2e-5 to 5e-5. Different pretraining access is acknowledged.
 
+Only two additional CNN training interventions were used, with no new
+architecture sweep. First, the two strongest families received ground-truth
+plus training-only BERT distillation: weight 0.3, temperature 2, document-level
+Bernoulli teacher margins and a same-data supervised control. The refined
+seed-42 BERT teacher had useful development behavior (79% recall, zero FPR)
+but did not satisfy the security gate. Its cache contains FIT outputs only.
+No teacher remains at inference or supplies confirmation supervision.
 
-### First bounded distillation result
+Second, LocalContext received raw language-pretrained WordPiece embeddings
+projected by a FIT-independent, deterministic FP64 PCA to 96 dimensions,
+with PAD fixed, RMS matched and every non-embedding initial tensor/RNG state
+preserved. This is standard transfer initialization, not a novel method.
+It retained the same distillation objective and architecture. The intervention
+improved selected development recall but was not a uniform mechanism benefit;
+its practical comparison also includes the prespecified epoch selector.
 
-LocalContext KD completed12epochs, selectedepoch2 by the unchanged development
-rule. Checkpoint SHA256:3361e55b6cb16dc6b770baf89ad8d65b2a9e0e5ae21a19b222aef3b72d41a2b7.
-Training/scoring interval784.1493201seconds. Full FP32 development primary
-TP192/FN208/FP6/TN794, threshold .9986555576324463 (48%recall/.75%FPR).
-Same-data/seed/architecture supervised control188/212/16/784 (47%/2%).
-KD improves observed FPR but fails fixed99% recall; no confirmation claim.
-The serial C98 replacement KD job is live. Independent score audit and corrected
-FIT-calibrated numerical export of the completed first checkpoint are underway.
+Development-only selection fixed LocalContext PCA + KD at seven epochs,
+C98 KD at four, and matched BERT at four epochs of its five-epoch LR schedule.
+Fresh final fits used seeds 42, 1337 and 2026, with no development monitoring,
+early stopping or seed selection. Seed 42 was fixed for the deployment
+checkpoint, and candidate priority was LocalContext then C98. Exact seed-42
+state tensors reproduce their selected parents; file digests differ because
+the completed final artifacts have distinct metadata and optimizer states.
 
-Independent Local KD saved-score audit passed3.281CPU seconds. Hard-benign FP
-6/182=3.30% versus16/182=8.79% supervised; natural-email TP48/100 andFP1/200
-versus47/100 and2/200. Exact-control audit .469CPU seconds binds same model,
-FIT/development inputs,seed,optimizer,scheduler andepochs. Own-threshold paired
-changes:28attackgains/24losses;13benignFPremoved/3added. Old96TP0/FN64/FP0/TN32.
-Thus KD's observed benefit primarily reduces FP-tail risk without closing the
-recall gap to useful BERT. Required withheld strata remain absent ondevelopment.
-New corrected Local KD export uses512FITwindows/500groups/12strata and shared
-calibration5a11a1c9...c7624e. Packedbytes3,440,780; fourFITrefmax/mean logitdelta
-.127228/.040494, argmax4/4,CPU10.140seconds. ManifestSHA256
-616cc048b8bb6ad7032c7f700fd7c1b96c23263983e804c734def3d003c7cb29.
-GPU packed qualification and actualformat full quality are still pending.
+## Development behavior and score separation
 
+Common enriched seed-42 supervision produced recall/FPR of 27%/1.125% for
+TextCNN, 36%/1.125% for Stacked, 47%/2% for LocalContext and 41.25%/0.375%
+for C98. Matched BERT improved from 68.75%/0.25% at LR 2e-5 to 79%/0% at
+5e-5. Distillation gave LocalContext 48%/0.75% and C98 42.75%/0.875%; the
+PCA-initialized LocalContext selected parent reached 51.75%/0.875% in FP32
+and 52.75%/1% after conversion. These are practical selected-recipe effects,
+not a claim that every error category improved or that data enrichment alone
+caused the difference from the original span-trained models.
 
-### Prospective second-intervention selection rule
+| Final intended format | Seed 42 recall/FPR | Seed 1337 recall/FPR | Seed 2026 recall/FPR |
+|---|---:|---:|---:|
+| LocalContext PCA + KD, W8/A8 | 52.75% / 1% | 63.75% / 2.25% | 44.5% / 1% |
+| C98 KD, W8/A8 | 43% / 0.875% | 40.5% / 2% | 28.25% / 0.875% |
+| Matched BERT FP32 | 79% / 0% | 47% / 0.375% | 75.75% / 0.125% |
 
-Before C98 KD finishes, the remaining intervention is bounded to one existing
-contextualCNN: if completed KD still fails primary recall, choose the stronger
-of the two KD-only recipes by the existing checkpoint quality key (highest
-primary recall while below99%, then FPR; fixed tie priority LocalContext).
-Test raw-pretrained PCA embedding initialization plus the identical KD recipe
-against that KD-only control, with the same12epoch horizon, seed42, architecture,
-FIT/cache, optimizer and decision policy. Pretraining representation is a named
-remaining difference from BERT after KD's limited recall improvement. This is
-standard transfer learning, not a new security contribution; PCA/centering/
-anisotropy and lexical knowledge change together. No runtime BERT or new encoder
-computation enters the CNN. All nonembedding weights and RNG must remain equal.
-No improvement of the prespecified development primary key would falsify its
-usefulness for selection. No further training intervention or architecture
-search follows this bounded test. Final recipes/formats/priority must then freeze
-on development evidence, with all3seed comparison and once-only confirmation.
-Integration is prepared separately and cannot replace the trainer until the
-live KD queue terminates; original executed source/artifacts stay preserved.
+All three seeds of each model fail development recall. LocalContext seed 1337
+has higher recall than its BERT counterpart but excessive FPR; BERT is not
+uniformly stronger across seeds. Four paired three-seed comparisons preserve
+source-group, attack-payload-group and benign-calibration-refit sensitivity
+draws. Their thresholds remain the actual benign-calibrated policy.
 
-Paired Local KD FP32 vs refined BERT FP32 development comparison executed
-1,000 draws, seed20261014. Nominal CNN-minus-BERT recall -31pp andFPR+.75pp.
-Selection-source800group percentile95% sensitivity interval: recall[-36.041,
--25.309]pp,FPR[+.25,+1.375]pp; attackpayload20group recall[-47.727,-11.744]pp,
-FPRundefined. Paired1000benigncalibration-group refits withselectionfixed yield
-recall[-41.25,+15.75]pp,FPR[+.25,+1.125]pp. These distinct dependence/tail
-sensitivities neither rescue fixed nominal gates nor prove noninferiority.
-OutputSHA256:947aa7f83ea3167d456c6b7ca331a271576e8623a6a438d94239a9b7ff28fcb7;
-results/cnn_adoption_v1/local_kd_vs_refined_bert_comparison_r2.json.
-No inference/GPU/reserved access. Whole-process CPU duration was not captured
-by the comparator; recorded as unknown, not zero or inferred from wait timeout.
+A separate retrospective development-label diagnostic enumerates every strict
+score tier, preserving ties. At most 8/800 false positives gives maximum
+intended LocalContext recall 53.5%/41.75%/44.5% across seeds; C98 gives
+47.75%/27.75%/29.25%; matched BERT gives 94%/69.25%/94.5%. At least 396/400
+attack detections instead requires minimum BERT FPR 19.625%/14.375%/7.625%.
+No target has a single strict threshold attaining both 99% recall and 1% FPR
+on this observed development panel, even with its labels available. Independent
+whole-tier enumeration and mixed-class/saturated-score tie tests confirmed the
+rank calculation. These oracle cuts are neither calibration choices nor
+confirmation/population bounds. They show a score-separation limitation in
+addition to calibration transfer; global threshold movement alone cannot solve
+the observed development failure.
 
+## Frozen numerical and operating policies
 
-### Second KD completed; final bounded intervention released
+Primary calibration is nominal alpha 0.005 on 3,000 separate benign documents,
+with strict `risk > threshold`; required observed recall is at least 99% and
+FPR at most 1%. Natural-email recall/FPR has the same bound. Hard-benign FPR
+must be at most 5%; adequately populated required mechanisms must reach 95%
+recall. Alpha 0.01 and 0.02 are secondary descriptions, never rescue chances.
+All three fixed seeds must qualify; pooled or best-seed results cannot pass
+for a failed seed. Relative to the development-selected matched BERT, observed
+recall loss may not exceed one percentage point while meeting absolute bounds.
 
-C98 KD completed12epochs, selected4, CPd17e8e63c177a8a2ae6d21d02ae7159c8ad07a3117b6e5fab1365ceeaa9196b6,
-816.9545773training/scoring seconds. Full FP32 primary TP171/FN229/FP7/TN793,
-threshold .9994576573371887 (42.75%/.875%), vs supervised165/3.
-Local KD192/6 wins the prospectively recorded rule. The isolated reviewed
-PCA integration was applied only after serial KD queue terminal0; original
-trainer689391...14d04 preserved, newtrainer a9589bd633b67f413be2cafdf3b79f3f4d4f1bdbcb18c48fdb724ee434f34e4f.
-The Local PCA+KD recipe retains allarchitecture/data/loss/seed/optimizer/horizon
-fields and binds frozen projection/source/provenance hashes. No further training
-intervention or newarchitecture search remains. Serial queue first confirms
-actual LocalKD W8/A8 development quality then fits/evaluates Local PCA+KD.
-LocalKD native signed integer qualification passed35dots/4FITwindows5.1374104s.
-C98KD corrected CPU export:3,439,184bytes, max/mean4FITdelta .076938/.035418,
-9.922CPU seconds; manifest6d57a4abab0e457351fe9ced9252e1ee5f3b146a08445926cf648c2bddbc63e7.
-All existing scores preserve executed oldsources; no re-association or overwrite.
-Confirmation remains unopened; final3seed/format/priority freeze still pending.
+The prospective freeze binds all sixteen exact targets, recipes, formats,
+source identities, data membership, policies, priority and seed rule before
+confirmation. Its SHA256 is
+`6252a2f357edc9fe62690da3dd375ea1c795fd9d28c5c4accfd7c8e1e07a5aaa`.
+Both CNNs are assessed in intended W8/A8 plus explicit FP32 exceptions; FP32
+companions are diagnostic. BERT is FP32. The historical W8 anchor remains
+separate, with its original threshold 0.004557917360216379 and prospective
+recalibration reported independently. No post-confirmation tuning is allowed.
 
-Local KD W8/A8 independent audit passed5.657CPU seconds; ownthreshold
-.998722493648529 gives189TP/5FP vsFP32192/6. Exactly3attacklosses and1FPremoved;
-emailunchanged48/100TP/1/200FP, hard5/182=2.747%, old96zeroTP/FP.
-NineW8packed tensors and8A8scales matched codes/manifest and35dotnativeproof;
-actualCPtrainingtrainer689391... andcurrentW8scoringtrainera9589... are retained
-as separate identities. No inherited floating quality or newconfirmation claim.
-Actual PCA training association confirms96dims, PADzero/trainable, nonembedding
-state/RNGunchanged, scratchRMS .9997781367 vs initialized .9997781573.
-Initializerartifact/source/provenance/teacher-cache hashes are bound inrun.json.
-Accountusage actual45%, cap60; noresetused.
+The CNN export uses actual signed W8 codes, A8 inputs, INT32 accumulation,
+round-to-nearest-even/saturation, and FP32 scales, biases, LayerNorm,
+nonlinearities, pooling and softmax. Representative FIT calibration selects
+512 windows from 500 source groups across twelve source/genre/length strata.
+Actual packed CPU references and native signed CUDA integer products are
+checked per checkpoint. Odd-shape/edge tests and module comparisons total
+35 exact accumulator checks per final export; full intended-format development
+scores and decisions are separately verified. No fake-quantized runtime is
+reported as native integer performance.
 
+The initial length sampler queried an absent metadata key; corrected exports
+use the actual `content_tokens` field. Old exports/outcomes remain preserved.
+A stale family mapping and the aligned/un-aligned BERT byte subtotal were
+also corrected with their historical evidence retained. Post-training integer
+conversion changed development recall modestly; floating models already
+failed severely. Additional QAT was therefore not a quality-critical rescue.
 
-### Fixed three-seed stage released before confirmation
+## Software timing and hardware interpretation
 
-All additional training interventions are complete. Final Local PCA+KD selected7
-CP6f34e8c...63f342d,12epoch fit/scoring850.8515419seconds; fullFP32207TP/7FP.
-Independent audit verifies51/100emailTP/1FP,hard6/182,old96knownTP16/64.
-PCA gain is concentratedtranslation; response-redirectionTP49→31/per80.
-Corrected512FIT-window CPUexport3,440,780B,13.187seconds, fourFITmaxlogitdelta
-.059180; native35dotcheck4.9811459seconds passed. FullW8/A8TP211/FP8
-(52.75%/1%),threshold .9997921586036682. C98KD native35dotcheck4.7931423s
-passed; fullW8/A8TP172/FP7 (43%/.875%),threshold .9994614720344543.
-Both intendedroutes fail99%recall; noQAT is warranted to rescue a floating
-securityfailure. No numerical quality/timing from a parent is inherited by
-a new final checkpoint.
+All matched timing uses exact final seed-42 checkpoints and 29 shared raw
+development documents, stratified by genre, label and window counts 1/2-3/4-7/8+,
+plus the two longest documents per label. Each route has three warmups and
+twenty retained repetitions per document. Complete latency includes raw-text
+tokenization, padding/copies, every serial batch-one window, network, device
+return, max aggregation and fixed-threshold decision. Loading/capture/qualification
+are separate. The stratified sample is not a workload-frequency estimate.
 
-Before final fits, existing primary development key selected LocalPCA+KD7,
-C98KD4, and matchedBERT5e-5 epoch4 withschedule_total_epochs5. Nine newfixed
-fits for42/1337/2026 nowrun serially without development monitoring; eachnewCP
-then gets full development qualification. Priority LocalContext→C98, deployment
-seed42. IntendedCNNadoptionformatW8/A8 with explicitFP32exceptions; matched
-BERTFP32. CNNFP32confirmation companions diagnose conversion and cannotrescue
-failed intendedformat/seed. These rules precede newconfirmation scoring.
-Currentconfig/archiveparentrecord preserves exactrecipes and allsources.
-FreshhistoricalW8 development alias will qualify the current scoring-source
-closure without altering its oldcheckpoint/threshold orcanonicalevidence.
-Actualfinal exports, arithmetic/profile qualification and prospective freeze
-remain required before once-only heldout scoring. No further tuning follows.
+Fourteen warm routes passed all 3,335 calibration/development qualification
+windows and 2,200 document decisions, with zero decision changes. Five cold
+routes retain ten fresh-process shortest/longest observations. OS/file caches
+were not flushed. BERT CPU1 failed the unchanged 1e-5 risk tolerance on two
+windows, maximum delta 2.31266e-5, despite zero decision changes. Its CPU timing
+is unqualified; CPU4/cold follow-ups were omitted and no fallback was hidden.
+Memory-floor interruptions are retained separately from numerical failures.
 
+| Complete-document mean, ms | LocalContext | C98 | Matched BERT |
+|---|---:|---:|---:|
+| FP32 CPU, one thread | 23.414 | 25.570 | Unqualified |
+| FP32 CPU, four threads | 21.257 | 22.668 | Not executed |
+| FP32 CUDA eager | 34.993 | 36.203 | 25.755 |
+| FP32 CUDA Graph | 4.415 | 4.557 | 5.106 |
+| Intended W8/A8 CUDA eager | 55.656 | 56.412 | Not this format |
+| Intended W8/A8 CUDA Graph | 5.211 | 5.602 | Not this format |
 
-### LocalContext final development replication
+The intended integer CNN routes show no measured GPU latency advantage over
+qualified BERT FP32 Graph. Their float companions are faster on this sample
+but cannot replace the frozen intended arithmetic. Measurements are sequential
+on the shared Windows/RTX 4070 host; concurrent system load is not controlled,
+and this is not a physical FPGA or population-latency claim. Exact per-document,
+length-bin, long-stress, stage and startup observations are retained in
+`final_profiling_audit_r2.json` and its bound profiles.
 
-All three fixed seven-epoch LocalContext fits and FP32 development evaluations
-completed. Independent saved-score audits passed. Seed42: TP207/400, FP7/800;
-seed1337: TP256/400, FP19/800; seed2026: TP170/400, FP6/800. Natural-email
-TP counts are51/69/36 per100 andFP1/3/1 per200. Hard-benign FP counts are
-6/19/6 per182. All fail pooled/email99% recall; seed1337 additionally fails
-pooled/email FPR and hard-benign bounds. These are development observations,
-not a confirmation verdict or sampled-seed population claim.
+The intended FPGA target is VEK280, `xcve2802-vsvh1760-2MP-e-S`, with a 200 MHz
+objective, 64 MiB DDR arena and explicit host/PS tokenization/windowing/document
+retention. The PL route proposes three AXI4 memory bundles and AXI-Lite control.
+LocalContext and C98 both need receptive field 33/lookahead 16, per-token
+channel LayerNorm and branch work, whole-window pooling and document-wide
+decision retention. The ideal
+3,072-byte A8 line-history subtotal is neither simultaneous peak nor allocated
+RAM. Whole-document work scales with
+`N(n)=max(1,ceil(max(0,n-254)/190)+1)`; no tail or host transport is free.
 
-The seed42 fixed FIT-only final checkpoint50eefbb95597519ef268d0e7262c05f470b947076c167c7603f762a5060a08eb
-reproduces all29 model-state tensors of its selected parent exactly. The newly
-completed C98 seed42 checkpointecf5a25b99bd810ce624cad9eac95682af2db5e7de6d8623b1c6a0d67183ce72
-also reproduces all29 parent tensors despite the recorded trainer-source change.
-Final-fit associations/history contain no development monitoring. New checkpoint
-files retain their own digests and still require fresh numerical/profile checks.
-Three Local CPU exports completed; a watcher association-field lookup error
-delayed the first export, was corrected, and its interrupted record preserved.
-No training was restarted and no partial export was overwritten.
+Actual final payloads are 3,440,780 bytes for LocalContext and 3,439,184 for C98,
+identical within each family across seeds. The hypothetical, equally aligned
+all-matrix-W8 BERT shape subtotal is 11,377,100 bytes, giving conditional
+69.75697%/69.770996% storage reductions. That BERT precision scope has no
+qualified packed artifact. The comparison passes the arithmetic example of
+a 50% reduction conditionally; it does not establish the complete prospective
+target-feasible memory/dataflow/retention/transport benefit.
 
+No CNN allocated-buffer map, CNN command/packet integration, HLS/Vivado closure,
+achieved clock, bandwidth, power, energy or physical protection measurement
+exists. Existing BERT FPGA resources/timings cannot be inherited. Analytical
+MAC counts exclude some operators and cannot establish speedup. Zero optional
+vendor builds were used: the observed quality question was the first
+discriminator, and builds are not required to explain a measured quality failure.
 
-### Prospective final timing routes and loader qualification
+## Reproduction and retained limitations
 
-Before final profiling, the FP32 benchmark loader was optimized to restore the
-exact fitted state directly, with lazy ZIP mapping and no redundant pretrained
-base-weight load. CPU checks passed in42.078seconds: exact descriptors, model
-states and nonpersistent buffers; identical logits onfour actual FIT windows;
-matching BERT SDPA classes, padding invariance and strict missing-key rejection.
-Profiler SHA25620da10034392fb4e4661af29886e756755d389e3c90b9048be51d03dca0e2849.
-Original profiler and proof are preserved underprofile_loader_check. Trainer,
-evaluator, checkpoint and decision policy were unchanged. New final checkpoints
-still require full saved-score route qualification before timing.
+The principal configuration is `configs/cnn_adoption_v1.json`; its freeze and
+checkpoint/export identities bind the study. Python 3.11.16, Torch 2.9.1+cu128,
+Transformers 4.57.3 and the pinned Google small-BERT revision are recorded.
+Results, source downloads, checkpoints and build artifacts are Git-ignored;
+a fresh clone does not contain the measurements. Reuse these bound artifacts
+rather than rerunning confirmation or selecting a new seed after seeing results.
 
-Fixed seed42 comparative routes: FP32CNNs/BERT onCPU1/4threads andCUDA eager/
-graph; W8/A8CNNs onactualCUDA integer eager/graph. Coldstartup uses two matched
-fresh-child documents onCPU1 FP32 andCUDAgraph intendedformats, with noOS-cache
-flush. The CPU INT64integer oracle is a correctness implementation, so its
-nonoptimized latency is omitted from the practical speed comparison. Sampling
-remains seed424242, two pergenre/label/window-count stratum plus two longest
-perlabel, three warmups and20retained repetitions; all rawtext, tokenization,
-copies, complete windows, aggregation and fixed-threshold decisions are timed.
-Scope is deploymentseed42; otherseeds inherit no timing claim.
-Accountusage last observed48% against60%; noresetused.
+The exact process commands and logs are in `final_training_dispatch/`,
+`qualification_dispatch/` and `confirmation_dispatch/`. Once-only scoring uses
+`scripts/cnn_adoption_evaluate.py --stage confirmation` with the bound plan.
+Independent verification uses `scripts/check_cnn_adoption_confirmation.py`,
+and profiling uses `scripts/cnn_adoption_profile.py`. Resource accounting
+separates completed process walls, nested timers, waiting/bookkeeping,
+interrupted upper charges and unknown intervals; no missing total is zero.
 
+This bounded panel does not establish impossibility for all CNNs or justify
+abandoning FPGA. It does not demonstrate target compromise, downstream task
+utility, universal injection protection, energy/performance on a physical
+device or publication-level novelty. Sparse held-mechanism ancestry, controlled
+one-author benign contexts, operational grouping and unknown foundation
+exposure limit the breadth of any empirical adoption decision.
 
-### Final training completed; numerical and timing qualification live
+## Historical reference on confirmation
 
-All nine fixed fits completed:19 terminal learning jobs including the initial
-interrupted fit. Independent FP32development audits passed for allnine. BERT
-recall/FPR for42/1337/2026:79%/0%,47%/.375%,75.75%/.125%; emailTP72/33/70
-per100 andFP0/0/0 per200; hardFP0/3/1 per182. BERT is not uniformly stronger
-acrossseeds. Every finalmodel still fails pooled/email99%recall. All3seed42
-parent reproductions are bitwise proven (Local29, C9829, BERT73state tensors).
-All6 finalCPUexports completed; driverelapsed990.766seconds includeswaiting
-and is distinct from activeexport processwalls. Finalsource/manifest bindings
-and prospective profiling/intended-format policies were recorded after training
-terminal and before qualification. Serial native/fullW8-A8/profile dispatch is
-live. Newconfirmation remains unopened and noverdict is claimed.
-Savedhistorical canonicalmetrics were reused without reopening protectedinputs:
-results/span_coupled_pilot_v1/reference_bert_v1/metrics.json SHA256
-b05b6664129286bac67639fad24f5524b68ce54548cfcb9f77d5e41fadedd9e8.
-SavedcanonicalN4107, TP2738/FN0; alpha .005/.01/.02 FP4/13/43 per1369benign.
-Thresholds .41116243600845337/.004557917360216379/.0004980998346582055.
-Originalalpha.01threshold is preserved separately from new-panel recalibration.
+The original threshold `0.004557917360216379` gives 288/1000 attack
+detections and 122/2000 benign rejections (28.80% recall,
+6.10% FPR). Prospective alpha-0.005 recalibration gives 69/1000
+and 22/2000 (6.9% recall, 1.1% FPR). Both are distinct from the saved canonical
+and known-probe regression metrics; neither is silently substituted for the other.
+
+## Resource closure and next action
+
+The final ledger records 19 charged fitting jobs (18 completed,
+one interrupted invalid-r1 fit). Fifteen transient gradient qualification
+updates are separately disclosed; counting every one conservatively as a
+learning job yields 34, still below the 60-job ceiling.
+Recorded accelerator process/internal lower bound is 3.462178 hours;
+the interrupted-r1 upper charge is 323.747091 seconds.
+The compatibility terminal charge is 3.552107 hours,
+while recorded CPU lower bound is 0.669796 hours.
+These are disjoint recorded process intervals, not exact device-busy time or
+a strict total-runtime upper bound; unknown intervals remain explicit.
+Nested timers are not added twice. Export waiting/bookkeeping is distinct
+from its active subprocess walls. Failed preflights/checks and successful
+retries are charged separately. Prior ledger bytes and hashes are retained.
+Account usage was observed at 53% against the user-raised 60% cap,
+initially 36%, with no reset or purchase. Zero vendor attempts, paid/API calls
+or physical-device operations were performed. Recorded charges are below the
+48 accelerator-hour / 12 heavy-CPU-hour / four optional vendor-attempt ceilings.
+Eight explicit unknown intervals prevent an exact study-wide total or a strict
+resource-accounting upper-bound claim; they are not zero or silently passed.
+
+The smallest proposed next discriminator is a prospectively labeled, grouped
+attribution-distance test using the frozen models: keep background and quoted
+payload fixed while moving the retrospective attribution within/across the
+256-token window boundary. Treat related variants as one source/payload group.
+A boundary-specific loss would implicate missing document-context coupling;
+failure even in the short, same-window control would instead motivate a
+representation/intent-boundary investigation. This is a proposed separate
+work package, not post-confirmation probe wording, rescue training or an
+authorized hardware launch. It precedes a larger build or another broad search.
+
+## Reproduction commands and history
+
+Use the retained commands and immutable artifacts; do not rerun confirmation
+as a new selection opportunity. Representative completed entry points:
+
+```powershell
+& 'C:/research/GATE/.venv/Scripts/python.exe' -B scripts/cnn_adoption_train.py --plan configs/cnn_adoption_v1.json --run-id local_context_03_final_s42_r2
+& 'C:/research/GATE/.venv/Scripts/python.exe' -B scripts/cnn_adoption_evaluate.py --plan configs/cnn_adoption_v1.json --run-id local_context_03_final_s42_r2 --stage confirmation --format w8a8_export --device cuda --batch-windows 1
+& 'C:/research/GATE/.venv/Scripts/python.exe' -B scripts/check_cnn_adoption_confirmation.py --plan configs/cnn_adoption_v1.json --independent-check results/cnn_adoption_v1/data_check_r2.json --confirmation-scores-released --output results/cnn_adoption_v1/independent_confirmation_recheck.json
+& 'C:/research/GATE/.venv/Scripts/python.exe' -B scripts/update_handoff.py --check
+```
+
+Existing completed training/scoring entry points reuse only matching saved
+associations; the independent recheck writes a fresh analysis artifact.
+Profiling command variants and exact matched policies are recorded in
+`qualification_dispatch/`; comparisons and helper versions are recorded in
+`comparison_dispatch/` and `confirmation_comparison_adapter/`.
+The preceding principal-report chronology is preserved verbatim in
+`reports/cnn_adoption_execution_history_20261015.md`. Its old pending plans
+are historical and non-authorizing. The execution log preserves failed
+attempts and corrections. Older broad-exploration and method-study reports
+remain unchanged. Git commits 38c294b and 6e566a0 exist locally; the requested
+push to origin/main was rejected by automatic approval review and remains
+pending explicit destination/payload approval. This final study handoff
+does not imply GitHub synchronization.
