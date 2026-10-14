@@ -311,6 +311,8 @@ def mapping_assessment(model: nn.Module, manifest: dict):
     hw = project["hardware"]
     length = 256 if model.study_config.get("representation") != "byte" else 1024
     cnn_ops = model_cost(model, sequence_length=length, batch_size=1)
+    cnn_profile = static_checkpoint_mapping(model.study_config, manifest["checkpoint_path"],
+                                            manifest["checkpoint_sha256"], sequence_length=length)
     model_path = ROOT / "checkpoints/floating/epoch_3/model.safetensors"
     bert_cfg_path = ROOT / "checkpoints/floating/epoch_3/config.json"
     bert_cfg = json.loads(bert_cfg_path.read_text(encoding="utf-8"))
@@ -334,13 +336,6 @@ def mapping_assessment(model: nn.Module, manifest: dict):
     bert_existing_w8 = old_q_weights + 4 * old_q_scales + 4 * len(old_encoder) + 4 * (bert_params - old_q_weights)
 
     token_protocol = json.loads((ROOT / "results/cnn_study_v1/prepared/data_protocol.json").read_text(encoding="utf-8"))
-    # The selected old FIT tensors provide an executed complete-window count for
-    # this bring-up only. New-stage counts must replace it before confirmation.
-    fit_dir = ROOT / "results/cnn_study_v1/prepared/token/full_train"
-    fit_manifest = json.loads((fit_dir / "manifest.json").read_text(encoding="utf-8"))
-    starts = np.load(fit_dir / "starts.npy", mmap_mode="r", allow_pickle=False)
-    windows = np.diff(starts.astype(np.int64))
-    mean_windows = float(windows.mean())
     bert_h = int(bert_cfg["hidden_size"])
     bert_i = int(bert_cfg["intermediate_size"])
     bert_layers = int(bert_cfg["num_hidden_layers"])
@@ -358,23 +353,71 @@ def mapping_assessment(model: nn.Module, manifest: dict):
     fp32_weight_bytes = int(cnn_ops["parameter_bytes_fp32"])
     channels = int(model.study_config.get("channels", 64))
     depth = int(model.study_config.get("depth", 1))
-    kmax = max(model.study_config.get("kernel_sizes", [3]))
-    streaming_line_buffer = max(0, kmax - 1) * channels * depth  # A8 bytes, schedule hypothesis
-    tiled_feature = length * channels  # one A8 map
     target_total_memory_bits = hw["resource_limits"]["BLOCK_RAMS"] * 36 * 1024 + hw["resource_limits"]["ULTRA_RAMS"] * 288 * 1024
+    family = model.study_config["family"]
+    kernels = [int(k) for k in model.study_config.get("kernel_sizes", [3])]
+    dilations = [int(d) for d in model.study_config.get("dilations", [1])]
+    context_kernel = int(model.study_config.get("context_kernel", 7))
+    if family == "textcnn":
+        topology = {
+            "family": family,
+            "graph": f"Parallel centered width-{kernels} filter branches, {channels} channels per branch, then global masked pooling and one classifier.",
+            "branch_schedule": "Branches may be time-multiplexed or concurrent; concurrent execution retains each branch output through pooling. No route is measured.",
+        }
+    elif family == "stacked":
+        topology = {
+            "family": family,
+            "graph": f"{depth} serial centered convolution stages at {channels} channels with kernels {kernels}; global masked max pooling then classifier.",
+            "branch_schedule": "Sequential feature maps can be reused stage by stage; per-stage FP32 rescale/bias and any intervening operations must be preserved or separately qualified.",
+        }
+    elif family == "local_context":
+        norm_modules = cnn_profile["fp32_layernorm_parameter_count"] // max(1, 2 * channels)
+        local_k = kernels[0]
+        dilation = dilations[0]
+        line_buffer = depth * ((local_k - 1) + (context_kernel - 1) * dilation) * channels
+        feature_fp32 = length * channels * 4
+        topology = {
+            "family": family,
+            "graph": (f"{depth} residual blocks; each applies local width-{local_k} ConvBlock, then centered context "
+                      f"width-{context_kernel} dilation-{dilation} ConvBlock to the local output, concatenates both "
+                      f"{channels}-channel maps, fuses 2C to C with width-1 Conv, applies tokenwise LayerNorm, then adds the block skip."),
+            "gated": bool(model.study_config.get("gated", False)),
+            "layernorm_module_count": norm_modules,
+            "layernorm_affine_parameter_count": cnn_profile["fp32_layernorm_parameter_count"],
+            "centered_feature_receptive_field_tokens": cnn_profile["receptive_field_tokens"],
+            "centered_feature_lookahead_tokens": cnn_profile["centered_feature_lookahead_tokens"],
+            "ideal_A8_delay_line_bytes_lower_bound": line_buffer,
+            "one_full_FP32_C_map_bytes": feature_fp32,
+            "branch_maps_plus_concat_FP32_if_fully_materialized_bytes": cnn_profile["activation_shape_bounds"]["local_context_branch_outputs_plus_concat_FP32_bytes_if_materialized"],
+            "branch_maps_concat_block_input_and_fused_output_FP32_if_all_coexist_bytes": 6 * feature_fp32,
+            "norm_and_fusion_schedule": "Each token's LayerNorm needs channel statistics; local/context branch values meet at concatenation/fusion. A streaming schedule may reduce whole-map retention, but no allocator/live-range proof exists.",
+        }
+    else:
+        topology = {
+            "family": family,
+            "graph": f"{depth} serial centered residual stages at {channels} channels with kernels {kernels} and dilations {dilations}; global masked pooling then classifier.",
+            "branch_schedule": "Each residual add must align the skip and transformed output; any LayerNorm/gate stages remain explicit FP32 exceptions in this reference.",
+        }
+    topology.update({
+        "window_length": length,
+        "complete_window_required": True,
+        "global_pool_summary_FP32_bytes": cnn_profile["activation_shape_bounds"]["global_pool_summary_FP32_bytes"],
+        "complete_document_retention": "One FP32 maximum-risk scalar per active document can be retained as window results arrive; the final decision still waits until every window has been processed.",
+        "activation_shape_bounds": cnn_profile["activation_shape_bounds"],
+        "liveness_boundary": "Analytical named tensor sizes and a schedule hypothesis only; not simultaneous allocation, target memory fit, bandwidth, timing, or synthesis evidence.",
+    })
     report = {
         "kind": "analytical target-specific mapping hypothesis; no synthesis or physical measurement",
+        "mapping_generator_sha256": sha(Path(__file__)),
+        "candidate_export_manifest_object_sha256": canonical_sha(manifest),
         "candidate": {"run_id": manifest["run_id"], "checkpoint_sha256": manifest["checkpoint_sha256"],
                       "representation": model.study_config["representation"], "window_length": length,
                       "parameters": cnn_ops["parameters"], "fp32_parameter_bytes": fp32_weight_bytes,
                       "exported_w8a8_payload_bytes": cnn_payload,
                       "payload_reduction_vs_fp32": 1 - cnn_payload / fp32_weight_bytes,
                       "conv_linear_macs_per_window": cnn_ops["conv_linear_macs"],
-                      "mean_old_fit_windows_per_document": mean_windows,
-                      "mean_old_fit_conv_linear_macs_per_document": cnn_ops["conv_linear_macs"] * mean_windows,
-                      "old_fit_document_count": int(fit_manifest["documents"]),
-                      "old_fit_window_count": int(fit_manifest["windows"]),
-                      "complete_document_score_retention": "one FP32 max/risk scalar per active document is sufficient if window scores are consumed in order; final decision waits for all windows"},
+                      "analytical_complete_document_window_formula": cnn_profile["document_formula"],
+                      "complete_document_score_retention": topology["complete_document_retention"]},
         "bert_shape_reference": {"checkpoint": "checkpoints/floating/epoch_3/model.safetensors",
             "checkpoint_sha256": sha(model_path), "config_sha256": sha(bert_cfg_path),
             "parameters": bert_params, "matrix_parameters": bert_matrix_weights,
@@ -396,15 +439,8 @@ def mapping_assessment(model: nn.Module, manifest: dict):
             "interface": hw["interface"], "hls_interfaces": "three m_axi bundles: activations, weights, outputs; AXI4-Lite control; project-specific integration pending for a CNN.",
             "shared_ddr_arena_bytes": 64 * 1024 * 1024,
             "storage_feasibility_boundary": "Exported payload is below nominal arena size and aggregate BRAM/URAM bit capacity, but this is not an allocation, banking, port, bandwidth, timing or free-resource proof."},
-        "stacked_stream_schedule_hypothesis": {"layers": "2 x width-3, 64-channel centered Conv1d; no LayerNorm, gate, residual, or downsampling; masked ReLU and max pool; 2-logit classifier",
-            "lookahead_tokens": 2, "a8_line_buffer_bytes_ideal": streaming_line_buffer,
-            "one_full_A8_feature_map_bytes": tiled_feature, "two_full_A8_pingpong_maps_bytes": 2 * tiled_feature,
-            "one_full_int32_accumulator_map_bytes": length * channels * 4,
-            "two_full_int32_accumulator_maps_bytes": 2 * length * channels * 4,
-            "input_ids_and_mask_bytes_per_window": input_ids_bytes + input_mask_bytes,
-            "max_pool_fp32_state_bytes": channels * 4, "doc_running_fp32_max_bytes": 4,
-            "accumulation_and_requantization": "Keep signed int32 partial sums; per-output-channel FP32 rescale and FP32 bias precede ReLU; each next Conv/Linear input is static-scale A8. Replacing these FP32 steps with integer fixed-point multipliers would change the reference and needs its own numerical check.",
-            "activation_liveness_boundary": "Line-buffer lower bound assumes a pipelined stream and no full-map materialization; a tiled implementation needs at least the declared map buffers plus int32 accumulators/workspace. No live tensor proof or HLS resource count exists."},
+        "topology_schedule_hypothesis": topology,
+        "shape_profile": cnn_profile,
         "transport": {"reused_BERT_packet_bytes_per_window": bert_packet,
             "hypothetical_CNN_packet_bytes_per_window_uint32_ids_mask_no_token_types": cnn_packet,
             "hypothetical_CNN_packet_reduction_vs_BERT": 1 - cnn_packet / bert_packet,
@@ -413,8 +449,7 @@ def mapping_assessment(model: nn.Module, manifest: dict):
             "hypothetical_BERT_serialization_ms_per_window": bert_packet * 10 / uart_bps * 1000,
             "contract": "Reuses the recorded L256 header/response sizes and omits uint32 token_type_ids for CNN. No CNN command exists; document batching, per-window response, memory copy/cache and synchronization costs remain unvalidated."},
         "windowing": token_protocol.get("token", token_protocol.get("windowing", {})),
-        "limitations": ["Old stacked_01 checkpoint and old full_train FIT used only to validate the export/reference path; this is not the adoption-stage candidate or confirmation.",
-            "No candidate numerical quality, activation-tail representativeness, new-fit calibration adequacy, real matched-BERT W8/A8 quality, or host-to-device complete-chain timing is established.",
+        "limitations": ["This profile is analytical for the checkpoint named in the export manifest; it does not establish model quality, activation-tail representativeness, new-fit calibration adequacy, real matched-BERT W8/A8 quality, or host-to-device complete-chain timing.",
             "No vendor build, physical device activity, power, throughput or resource utilization was performed."],
     }
     return report
@@ -629,15 +664,325 @@ def load_export_reference(manifest_path: Path | str, device: str = "cpu"):
     return model.eval(), manifest
 
 
+def _aligned_packed_bytes(lengths: list[int], alignment: int = ALIGN) -> int:
+    cursor = 0
+    for length in lengths:
+        cursor += (-cursor) % alignment
+        cursor += int(length)
+    return cursor
+
+
+def static_checkpoint_mapping(config: dict, checkpoint_path: Path | str,
+                              expected_checkpoint_sha256: str,
+                              sequence_length: int = 256) -> dict:
+    """Shape-only profile for a frozen CNN checkpoint; no forward/inference.
+
+    Counts exact tensor-shaped W8/A8 and FP32 export payloads including the
+    serializer's 64-byte per-tensor alignment. MACs are derived from this
+    registry's Conv1d/Linear shapes at the unchanged full sequence length.
+    Only the four adoption-original topologies are currently supported, and
+    the checkpoint is loaded solely for digest and state-dict shape checks.
+    """
+    checkpoint_path = Path(checkpoint_path)
+    if not checkpoint_path.is_absolute():
+        checkpoint_path = ROOT / checkpoint_path
+    checkpoint_digest = sha(checkpoint_path)
+    if checkpoint_digest != expected_checkpoint_sha256:
+        raise ValueError(f"Frozen checkpoint SHA mismatch: {checkpoint_path}")
+    family = config["family"]
+    if family not in {"textcnn", "stacked", "local_context", "residual"}:
+        raise ValueError(f"Static adoption profile is scoped to the four original topologies, got {family}")
+    vocab = int(config.get("vocab_size", 30522))
+    if "vocab_size" not in config:
+        vocab = 30522 if config.get("representation", "token") == "token" else 257
+    # Construction exposes the registered parameter shapes, but no module is
+    # called. Preserve the caller's RNG state because initialization values are
+    # irrelevant to this shape-only audit.
+    with torch.random.fork_rng(devices=[]):
+        model = build_model(config, vocab, pad_id=0).cpu().eval()
+    state = torch.load(checkpoint_path, map_location="cpu", weights_only=False)
+    state_dict = state.get("state_dict", state)
+    model.load_state_dict(state_dict, strict=True)
+    modules = list(model.named_modules())
+    named_parameters = dict(model.named_parameters())
+    weight_lengths, scale_lengths, parameter_lengths = [], [], []
+    quant_weight_names, quantized_modules = set(), []
+    conv_macs = linear_macs = 0
+    layer_norm_parameters = 0
+    layer_norm_parameter_names: set[str] = set()
+    module_rows = []
+    for name, module in modules:
+        if not name:
+            continue
+        if isinstance(module, nn.Embedding):
+            weight = module.weight
+            weight_lengths.append(weight.numel())
+            scale_lengths.append(int(weight.shape[0]) * 4)
+            quant_weight_names.add(name + ".weight")
+            quantized_modules.append(name)
+            module_rows.append({"name": name, "kind": "embedding_w8_per_row", "weight_shape": list(weight.shape),
+                                "weight_bytes": weight.numel(), "weight_scale_bytes": int(weight.shape[0]) * 4})
+        elif isinstance(module, nn.Conv1d):
+            weight = module.weight
+            weight_lengths.append(weight.numel())
+            scale_lengths.extend((int(module.out_channels) * 4, 4))
+            if module.bias is not None:
+                parameter_lengths.append(int(module.bias.numel()) * 4)
+            quant_weight_names.add(name + ".weight")
+            quantized_modules.append(name)
+            conv_macs += sequence_length * int(module.out_channels) * int(module.in_channels // module.groups) * int(module.kernel_size[0])
+            module_rows.append({"name": name, "kind": "conv1d_w8a8_int32", "weight_shape": list(weight.shape),
+                                "weight_bytes": weight.numel(), "weight_scale_bytes": int(module.out_channels) * 4,
+                                "input_scale_bytes": 4, "bias_fp32_bytes": int(module.bias.numel()) * 4 if module.bias is not None else 0,
+                                "groups": int(module.groups), "kernel": int(module.kernel_size[0]),
+                                "counted_macs_per_window": sequence_length * int(module.out_channels) * int(module.in_channels // module.groups) * int(module.kernel_size[0])})
+        elif isinstance(module, nn.Linear):
+            weight = module.weight
+            weight_lengths.append(weight.numel())
+            scale_lengths.extend((int(module.out_features) * 4, 4))
+            if module.bias is not None:
+                parameter_lengths.append(int(module.bias.numel()) * 4)
+            quant_weight_names.add(name + ".weight")
+            quantized_modules.append(name)
+            linear_macs += int(module.in_features) * int(module.out_features)
+            module_rows.append({"name": name, "kind": "linear_w8a8_int32", "weight_shape": list(weight.shape),
+                                "weight_bytes": weight.numel(), "weight_scale_bytes": int(module.out_features) * 4,
+                                "input_scale_bytes": 4, "bias_fp32_bytes": int(module.bias.numel()) * 4 if module.bias is not None else 0,
+                                "counted_macs_per_window": int(module.in_features) * int(module.out_features)})
+        elif isinstance(module, nn.LayerNorm):
+            norm_params = list(module.named_parameters(recurse=False))
+            layer_norm_parameters += sum(param.numel() for _, param in norm_params)
+            parameter_lengths.extend(param.numel() * 4 for _, param in norm_params)
+            layer_norm_parameter_names.update(f"{name}.{pname}" for pname, _ in norm_params)
+    for name, param in named_parameters.items():
+        if name in quant_weight_names or name in layer_norm_parameter_names or any(name == module + ".bias" for module in quantized_modules):
+            continue
+        # All remaining trainable values are explicit FP32 exceptions. Avoid
+        # double-counting LayerNorm and quantized-module biases already tallied.
+        if any(name.startswith(module + ".") for module in quantized_modules):
+            continue
+        if param.numel():
+            parameter_lengths.append(param.numel() * 4)
+    weight_bytes = _aligned_packed_bytes(weight_lengths)
+    scale_bytes = _aligned_packed_bytes(scale_lengths)
+    parameter_bytes = _aligned_packed_bytes(parameter_lengths)
+    params = sum(param.numel() for param in named_parameters.values())
+    embedding_parameters = model.embedding.weight.numel()
+    channels = int(config.get("channels", 64))
+    embedding_dim = int(config.get("embedding_dim", 64))
+    kernels = config.get("kernel_sizes", [3])
+    if family == "textcnn":
+        rf = max(int(k) for k in kernels)
+    elif family == "stacked":
+        rf = 1 + sum((int(kernels[i % len(kernels)]) - 1) * int(config.get("dilations", [1])[i % len(config.get("dilations", [1]))]) for i in range(int(config.get("depth", 1))))
+    elif family == "local_context":
+        local_k = int(kernels[0])
+        context_k = int(config.get("context_kernel", 7))
+        dilation = int(config.get("dilations", [1])[0])
+        rf = 1 + int(config.get("depth", 1)) * ((local_k - 1) + (context_k - 1) * dilation)
+    else:  # ordinary residual chain, all convolutions are centered in this config
+        rf = 1 + sum((int(kernels[i % len(kernels)]) - 1) * int(config.get("dilations", [1])[i % len(config.get("dilations", [1]))]) for i in range(int(config.get("depth", 1))))
+    lookahead = (rf - 1) // 2
+    length = int(sequence_length)
+    feature_map_a8 = length * channels
+    feature_map_fp32 = feature_map_a8 * 4
+    feature_map_int32 = feature_map_a8 * 4
+    embedding_map_fp32 = length * embedding_dim * 4
+    pooling_width = channels * (len(kernels) if family == "textcnn" else 1)
+    payload = weight_bytes + scale_bytes + parameter_bytes
+    return {
+        "kind": "shape-only analytical profile; checkpoint loaded for identity and shape validation only; no forward/inference",
+        "config": config, "config_sha256": canonical_sha(config),
+        "checkpoint": str(checkpoint_path.relative_to(ROOT) if checkpoint_path.is_relative_to(ROOT) else checkpoint_path),
+        "checkpoint_sha256": checkpoint_digest,
+        "model_source_sha256": sha(ROOT / "scripts/cnn_models.py"),
+        "representation": config.get("representation", "token"), "sequence_length": length,
+        "parameters": params, "embedding_parameters": embedding_parameters,
+        "fp32_parameter_payload_bytes": params * 4,
+        "packed_payload_bytes": {"weights_w8_aligned": weight_bytes, "scales_f32_aligned": scale_bytes,
+                                 "parameters_f32_aligned": parameter_bytes, "combined": payload,
+                                 "reduction_vs_fp32": 1 - payload / (params * 4)},
+        "macs_per_full_window": {"conv1d": conv_macs, "linear": linear_macs, "total": conv_macs + linear_macs,
+                                 "counting_boundary": "Conv1d and Linear MACs from exact registered shapes at L; excludes embedding lookup, norms, activation, gates, masks, pooling, aggregation and transfer."},
+        "receptive_field_tokens": rf, "centered_feature_lookahead_tokens": lookahead,
+        "global_window_decision": "Every selected topology applies global pooling before its classifier; a complete window is required even when the local convolutional feature lookahead is smaller.",
+        "activation_shape_bounds": {"one_full_A8_C_channel_map_bytes": feature_map_a8,
+                                    "one_full_FP32_C_channel_map_bytes": feature_map_fp32,
+                                    "one_full_int32_C_channel_bytes": feature_map_int32,
+                                    "one_full_FP32_embedding_output_map_bytes": embedding_map_fp32,
+                                    "textcnn_parallel_branch_A8_maps_bytes_if_materialized": 3 * feature_map_a8 if family == "textcnn" else None,
+                                    "textcnn_parallel_branch_FP32_maps_bytes_if_materialized": 3 * feature_map_fp32 if family == "textcnn" else None,
+                                    "textcnn_concatenated_A8_map_bytes_if_materialized": 3 * feature_map_a8 if family == "textcnn" else None,
+                                    "textcnn_concatenated_FP32_map_bytes_if_materialized": 3 * feature_map_fp32 if family == "textcnn" else None,
+                                    "local_context_two_branch_A8_concat_bytes_if_materialized": 2 * feature_map_a8 if family == "local_context" else None,
+                                    "local_context_two_branch_FP32_concat_bytes_if_materialized": 2 * feature_map_fp32 if family == "local_context" else None,
+                                    "local_context_branch_outputs_plus_concat_FP32_bytes_if_materialized": 4 * feature_map_fp32 if family == "local_context" else None,
+                                    "residual_skip_plus_output_FP32_maps_bytes_if_materialized": 2 * feature_map_fp32 if family == "residual" else None,
+                                    "global_pool_summary_FP32_bytes": pooling_width * 4,
+                                    "boundary": "Per-tensor shape bounds only. These examples are not simultaneous live allocations, implementation buffers, BRAM/URAM allocation, or upper bounds on all workspace."},
+        "embedding_access": {"w8_table_bytes": embedding_parameters, "per_row_f32_scale_bytes": int(model.embedding.num_embeddings) * 4,
+                             "access_pattern": "Token-indexed row gather plus per-row scale; bank/port/NoC contention and cache behavior are unmeasured."},
+        "document_formula": {"content_capacity": 254, "overlap": 64, "stride": 190,
+                             "windows_for_n_content_tokens": "max(1, ceil(max(0,n-254)/190)+1)",
+                             "macs_for_n_tokens": f"{conv_macs + linear_macs} * windows_for_n_content_tokens",
+                             "note": "All tails are evaluated; no early document decision before all windows because document risk is max-window risk."},
+        "transport": {"ids_and_mask_bytes_per_window": length * 5,
+                      "hypothetical_per_window_packet_bytes": 64 + length * 5 + 64,
+                      "existing_BERT_packet_bytes_same_length": 64 + length * 4 + length * 4 + length + 64,
+                      "packet_scope": "Existing protocol arithmetic only: 64-byte request and response headers, uint32 IDs, uint8 mask; CNN omits BERT token types. No CNN packet contract or target performance is measured."},
+        "operator_inventory": module_rows,
+        "fp32_layernorm_parameter_count": layer_norm_parameters,
+    }
+
+
+def original_static_mapping(plan_path: Path | str = ROOT / "configs/cnn_adoption_v1.json") -> dict:
+    """Build reproducible analytical records keyed to the four frozen originals."""
+    plan_path = Path(plan_path)
+    if not plan_path.is_absolute():
+        plan_path = ROOT / plan_path
+    plan = json.loads(plan_path.read_text(encoding="utf-8"))
+    model_specs = plan.get("model_specs", plan.get("models", {}))
+    result = {"kind": "preliminary shape/accounting evidence; not a fit, inference, numerical-equivalence, FPGA implementation, or physical measurement",
+              "execution_record": {"command": "python -B scripts/cnn_adoption_export.py --static-originals-only",
+                  "device": "CPU; no model forward/inference", "python": sys.version,
+                  "torch": torch.__version__, "platform": platform.platform(),
+                  "exporter_sha256": sha(Path(__file__)),
+                  "model_source_sha256": sha(ROOT / "scripts/cnn_models.py")},
+              "plan_sha256": sha(plan_path), "tokenizer_data_contract": {"length": 256, "content_capacity": 254,
+                  "overlap": 64, "stride": 190, "window_formula": "max(1, ceil(max(0,n-254)/190)+1)",
+                  "tokenizer_runs_on": "Desktop host; existing A72 supervisor receives already-windowed IDs and masks. Streaming tokenization is unimplemented and unmeasured."},
+              "profiles": {}}
+    for ref_id in ("original_textcnn_01", "original_stacked_01", "original_local_context_03", "original_local_context_03_residual_replace_c98"):
+        ref = plan["references"][ref_id]
+        spec = model_specs[ref["model_id"]]
+        if spec.get("kind") != "cnn":
+            raise ValueError(f"Unexpected non-CNN spec for {ref_id}")
+        profile = static_checkpoint_mapping(spec["config"], ref["checkpoint"], ref["checkpoint_sha256"], 256)
+        profile["reference_id"] = ref_id
+        result["profiles"][ref_id] = profile
+    # Same accounting recipe for the comparison model: every 2-D matrix W8,
+    # per-row FP32 scale (including embedding rows), static A8 input scale for
+    # every non-embedding matrix, and all non-matrix parameters FP32.
+    bert_path = ROOT / "checkpoints/floating/epoch_3/model.safetensors"
+    bert_config_path = ROOT / "checkpoints/floating/epoch_3/config.json"
+    bert_config = json.loads(bert_config_path.read_text(encoding="utf-8"))
+    from safetensors import safe_open
+    with safe_open(str(bert_path), framework="pt", device="cpu") as sf:
+        bert_shapes = {key: tuple(sf.get_slice(key).get_shape()) for key in sf.keys()}
+    matrix_shapes = {key: shape for key, shape in bert_shapes.items() if len(shape) == 2}
+    linear_shapes = {key: shape for key, shape in matrix_shapes.items() if "embeddings." not in key}
+    vector_shapes = {key: shape for key, shape in bert_shapes.items() if len(shape) != 2}
+    bert_weight_bytes = _aligned_packed_bytes([int(np.prod(shape)) for shape in matrix_shapes.values()])
+    bert_scale_bytes = _aligned_packed_bytes([shape[0] * 4 for shape in matrix_shapes.values()] + [4 for _ in linear_shapes])
+    bert_parameter_bytes = _aligned_packed_bytes([int(np.prod(shape)) * 4 for shape in vector_shapes.values()])
+    bert_payload = bert_weight_bytes + bert_scale_bytes + bert_parameter_bytes
+    h, inner, layers = int(bert_config["hidden_size"]), int(bert_config["intermediate_size"]), int(bert_config["num_hidden_layers"])
+    L = 256
+    bert_macs = layers * L * (4 * h * h + 2 * h * inner) + layers * 2 * L * L * h + h * h + 2 * h
+    result["precision_matched_bert_shape_route"] = {
+        "checkpoint": "checkpoints/floating/epoch_3/model.safetensors",
+        "checkpoint_sha256": sha(bert_path), "config_sha256": sha(bert_config_path),
+        "parameters": sum(int(np.prod(shape)) for shape in bert_shapes.values()),
+        "matrix_parameter_count": sum(int(np.prod(shape)) for shape in matrix_shapes.values()),
+        "matrix_tensor_count": len(matrix_shapes), "matrix_output_rows_for_scales": sum(shape[0] for shape in matrix_shapes.values()),
+        "linear_matrix_count_for_A8_input_scales": len(linear_shapes),
+        "nonmatrix_FP32_parameter_count": sum(int(np.prod(shape)) for shape in vector_shapes.values()),
+        "packed_payload_bytes_64B_tensor_aligned": {"weights_w8": bert_weight_bytes, "scales_f32": bert_scale_bytes,
+                                                     "parameters_f32": bert_parameter_bytes, "combined": bert_payload},
+        "payload_format": "All 2-D weights W8; per-first-dimension-row FP32 scales including embedding rows; one FP32 static A8 input scale per non-embedding 2-D weight; all non-2-D weights/biases/norm parameters FP32. Each tensor starts at 64-byte alignment.",
+        "MACs_per_L256_window": bert_macs,
+        "MAC_counting_boundary": "Four-layer BERT shape-derived dense linears plus QK/AV; excludes softmax, LayerNorm, embedding lookup, masks and transfer. This payload/operation route has no new numerical-equivalence result.",
+        "limitations": "Shape-derived hypothetical matched-format BERT accounting, not an exported or numerically qualified checkpoint in this broader all-matrix W8 scope."
+    }
+    for profile in result["profiles"].values():
+        family = profile["config"]["family"]
+        candidate_payload = profile["packed_payload_bytes"]["combined"]
+        profile["precision_matched_bert_comparison"] = {
+            "bert_payload_bytes_64B_tensor_aligned": bert_payload,
+            "candidate_payload_reduction_vs_matched_bert": 1 - candidate_payload / bert_payload,
+            "bert_macs_over_candidate_macs": bert_macs / max(1, profile["macs_per_full_window"]["total"]),
+            "boundary": "Both are shape/format accounting only; reduction does not imply equivalent numerical quality, host-chain latency, target fit, or speedup."
+        }
+        windows = []
+        for n_tokens in (254, 255, 444, 445, 634, 635):
+            n_windows = max(1, int(np.ceil(max(0, n_tokens - 254) / 190)) + 1)
+            windows.append({"content_tokens": n_tokens, "windows": n_windows,
+                            "candidate_conv_linear_macs": n_windows * profile["macs_per_full_window"]["total"],
+                            "host_ID_plus_mask_input_bytes": n_windows * 256 * 5,
+                            "hypothetical_per_window_request_response_bytes": n_windows * (64 + 256 * 5 + 64),
+                            "hypothetical_one_batch_request_response_bytes": 128 + n_windows * 256 * 5})
+        profile["document_examples"] = windows
+        C = int(profile["config"].get("channels", 64))
+        width = int(profile["config"].get("embedding_dim", 64))
+        profile["dataflow_and_retention"] = {
+            "first_stage": "The selected desktop host holds document text, applies the existing tokenizer and constructs 256-ID windows with 254-content capacity and 64-token overlap. It sends uint32 IDs and uint8 masks by UART to the A72 supervisor, which validates/copies the request before PL submission. Neither A72 nor PL has a mapped tokenizer in the recorded architecture.",
+            "embedding_to_first_A8": "Embedding rows are gathered as W8 plus a per-row FP32 scale. The CPU reference dequantizes to FP32 before the first Conv requantizes with its static A8 input scale. Each integer-dot Conv/Linear then rescales to FP32 and adds FP32 bias; the next Conv quantizes its FP32 input to A8. Fusing these boundaries into narrower fixed-point streaming operators would require a separate numerical check.",
+            "window_schedule": "Process one complete window at a time, reuse intermediate activation storage, emit two logits or a risk scalar, then release window activations. Full global pooling means no window score before the full window; the document max-risk result is unavailable until every window has completed.",
+            "topology_specific_PL_hypothesis": {
+                "textcnn": "Three independent centered width-3/5/7 Conv branches at 64 channels. PL may run branches in parallel or time-multiplex a convolution engine across branch weights; parallel execution retains multiple branch outputs, while serialized execution reduces compute concurrency but still needs the three branch summaries for the final 192-value max-pooled classifier input.",
+                "stacked": "Two centered width-3, 64-channel stages. This is the shortest sequential path and has two-token feature lookahead; a fused PL streaming schedule is the simplest candidate to test, provided embedding dequantize/requantize and per-stage FP32 bias/rescale boundaries are preserved or separately qualified.",
+                "local_context": "Two residual local-context blocks, each with local width-3, context width-15, and 2C-to-C fusion; six tokenwise LayerNorms overall. The local/context branch values must meet at fusion; a fully materialized route can hold two C-wide maps plus a 2C concat, while streaming/branch scheduling changes live storage and needs an explicit schedule.",
+                "residual": "Six sequential 98-channel residual convolutions with kernels 3/15/1/3/15/1 and six tokenwise LayerNorms. A simple chain has fewer simultaneous branches than local_context but each residual add needs skip/output alignment; width-15 stages set long local buffers and 16-token lookahead."
+            }.get(family),
+            "document_retention": {"host_ID_sequence_if_materialized_bytes": "4*n content tokens, excluding tokenizer/raw-text storage and special tokens",
+                                   "rolling_window_token_IDs_if_streamable": 254 * 4,
+                                   "device_running_document_risk_FP32_bytes": 4,
+                                   "output_per_window_if_host_aggregates_logits_bytes": 2 * 4,
+                                   "output_per_window_if_device_aggregates_risk_bytes": 4,
+                                   "streaming_tokenizer_status": "A bounded-overlap host token stream is a schedule option only; tokenizer chunk equivalence and an actual stream implementation are unverified."},
+            "retained_weights": {"embedding_W8_plus_row_scales_bytes": int(profile["embedding_access"]["w8_table_bytes"] + profile["embedding_access"]["per_row_f32_scale_bytes"]),
+                                 "complete_packed_payload_bytes": candidate_payload,
+                                 "target_route": "Shared PS/PL DDR/NoC weights bundle is the least-assumptive source; BRAM/URAM caching or banking is only a future schedule question."},
+            "activation_boundaries": profile["activation_shape_bounds"],
+            "quality_of_bound": "The listed full-map sizes are allocations for named hypothetical materializations; line buffers/rolling summaries are lower-bound scheduling ideas. Neither set proves simultaneous peak, BRAM/URAM fit, DSP/LUT use, 200 MHz closure, NoC bandwidth, or physical performance."
+        }
+        profile["transport"]["uart_8n1_at_115200"] = {
+            "hypothetical_CNN_per_window_packet_bytes": 64 + 256 * 5 + 64,
+            "hypothetical_BERT_per_window_packet_bytes": 64 + 256 * 9 + 64,
+            "CNN_per_window_serialization_ms": (64 + 256 * 5 + 64) * 10 / 115200 * 1000,
+            "BERT_per_window_serialization_ms": (64 + 256 * 9 + 64) * 10 / 115200 * 1000,
+            "one_batched_CNN_document_serialization_ms_for_N_windows": "(128 + 1280*N) * 10 / 115200 * 1000",
+            "separate_request_response_serialization_ms_for_N_windows": "N * 1408 * 10 / 115200 * 1000",
+            "boundary": "UART serialization arithmetic only. The CNN packet, batching, response timing, tokenization, PS copy/cache/mailbox and PL processing are not implemented or measured."
+        }
+    project = json.loads((ROOT / "configs/project.json").read_text(encoding="utf-8"))
+    hw = project["hardware"]
+    result["target_contract"] = {"part": hw["part"], "board": hw["allocated_board"],
+        "clock_objective_mhz": hw["clock_objective_mhz"], "resource_limits_70pct": hw["resource_limits"],
+        "nominal_combined_bram_uram_bytes": int((hw["resource_limits"]["BLOCK_RAMS"] * 36 * 1024 + hw["resource_limits"]["ULTRA_RAMS"] * 288 * 1024) // 8),
+        "interface": hw["interface"], "shared_ddr_arena_bytes": 64 * 1024 * 1024,
+        "host_and_PL_boundary": "Existing selected architecture is a standalone A72 supervisor with a PL detector. Host/PS tokenizer/windowing and request serialization remain on the host side; the PL-facing contract currently has three AXI4 m_axi bundles (activation, weights, output) plus AXI4-Lite. There is no CNN command or CNN graph integration in that contract.",
+        "AIE_boundary": "No AIE route or XRT runtime is recorded in the configured project; this profile does not assume AI Engine mapping or availability.",
+        "physical_boundary": "Configured target/capacity/AXI catalog only. No CNN build, resource use, allocation, port/bandwidth proof, physical clock/power, or latency measurement is present."}
+    return result
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--run-dir", required=True, type=Path)
+    ap.add_argument("--static-originals-only", action="store_true",
+                    help="Write shape-only profiles for the four frozen CNN originals; loads checkpoint tensors for identity/shape checks but performs no forward/inference")
+    ap.add_argument("--plan", type=Path, default=ROOT / "configs/cnn_adoption_v1.json")
+    ap.add_argument("--static-output", type=Path, default=ROOT / "results/cnn_adoption_v1/original_static_mapping.json")
+    ap.add_argument("--run-dir", type=Path)
     ap.add_argument("--checkpoint", type=Path)
-    ap.add_argument("--calibration-dir", required=True, type=Path)
+    ap.add_argument("--calibration-dir", type=Path)
     ap.add_argument("--out-dir", type=Path)
     ap.add_argument("--max-calibration-windows", type=int, default=512)
     ap.add_argument("--reference-windows", type=int, default=4)
     args = ap.parse_args()
+    if args.static_originals_only:
+        profile = original_static_mapping(args.plan)
+        static_output = args.static_output if args.static_output.is_absolute() else ROOT / args.static_output
+        write_json(static_output, profile)
+        print(json.dumps({"complete": True, "kind": profile["kind"], "output": str(static_output),
+                          "profiles": {key: {"checkpoint_sha256": value["checkpoint_sha256"],
+                              "parameters": value["parameters"], "packed_payload_bytes": value["packed_payload_bytes"]["combined"],
+                              "macs_per_window": value["macs_per_full_window"]["total"],
+                              "receptive_field_tokens": value["receptive_field_tokens"]}
+                              for key, value in profile["profiles"].items()}}, indent=2))
+        return
+    if args.run_dir is None or args.calibration_dir is None:
+        ap.error("--run-dir and --calibration-dir are required unless --static-originals-only is selected")
     started = time.monotonic()
     if args.max_calibration_windows < 1 or args.reference_windows < 1:
         raise ValueError("Window counts must be positive")

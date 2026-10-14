@@ -130,3 +130,294 @@ threshold .9999271631240845, TP1/FN399/FP1/TN799. This fails the development
 quality gate; it is not a final adoption result. No new candidate fit or
 confirmation scoring has run. Remaining original baselines and common supervised
 adaptation are pending. Git synchronization preserves this incomplete state.
+
+## Frozen-original development comparison completed
+
+All six saved references finished before new supervised fitting. The following
+counts use the same 1,000 benign development-calibration and 1,200 selection
+documents (400 attack/800 benign), strict score>threshold, alpha=.005.
+
+| Reference | Threshold | TP/FN | FP/TN |
+|---|---:|---:|---:|
+| historical_bert_fp32 | 0.999423384666 | 5/395 | 1/799 |
+| historical_bert_w8 | 0.999802529812 | 7/393 | 3/797 |
+| original_local_context_03 | 0.995144784451 | 17/383 | 2/798 |
+| original_local_context_03_residual_replace_c98 | 0.98744904995 | 10/390 | 0/800 |
+| original_stacked_01 | 0.998128354549 | 1/399 | 3/797 |
+| original_textcnn_01 | 0.999927163124 | 1/399 | 1/799 |
+
+All fail the primary development gate. Historical W8 unchanged threshold
+.004557917360216379 gives TP118/FN282/FP62/TN738, separately from recalibration.
+Independent TextCNN saved-score audit passed all 2,296 rows, input/window and
+checkpoint/source identities, exact max aggregation and threshold/count
+recomputation (3.047 CPU seconds). Primary natural-email counts TP0/FN100/FP0/TN200.
+The top20 calibration risks include16 retrospective instruction discussions;
+4of5 primary calibration rejections are retrospective examples. All239
+single-window attacks and all21 attacks with >=4windows are missed. This does
+not implicate missing tails. These descriptive associations motivate enriched
+supervision without changing labels, construction or thresholds.
+
+The fixed five supervised recipes are dispatched serially by
+results/cnn_adoption_v1/serial_development_queue.py, stopping on any error.
+Per-job exact commands, terminal codes and walls are in queue_logs. TextCNN
+fitting has started; final outcomes are pending. Actual account usage39% used
+against the explicitly updated60% ceiling; no reset consumed.
+
+## Verified construction fault: original new panel superseded for adoption
+
+Independent inspection found six repeated POSITIVE_CONTEXT and six disjoint
+BENIGN_CONTEXT framing sentences in scripts/cnn_adoption_data.py. These
+label-exclusive framings cross fit/development roles and can identify class
+without interpreting the human-authored payload. Transport balancing does not
+remove this shortcut. All reported original-panel scores remain preserved but
+cannot establish the requested beyond-template generalization. Supervised
+TextCNN early perfect development scores are affected and do not qualify a
+candidate. The serial queue was stopped by verified process identity; last
+saved epoch and interruption record are in construction_fault_stop.json.
+One interrupted learning job counts against the60-job allowance; measured
+process time will be charged rather than treating the interruption as free.
+No confirmation scores were opened. A focused construction repair will preserve
+source/payload role memberships and scientific gates, use distinct revision
+paths, and freeze before new fitting. The previously recorded data check verified
+token/ancestry mechanics, not the absence of semantic construction shortcuts.
+
+Focused repair authorized within the original fault-correction allowance:
+remove positive intros; use common neutral transports and30 reviewed authored
+benign discourse-ancestry families allocated6perrole, with grouped wording
+realizations. Retain original source/TT memberships, labels, counts, quotas and
+gates. Old files remain untouched; revised raw/protocol and packed inputs will
+use revision_r2/ and prepared/token_r2/. The label evidence remains controlled
+context recognition on natural backgrounds, not natural historical incident
+records or evidence of broad population generalization. Revised ancestry and
+shortcut checks must pass before scoring/fitting. Resource accounting currently
+charges one interrupted learning job and a conservative323.747s fit-process
+upper bound; scoring/qualification intervals are explicitly distinguished from
+whole-process walls in results/cnn_adoption_v1/resource_accounting.json.
+
+CUDA Graph complete-raw-document profiling pipeline bring-up passed on the
+preserved original TextCNN development inputs:15 stratified/stress documents,
+45 repetitions; all-window/eager/saved-risk and fixed-decision checks passed.
+This is implementation qualification on the superseded panel, not adoption
+quality or a latency claim for a future checkpoint. CLI: python -B
+scripts/cnn_adoption_profile.py --plan
+results/cnn_adoption_v1/config_r1_before_repair.json --reference-id
+original_textcnn_01 --stage development --format fp32 --device cuda --backend
+cuda_graph --mode warm --sample-per-stratum 1 --long-stress-per-label 1
+--warmups 1 --repeats 3 --max-seconds 600. SourceSHA256
+9b6fc7f710246a6073c661052596a5657a2168bd1ab4c88d4d8a507b2fdaa3b9.
+Four-original analytical target mappings now record actual shape/identity checks,
+2.139/2.106/3.445/3.445MB proposed packed payloads and complete-window scaling.
+The hypothetical precision-matched BERT payload11.377MB is unqualified
+numerically; reductions69.7–81.5% do not establish measured resources or speed.
+
+The same bounded CUDA Graph profiler check also passed historical FP32 BERT
+(15documents/45timedobservations). This qualifies the explicit-mask graph
+route only for that checkpoint/input panel, with all saved calibration and
+development windows/decisions checked; a new matched-data checkpoint must be
+qualified again. The repaired context bank was inspected and released before
+new raw construction:30 controlled families/60realizations, zero exact cross-
+role templates, maximum token3shingle Jaccard.0625. Semantic themes and one
+construction author remain shared limitations, not independent natural sources.
+
+Fresh-process cold profiling bring-up also completed for the shortest/longest
+shared original TextCNN warm-sample documents (two children), with saved warm
+risks/decisions matched. Model/tokenizer loading and graph capture remain
+separate from the warm raw-document interval; operating-system caches were
+not flushed. Source and matched-warm identities are recorded in
+profiling/development/original_textcnn_01/fp32/cuda_graph/cuda/
+cold_process_complete.json. No latency result is assigned to a revised fit.
+
+## Repaired r2 execution released
+
+R2 token preparation completed47.000s; core independent token/association/tail
+check59.469s, with additional raw-block/context checks outside that core timer.
+44,570documents/60,226windows verified. All3,400 newly constructed positive
+blocks equal the original transformed TT text with common transport only;
+all1,760 benign discussion blocks match the released role-exclusive bank;
+removing each of5,160 constructed blocks recovers its exact original background.
+Source/payload/context role intersections and exact normalized-document role
+matches are zero. R2 source/TT memberships and labels equal the original panel.
+The protocol freeze precedes every r2 fit; the earlier interrupted r1 fit and
+its known development outcomes remain disclosed, not erased by this repair.
+
+Protocol:c84c7c0ca42b3099a95e7f48471788e221873ef694bf4e7cf96fe6d3f7a62cb7.
+Independentcheck:0844e039d7b3216a27936a07661cc5dd2c86abefbc07d46c06205488858fabe2.
+Pretrainingcontract:e47f997b1bcc53f6fd079da74d29ef169ebd741bd20399e0b12a4082fa30b785.
+All are under results/cnn_adoption_v1, with revised raw/protocol inrevision_r2
+and prepared inputs inprepared/token_r2. Config now binds exact manifest/raw/
+artifact hashes. Required-stratum display aliases were corrected to actual
+role_delimiter_spoof/encoded_instruction/code_simulation metadata keys before
+r2 scoring; the same prespecified minima apply. Payloadgroup counts4/13/21
+respectively retain sparse evidence for the first two.
+
+The guarded serial_development_queue_r2.py was dispatched after terminalcheck
+exit0; session17071 starts original_textcnn_01_r2, then the other five saved
+references, followed by allfive unchanged supervised recipes with_r2 IDs.
+All prior r1 models/scores/data are retained; no r2 confirmation scored.
+
+## Repaired frozen-original development results
+
+All six original-checkpoint r2 evaluations completed exit0 before supervised
+r2 fitting. Same1,000 benign development calibration and1,200 selection rows.
+
+| Reference | Primary TP/FN | Primary FP/TN | Threshold |
+|---|---:|---:|---:|
+| historical_bert_fp32_r2 | 13/387 | 1/799 | 0.9994353652 |
+| historical_bert_w8_r2 | 16/384 | 3/797 | 0.999746978283 |
+| original_local_context_03_r2 | 0/400 | 0/800 | 0.999974727631 |
+| original_local_context_03_residual_replace_c98_r2 | 1/399 | 0/800 | 0.999627590179 |
+| original_stacked_01_r2 | 1/399 | 3/797 | 0.998424172401 |
+| original_textcnn_01_r2 | 1/399 | 3/797 | 0.99991953373 |
+
+Independent TextCNN/Stacked saved-score checks passed3.547/3.359 CPU seconds.
+TextCNN natural-email TP0/FN100/FP1/TN199. Both saved own-threshold/max/input
+associations match the revised data. Original TextCNN vs historical W8 primary
+paired recall difference is-.0375 (CNN.0025 vs BERT.04), equal FPR.00375.
+Separate95% sensitivity intervals: sourcegroups[-.0595,-.0179], attackpayload
+groups[-.0765,0], paired calibration-source refit[-.06,-.0125]. This is one
+fixed seed, not a sampled seed population or distribution-shift guarantee.
+1000 raw resampling draws and group counts are retained in the comparison JSON.
+The initial comparator integration rejected a nonexistent redundant top-level
+stage before reading rows; it now uses the actual association.stage schema.
+The saved output caption incorrectly said all benigns lack payload ancestry;
+its numeric draws remain valid: payload bootstrap concerns attack recall only,
+and full-panel FPR is undefined because natural benigns lack that ancestry.
+Controlled retrospective benigns can carry TT ancestry. The caption correction
+is preserved in cnn_adoption_compare_execution_attempts.json; source corrected
+for future outputs without overwriting the original comparison.
+
+Supervised r2 TextCNN remains live. Epoch7 primary TP108/400,FP9/800 at the
+last inspection; this is interim development evidence, not finalist selection.
+Other fixed supervised recipes continue serially after this run.
+
+R2 supervised TextCNN completed12epochs, development-selectedepoch7.
+CheckpointSHA256:b068fcc77e25946b904c1d4abf4b61e2ce538a8b4e18eba4324b78f86c1f7056.
+Primarythreshold.9999972581863403;TP108/FN292/FP9/TN791, recall27%,FPR1.125%.
+Training+scoring361.778s (whole subprocesswall in queue_logs_r2). This fails
+the primary gate. Stacked fitting follows. Some late TextCNN FP32-softmax
+calibration scores round to1 (epoch12threshold1/TP0/FP0); a separate
+development-only raw-margin/F64 diagnostic is underway to distinguish rounding
+from actual score overlap. It changes neither primary scores nor thresholds.
+
+Independent selected-TextCNN context/window diagnosis completed34.219 CPU
+seconds. All9 selection false-positive winning windows retain BOTH discourse
+framing sides; no retrospective selection/calibration document has an isolated
+payload window. Thus disappearance of both framing sides does not explain
+current development false positives. All20 highest calibration scores are
+retrospective examples;7of9 selection false positives share one payload group
+across five context families. Matched backgrounds:376/400 attack risks exceed
+the paired benign risk,22are lower,2tie. Improved relative ranking does not
+satisfy the absolute low-FPR requirement. FIT separately contains19/400
+retrospective documents with28 isolated payload windows, matching54positive
+windows in24positive fitting documents. This is a local supervision tension,
+not proof of an unavoidable whole-document contradiction. The diagnosis
+artifact retains exact IDs/input hashes and did not access reserved scores.
+
+## Probability saturation discriminated from low-FPR overlap
+
+Bounded CPU-only TextCNN margin probe completed14.015s, one CPU thread,
+CUDA not initialized, devcal/devselection only. Selectedepoch7 primary counts
+are identical for nativeFP32probability, FP64sigmoid of FP32logits, and raw
+FP32/FP64margin diagnostics:TP108/FN292/FP9/TN791. Its selected result is
+therefore not rescued by preserving more score-order precision. Latestepoch12
+FP32threshold1 producesTP0/FP0; diagnostic FP64probability or rawmargin
+producesTP64/FN336/FP11/TN789 (recall16%,FPR1.375%). Rounding explains the
+lateepoch collapse but not satisfactory discrimination. This does not change
+primary outcomes, model selection, calibration or numerical policy. CPU/CUDA
+comparison limitations and frozen checkpoint hashes are retained in
+margin_probe/textcnn_01_supervised_s42_r2/complete.json.
+
+StackedCNN completed12epochs, selectedepoch9:primaryTP144/FN256/FP9/TN791,
+recall36%,FPR1.125%, threshold.9998946189880371, also fails.
+CheckpointSHA882cde263e5b6b0c706e268fc73894e5564517eb96f0f04c493beab2edacd201.
+Training+scoring391.034s; subprocesswall separately saved. LocalContext fitting
+is live; no intervention is selected until the common panel and matchedBERT
+finish.
+
+Actual enriched Stacked epoch9 W8/A8 export completed CPU1thread7.593s
+(invocationwall~17.1s), CUDA/vendor/physicalfalse.512representativeFITwindows
+from512sourcegroups calibrate activations; codes/scales are hashed and loaded
+from packed bytes, not recomputed weights. Payload:1,982,208W8-codebytes +
+123,140FP32-scalebytes +776FP32parameter/biasbytes =2,106,124bytes. FourFIT
+referencewindows show max/mean absolute logit error.07037/.04206 and4/4
+argmaxagreement. This small reference check is NOT low-FPR quality or
+threshold qualification; own-format development scoring follows whenGPUqueue
+finishes. No finalist is nominated by this bring-up. Output:
+exports/stacked_01_supervised_s42_r2/ under the adoption resultroot.
+
+LocalContext03 supervised_r2 completed12epochs, selectedepoch4. Primary
+threshold.9990829229354858;TP188/FN212/FP16/TN784, recall47%,FPR2%,
+failingboth absolutebounds. CP SHA256
+ce775d06de3b15b728b604c59e9ef5f660809463371a67c31b0019f8308172f0.
+Training+scoring792.277s; wholeprocesswall separately inqueue_logs_r2.
+Residualreplacement98 fitting is now live, followed bymatched-data BERT.
+Train-only teacher-cache entrypoint is being implemented against the existing
+FIT/cache schema; no teacher has been qualified or queried yet. Any such
+intervention depends on the actual completed matchedBERT development result.
+
+Residualreplacement98 supervised_r2 completed12epochs, selectedepoch2.
+Primarythreshold.998331606388092;TP165/FN235/FP3/TN797, recall41.25%,
+FPR.375%; meetsFPR butfailsrecall. CheckpointSHA256
+8b5f53c9791b1312a0bdb529aecc9fd220967971bac494a179a4be7c6ffce185.
+Training+scoring816.655s, subprocesswall separately inqueue_logs_r2.
+Allfour common CNN fits are complete; matchedBERT nowruns.
+LocalContext numericalexport produced3,440,780 packedbytes andfourFIT
+referencevectors withmax/mean |logitdelta|.107903/.026414,4/4argmaxagreement,
+CPU1thread11.969s. Its generatedmapping sidecar erroneously reused a
+Stacked-specific schedule; topology/liveness claims are quarantined pending
+focused correction, preserving oldbytes. Packedcodes/scales/config/opgraph
+and theirhashes remain checkpoint-specific. No GPUqualityqualification yet.
+The nativeinteger check now accepts explicitmanifest/FIT/output CLIargs with
+unique-output/preservation guards; help passes, actualnewformatGPUchecks
+wait for theserialtrainingqueue. Teacher FITcache helper andsyntheticchecks
+are ready, but no teacher has beenqualified orqueried.
+
+## Mapping estimate correction
+
+The LocalContext sidecar schedule is now family-specific, preserving the
+invalid oldsidecar andpre-fix exporter inits historydirectory. Packedmanifest,
+codes/scales/reference/opgraph bytes are unchanged. The staticpayload estimator
+also double-counted LayerNorm affine parameters: corrected LocalContext
+3,440,780B (prior3,445,444B), C98replacement3,439,184B (prior3,444,560B).
+TextCNN2,139,148B andStacked2,106,124B unchanged. These corrections supersede
+previous preliminary storage figures; equalconfig/shapes fororiginal and
+enrichedLocalContext nowmatchtheactual3,440,780B payload. The discrepancy
+was accounting, not a silent architecture change. BERTshape-derived storage
+comparison remains hypothetical andnumericallyunqualified; no physicalclaim.
+
+Common matchedBERT completed5epochs, selected4:TP275/FN125/FP2/TN798,
+recall68.75%,FPR.25%, threshold.9993425011634827. It improves the practical
+comparison butfailsrecall99%. CP SHA
+13c6814362b39eee0d4a58ae8e6aef51d4e4fb12ae728368cd452042d08f2d4c.
+Training+scoring521.877s. Allfive common selectedCPs nowhavecompleted full
+development+known96 evaluations. The prospectively allowed oneBERT5e-5
+refinement was dispatched afternewformatchecks; no extraBERTsweep.
+
+Nativeinteger qualification of actual enrichedStacked/LocalContext passed
+19/35exactINT32-dotchecks againstCPUINT64oracles, respectively, plusfourFIT
+packedCPU/nativeCUDA outputchecks underunchanged1e-5logit/1e-6risk tolerances.
+Checkintervals4.627/6.019s; fullprocesswalls separatelylogged. BothW8/A8
+formats completedown-calibration developmentscoring; these are actualmixed
+integer/FP32-exception routes, not fakequant runtime. Qualityresults below:
+stacked_01_supervised_s42_r2 W8/A8:TP142/FN258/FP9/TN791, threshold0.999895572662.
+local_context_03_supervised_s42_r2 W8/A8:TP188/FN212/FP16/TN784, threshold0.999074459076.
+
+These remaindevelopment-only andnotfinalnominations. Accountusage43% used
+againstuser-raised60%; noresetconsumed. Confirmationunopened.
+
+
+### Git synchronization checkpoint, 14 October 2026
+
+Stage 2 terminated successfully. BERT 5e-5 refinement full development primary
+evaluation: TP316/FN84/FP0/TN800, 79% recall/0% FPR, below fixed 99% recall.
+Checkpoint SHA256: 95025bfc0e29163efea613d556d7da0b516ec1bb6c6fac9d9c4c9c6f1f373525.
+Seven independent common-recipe/format audits passed in 28.000 CPU seconds.
+C98 CPU export: 512 FIT calibration windows, four reference vectors,
+3,439,184 bytes, maximum logit error .059832; no FPGA measurements.
+Independent inspection found export calibration queries content_token_count/
+content_length while R2 supplies content_tokens. Existing exports actually
+balance source/genre with collapsed length strata; advertised length balancing
+is unproven. Saved artifacts/results remain tied to that sampler. Repair needs
+new qualification and preservation of existing artifacts. Confirmation remains
+unopened; distillation and frozen three-seed confirmation are pending.
+The user requested synchronization of this incomplete study state to Git.

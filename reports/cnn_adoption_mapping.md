@@ -65,36 +65,55 @@ packed-loader use are in [`execution.json`](../results/cnn_adoption_v1/exports/s
 The corrected scale-serialization mismatch from the first loader attempt is
 recorded in [`execution_attempts.json`](../results/cnn_adoption_v1/exports/stacked_01_final_s42/execution_attempts.json).
 
-## Precision-matched BERT shape comparison
+## Four original structures: exact shape costs
 
-Using the saved four-layer, hidden-256 BERT checkpoint only for shapes, an
-analytical uniform format that stores every two-dimensional matrix W8 with
-per-row FP32 scales, all vector/bias parameters FP32, and static A8 input scales
-for each of its 26 linear layers requires 11,375,464 bytes. The initial
-`stacked_01` export is 81.5% smaller than this same-storage-format estimate,
-above the prompt's prospective 50% parameter-and-scale reduction example.
-The BERT estimate includes its embedding matrices at W8, matching the CNN's
-embedding storage; it does not establish numerical quality for that broader
-BERT quantization route. By comparison, the existing BERT W8-QAT scope quantizes
-24 encoder linears while leaving embeddings and other parameters FP32; its
-ideal packed payload is 35,284,072 bytes, but that is not an embedding-precision
-matched comparison. The underlying FP32 checkpoint shape identity and both
-payload calculations are in
-[`mapping_assessment.json`](../results/cnn_adoption_v1/exports/stacked_01_final_s42/mapping_assessment.json).
+[`original_static_mapping.json`](../results/cnn_adoption_v1/original_static_mapping.json)
+is a shape-only audit of the four frozen original checkpoints named in
+`configs/cnn_adoption_v1.json`. It verifies each checkpoint hash and loads the
+state dict only to confirm parameter shapes; it executes no model forward. The
+payload sizes below count every weight as signed W8, per-output/per-embedding-
+row FP32 weight scales, one FP32 static A8 input scale per Conv/Linear, FP32
+biases and all other trainable parameters, with the export's actual 64-byte
+per-tensor alignment. These are exact byte counts for that format and shape;
+the three non-Stacked values are not exported numerical references and their
+activation scales still depend on their future FIT calibration.
 
-For the same L=256 token window, counted linear plus attention QK/AV work is
-7.340M CNN Conv/Linear MACs versus 939.590M BERT MACs (about 128:1). The BERT
-count includes four layers of Q/K/V, attention output and feed-forward linears,
-plus QK and AV products; it excludes embedding lookup, LayerNorm, softmax and
-other operations. The CNN excludes embedding lookup, masks, pooling and
-nonlinear work. These unlike operation graphs and counts do not predict latency
-or speedup. In the old FIT partition, stacked averages 1.263 L=256 windows per
-document (40,883 windows / 32,370 documents), or 9.271M counted Conv/Linear MACs
-per document. For a tokenized document with `n` content tokens, the existing
-254-content, overlap-64, stride-190 policy gives
-`max(1, ceil(max(0, n - 254) / 190) + 1)` windows; work grows with that count.
-These old-FIT distribution values must be replaced by the adoption workload's
-document lengths before confirmation.
+| Frozen original | Parameters | FP32 bytes | Aligned W8/A8 payload | Payload reduction | Conv/Linear MACs per L=256 window | Feature RF / centered lookahead |
+|---|---:|---:|---:|---:|---:|---:|
+| TextCNN-01 | 2,015,426 | 8,061,704 | 2,139,148 B | 73.5% | 15,729,024 | 7 / 3 tokens |
+| Stacked-01 | 1,982,402 | 7,929,608 | 2,106,124 B | 73.4% | 7,340,160 | 5 / 2 tokens |
+| Local-context-03 | 3,309,986 | 13,239,944 | 3,445,444 B | 74.0% | 96,731,328 | 33 / 16 tokens |
+| Residual replacement C98 | 3,306,532 | 13,226,128 | 3,444,560 B | 74.0% | 95,836,356 | 33 / 16 tokens |
+
+The matched BERT route is hypothetical shape accounting on the saved
+four-layer H=256 checkpoint: every 2-D matrix, including all embeddings, is
+W8; each matrix has a per-row FP32 scale; each of 26 non-embedding matrices
+has one FP32 A8 input scale; and all 14,082 non-matrix parameters (biases,
+normalization vectors and other vectors) remain FP32. Applying the same
+per-tensor alignment gives 11,156,992 bytes W8, 163,780 bytes of scales and
+56,328 bytes FP32 parameters, 11,377,100 bytes total. The candidate payloads
+are 69.7–81.5% smaller under this matched storage rule. This is above the
+prompt's prospective 50% payload-reduction example, but it does not establish
+equivalent BERT W8/A8 quality or any speed benefit. The existing BERT W8-QAT
+scope instead leaves embeddings and other parameters FP32; its ideal packed
+payload is 35,284,072 bytes and is not embedding-precision matched. All shapes,
+checkpoint hashes, tensor counts, exact per-file payload arithmetic, and
+boundaries are in the JSON record.
+
+Per-document work is explicitly all-window work. For `n` content tokens the
+frozen tokenizer/window policy gives
+`N(n)=max(1, ceil(max(0,n-254)/190)+1)`, so each model costs its table MAC count
+times `N(n)`; no model stops after the first suspicious window. At content
+lengths 254, 255, 444, 445, 634 and 635, the complete window count is 1, 2, 2,
+3, 3 and 4 respectively. Every further 190 content tokens adds one full
+L=256 window, including the 64-token overlap and repeated special tokens.
+The JSON lists corresponding MACs and payload bytes for each architecture.
+
+For scale, the matched-format BERT count at L=256 is 939,590,144 MACs under the
+same narrow linear plus QK/AV boundary, compared with the four CNN counts above.
+CNN counts exclude embedding lookup, masks, norms, activations, pooling and
+aggregation; BERT excludes its embedding lookup, masks, norms and softmax.
+These operation counts are not latency or speedup evidence.
 
 ## VEK280 route and costs still open
 
@@ -109,6 +128,75 @@ descriptor or command. Prior BERT closure/resource results describe the BERT
 design, not available CNN headroom. These details are recorded in
 [`goal4_platform_architecture.md`](goal4_platform_architecture.md),
 [`fpga_toolchain.md`](fpga_toolchain.md), and `configs/project.json`.
+
+### Candidate-specific PL dataflow and retention
+
+The existing integrated design is a desktop host → UART → standalone A72
+supervisor → mailbox/PL path. The desktop host performs tokenization and window
+construction; A72 validates/copies already-windowed IDs and submits PL work.
+The existing PL contract has activation, weight and output AXI4 master bundles
+plus AXI4-Lite, but no CNN command, CNN input packet, or CNN graph. The selected
+shared DDR_LOW0 arena is 64 MiB; the configured 70%-budget aggregate BRAM36 plus
+URAM capacity is 8.72 MB. Neither capacity number proves free or correctly
+banked space. There is no recorded AIE/XRT route in this project, so the
+hypotheses below remain PL/DDR/NoC routes rather than assumptions about AIE.
+The existing A72 supervisor ELF has a 241,472-byte OCM load; each complete CNN
+payload is 8.7–14.3 times larger, so an implementation that retains all weights
+cannot assume the supervisor OCM as its backing store. The shared DDR arena is
+the recorded host/PL memory route, subject to allocation and bandwidth proof.
+
+| Original topology | Source-derived PL schedule question | Useful materialization sizes at L=256 | Main numerical/dataflow burden |
+|---|---|---|---|
+| TextCNN-01 | Three independent centered kernel-3/5/7 branches at C=64. Compare parallel branches with one time-multiplexed Conv unit; the former holds more branch data, the latter serializes weights/work. | Embedding W8+row scales 2,075,496 B; three branch maps total 192 KiB FP32 (48 KiB if represented as A8 codes), plus concatenated 192 KiB FP32 map (48 KiB as A8) at the join; pooled FP32 summary 768 B. | No LayerNorm or residual, but global max needs all token positions; a fused branch-wise max could reduce retention to three C-wide summaries. That fusion is a proposed schedule, not the current graph. |
+| Stacked-01 | Two centered width-3 stages at C=64; test a fused stream from embedding/projection through both stages. | Embedding W8+row scales 2,075,496 B; one FP32 feature map 64 KiB (16 KiB if saved after A8 requantization); one int32 accumulator map 64 KiB; pooled FP32 summary 256 B. | Lowest source-counted CNN MACs; two-token local feature lookahead. Global max still holds a full-window barrier; FP32 bias/rescale then static A8 requantization sits between Conv stages. |
+| Local-context-03 | Two blocks; each has local k=3, context k=15, concatenation and 2C→C fusion at C=96. Compare branch scheduling and fusion without losing the local/context values needed at the join. | Embedding W8+row scales 3,052,200 B; one FP32 map 96 KiB (24 KiB as A8); both branch outputs plus the concatenated map are 384 KiB FP32 total if simultaneously materialized (96 KiB as A8); pooled FP32 summary 384 B. | Six tokenwise LayerNorms; long 16-token centered feature lookahead. Local and context outputs must coexist until fusion under the direct source graph. |
+| Residual replacement C98 | Six sequential residual Conv stages with kernels 3/15/1/3/15/1. Compare token-streaming skip alignment against materialized residual tensors. | Embedding W8+row scales 3,052,200 B; one C=98 FP32 map 98 KiB (24.5 KiB as A8); skip plus output maps 196 KiB FP32 (49 KiB as A8); pooled FP32 summary 392 B. | Six tokenwise LayerNorms and residual adds; 16-token centered feature lookahead. k=15 stages and skip/output alignment complicate streaming even though this is a single chain. |
+
+Every model has an embedding gather followed by a static-scale A8 Conv input.
+The reference exports per-row FP32 embedding scales, dequantizes each gathered
+row to FP32, then quantizes it to the first Conv's A8 input scale. The C-wide
+first Conv/projection input map is 65,536 FP32 bytes for TextCNN/Stacked and
+98,304 bytes for the two width-96 embedding models if fully materialized.
+Fusing that row-scale to A8 conversion, Conv rescale/bias, tokenwise LayerNorm,
+ReLU and residual updates into narrower fixed-point operators would alter the
+CPU reference; it needs its own exact numerical qualification. The manifest's
+W8/A8 name therefore describes Conv/Linear dot inputs and weights, not an
+all-integer execution graph.
+
+The current integer-dot reference rescales each Conv/Linear output to FP32,
+applies FP32 bias, and requantizes the next operator's input to A8. Thus the
+FP32 sizes are the direct materialization requirement for that reference path;
+A8 sizes describe a narrower hypothetical schedule that fuses or preserves
+quantized boundaries and needs separate numerical qualification. The profile
+sizes are individual buffers, not the simultaneous live peak. A streamed PL
+design might retain only line history plus a pooled summary, while
+a tiled schedule could need full feature maps, int32 accumulators, concatenated
+branch data and residual skips. TextCNN's parallel branches and Local-context's
+fusion impose explicit joins; Stacked is the clearest serial pipeline; C98 is
+sequential but has the longest receptive field and residual retention. A
+complete allocation must also place the random-access embedding table and
+scales alongside kernel weights, with port/bank arbitration on the target's
+weight bundle. None of those choices has an HLS schedule, allocation, or
+resource report yet.
+
+The host can either retain the complete `n`-token ID array (at least `4*n`
+bytes, excluding raw text/tokenizer storage) or produce windows incrementally
+while retaining 254 IDs for the active 256-position window. The latter assumes
+tokenizer chunk equivalence that has not been implemented or tested. Windows
+overlap by 64 tokens and are all scored; one FP32 running document risk scalar
+(4 bytes) is sufficient if outputs arrive in order, but the document decision
+cannot be returned until every window completes. Per-window CNN exchange size
+under the existing packet framing is 1,408 bytes versus BERT's 2,432 bytes;
+at 115,200-baud 8N1 that is 122.22 ms versus 211.11 ms of wire time per window.
+For `N(n)` windows, separate exchanges cost `1,408*N(n)` bytes, while an
+unimplemented single batched request would cost `128+1,280*N(n)` bytes before
+responses. These are exact serialization calculations under the stated
+packet assumption, not a CNN protocol or end-to-end time.
+
+The detailed per-model work, aligned tensor payload, 64-byte storage
+accounting, window-count examples, target envelope, packet arithmetic and
+checkpoint/config hashes are in
+[`original_static_mapping.json`](../results/cnn_adoption_v1/original_static_mapping.json).
 
 A plausible PL schedule streams one 256-token window from the activation
 bundle, looks up the W8 embedding table and per-row scales from the weight
@@ -136,20 +224,32 @@ serialization calculation. No CNN packet or batching contract exists, so this
 is a conditional transport arithmetic comparison rather than measured
 end-to-end performance. Reducing compute alone does not solve host transport.
 
-The export's 2.11 MB payload is smaller than both the nominal aggregate BRAM36
-plus URAM capacity under the declared budget (8.72 MB) and the selected 64 MiB
-DDR arena. Neither comparison establishes that those resources are free or
-that the tensors fit the required bank widths, ports, placement and bandwidth.
-The exporter has not established CNN LUT/DSP/BRAM use, 200 MHz closure, power,
-NoC traffic, UART integration or physical-device behavior. No vendor build was
-made because this is a mapping artifact for the root's selection work, not an
-approved hardware dispatch. A later discriminator should first fix a named
-candidate and full document-chain boundary, then determine whether the
-embedding-plus-convolution schedule, FP32 exceptions and host transport fit
-the declared envelope. If that schedule cannot be bounded, the current 81.5%
-payload scenario alone is insufficient for hardware adoption.
+The 2.11–3.45 MB candidate payloads are smaller than both nominal aggregate
+BRAM36 plus URAM capacity under the declared budget (8.72 MB) and the selected
+64 MiB DDR arena. Neither comparison establishes free resources, valid banking,
+ports, placement or bandwidth. No candidate has a CNN build, allocated buffer
+map, CNN UART integration, or physical measurement in this mapping. Zero
+optional vendor builds were chosen for this bounded task: its purpose is
+shape-based mapping across the four originals, and the current FP32-exception
+W8/A8 route is not yet a fully qualified CNN execution chain. Tool availability
+is not the blocker; the installed VEK280 flow has been used for the existing PL
+design. A useful next discriminator is one exact candidate checkpoint and FIT
+calibration, followed by complete-window packed/reference equivalence and a
+named activation/embedding/host-transport schedule. Only then can a small
+candidate-specific PL build answer whether that route fits the declared target
+envelope. Payload reduction by itself is insufficient for adoption.
 
 Reproduction (CPU only; no evaluation or confirmation partition):
+
+Shape-only profiles for all four frozen originals, without a model forward:
+
+```powershell
+& 'C:/research/GATE/.venv/Scripts/python.exe' -B scripts/cnn_adoption_export.py `
+  --static-originals-only
+```
+
+The initial Stacked packed-reference bring-up (which does run calibration and
+the requested FIT-only reference vectors) is:
 
 ```powershell
 & 'C:/research/GATE/.venv/Scripts/python.exe' -B scripts/cnn_adoption_export.py `

@@ -10,26 +10,32 @@ negative/unstable primary outcomes remain unchanged.
 
 ## Active authorized work
 
-The prospective contract is in reports/cnn_adoption_study.md and the single
-configuration configs/cnn_adoption_v1.json. Natural mail/article data and human-authored payload provenance are frozen
-into five separate roles, with source/thread/article and payload/author ancestry.
-Independent checks passed for44,570 documents/60,453 windows. Confirmation
-scores stay unopened until candidate/format/rule freeze. No new candidate fit
-has run.
+The single contract/configuration is reports/cnn_adoption_study.md and
+configs/cnn_adoption_v1.json. The original new-panel framing shortcut was
+verified; the affected TextCNN fit stopped after8 saved epochs. All r1 data,
+scores and checkpoints are preserved and cannot support adoption.
 
-Shared document-max BCE training is implemented for four existing CNNs and
-pretrained small BERT. Focused CPU checks passed exact loss/gradient/RNG replay,
-masks, ties and finite updates. The first packed W8/A8 CNN reference/export and
-native CUDA integer-dot adapter passed bounded old-FIT checks; these are
-implementation evidence, not adoption quality or hardware measurements.
+The repaired r2 construction removes all positive intros and assigns each
+benign discourse family to one role. Original source/TT memberships, labels,
+counts, presentation quotas and quality gates remain unchanged. Independent
+checks passed44,570 documents/60,226 windows, all tails and5,160 constructed
+block/background recoveries. R2 memberships/hashes froze before any r2 fit.
+Controlled one-author discourse and sparse role/encoding payload ancestry
+remain evidence limits; no broad natural-population guarantee is claimed.
 
-CUDA training and packed integer-backend qualification passed. Original TextCNN
-development at primary alpha=.005 yielded TP1/FN399/FP1/TN799; this is not an
-adoption verdict. Next: finish remaining frozen-original development evaluations,
-then execute competent common supervised adaptation. Root owns
-serial heavy jobs. Optional distillation/repairs depend on development evidence;
-final repeats use seeds42/1337/2026 and predeclared priority/checkpoint rules.
-Adoption remains unproven until the full prospective requirements are executed.
+All six frozen-original comparisons, five shared supervised fits and the bounded
+higher-LR BERT refinement completed. Primary recall/FPR: TextCNN 27%/1.125%,
+Stacked 36%/1.125%, LocalContext 47%/2%, C98 replacement 41.25%/0.375%,
+matched BERT 68.75%/0.25%, refined BERT 79%/0%. All fail 99% recall.
+Stacked/Local W8/A8 native qualification and full development scoring completed;
+seven independent score audits passed. C98 CPU export is 3,439,184 bytes.
+The export sampler queries a missing length field: existing calibration balances
+source/genre, not advertised lengths. Results retain their actual sampler identity.
+
+Confirmation remains unopened. Teacher distillation, final qualification and
+frozen three-seed confirmation remain pending; no adoption verdict exists.
+Account usage last observed 43% against the user-raised 60% ceiling.
+The user requested Git synchronization of this incomplete local state.
 
 ## Preserved limits and findings
 

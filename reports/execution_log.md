@@ -2725,3 +2725,99 @@ local. No new candidate fit or confirmation scoring completed. Pending work
 includes remaining frozen baselines, supervised adaptation and final comparison.
 The original pretraining snapshot remains preserved; the later user ceiling
 change does not alter frozen data or scientific thresholds.
+
+
+## CNN adoption frozen-original development stage
+
+All six frozen references terminal exit0 before the first supervised fit.
+Recalibrated primary TP/400: Text1, Stacked1, Local17, Replacement10, W8BERT7,
+FP32BERT5. Primary FP/800:1,3,2,0,3,1 respectively. Saved complete.json and
+score JSONL associations are under results/cnn_adoption_v1/evaluation/development.
+Independent TextCNN check3.047 CPU seconds passed hashes/max/threshold/counts.
+Required withheld mechanism list role_delimiter/encoding/code is now explicitly
+bound in evaluator config, carrying the existing pre-fitting data contract; no
+scientific gate or membership changed. Earlier reference records retain their
+original association; no unnecessary inference rerun. Serial queue session7981
+now dispatches the fixed supervised recipes; no confirmation scoring.
+
+
+## Verified adoption construction fault and bounded interruption
+
+Independent data worker identified repeated class-specific framing sentences
+cross roles (POSITIVE_CONTEXT/BENIGN_CONTEXT). Root inspected code and verified
+queue/trainer process IDs59072/26328/53220/51808, then stopped only affected
+processes. Queue session7981 terminal exit1; some child processes exited during
+stop, with no unrelated mapping worker stopped. All outputs/checkpoints remain
+in place. One interrupted TextCNN learning job is charged; no remaining
+supervised jobs dispatched and no confirmation scored. Full interruption
+record:results/cnn_adoption_v1/construction_fault_stop.json. Prospective
+scientific thresholds unchanged; new construction revision pending design.
+
+
+## Repaired r2 data verified and development queue running
+
+R2 protocolSHA c84c7c0ca42b3099a95e7f48471788e221873ef694bf4e7cf96fe6d3f7a62cb7;
+checkSHA0844e039d7b3216a27936a07661cc5dd2c86abefbc07d46c06205488858fabe2;
+pretraining snapshotSHAe47f997b1bcc53f6fd079da74d29ef169ebd741bd20399e0b12a4082fa30b785.
+Preparation47.000s/core independentcheck59.469s;44,570docs/60,226windows;
+3,400positive/1,760benign blocks and5,160background recoveries verified.
+Data-check timer excludes additional block verification; no invented total.
+Fixed scientific gates retained; actual requiredstratum IDs corrected from
+displayaliases before r2 scoring. Root bound exactartifact/manifest/raw hashes
+and dispatched serial queue_r2 session17071 after terminalcheck exit0.
+Previous altered-panel scores and interrupted fit remain disclosed/preserved.
+No confirmation scoring and no further Git sync.
+
+
+## Repaired frozen-baseline completion and real comparator check
+
+Six r2 baseline process walls: Text17.08s, Stacked18.04s, Local31.76s,
+Replacement33.01s, historicalW856.23s, historicalFP3231.46s; exact values
+in queue_logs_r2/*.dispatch.json. All exit0; TextCNNsupervised_r2 live next.
+Independent Text/Stacked score checks3.547/3.359s. Real 1000-rep paired
+comparison completed CPU~19.6s after focused association.stage compatibility
+fix; original pre-row failure and subsequent caption correction preserved in
+cnn_adoption_compare_execution_attempts.json. No inference/confirmation rows
+used by comparator. Scientific thresholds and construction stay frozen.
+
+
+## Supervised development and saturation discriminator
+
+TextCNN_r2 completed12epochs/selected7:CPb068fcc77e25946b904c1d4abf4b61e2ce538a8b4e18eba4324b78f86c1f7056,
+TP108/FN292/FP9/TN791,361.778s training+scoring. Stacked_r2 completed12/selected9:
+CP882cde263e5b6b0c706e268fc73894e5564517eb96f0f04c493beab2edacd201,
+TP144/FN256/FP9/TN791,391.034s training+scoring. Wholeprocesswalls saved
+separately; LocalContextGPUfit live next. IndependentTextcontextcheck34.219CPU
+seconds: all9FPwindows retainbothframing sides,20topcalriskretrospective,
+7/9FPonepayloadgroup; localFITwindow collisions are tension, notimpossibility.
+CPU1thread marginprobe14.015s, noCUDAinitialized: selected7 samecountsunder
+F32/F64prob/margin; latest12 F32threshold1→zeroTP, stablemargin64TP/11FP.
+SelectedCPU/CUDAmaxriskdelta2.08616e-6 withzeroallthreeoperatingpointdecisionchanges.
+Probehashd585d0436dc07d0b726c6daa88f5817443089085c0d7d95ce12c5d7ba664a8a7.
+No primarypolicy/score changes. Stacked newfit PTQexport CPUbring-up authorized
+whileGPUqueue17071continues, preservingoldexports and usingr2FITonly.
+
+
+## Third supervised r2 fit completed
+
+LocalContext03 completed12epochs, selected4 CPce775d06de3b15b728b604c59e9ef5f660809463371a67c31b0019f8308172f0.
+PrimaryTP188/FN212/FP16/TN784;792.277s training+scoring. Rootpoll ofsession17071
+confirmed terminalexit0 andresidualreplacementdispatch. A45-secondwait polled
+the same livequeuehandle; no processrestart. No confirmation or policychange.
+
+
+### Git synchronization checkpoint, 14 October 2026
+
+Stage 2 terminated successfully. BERT 5e-5 refinement full development primary
+evaluation: TP316/FN84/FP0/TN800, 79% recall/0% FPR, below fixed 99% recall.
+Checkpoint SHA256: 95025bfc0e29163efea613d556d7da0b516ec1bb6c6fac9d9c4c9c6f1f373525.
+Seven independent common-recipe/format audits passed in 28.000 CPU seconds.
+C98 CPU export: 512 FIT calibration windows, four reference vectors,
+3,439,184 bytes, maximum logit error .059832; no FPGA measurements.
+Independent inspection found export calibration queries content_token_count/
+content_length while R2 supplies content_tokens. Existing exports actually
+balance source/genre with collapsed length strata; advertised length balancing
+is unproven. Saved artifacts/results remain tied to that sampler. Repair needs
+new qualification and preservation of existing artifacts. Confirmation remains
+unopened; distillation and frozen three-seed confirmation are pending.
+The user requested synchronization of this incomplete study state to Git.
