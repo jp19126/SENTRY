@@ -1,0 +1,21 @@
+{
+  "study_id": "span_coupled_pilot_v1",
+  "approval": {
+    "date_local": "2026-10-13",
+    "user_text": "continue. I will go to sleep in the next hours so keep going. I approve this",
+    "contract": "reports/method_study.md",
+    "scope": "Pilot plus conditional integration under the approved gates; local changes only"
+  },
+  "usage": {"before_next_reset": "no cap", "after_next_reset_stop_used_percent": 50, "last_pre_reset_used_percent": 6, "last_pre_reset_resets_at": 1792323848, "reset_observed": false},
+  "seed_values": [42, 1337],
+  "arms": ["coupled", "independent", "span_mlp", "sopa"],
+  "model": {"vocabulary": 30522, "embedding_dim": 64, "conv_widths": [3, 5, 7], "conv_channels_each": 64, "context_length": 58, "context_left": 28, "context_right": 29, "rank": 32, "full_footprint_left": 31, "full_footprint_right": 32, "dropout": 0.0, "sopa_patterns": 16, "sopa_consuming_transitions": 2, "sopa_self_loops": true, "sopa_epsilon": true},
+  "windowing": {"length": 256, "overlap_content_tokens": 64, "tails": "complete", "aggregation": "max_window_risk", "rule": "score > threshold"},
+  "training": {"epochs": 10, "fp32_epochs": 8, "qat_epochs": 2, "optimizer": "AdamW", "learning_rate": 0.001, "weight_decay": 0.01, "document_batch": 32, "gradient_clip": 5.0, "selection": "fixed final epoch", "teacher": null},
+  "arithmetic": {"weight_bits": 8, "weight_scales": "per-output symmetric power-of-two frozen before QAT", "encoder_activation_bits": 8, "state_dtype": "int32", "state_fractional_bits": 12, "state_code_clip": [-32768, 32768], "lambda_fractional_bits": 8, "lambda_max_code": 256, "intermediates": "int64", "rounding": "nearest ties to even", "sigmoid_table_entries": 4097, "sigmoid_logit_range": [-16, 16], "sigmoid_entry": "IEEE754 binary32 bit pattern in uint32 ROM"},
+  "data": {"source_prepared": "results/goal_r1/prepared_v1", "allowed_splits": ["train", "search_temporary_threshold", "search_candidate_scoring"], "augmented_training_groups": 512, "augmentations_per_training_group": 4, "probe_scoring_groups": 128, "probe_variants_per_group": 8, "sampling_seed": 20261013, "protected_partitions_open": false, "probe_recipe_source": "scripts/span_prepare.py", "exposure_claim": "Newly authored development stress probes; not an independent unseen-distribution benchmark"},
+  "quality": {"natural_recall_min": 0.99, "natural_fpr_max": 0.01, "stress_recall_min": 0.95, "stress_fpr_max": 0.05, "quantized_recall_loss_points_max": 0.5, "quantized_fpr_increase_points_max": 0.25, "paired_ablation_balanced_error_improvement_points_min": 5.0},
+  "hardware": {"part": "xcve2802-vsvh1760-2MP-e-S", "clock_target_mhz": 200, "pilot_frequency_derating": 0.8, "product_lane_target": 128, "lut_max": 100000, "ff_max": 200000, "dsp_max": 256, "bram36_max": 64, "uram_max": 96, "pilot_designs": ["coupled_fused", "coupled_conventional", "span_mlp", "sopa"]},
+  "budget": {"planned_training_fits": 8, "training_seconds_per_fit": 2700, "training_gpu_hours": 6, "evaluation_bundles": 12, "evaluation_seconds_per_bundle": 1200, "timed_algorithms": 8, "pilot_hardware_designs": 4, "pilot_seconds_per_design": 7200, "corrective_software_reruns": 2, "corrective_hardware_rebuilds": 2, "total_gpu_hours": 19, "pilot_vendor_wall_hours_with_corrections": 12, "conditional_integration_vendor_wall_hours": 36},
+  "permissions": {"target_api_calls": false, "paid_services": false, "physical_hardware": false, "final_data": false, "github_sync": false}
+}

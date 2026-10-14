@@ -1657,3 +1657,549 @@ remain under `results/goal_r1/`. STATUS updated via guarded UTF-8 helper, follow
 by its read-only check. No research rerun for documentation changes.
 
 Final R1 checks: seven new Python sources parse; project/architecture JSON parse; guarded STATUS write and --check passed (STATUS40624 B, board handoff11604 B unchanged). Whitespace check passes with temporary core.whitespace=cr-at-eol for native Windows line endings; no Git setting changed. Elevated read-only process check finds zero owned R1 Python jobs; owned cancellation marker absent. Initial default Git check flagged CRLF, and sandbox CIM access was unavailable; the appropriate read-only follow-ups resolved both. No experiments rerun. Evidence: results/goal_r1/final_checks.json.
+
+## 2026-10-13 — staged prompt Phase A executed; scientific checkpoint
+
+User requested execution of `SENTRY_codex_execution_prompt.md` using native
+subagents and essential actual offline work. The prompt explicitly requires
+method/budget selection after Phase A, before new training, inference campaigns,
+vendor simulations/builds and integration. No specific candidate was already
+approved. Governing README/AGENTS/scope/status, current protocol/configuration,
+R1 report and relevant saved evidence were inspected. Initial WSL Git status
+was clean `main...origin/main`; HEAD
+`d50abdca98b889a0de0ac09488da5154e7102389`. No Git synchronization occurred.
+
+Native delegates: `gpt-6-astra` method/security/primary literature and
+`gpt-6.1-sol` FPGA/co-design evidence, at most two, no nested teams. The academic
+search skill's multi-source workflow used public primary web fallback because
+academic-search MCP tools were absent. Literature inspection, device/manual
+facts and limitations are in `reports/method_study.md`; worker notes remain in
+`results/method_study_phase_a/prior_art_notes.md` and `hardware_notes.md`.
+
+Implemented `scripts/method_study_saved_audit.py` (stdlib plus existing
+`gate_eval`), reading only eight existing R1 development document-score files.
+It validates complete window arrays/maxima, coverage, matched metadata, finite
+scores and calibration/scoring source separation; independently recalculates
+strict order-statistic thresholds/counts, paired decisions, conventional early
+positive-exit work and fixed-threshold source-group bootstrap uncertainty.
+Input SHA256/bytes and outputs are saved. No final partition, model, target API,
+vendor tool or physical board was opened/executed by this analysis.
+
+Actual command, from the checkout:
+
+```sh
+python3 -B scripts/method_study_saved_audit.py --output results/method_study_phase_a/saved_score_audit.json
+python3 -B scripts/method_study_saved_audit.py --output results/method_study_phase_a/saved_score_audit_v2.json
+```
+
+Each WSL run completed in approximately 6.5 seconds. The v2 rerun only clarifies
+that calibration groups are not resampled/recalibrated in this descriptive
+bootstrap; original output is retained. Independent PowerShell rereads confirmed
+threshold 0.004557917360216379, 1,369 three-document groups, BERT 2738/0/13/1356,
+447 of 5,308 skippable windows (8.421%) and CNN/BERT joint FP4, BERT-onlyFP9,
+CNN-onlyFP20. FPR bootstrap0.5113–1.4609% is conditional on the fitted threshold;
+zero-miss recall bootstrap is degenerate and all55templates were seen in training.
+The inferred conjunction/early-exit counts are exploratory conventional
+opportunities, not measured timing, an adopted detector or novel-method evidence.
+
+Environment failures were preserved as limitations of initial attempts, not
+scientific failures: sandbox WSL invocation returned E_ACCESSDENIED; read-only
+WSL escalation succeeded. Windows Git on UNC reported unsupported sequencer
+access, while WSL status succeeded. Native Python's output-path stat returned
+WinError65 before producing a result; WSL Python executed the same analysis.
+The first STATUS-candidate command incorrectly used a provider-qualified
+PowerShell location in a .NET path; it produced no candidate and the handoff
+helper refused the missing file. Using the ProviderPath corrected it. The
+canonical STATUS was changed only by `scripts/update_handoff.py --write`.
+No automatic approval-review rejection occurred.
+
+The report proposes a completed-context span-coupled guard, ordinary span/SoPa
+competitors, independent-pooling ablation and frozen quality references. Review
+found that emitting maxima over incomplete spans could preserve false alarms
+before benign context arrived. The contract was corrected before experiments:
+each token anchor waits for its fixed58-token context, encoder footprint64;
+internal-window-edge anchors require complete context; actual document edges
+use explicit zero padding. No short-span score or context-free summary maximum
+bypasses that requirement. Novelty and semantic interpretation remain open.
+
+Final analytical example: H58/R32 paired INT32 state14,848B, plus conservative
+11,136B A8anchor features;19,906,560 scalar products at denseL256 including
+encoder, projections, recurrence and completed-anchor head. Ideal128lane
+200MHz arithmetic0.7776ms is not achieved timing. Pilot estimates require20%
+clock derating; routed frequency belongs to conditional integration. Actual
+UART1152008N1 framing128B alone takes11.111ms, blocking a1.707ms comparison on
+the unchanged transport. Faster physical transport remains unverified.
+
+Independent reviews also repaired contract coverage: four pilot hardware
+designs now include conventional span/SoPa cost comparators, timing includes
+all up-to-eight eligible algorithms/references, and evaluation bundles include
+FP32/fixed-point and applicable head-swap results. Proposed ceilings are eight
+planned compact fits, bounded corrections,19GPUh across pilot+conditional
+integration,12pilot vendor wall-hours and36conditional integration vendor
+wall-hours. These are proposals, not consumed allowances or authorizations.
+
+Usage instructions changed during the turn: initial stop at10%remaining,
+then user removed the limit, then specified50%usage cap after the next global
+reset. Latest observation at2026-10-13 01:37:33UTC: weekly5%used, duration10080min,
+reset timestamp1792323848, no reset yet observed. Retain no cap until the next
+observed reset, then pause at50%weeklyused; never consume reset credits. This
+does not authorize scientific expansion or alter data/access restrictions.
+
+Phase A concludes at the execution prompt's explicitly requested scientific
+approval checkpoint. Candidate source/training, new scoring campaigns and
+hardware execution have not begun. No method or hardware advantage is claimed.
+The user can approve the concrete pilot plus conditional integration contract
+once; subsequent routine implementation/correction will proceed within it.
+
+Final verification: WSL Python3.12.3 parsed the new audit source; saved v1/v2
+input identities, confusion counts, paired cells and window counts agree.
+Recomputed the final19,906,560-product/25,984-byte analytical formulas after
+the emission-rule correction. `update_handoff.py --check` passed for
+STATUS6681bytes and unchanged board_handoff11604bytes. UTF-8 reads passed;
+Git whitespace check with one-command `core.whitespace=cr-at-eol` passed.
+Final working tree has only STATUS and execution-log edits plus the new
+method study and audit script; no commit, push, PR, merge or remote change.
+
+## 2026-10-13 — approved span pilot begins
+
+The user approved the concrete method and allowance: “continue. I will go to
+sleep in the next hours so keep going. I approve this”. This resumes the named
+`span_coupled_pilot_v1` pilot and conditional integration under the gates in
+`reports/method_study.md`; it does not reopen historical campaigns. The approved
+question is whether complete local context with paired states improves the
+guard trade-off beyond augmentation, ordinary span computation and SoPa, and
+whether a fused FPGA mapping improves complete-region cost. This is contribution
+development; environment, arithmetic and baseline setup support that question.
+
+`configs/span_coupled_pilot_v1.json` records the approved seeds, four arms,
+formats, bounds and budgets. Preparation reused the original R1 arrays and
+created one frozen shared augmentation/probe set before any candidate fitting:
+34,418 training documents/43,579 windows after 2,048 augmentations; temporary
+calibration 4,065/5,143; scoring 4,107/5,308; stress 1,024/1,873. Source groups
+remain disjoint. Maximum document window counts are 25/12/14/13 respectively.
+The eight constructed stress recipes are development screens, not new target
+responses or independent attack distributions. Preparation took 22.36 seconds;
+initial Windows/WSL available memory was 12,693,479,424/24,142,364,672 bytes.
+
+Commands use native Python `C:/research/GATE/.venv/Scripts/python.exe -B` from
+the repository. Native environment is Python 3.11.16, PyTorch 2.9.1+cu128/CUDA
+12.8 on the local RTX 4070, four intra-op threads and one inter-op thread,
+deterministic algorithms, TF32 disabled. WSL vendor jobs remain separately
+dispatched and serial with GPU jobs.
+
+Executed preparation: `scripts/span_prepare.py --output
+results/span_coupled_pilot_v1/prepared --max-seconds 1200`. Frozen recipe text,
+source IDs, data contract and source hashes are in that output. Protected final
+calibration/test/NotInject data and metadata were not opened.
+
+Initial CPU synthetic bring-up passed. CUDA synthetic attempt v2 failed before
+training because PyTorch does not implement CUDA INT64 `addmm` in the ordinary
+span MLP head. A focused correction replaced it with exact INT64 multiply and
+reduce operations; both failed output and correction are preserved. CUDA v3
+passed all four arms, 3,108 signed nearest-even cases, duplicate anchors, empty
+and no-eligible-anchor behavior. The real CUDA bring-up passed on 32 train-only
+documents/41 windows, 149 independent scalar-state checks and nine duplicate
+anchors. This is untrained-model arithmetic evidence, not quality evidence.
+
+Bring-up commands: `scripts/span_train.py --stage bringup --device cuda
+--output results/span_coupled_pilot_v1/synthetic_cuda_bringup_v3 --max-seconds
+180 --microbatch 32`, then the same driver with `--stage bringup --real --arm
+coupled --device cuda --output results/span_coupled_pilot_v1/real_cuda_bringup_v1
+--max-seconds 600 --microbatch 32`. The failed v2 path is retained separately.
+
+The first fit was dispatched only after both checks passed: `scripts/span_train.py
+--stage train --arm coupled --seed 42 --prepared
+results/span_coupled_pilot_v1/prepared --output
+results/span_coupled_pilot_v1/coupled_seed42_v1 --device cuda --max-seconds 2700
+--microbatch 32`. Effective document batch remains 32, with mean window loss
+inside each document; microbatching does not change sample weights. The fixed
+eight FP32 plus two QAT epochs and final checkpoint rule remain unchanged.
+
+Public-reference access check: Prompt Guard 2 22M config returned HTTP 401,
+with no existing HF credential; no gated weights were retrieved. Approved
+fallback PIGuard is ungated, MIT-labelled, pinned to
+`dd78b24e330193a22d2293ac66922dd4f982f563`; safetensors size 737,719,272 bytes.
+Its model source was inspected as text: installed DeBERTa-v2 encoder followed
+by a linear classifier on token zero. Remote Python is not executed. The
+bounded retrieval helper allows only config, tokenizer, model card and one
+safetensors checkpoint, and excludes datasets and executable code.
+
+Weekly usage was 14% at the first resumed checkpoint, reset timestamp still
+1792323848. No reset observed. Latest user rule remains no cap before the next
+global reset, then pause at 50% used. No reset credits are consumed.
+
+### First completed candidate, references and hardware correction
+
+The first coupled seed-42 fit completed in 1,013.062 seconds, followed by the
+five-variant score bundle in 66.266 seconds. Commands use `span_train.py --stage
+score --run results/span_coupled_pilot_v1/coupled_seed42_v1 --device cuda
+--microbatch 32 --max-seconds 1200 --output
+results/span_coupled_pilot_v1/coupled_seed42_score_v1`. The same-weight FP32 and
+integer candidate both fail the prospective quality screen; exact counts,
+strata and numerical differences are in the method study. No learning setting
+was changed. Source/calibration-refit bootstrap used 2,000 shared-group draws,
+seed 20261013, and checked serialized confusion counts exactly.
+
+Candidate application-pilot FP32/integer inference took 11.141/17.047 seconds
+in disjoint process intervals. Saved-input replay rejected no distinct clean
+tasks and all 100 attacks; it preserves nine successful tasks among 20 distinct
+clean tasks. Blocking an attacked input does not complete its legitimate task.
+The replay checked original task/document/source identities and recorded current
+raw-text hashes. Guard scoring consumed those unchanged pilot texts directly;
+older score rows do not carry an independent per-row raw-text hash. No target
+calls ran.
+
+Public retrieval attempt `public_reference` failed on unsupported UNC file
+locking before retrieval. The bounded direct-byte correction retained the
+same pinned public revision and allowlist; `public_reference_v2` succeeded in
+23.047 seconds. Frozen CNN, BERT and PIGuard evaluations completed in
+14.875, 15.484 and 372.219 seconds respectively. Outputs are
+`reference_cnn_v1`, `reference_bert_v1`, `reference_piguard_v1`; source/version,
+input identities, threshold and resource evidence are stored in each directory.
+PIGuard uses the inspected CLS-token classifier through installed DeBERTa-v2;
+strict checkpoint loading succeeded without executing remote Python.
+
+Conjunction attempt v1 stopped at sandbox memory telemetry before scoring;
+v2 completed under the established WSL permission. Its true decision is
+`attack_decisions[alpha]`, not the inherited BERT risk score. Analysis must
+refit both constituent thresholds for each calibration bootstrap, then AND
+their decisions. At alpha 0.01, natural/stress counts are respectively
+2738/0/4/1365 and 94/418/146/366. No scalar-threshold interpretation is claimed.
+
+Trained-model hardware fixtures contain 143 cases from 32 fixed training
+documents plus corners. Full C replay and 46 nonempty-window intermediate
+traces match the frozen integer reference exactly. The compact RTL cases are
+a full window, a complete short document, overlapping windows and continued
+maximum; empty-document behavior is checked separately.
+
+First vendor attempt `hls_coupled_stream_v2` passed all 143 C-simulation cases
+but failed synthesis with HLS214-211 at the generic scalar model loader
+(struct field 14, z_exp). It consumed 43.458 runner seconds and produced no
+RTL-cycle/resource result. Its owned process group was confirmed absent.
+The focused correction uses direct scalar reads and compile-time row array
+loads, preserving serialized bytes and all arithmetic. Fresh v3 C replay
+again passed 143/143 and 46-window trace comparison; v3 is the first of two
+allowed corrective vendor attempts. Initial v3 CLI invocations omitted the
+required --design flag and did no compilation; corrected commands succeeded.
+
+At the next usage observation weekly consumption was 36%; the reset timestamp
+drifted one second to 1792323849 while usage increased. This is not evidence
+of a reset. The post-reset 50%-used cap remains pending. All work remains local.
+
+Corrective vendor v3 stopped at the fixed runtime memory floor after 142.511
+seconds: Windows available 2,041,344,000 bytes, WSL 22,697,615,360 bytes. Return
+code -15 and assigned_group_present=false confirm owned-job cleanup. It passed
+the earlier loader failure and reached RTL generation, but no top csynth report
+or co-simulation exists. Native Windows processes revealed a separate Vitis
+build under `S:/.cache/goal3/vendor/full_matched`; its Vivado workers consumed
+substantial RAM. They were not altered. The second coupled seed's v1 preflight
+then refused launch at 1,140,518,912 available Windows bytes before fitting.
+Its empty directory is preserved. A bounded 45-minute wait for that separate
+Vitis process to exit precedes one v2 launch, still subject to all resource
+checks. The wait also honors this study's pause marker.
+
+While waiting, lightweight saved-score analysis completed. The conjunction
+adapter first exposed NumPy int64 JSON serialization at final output; v1 is
+retained, the fix casts counts to native integers, and a report-shaped JSON
+round-trip check passed. Real `conjunction_analysis_v2` then completed in
+2.307 seconds. `analysis_first_seed_references_v1.json` completed in 3.576
+seconds, checking every stored threshold/count and paired bootstrap. Saved
+application replays completed for candidate FP32/integer, CNN, BERT, PIGuard
+and conjunction; detailed consequences and the 20-distinct-task boundary are
+in the method study. No target calls or protected partitions were used.
+
+Conventional `hls_coupled_buffered_v1` prepared from the same trained export
+and fixtures, compiled in 1.634 seconds, and passed all 143 cases in 2.931
+seconds. Its 46-window intermediate trace audit also passed. This is C
+execution only; no conventional vendor attempt has been dispatched yet.
+The new stdlib `span_hardware_report.py` explicitly leaves missing top-level
+cycles, resources and host/transport terms unresolved. Its native Windows read
+hit a sandbox UNC path error; WSL execution completed and saved
+`hls_coupled_stream_v3/hardware_report_partial.json` without a rebuild.
+
+Bounded qualitative inspection used one fixed stress source group and the
+sole natural FP32/integer flip. Labels/token IDs/complete coverage match the
+contract, but background padding dominates the inspected benign boundary
+false alarm; the gap pair also differs in length and wording. The report
+preserves these limitations rather than changing probes after observing them.
+Current model/train/numerics hashes still equal the first fit's source hashes.
+Weekly usage reached 42% with the same reset boundary; no reset observed.
+STATUS and board_handoff were safely updated and strict UTF-8 checks passed;
+historical handoff content is retained under a non-authorizing heading.
+
+The original competing Vitis process exited and Windows memory recovered to
+9,965,301,760 bytes. Seed-1337 v2 therefore started at approximately 03:30 UTC.
+A new set of native Windows Vitis/Vivado processes then appeared; at 03:36:35
+the fit stopped at 2,092,163,072 Windows bytes (WSL 24,129,912,832), below the
+2 GiB runtime floor. Its last logged step is epoch 4, batch 450, elapsed 332.328
+seconds. It did not reach a scoring checkpoint and contributes no quality result.
+Failed source, logs and resource evidence remain in `coupled_seed1337_v2`.
+
+The next bounded wait requires all native Vivado/Vitis processes to be absent
+for four consecutive 30-second checks before launching unchanged v3. This
+avoids treating one parent's exit as release of an ongoing vendor campaign.
+Conservative dispatch accounting treats the v1 preflight refusal as the planned
+seed-1337 attempt and v2/v3 as the two software correction slots; no further
+learning/evaluation campaign retry is available after v3 dispatch. Preflight
+refusal consumed no GPU time, but failed dispatches are not silently erased.
+The v3 wait lasts at most 45 minutes and honors the pause marker. No unrelated
+process is stopped and no resource floor is lowered.
+
+The conventional-arm analysis now reports both ordinary span and SoPa, ties,
+same-direction checks and paired stronger-arm bootstrap intervals. It applies
+the original >=2-point quality-gain / <=1.10 cost-ratio alternative and the
+<=1-point quality-loss / <=0.80 cost-ratio alternative. Missing hardware costs
+remain null and cannot produce a pass. Synthetic boundary, tie, missing-arm,
+direction and JSON serialization checks passed; this does not add a new
+scientific criterion or change any frozen model source.
+
+Read-only app status identified the competing work as `Complete remaining
+offline GATE work`. Its second route and quiet CPU measurements were still
+pending, so the automatic retry wait was cancelled with the task's own marker
+(session exited 2, no v3 dispatch). No message was sent and no competing job
+was modified. Once that chat reported all measurements complete, the coordinator
+confirmed no native vendor processes, removed only the temporary local marker,
+and started unchanged `coupled_seed1337_v3` with the original 2,700-second
+ceiling and microbatch 32. This is the final conservatively accounted software
+correction slot. Official weekly usage was 46% with the same reset boundary;
+the post-reset 50% cap has not yet activated.
+
+Seed-1337 v3 completed at 1,141.735 seconds, error=null, all ten epochs and
+final export present. Source hashes exactly match seed 42. Scoring command
+`span_train.py --stage score --run results/span_coupled_pilot_v1/coupled_seed1337_v3
+--device cuda --microbatch 32 --max-seconds 1200 --output
+results/span_coupled_pilot_v1/coupled_seed1337_score_v1` completed in 73.078
+seconds. Both final arithmetic variants pass natural limits (2738/0/6/1363)
+but fail stress limits (254/258/256/256); relative numerical count degradation
+is zero. The two fixed coupled seeds therefore both fail the required stress
+screen. No architecture, data, threshold rule or quality limit changed.
+
+The two pilot-inference processes ran serially (11.023/18.034 command seconds
+for FP32/integer), followed by saved-response replay. Both preserve the same
+nine of 20 clean completions with zero additional rejection and block all 100
+attacks. `analysis_coupled_both_seeds_v1.json` completed in 5.499 seconds and
+recounts both learned bundles and all frozen references, with the same paired
+source/calibration bootstrap. Conventional-arm attribution remains pending.
+
+Fresh `hls_coupled_stream_v4` preparation preserved v2/v3 failures. Its staged
+C binary compiled in 3.541 seconds and passed 143 cases in 5.300 seconds;
+unchanged intermediate arithmetic is already covered by v3's exact trace audit.
+Only after the score/pilot bundle finished, `span_hardware.py run-vendor
+--design coupled_stream --output results/span_coupled_pilot_v1/hls_coupled_stream_v4
+--vendor-action full-flow --max-seconds 7200` started. This uses the final
+hardware correction slot and retains all resource floors. Official usage
+reached 49% with the same reset boundary; no reset has been observed.
+
+The final fused correction v4 completed HLS synthesis but fails the common
+resource envelope: LUT 104176/100000, FF 50671/200000, DSP 167/256,
+BRAM18 99 (49.5 BRAM36/64), URAM 65/96; estimated period 5.992 ns versus
+requested 5 ns. The top latency range mixes load and variable document work
+and is not an observed warm-check cycle measurement.
+RTL co-simulation then stopped at 04:25:51 UTC after 294.339 vendor seconds:
+Windows available 1,738,067,968 bytes below 2 GiB; WSL 12,254,113,792 bytes
+above 4 GiB. Owned process-group cleanup completed, assigned_group_present=false.
+Unlike v3, attribution to another job is not established. The simulator snapshot
+exists; its 10 MB waveform file does not establish waveform logging as the
+memory cause. No speculative simulation restart was dispatched after both
+hardware correction slots were consumed. Original failed artifacts remain.
+The three other planned initial hardware designs retain their own allowance.
+Independent-pooling seed 42 started next with the unchanged fixed training
+source and 2700-second ceiling. Official weekly usage is 50% with the same
+reset boundary 1792323848; the post-reset cap has not activated.
+
+The fused terminal report was regenerated from final vendor state as
+`hls_coupled_stream_v4/hardware_terminal_report_v1.json`: resource envelope
+fails and completed RTL/cold/warm cycles are unresolved. Bounded parser
+regression subsequently passed 12/12 in 0.766 seconds; missing RTL reports now
+emit explicit null costs, and promotion requires exact prepared binary/JSON
+case identity as well as completed Verilog Pass and transaction order.
+Evidence: `hardware_parser_regression_v2.json`, with failed v1 retained.
+No synthesis or simulation was rerun for these reporting checks.
+
+The buffered initial design was prepared with the same complete cases and
+clock/part. Its original generated `full-flow.profiled.tcl` is preserved;
+`full-flow.tcl` changes only optional cosim instrumentation from top-port traces
+plus channel profiling to `-trace_level none`. Vendor dispatch remains serial
+and has not started at this checkpoint. No demonstrated memory remedy is claimed.
+
+A focused analysis review reproduced two input-order risks and fixed them:
+duplicate learned arm/seed bundles or variants now raise instead of silently
+overwriting; a separate learned-arm anchor checks shared compact tokenization
+while frozen references may use their own tokenizer in any order. Synthetic
+normal-order equivalence, reversed-reference-order, duplicate rejection and
+retained cohort/window validation passed. Existing saved numbers were not
+invalidated; frozen model, numerical and training sources are unchanged.
+
+Independent-pooling seed 42 completed ten epochs in 1174.938 seconds with
+zero uncovered training windows and model/numerics/train source hashes matching
+the original coupled fit. The fresh scoring and FP32/integer application-pilot
+commands then completed serially. Natural final FP32 counts are
+2738/0/23/1346; integer counts 2738/0/20/1349. Stress counts are
+387/125/282/230 and 386/126/281/231, respectively. Each final arithmetic has
+407/1024 = 39.7461% balanced error, versus coupled seed 42's 50%; coupling
+is 10.2539 percentage points worse and cannot pass the per-seed mechanism gate.
+Both architectures still fail absolute stress quality, and this ablation fails
+natural FPR. Integer recall loss is 0.1953 points on stress and its FPR falls;
+relative numerical limits pass. Both saved-response replays preserve nine of
+20 distinct clean completions, add zero clean rejection, and block all100attacks.
+No new target calls. Second-seed attribution remains pending.
+
+After these commands exited successfully, the first `coupled_buffered` full-flow
+vendor attempt started in `hls_coupled_buffered_v1` with the unchanged 7200-second
+ceiling. This is the second of four planned initial designs, not a fused retry.
+The prepared Tcl disables optional tracing/profiling only; original Tcl retained.
+
+The buffered initial vendor attempt failed after34.217 seconds (return1) during
+synthesizability checking, with Windows14.49GB and WSL23.44GB free at its last
+observation. HLS SYNCHK200-41/43 rejects the dynamic `proj` row/zero-array
+pointer selection at source line171. Complete C simulation had passed; no top
+resource report or RTL result exists. Cleanup confirms assigned_group_present=false.
+The terminal parser preserves unknown resources/cycles, not zero costs.
+No buffered corrective vendor build is authorized after the two consumed
+correction slots. A focused arithmetic-preserving source fix is being prepared
+for the still-unbuilt MLP/SoPa initial designs; no existing snapshot is changed.
+Independent seed1337 started next under the original2700-second ceiling.
+
+Focused source correction for remaining initial designs: `update` takes a
+default-true valid flag and selects zero scalar inputs in its existing eight-lane
+loop; `reference_impl` supplies a bounded row from the same projection array
+and the validity flag. No copy loop or extra input array is introduced.
+Current CPP SHA256=e0214fafca8d12d8e9d7ca6efc9c646229f1896ce183113a02e6966cee01a7ab;
+old buffered snapshot remains26bb8b1e151ba38ad98af77393284831873541a7d0a0bfa17d155a620fd0e57c.
+C compilation of algorithm0/2/3 plus isolated recurrence comparison passed
+44,544 coordinates each (133,632 total),2.807 seconds within a5-second cap.
+Two earlier shell-invocation errors executed no checks; the successful command
+used WSL --exec. SoPa's distinct WFSA path is unchanged, not validated by this
+recurrence-only test. No vendor restart, model change or budget expansion.
+
+The isolated source-correction driver's input snapshots, exact command and captured
+prior stdout are preserved in results/span_coupled_pilot_v1/hardware_pointer_selection_check_v1/.
+Its result.json explicitly marks retrospective capture with no rerun, and hashes
+the driver, CPP and header. The original absolute include requires hash checking
+before reproduction; matching source snapshots accompany the driver.
+
+Official weekly reset observed: usage fell from53% to1% and resetsAt changed
+from1792323848 to1792472301. The user's post-reset50%-used cap is now ACTIVE.
+Evidence: results/span_coupled_pilot_v1/usage_reset_observed_v1.json.
+Independent seed1337 continues within the cap; stop via the study pause marker
+and safe owned-job exit when account usage reaches50%, without lowering floors.
+
+Independent seed1337 fit finished1173.813 seconds; its scoring command took
+42.562 seconds and FP32/integer pilot processes9.500/16.719 seconds. All sources
+match the firstfit. Saved-response replays completed with zero new target calls.
+The composite evaluation command enforced the remaining1200-second bundle budget
+before each pilot process. `span_analyze.py --bundles` with the two coupled,
+two independent and three frozen reference directories completed8.359 seconds
+and saved `analysis_coupled_independent_both_seeds_v1.json`.
+Mechanism gate complete=false is now superseded: complete=true, passes=false.
+Per-seed coupling gains FP32[-10.25390625,+0.9765625] and integer
+[-10.25390625,+1.171875] points both fail the required5-point criterion;
+pooled paired intervals include zero. Exact counts and limitations are in the
+method study. After analysis exited, span_mlp seed42 started with the unchanged
+2700-second ceiling, microbatch32 and fixed8+2 recipe. Official post-resetusage
+remains1% with resetboundary1792472301; the50%-used stop is active.
+
+Span-MLP seed42 completed1091.766 seconds with frozen learning sources and
+zero uncovered training windows. Score41.344s and FP32/integer pilot9.390/16.500s
+completed serially. Final natural counts are2738/0/21/1348 in both arithmetic
+variants; stress FP32=299/213/259/253, integer=336/176/259/253. Both failabsolute
+quality. Integer has37 more attack detections with unchanged FP count, requiring
+score/threshold-sensitivity inspection rather than an automatic efficacy claim.
+Both saved-response replays preserve9/20 clean completions, no newcleanrejections,
+and block100 attacks. No target calls.
+
+`span_hardware_fixtures.py --export span_mlp_seed42_v1/export --max-seconds600`
+generated143 cases in5.100 command seconds from the same fixed32 training
+documents plus corners. `span_hardware.py prepare/build-c/run-c --trace` prepared
+a fresh `hls_span_mlp_v1` from corrected CPP and passed all143 cases. The exact
+C/Python trace check passed46 nonempty windows in3.439 command seconds, saved
+as `span_mlp_seed42_trace_v1.json`. This does not establish RTL behavior.
+Its original profiled Tcl is preserved; only optional waveform/profiling options
+were removed for the actual first vendor dispatch. `run-vendor --design span_mlp
+--output results/span_coupled_pilot_v1/hls_span_mlp_v1 --vendor-action full-flow
+--max-seconds7200` started after all C checks completed. It is the third planned
+initial hardware design, with no additional correction allowance. Post-reset
+usage remains2%, below the active50% stop.
+
+The first span-MLP vendor attempt completed HLS synthesis (95120 LUT,37954 FF,
+292 DSP,119 BRAM18,65 URAM;5.992 ns estimate) and fails the 256-DSP envelope.
+RTL stopped at05:46:37 UTC after422.374894 seconds with Windows1,902,804,992 B
+below2 GiB and WSL12,141,441,024 B above4 GiB. No transaction completed;
+return-15,assigned_group_present=false. Terminal report saved, no retry.
+The same32 fixture document identities were independently compared and match.
+A separate read-only preflight after cleanup passed at05:47:35 UTC:
+Windows13,827,530,752 B, WSL24,128,712,704 B. Only then did span_mlp seed1337
+start under the unchanged2700-second ceiling and frozen training sources.
+Official post-reset usage is4% with resetboundary1792472301; cap50% active.
+
+### 2026-10-13 — second span-MLP seed completed; SoPa started
+
+`span_mlp_seed1337_v1` completed the fixed eight FP32 plus two QAT epochs in
+1,071.125 guarded seconds. Its three frozen source hashes match the first
+coupled fit. `span_mlp_seed1337_score_v1` completed in 42.359 seconds; separate
+FP32/integer application-pilot scoring took 9.375/16.594 seconds, giving
+68.328 seconds for these three evaluation subprocesses within the fixed bundle
+allowance. Final thresholds are 0.03790095075964928/0.037892427295446396.
+Natural TP/FN/FP/TN is 2738/0/9/1360 in both variants. Stress FP32 is
+137/375/169/343; integer is 136/376/162/350. Natural quality passes, stress
+quality fails, and the one-sided relative numerical limits pass.
+
+Bounded inspection of the two saved stress JSONL files found eight changed
+decisions: seven decoy-benign false positives removed and one decoy attack
+newly missed, for six fewer errors. Cross-applying the saved thresholds changes
+no stress decisions; this is score sensitivity, not a threshold-selection
+benefit. No new inference, bootstrap, model change or probe edit was performed
+for this inspection. Both `span_mlp_seed1337_pilot_*_replay_v1.json` records
+confirm 20 distinct clean tasks, zero additional rejections, nine retained
+saved completions and all 100 attacks blocked. No target calls ran.
+
+Six planned fits are now complete, all failing stress quality. The coordinator
+started the initial `sopa_seed42_v1` fit (session 37890) under the same frozen
+recipe and 2,700-second ceiling. SoPa seed 1337 and its initial hardware design
+remain pending; no correction slot was reopened. The method-study summary now
+reflects six fits while preserving the approved contract and historical record.
+Latest coordinator-reported official usage is 6% at reset boundary 1792472301;
+the post-reset 50%-used pause remains active.
+
+### 2026-10-13 — SoPa early stop and bounded negative-study close
+
+The initial `sopa_seed42_v1` fit logged epoch-1 batches 0, 50, 100 and 150 at
+5.593, 96.328, 189.921 and 282.109 seconds. The coordinator's saved
+`early_stop_decision_v1.json` used the first two 50-batch intervals to project
+1.84328 seconds/batch times 10,760 fixed batches = 19,833.6928 seconds, beyond
+the unchanged 2,700-second ceiling. This was a projection of the current
+implementation, not an actual timeout or full-recipe measurement. The existing
+pause marker stopped the process safely with exit 1, `Study pause requested`,
+and 318.000 seconds in `resources.json`; the marker was removed after exit.
+This was not a usage-cap pause. No partial checkpoint was scored, no recipe
+shortened, and no retry or second SoPa seed ran. Its hardware design remains
+unexecuted because a trained export is unavailable.
+
+Root completed and inspected `analysis_final_available_v1.json`: the coupling
+mechanism gate is complete and false; all six integer relative numerical gates
+pass on both evaluated splits; no final variant passes all absolute quality
+limits. The conventional discriminator remains incomplete, missing SoPa 42/1337
+and complete cost evidence, with `passes=null`. This closes a bounded negative
+candidate study, not a completed comparative protocol or a general rejection
+of the mechanism. Quality, mechanism and FPGA resource failures independently
+prevent qualification; no timing stage or Phase C integration ran.
+
+Final resource reconciliation: six completed fits used 6,666.439 guarded wall
+seconds; interrupted coupled1337 v2 and SoPa42 used 334.390 and 318.000 seconds,
+respectively, for 7,318.829 executed-training seconds. The earlier coupled1337
+preflight refusal performed no fitting. Both software correction slots remain
+consumed by v2/v3; their combined runtime was 1,476.125 seconds. Six learned
+evaluation bundles (18 score/pilot subprocesses) used 465.687 seconds and three
+frozen-reference bundles 402.578 seconds: nine completed bundles, 868.265
+seconds total. Derived conjunction used 1.110 seconds separately. Three initial
+vendor designs plus both corrections used 936.900 seconds; corrective vendor
+time was 436.850 seconds. C-only preparation is not another vendor attempt.
+These are guarded process wall times, not active GPU/CPU-core measurements;
+small supporting preparation/check/retrieval/analysis work is separate.
+
+The report title, opening conclusions and final ledger now distinguish failed
+candidate gates from unresolved SoPa, RTL and end-to-end cost comparisons.
+Remaining caps are ceilings, not obligations or new retry authority. Any revised
+study needs new approval. No protected held-out contents or metadata, target-model API
+calls, physical-board actions or GitHub synchronization were used. Latest
+official usage is 7% at reset boundary 1792472301; the 50%-used cap remains active.

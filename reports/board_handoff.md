@@ -1,5 +1,84 @@
 # Board handoff
 
+**2026-10-13: span_coupled_pilot_v1 closed with a negative candidate result; NOT board-ready.**
+
+The candidate failed the approved quality, coupling-benefit and FPGA resource
+gates. Phase C integration was not entered. Six completed fits and all final
+available comparisons are in [method study](method_study.md). The stronger
+MLP/SoPa comparison remains incomplete: SoPa training was stopped at 318 seconds
+on observed projected budget infeasibility, without scoring a partial checkpoint.
+No trained SoPa export or SoPa hardware result exists.
+
+## Actual implementation and build state
+
+Vitis/Vivado 2025.2 targets `xcve2802-vsvh1760-2MP-e-S`; requested clock 5 ns.
+All paths below are under `results/span_coupled_pilot_v1/`.
+
+| Design / preserved build | Complete C / trace checks | Actual vendor outcome |
+|---|---|---|
+| Fused coupled / `hls_coupled_stream_v4` | 143 cases; unchanged arithmetic trace covered by v3, 46 windows | 104,176 LUT, 50,671 FF, 167 DSP, 99 BRAM18, 65 URAM; LUT limit failed; RTL memory-floor stop |
+| Buffered coupled / `hls_coupled_buffered_v1` | 143 cases, 46 windows | SYNCHK unsupported pointer selection; no complete synthesis or RTL cost |
+| Span MLP / `hls_span_mlp_v1` | 143 cases, 46 windows | 95,120 LUT, 37,954 FF, 292 DSP, 119 BRAM18, 65 URAM; DSP limit failed; RTL memory-floor stop |
+| SoPa | No trained full-chain C replay | Not dispatched: completed trained export unavailable |
+
+Both successful top-level HLS reports estimate 5.992 ns. Applying the approved
+20% frequency derating gives a modeled 7.490 ns cycle, not achieved routed timing.
+Neither RTL attempt completed a transaction or returned a pass. HLS average or
+worst-case latency is not substituted for observed cold/warm cycles. Terminal
+reports are `hardware_terminal_report_v1.json` inside each of the three attempted
+build directories. Both corrective rebuild slots are consumed; no retry is authorized.
+
+The old buffered source snapshot is preserved. Current source fixes the
+unsupported pointer selection, and the first MLP build accepted that correction.
+This does not retroactively repair the failed buffered build. Exact source/model
+hashes, test fixtures, generated Tcl and vendor reports are retained per attempt.
+No device implementation, routed image, board run or physical result exists.
+
+## Artifacts and implemented entry points
+
+Candidate exports are `coupled_seed42_v1/export/` and
+`coupled_seed1337_v3/export/`; the hardware pilot uses seed 42. The MLP hardware
+export is `span_mlp_seed42_v1/export/`. Fixtures are
+`coupled_seed42_fixtures_v1/` and `span_mlp_seed42_fixtures_v1/`, from the same
+32 approved training documents plus corners, not protected evaluation data.
+The Python integer model is `scripts/span_numerics.py`; the full C region is in
+`hardware/span_guard/`. All executed commands are in [execution log](execution_log.md).
+
+The executed C replay entry point, shown for traceability rather than dispatch,
+was:
+
+```sh
+python3 -B scripts/span_hardware.py run-c --design span_mlp --output results/span_coupled_pilot_v1/hls_span_mlp_v1 --trace
+```
+
+Native Python then ran `scripts/span_hardware_trace.py --fixtures
+results/span_coupled_pilot_v1/span_mlp_seed42_fixtures_v1 --replay
+results/span_coupled_pilot_v1/hls_span_mlp_v1 --output
+results/span_coupled_pilot_v1/span_mlp_seed42_trace_v1.json`. These outputs already
+exist; preserve them. `span_hardware_report.py` reads preserved vendor evidence
+and requires a fresh output filename. Existing paths and reproduction boundaries
+are further described in [hardware README](../hardware/span_guard/README.md).
+
+The implemented interface carries uint16 content-token IDs, window/document
+boundaries and a continued document maximum; model load is a separate cold
+transaction. Warm checking includes embedding, CNN, projection, recurrence/head,
+LUT and strict decision. Host tokenization/packing, transport and result return
+remain required dependencies. No measured warm-region cost is available, and
+unknown host/transport terms are not zero. The historical UART route has at least
+11.111 ms framing serialization; no faster complete transport was validated.
+
+A future board campaign would require a newly approved viable method/build,
+complete RTL and routed checks, platform/transport validation, and physical
+measurements of correctness, latency, throughput and energy. It is outside this
+completed pilot. Protected final data, new target calls and physical actions
+remain excluded. No GitHub synchronization occurred.
+
+## Historical handoff — retained, non-authorizing
+
+The following October 8 state and deferred commands are preserved for evidence.
+They do not resume the old Goal 4/5 or A/B/C campaign, and their old usage limit
+is superseded by the current user's post-reset 50%-used cap.
+
 **Paused at the user weekly usage limit (2026-10-08T22:05:20.790425+00:00).** Actual usage tool reports90% used/10% remaining. No reset, scoring release/dispatch or physical-board action. OFFLINE BOARD-READY remains unfinished. Attempt002 is preserved; after explicit user resume, recheck usage and actual resources before any release. Last actual Windows RAM3,632,664,576B is below the unchanged4,294,967,296B preflight floor. Pause evidence: `results/goal5/campaign_next_execution_review_v2/guarded_campaign_dispatch_v1/first_A_attempt002/root_weekly_usage_pause_v1.json`. Earlier observations below are historical.
 
 

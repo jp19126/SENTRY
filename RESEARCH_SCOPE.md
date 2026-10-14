@@ -71,9 +71,9 @@ expand to an unrelated attack type to claim success.
 | New, falsifiable FPGA-aware algorithm/co-design contribution | **Approved scientific purpose** |
 | FPGA centrality and eventual hardware realization | **Required for completion** |
 | Existing guard ports and BERT/CNN/CUDA observations | **Supporting baselines; not the contribution** |
-| Specific new method, hardware mapping, hypothesis or experiment | **Not selected or approved** |
-| Numerical/security tolerances for a new method | **To be declared before comparative selection** |
-| Further training, API calls, spending, FPGA builds or board programming | **Not authorized by this document** |
+| Specific new method, hardware mapping, hypothesis or experiment | **2026-10-13: user approved** the bounded `span_coupled_pilot_v1` study and conditional board-free integration in [method study](reports/method_study.md); novelty remains a hypothesis |
+| Numerical/security tolerances for a new method | Prospective limits in the approved method-study contract; no outcome-based relaxation |
+| Further training, API calls, spending, FPGA builds or board programming | Only the named local training/offline build allowance is approved; API calls, paid services, protected final sets and board programming remain excluded |
 
 For the latest findings and the unresolved research decision, use
 [STATUS.md](STATUS.md). The completed R1 result is

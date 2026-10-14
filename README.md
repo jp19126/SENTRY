@@ -19,7 +19,8 @@ or general proof against LLM/model poisoning.
 | [RESEARCH_SCOPE.md](RESEARCH_SCOPE.md) | Approved scientific purpose, application boundary and criteria for a contribution |
 | [AGENTS.md](AGENTS.md) | Standing execution and evidence rules; deliberately **no specific research goals** |
 | [STATUS.md](STATUS.md) | Current findings, unresolved claims, permissions and next decision |
-| [SENTRY_codex_execution_prompt.md](SENTRY_codex_execution_prompt.md) | Current staged Codex research prompt; substantial experiments remain contingent on approval |
+| [SENTRY_codex_execution_prompt.md](SENTRY_codex_execution_prompt.md) | Current staged Codex research prompt; the named span pilot is approved, with integration conditional on its gates |
+| [Method study](reports/method_study.md) | Verified prior art, approved span-coupled experiment contract, executed results and limitations |
 | [Experimental protocol](reports/protocol.md) | Saved pilot data, split, threshold, numerical and evaluation definitions |
 | [Execution log](reports/execution_log.md) | Detailed historical actions and evidence paths |
 | [Documentation archive](docs/archive/README.md) | Old goal documents, execution prompts and setup handoffs |
@@ -46,6 +47,15 @@ current scientific scope.
 Git-ignored. **A fresh clone alone does not contain the saved models, measurements
 or generated vendor builds.** Keep these separate artifacts and their
 identities when attempting reproduction.
+
+## Latest bounded study
+
+The approved [span-coupled pilot](reports/method_study.md) closed on 13 October
+with a **negative candidate result**. Six fits completed; the candidate failed
+quality, coupling-benefit and FPGA resource gates. SoPa and complete RTL/cost
+comparisons remain unresolved. No conditional integration or board deployment
+was justified. [STATUS.md](STATUS.md) and the [board handoff](reports/board_handoff.md)
+separate these findings from earlier supporting work.
 
 ## Current evidence boundary
 
