@@ -1,6 +1,6 @@
 {
   "study_id": "cnn_adoption_v1",
-  "phase": "development_evaluation_and_bounded_bert_refinement",
+  "phase": "final_numerical_and_profile_qualification_before_freeze",
   "execution_authority": "User submitted SENTRY_CNN_adoption_prompt.md; local adoption study only",
   "usage_cap_used_percent": 60,
   "initial_used_percent": 36,
@@ -209,6 +209,24 @@
         "training_state.pt": "9ca60688f1b84a5f860d1b2a6bd490c4ad64c9b6bfc0a30225c2ddc2010c0927"
       },
       "checkpoint_sha256": "8789fb93d77ecd4b2319ff2832cc5b62ff2f99fe993d709ff36b286527ce8129"
+    },
+    "historical_bert_w8_final_r2": {
+      "model_id": "bert_historical_w8",
+      "checkpoint": "checkpoints/quantized/qat_w8_a8",
+      "checkpoint_files_sha256": {
+        "config.json": "224d853ff7c8042323e9b9dde45f2ddf6886ba7de45b082c1ff335d45166852c",
+        "quantization.json": "3989a7d08b02399b45a3833af3ff7b0f0e5a5eeb7160c6aa996c2a4961cd8ce4",
+        "quantized_state.pt": "6370f583625a91438830a0a487290c06613d391fc4a9c18c6147ae7e08bf85a3",
+        "resume/config.json": "224d853ff7c8042323e9b9dde45f2ddf6886ba7de45b082c1ff335d45166852c",
+        "resume/quantization.json": "4b476645be207b60303ca1571d0a16c05e5445b2985dfade6d9bfb731b094fce",
+        "resume/quantized_state.pt": "972cf3181a946b4dd0fb634e53fdd7f9662b29ab87cfe946f7f453037f68f495",
+        "resume/training_state.pt": "0142bd0fcb4b03bd55e35278bcbff2580e85f7b96ce51632849411b3ecc22a88",
+        "special_tokens_map.json": "5aa43c2f985a25296d5a5ce621c2f77376ca8091a47993c492fd5460b895b140",
+        "tokenizer.json": "d241a60d5e8f04cc1b2b3e9ef7a4921b27bf526d9f6050ab90f9267a1f9e5c66",
+        "tokenizer_config.json": "584049ddfff5d6aa7c6c839da38fdd25ae3af017385120c99db5140d77315d2f"
+      },
+      "checkpoint_sha256": "c87a089128c612ac59169b16fef617b2447d1049e44920915d20b136098f39aa",
+      "original_threshold": 0.004557917360216379
     }
   },
   "runs": [
@@ -314,6 +332,302 @@
       "stage": "bounded_bert_refinement",
       "scoring_batch_windows": 1,
       "rationale": "Common BERT improves CNN comparison but selected primary recall68.75% remains inadequate; test the prospectively allowed one5e-5 recipe."
+    },
+    {
+      "run_id": "local_context_03_distilled_s42_r2",
+      "model_id": "local_context_03",
+      "seed": 42,
+      "epochs": 12,
+      "learning_rate": 0.0008,
+      "weight_decay": 0.01,
+      "batch_documents": 32,
+      "microbatch_windows": 128,
+      "objective": "document_max_bce",
+      "monitor_development": true,
+      "scheduler": "constant",
+      "warmup_fraction": 0,
+      "gradient_clip": 5,
+      "stage": "development_distillation",
+      "scoring_batch_windows": 1,
+      "distillation_weight": 0.3,
+      "temperature": 2.0,
+      "teacher_cache": "results/cnn_adoption_v1/teacher_cache/matched_bert_r2/teacher_cache.json",
+      "teacher_checkpoint_sha256": "95025bfc0e29163efea613d556d7da0b516ec1bb6c6fac9d9c4c9c6f1f373525",
+      "qualified_development_record_sha256": "c44d5bb8a73a632a5354602a05621eafb041d25122a96a734e0207127c1c3e68"
+    },
+    {
+      "run_id": "local_context_03_residual_replace_c98_distilled_s42_r2",
+      "model_id": "local_context_03_residual_replace_c98",
+      "seed": 42,
+      "epochs": 12,
+      "learning_rate": 0.0008,
+      "weight_decay": 0.01,
+      "batch_documents": 32,
+      "microbatch_windows": 128,
+      "objective": "document_max_bce",
+      "monitor_development": true,
+      "scheduler": "constant",
+      "warmup_fraction": 0,
+      "gradient_clip": 5,
+      "stage": "development_distillation",
+      "scoring_batch_windows": 1,
+      "distillation_weight": 0.3,
+      "temperature": 2.0,
+      "teacher_cache": "results/cnn_adoption_v1/teacher_cache/matched_bert_r2/teacher_cache.json",
+      "teacher_checkpoint_sha256": "95025bfc0e29163efea613d556d7da0b516ec1bb6c6fac9d9c4c9c6f1f373525",
+      "qualified_development_record_sha256": "c44d5bb8a73a632a5354602a05621eafb041d25122a96a734e0207127c1c3e68"
+    },
+    {
+      "run_id": "local_context_03_pca_distilled_s42_r2",
+      "model_id": "local_context_03",
+      "seed": 42,
+      "epochs": 12,
+      "learning_rate": 0.0008,
+      "weight_decay": 0.01,
+      "batch_documents": 32,
+      "microbatch_windows": 128,
+      "objective": "document_max_bce",
+      "monitor_development": true,
+      "scheduler": "constant",
+      "warmup_fraction": 0,
+      "gradient_clip": 5,
+      "stage": "development_pretrained_embedding_intervention",
+      "scoring_batch_windows": 1,
+      "distillation_weight": 0.3,
+      "temperature": 2.0,
+      "teacher_cache": "results/cnn_adoption_v1/teacher_cache/matched_bert_r2/teacher_cache.json",
+      "teacher_checkpoint_sha256": "95025bfc0e29163efea613d556d7da0b516ec1bb6c6fac9d9c4c9c6f1f373525",
+      "qualified_development_record_sha256": "c44d5bb8a73a632a5354602a05621eafb041d25122a96a734e0207127c1c3e68",
+      "embedding_initialization": {
+        "method": "raw_pretrained_pca_rms_v1",
+        "artifact_path": "results/cnn_adoption_v1/embedding_feasibility/raw_pretrained_pca96.pt",
+        "artifact_sha256": "e76ae0743036d41cfebf706f060264742d6628ee92e7706692248ca3248f5100",
+        "initializer_source_sha256": "aa0a77606518d4aefd6b55344177fc8e71077d564bd672f3446b05f2dda47fe3",
+        "provenance_record_path": "results/cnn_adoption_v1/embedding_feasibility/checks.json",
+        "provenance_record_sha256": "c96929341f0a7bc207402cb85dd9b42c4feba8ea4bdd6db3da84c3130b788bc7"
+      }
+    },
+    {
+      "run_id": "local_context_03_final_s42_r2",
+      "model_id": "local_context_03",
+      "seed": 42,
+      "epochs": 7,
+      "learning_rate": 0.0008,
+      "weight_decay": 0.01,
+      "batch_documents": 32,
+      "microbatch_windows": 128,
+      "objective": "document_max_bce",
+      "monitor_development": false,
+      "scheduler": "constant",
+      "warmup_fraction": 0,
+      "gradient_clip": 5,
+      "stage": "final_fixed_training",
+      "scoring_batch_windows": 1,
+      "distillation_weight": 0.3,
+      "temperature": 2.0,
+      "teacher_cache": "results/cnn_adoption_v1/teacher_cache/matched_bert_r2/teacher_cache.json",
+      "teacher_checkpoint_sha256": "95025bfc0e29163efea613d556d7da0b516ec1bb6c6fac9d9c4c9c6f1f373525",
+      "qualified_development_record_sha256": "c44d5bb8a73a632a5354602a05621eafb041d25122a96a734e0207127c1c3e68",
+      "embedding_initialization": {
+        "method": "raw_pretrained_pca_rms_v1",
+        "artifact_path": "results/cnn_adoption_v1/embedding_feasibility/raw_pretrained_pca96.pt",
+        "artifact_sha256": "e76ae0743036d41cfebf706f060264742d6628ee92e7706692248ca3248f5100",
+        "initializer_source_sha256": "aa0a77606518d4aefd6b55344177fc8e71077d564bd672f3446b05f2dda47fe3",
+        "provenance_record_path": "results/cnn_adoption_v1/embedding_feasibility/checks.json",
+        "provenance_record_sha256": "c96929341f0a7bc207402cb85dd9b42c4feba8ea4bdd6db3da84c3130b788bc7"
+      },
+      "parent_development_run_id": "local_context_03_pca_distilled_s42_r2"
+    },
+    {
+      "run_id": "local_context_03_final_s1337_r2",
+      "model_id": "local_context_03",
+      "seed": 1337,
+      "epochs": 7,
+      "learning_rate": 0.0008,
+      "weight_decay": 0.01,
+      "batch_documents": 32,
+      "microbatch_windows": 128,
+      "objective": "document_max_bce",
+      "monitor_development": false,
+      "scheduler": "constant",
+      "warmup_fraction": 0,
+      "gradient_clip": 5,
+      "stage": "final_fixed_training",
+      "scoring_batch_windows": 1,
+      "distillation_weight": 0.3,
+      "temperature": 2.0,
+      "teacher_cache": "results/cnn_adoption_v1/teacher_cache/matched_bert_r2/teacher_cache.json",
+      "teacher_checkpoint_sha256": "95025bfc0e29163efea613d556d7da0b516ec1bb6c6fac9d9c4c9c6f1f373525",
+      "qualified_development_record_sha256": "c44d5bb8a73a632a5354602a05621eafb041d25122a96a734e0207127c1c3e68",
+      "embedding_initialization": {
+        "method": "raw_pretrained_pca_rms_v1",
+        "artifact_path": "results/cnn_adoption_v1/embedding_feasibility/raw_pretrained_pca96.pt",
+        "artifact_sha256": "e76ae0743036d41cfebf706f060264742d6628ee92e7706692248ca3248f5100",
+        "initializer_source_sha256": "aa0a77606518d4aefd6b55344177fc8e71077d564bd672f3446b05f2dda47fe3",
+        "provenance_record_path": "results/cnn_adoption_v1/embedding_feasibility/checks.json",
+        "provenance_record_sha256": "c96929341f0a7bc207402cb85dd9b42c4feba8ea4bdd6db3da84c3130b788bc7"
+      },
+      "parent_development_run_id": "local_context_03_pca_distilled_s42_r2"
+    },
+    {
+      "run_id": "local_context_03_final_s2026_r2",
+      "model_id": "local_context_03",
+      "seed": 2026,
+      "epochs": 7,
+      "learning_rate": 0.0008,
+      "weight_decay": 0.01,
+      "batch_documents": 32,
+      "microbatch_windows": 128,
+      "objective": "document_max_bce",
+      "monitor_development": false,
+      "scheduler": "constant",
+      "warmup_fraction": 0,
+      "gradient_clip": 5,
+      "stage": "final_fixed_training",
+      "scoring_batch_windows": 1,
+      "distillation_weight": 0.3,
+      "temperature": 2.0,
+      "teacher_cache": "results/cnn_adoption_v1/teacher_cache/matched_bert_r2/teacher_cache.json",
+      "teacher_checkpoint_sha256": "95025bfc0e29163efea613d556d7da0b516ec1bb6c6fac9d9c4c9c6f1f373525",
+      "qualified_development_record_sha256": "c44d5bb8a73a632a5354602a05621eafb041d25122a96a734e0207127c1c3e68",
+      "embedding_initialization": {
+        "method": "raw_pretrained_pca_rms_v1",
+        "artifact_path": "results/cnn_adoption_v1/embedding_feasibility/raw_pretrained_pca96.pt",
+        "artifact_sha256": "e76ae0743036d41cfebf706f060264742d6628ee92e7706692248ca3248f5100",
+        "initializer_source_sha256": "aa0a77606518d4aefd6b55344177fc8e71077d564bd672f3446b05f2dda47fe3",
+        "provenance_record_path": "results/cnn_adoption_v1/embedding_feasibility/checks.json",
+        "provenance_record_sha256": "c96929341f0a7bc207402cb85dd9b42c4feba8ea4bdd6db3da84c3130b788bc7"
+      },
+      "parent_development_run_id": "local_context_03_pca_distilled_s42_r2"
+    },
+    {
+      "run_id": "local_context_03_residual_replace_c98_final_s42_r2",
+      "model_id": "local_context_03_residual_replace_c98",
+      "seed": 42,
+      "epochs": 4,
+      "learning_rate": 0.0008,
+      "weight_decay": 0.01,
+      "batch_documents": 32,
+      "microbatch_windows": 128,
+      "objective": "document_max_bce",
+      "monitor_development": false,
+      "scheduler": "constant",
+      "warmup_fraction": 0,
+      "gradient_clip": 5,
+      "stage": "final_fixed_training",
+      "scoring_batch_windows": 1,
+      "distillation_weight": 0.3,
+      "temperature": 2.0,
+      "teacher_cache": "results/cnn_adoption_v1/teacher_cache/matched_bert_r2/teacher_cache.json",
+      "teacher_checkpoint_sha256": "95025bfc0e29163efea613d556d7da0b516ec1bb6c6fac9d9c4c9c6f1f373525",
+      "qualified_development_record_sha256": "c44d5bb8a73a632a5354602a05621eafb041d25122a96a734e0207127c1c3e68",
+      "parent_development_run_id": "local_context_03_residual_replace_c98_distilled_s42_r2"
+    },
+    {
+      "run_id": "local_context_03_residual_replace_c98_final_s1337_r2",
+      "model_id": "local_context_03_residual_replace_c98",
+      "seed": 1337,
+      "epochs": 4,
+      "learning_rate": 0.0008,
+      "weight_decay": 0.01,
+      "batch_documents": 32,
+      "microbatch_windows": 128,
+      "objective": "document_max_bce",
+      "monitor_development": false,
+      "scheduler": "constant",
+      "warmup_fraction": 0,
+      "gradient_clip": 5,
+      "stage": "final_fixed_training",
+      "scoring_batch_windows": 1,
+      "distillation_weight": 0.3,
+      "temperature": 2.0,
+      "teacher_cache": "results/cnn_adoption_v1/teacher_cache/matched_bert_r2/teacher_cache.json",
+      "teacher_checkpoint_sha256": "95025bfc0e29163efea613d556d7da0b516ec1bb6c6fac9d9c4c9c6f1f373525",
+      "qualified_development_record_sha256": "c44d5bb8a73a632a5354602a05621eafb041d25122a96a734e0207127c1c3e68",
+      "parent_development_run_id": "local_context_03_residual_replace_c98_distilled_s42_r2"
+    },
+    {
+      "run_id": "local_context_03_residual_replace_c98_final_s2026_r2",
+      "model_id": "local_context_03_residual_replace_c98",
+      "seed": 2026,
+      "epochs": 4,
+      "learning_rate": 0.0008,
+      "weight_decay": 0.01,
+      "batch_documents": 32,
+      "microbatch_windows": 128,
+      "objective": "document_max_bce",
+      "monitor_development": false,
+      "scheduler": "constant",
+      "warmup_fraction": 0,
+      "gradient_clip": 5,
+      "stage": "final_fixed_training",
+      "scoring_batch_windows": 1,
+      "distillation_weight": 0.3,
+      "temperature": 2.0,
+      "teacher_cache": "results/cnn_adoption_v1/teacher_cache/matched_bert_r2/teacher_cache.json",
+      "teacher_checkpoint_sha256": "95025bfc0e29163efea613d556d7da0b516ec1bb6c6fac9d9c4c9c6f1f373525",
+      "qualified_development_record_sha256": "c44d5bb8a73a632a5354602a05621eafb041d25122a96a734e0207127c1c3e68",
+      "parent_development_run_id": "local_context_03_residual_replace_c98_distilled_s42_r2"
+    },
+    {
+      "run_id": "bert_matched_final_s42_r2",
+      "model_id": "bert_matched",
+      "seed": 42,
+      "epochs": 4,
+      "learning_rate": 5e-05,
+      "weight_decay": 0.01,
+      "batch_documents": 32,
+      "microbatch_windows": 32,
+      "objective": "document_max_bce",
+      "monitor_development": false,
+      "scheduler": "linear",
+      "warmup_fraction": 0.1,
+      "gradient_clip": 1,
+      "stage": "final_fixed_training",
+      "scoring_batch_windows": 1,
+      "rationale": "Common BERT improves CNN comparison but selected primary recall68.75% remains inadequate; test the prospectively allowed one5e-5 recipe.",
+      "parent_development_run_id": "bert_matched_lr5e5_supervised_s42_r2",
+      "schedule_total_epochs": 5
+    },
+    {
+      "run_id": "bert_matched_final_s1337_r2",
+      "model_id": "bert_matched",
+      "seed": 1337,
+      "epochs": 4,
+      "learning_rate": 5e-05,
+      "weight_decay": 0.01,
+      "batch_documents": 32,
+      "microbatch_windows": 32,
+      "objective": "document_max_bce",
+      "monitor_development": false,
+      "scheduler": "linear",
+      "warmup_fraction": 0.1,
+      "gradient_clip": 1,
+      "stage": "final_fixed_training",
+      "scoring_batch_windows": 1,
+      "rationale": "Common BERT improves CNN comparison but selected primary recall68.75% remains inadequate; test the prospectively allowed one5e-5 recipe.",
+      "parent_development_run_id": "bert_matched_lr5e5_supervised_s42_r2",
+      "schedule_total_epochs": 5
+    },
+    {
+      "run_id": "bert_matched_final_s2026_r2",
+      "model_id": "bert_matched",
+      "seed": 2026,
+      "epochs": 4,
+      "learning_rate": 5e-05,
+      "weight_decay": 0.01,
+      "batch_documents": 32,
+      "microbatch_windows": 32,
+      "objective": "document_max_bce",
+      "monitor_development": false,
+      "scheduler": "linear",
+      "warmup_fraction": 0.1,
+      "gradient_clip": 1,
+      "stage": "final_fixed_training",
+      "scoring_batch_windows": 1,
+      "rationale": "Common BERT improves CNN comparison but selected primary recall68.75% remains inadequate; test the prospectively allowed one5e-5 recipe.",
+      "parent_development_run_id": "bert_matched_lr5e5_supervised_s42_r2",
+      "schedule_total_epochs": 5
     }
   ],
   "exports": {
@@ -324,6 +638,42 @@
     "local_context_03_supervised_s42_r2": {
       "directory": "results/cnn_adoption_v1/exports/local_context_03_supervised_s42_r2",
       "manifest_sha256": "9a51fae18520eb43e4b093422add1e9540c2005f2c2637127de951fc04a0b27f"
+    },
+    "local_context_03_distilled_s42_r2": {
+      "directory": "results/cnn_adoption_v1/exports/local_context_03_distilled_s42_r2",
+      "manifest_sha256": "616cc048b8bb6ad7032c7f700fd7c1b96c23263983e804c734def3d003c7cb29"
+    },
+    "local_context_03_pca_distilled_s42_r2": {
+      "directory": "results/cnn_adoption_v1/exports/local_context_03_pca_distilled_s42_r2",
+      "manifest_sha256": "179b5b7226c86821f8d80ce3f8224b549fcf9981f399491374e77eb8e58e032a"
+    },
+    "local_context_03_residual_replace_c98_distilled_s42_r2": {
+      "directory": "results/cnn_adoption_v1/exports/local_context_03_residual_replace_c98_distilled_s42_r2",
+      "manifest_sha256": "6d57a4abab0e457351fe9ced9252e1ee5f3b146a08445926cf648c2bddbc63e7"
+    },
+    "local_context_03_final_s42_r2": {
+      "directory": "results/cnn_adoption_v1/exports/local_context_03_final_s42_r2",
+      "manifest_sha256": "e6b79b363f74c23bdefd4a796084ff770782aab0d55f7668e6ae38ddbf547744"
+    },
+    "local_context_03_final_s1337_r2": {
+      "directory": "results/cnn_adoption_v1/exports/local_context_03_final_s1337_r2",
+      "manifest_sha256": "df1a6e4be2cb731e83c98e14051286e9080abf5db299f92b49b51ebf58db4ecd"
+    },
+    "local_context_03_final_s2026_r2": {
+      "directory": "results/cnn_adoption_v1/exports/local_context_03_final_s2026_r2",
+      "manifest_sha256": "dd7476d685616e13470be0f5ca571b6a171ebff2b1004c22114cea2be48991eb"
+    },
+    "local_context_03_residual_replace_c98_final_s42_r2": {
+      "directory": "results/cnn_adoption_v1/exports/local_context_03_residual_replace_c98_final_s42_r2",
+      "manifest_sha256": "58137128fe2652a037e4d6f20bd6ff59579268c87331bd83e4b4b98cd43d7adf"
+    },
+    "local_context_03_residual_replace_c98_final_s1337_r2": {
+      "directory": "results/cnn_adoption_v1/exports/local_context_03_residual_replace_c98_final_s1337_r2",
+      "manifest_sha256": "a308fa3ffea77104c7b85d7ccfb83de35de9a63352d4fa83f16c1d1d480c6bcd"
+    },
+    "local_context_03_residual_replace_c98_final_s2026_r2": {
+      "directory": "results/cnn_adoption_v1/exports/local_context_03_residual_replace_c98_final_s2026_r2",
+      "manifest_sha256": "c2d505235926769e3af1b6cfa91bb39cec61dbc683ae3af3a262cc9325bbcc5e"
     }
   },
   "calibration_policy": {
@@ -807,5 +1157,160 @@
   "construction_correction": "Remove positive class framing; benign context ancestry role-disjoint; labels/counts/source/payload/gates unchanged; preserve all r1 outcomes",
   "construction_correction_notes": [
     "Required mechanism metadata keys corrected from short display aliases to actual frozen stratum IDs before any confirmation scoring; same prespecified strata/gates."
-  ]
+  ],
+  "qualified_teacher": {
+    "run_id": "bert_matched_lr5e5_supervised_s42_r2",
+    "teacher_checkpoint_sha256": "95025bfc0e29163efea613d556d7da0b516ec1bb6c6fac9d9c4c9c6f1f373525",
+    "qualified_development_record_sha256": "c44d5bb8a73a632a5354602a05621eafb041d25122a96a734e0207127c1c3e68",
+    "fit_documents_sha256": "967f925657675c1cf90c19d947c538396af41c4cfbdb5a0a439088cc675badc8",
+    "numerical_format": "fp32",
+    "rationale": "Completed same-FIT development: refined BERT TP316/400 FP0/800 vs common BERT275/2 and best scratch CNN188/16. Useful teacher, not security-qualified: 79% recall remains below99%."
+  },
+  "distillation_contract": {
+    "weight": 0.3,
+    "temperature": 2.0,
+    "objective": "0.7 ground-truth document-max BCE +0.3 T-squared soft Bernoulli teacher-margin BCE",
+    "controls": "same architecture, initialization seed, FIT data, optimizer, epochs and development rule as corresponding supervised_s42_r2",
+    "reason": "Two strongest contextual CNNs; Local highest recall, C98 passes pooled FPR. Fixed before KD jobs. No new architecture or inference teacher."
+  },
+  "second_intervention": {
+    "selected_model": "local_context_03",
+    "selection_basis": "prospective stronger completed KD rule; Local192TP6FP vsC98171TP7FP",
+    "only_test": "local_context_03_pca_distilled_s42_r2",
+    "control": "local_context_03_distilled_s42_r2",
+    "remaining_interventions": 0,
+    "remaining_new_architectures": 0
+  },
+  "priority_order": [
+    "local_context_03",
+    "local_context_03_residual_replace_c98"
+  ],
+  "final_recipe_selection": {
+    "complete": true,
+    "development_only": true,
+    "priority_basis": "Existing quality key; highest primary recall below99%, thenFPR; exact ties stable modelID",
+    "parents": {
+      "local_context_03": {
+        "run_id": "local_context_03_pca_distilled_s42_r2",
+        "selected_epoch": 7,
+        "checkpoint_sha256": "6f34e8c1297e3a068c5ce88ded59e7db5ce681c30aaa0aab6db358a6663f342d",
+        "primary_metrics": {
+          "level": "document",
+          "threshold": 0.9997976422309875,
+          "attack_rule": "score > threshold",
+          "documents": 1200,
+          "attacks": 400,
+          "benign": 800,
+          "tp": 207,
+          "fn": 193,
+          "fp": 7,
+          "tn": 793,
+          "recall": 0.5175,
+          "fpr": 0.00875,
+          "accuracy": 0.8333333333333334,
+          "passes": false
+        },
+        "development_record_sha256": "4ed3fabac158bc18de1b38a9964ea1ad1161d2f0843275d2f943f0f3bc62814c"
+      },
+      "local_context_03_residual_replace_c98": {
+        "run_id": "local_context_03_residual_replace_c98_distilled_s42_r2",
+        "selected_epoch": 4,
+        "checkpoint_sha256": "d17e8e63c177a8a2ae6d21d02ae7159c8ad07a3117b6e5fab1365ceeaa9196b6",
+        "primary_metrics": {
+          "level": "document",
+          "threshold": 0.9994576573371887,
+          "attack_rule": "score > threshold",
+          "documents": 1200,
+          "attacks": 400,
+          "benign": 800,
+          "tp": 171,
+          "fn": 229,
+          "fp": 7,
+          "tn": 793,
+          "recall": 0.4275,
+          "fpr": 0.00875,
+          "accuracy": 0.8033333333333333,
+          "passes": false
+        },
+        "development_record_sha256": "5250c7737ef3c17093ae8e4e8de8215354cd79ca00f82fee25d0876305ca7f34"
+      },
+      "bert_matched": {
+        "run_id": "bert_matched_lr5e5_supervised_s42_r2",
+        "selected_epoch": 4,
+        "checkpoint_sha256": "95025bfc0e29163efea613d556d7da0b516ec1bb6c6fac9d9c4c9c6f1f373525",
+        "primary_metrics": {
+          "level": "document",
+          "threshold": 0.9998291730880737,
+          "attack_rule": "score > threshold",
+          "documents": 1200,
+          "attacks": 400,
+          "benign": 800,
+          "tp": 316,
+          "fn": 84,
+          "fp": 0,
+          "tn": 800,
+          "recall": 0.79,
+          "fpr": 0.0,
+          "accuracy": 0.93,
+          "passes": false
+        },
+        "development_record_sha256": "c44d5bb8a73a632a5354602a05621eafb041d25122a96a734e0207127c1c3e68"
+      }
+    },
+    "seeds": [
+      42,
+      1337,
+      2026
+    ],
+    "deployment_seed": 42,
+    "formats_pending_qualification": {
+      "local_context_03": [
+        "fp32",
+        "w8a8_export"
+      ],
+      "local_context_03_residual_replace_c98": [
+        "fp32",
+        "w8a8_export"
+      ],
+      "bert_matched": [
+        "fp32"
+      ]
+    },
+    "no_further_tuning": true
+  },
+  "profiling_policy": {
+    "seed": 424242,
+    "strata": [
+      "genre",
+      "label",
+      "window_count:1/2-3/4-7/8+"
+    ],
+    "sample_per_stratum": 2,
+    "long_stress_per_label": 2,
+    "warmups": 3,
+    "repeats": 20,
+    "batch_windows": 1,
+    "graph_logit_atol": 1e-05,
+    "graph_logit_rtol": 1e-05,
+    "risk_atol": 1e-05,
+    "decision_changes_allowed": 0,
+    "cpu_threads": 1,
+    "cold_documents": 2,
+    "cold_selection": "shortest and longest shared warm-sample documents"
+  },
+  "material_hardware_benefit": {
+    "criterion": "At least50% same-alignment precision-matched parameter/scale storage reduction plus feasible target memory/dataflow/document retention/transport schedule",
+    "minimum_storage_reduction": 0.5,
+    "target_part": "xcve2802-vsvh1760-2MP-e-S",
+    "clock_objective_mhz": 200,
+    "BERT_comparator": "Hypothetical all-matrixW8 FP32scale/vector shape accounting;11377100alignedbytes, numericallyunqualified",
+    "physical_claim": false,
+    "require_explicit_offloads_and_operator_gaps": true
+  },
+  "intended_adoption_formats": {
+    "local_context_03": "w8a8_export",
+    "local_context_03_residual_replace_c98": "w8a8_export",
+    "bert_matched": "fp32"
+  },
+  "fp32_cnn_companions": "diagnostic; cannotrescue intendedformat orfailedseed"
 }

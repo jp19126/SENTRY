@@ -328,6 +328,42 @@ def teacher_cache(path, fitting, recipe):
     return margins
 
 
+def projected_embedding_artifact(model_spec, requested):
+    """Load previously frozen raw-pretrained PCA, with no recomputation."""
+    from cnn_adoption_embedding_init import tensor_sha
+    if model_spec['kind'] != 'cnn' or requested['method'] != 'raw_pretrained_pca_rms_v1':
+        raise ValueError('Explicit token-CNN embedding intervention required')
+    config = model_spec.get('config') or cnn_config(model_spec['config_id'])
+    if config['representation'] != 'token' or model_spec.get('vocab_size', 30522) != 30522 or model_spec.get('pad_id', 0) != 0 or config['embedding_dim'] not in (64, 96) or model_spec.get('initial_checkpoint'):
+        raise ValueError('Shared vocabulary/PAD, width64/96 and fresh nonembedding initialization required')
+    initializer = ROOT / 'scripts/cnn_adoption_embedding_init.py'
+    if sha(initializer) != requested['initializer_source_sha256']:
+        raise ValueError('Embedding initializer source changed')
+    artifact = Path(requested['artifact_path']); artifact = artifact if artifact.is_absolute() else ROOT / artifact
+    provenance = Path(requested['provenance_record_path']); provenance = provenance if provenance.is_absolute() else ROOT / provenance
+    if any(not item.resolve().is_relative_to((DEST / 'embedding_feasibility').resolve()) for item in (artifact, provenance)):
+        raise ValueError('Frozen adoption embedding-feasibility artifact/provenance required')
+    if sha(artifact) != requested['artifact_sha256'] or sha(provenance) != requested['provenance_record_sha256']:
+        raise ValueError('Projected artifact/provenance bytes changed')
+    stored = torch.load(artifact, map_location='cpu', weights_only=True)
+    record = read(provenance); projected, source, pca = (stored[key] for key in ('projected', 'source', 'pca'))
+    if not record['complete'] or record['projection_artifact_sha256'] != requested['artifact_sha256'] or record['source'] != source or record['projection'] != pca or record['source_sha256']['cnn_adoption_embedding_init.py'] != requested['initializer_source_sha256']:
+        raise ValueError('Projection feasibility provenance differs')
+    if projected.dtype != torch.float32 or tuple(projected.shape) != (30522, 96) or not torch.isfinite(projected).all() or not (projected[0] == 0).all() or tensor_sha(projected) != pca['projected_sha256'] or pca['pad_id'] != 0 or pca['dimensions'] != 96:
+        raise ValueError('Projection tensor/hash/shape/PAD differs')
+    policy = read(ROOT / 'configs/project.json')['models']['detector']
+    if source['model_id'] != policy['id'] or source['revision'] != policy['revision'] or policy['tokenizer_revision'] != policy['revision'] or source['shape'] != [30522, 256] or source['vocabulary_size'] != 30522 or source['pad_id'] != 0 or source['tensor_key'] != 'bert.embeddings.word_embeddings.weight':
+        raise ValueError('Raw pretrained embedding/tokenizer policy differs')
+    snapshot = ROOT / 'checkpoints/huggingface' / ('models--' + policy['id'].replace('/', '--')) / 'snapshots' / policy['revision']
+    if set(source['files_sha256']) != {'pytorch_model.bin', 'config.json', 'vocab.txt'} or any(sha(snapshot / name) != digest for name, digest in source['files_sha256'].items()):
+        raise ValueError('Raw pretrained checkpoint/vocabulary bytes changed')
+    vocabulary = (snapshot / 'vocab.txt').read_text(encoding='utf-8').splitlines()
+    if len(vocabulary) != 30522 or vocabulary[0] != '[PAD]': raise ValueError('Shared vocabulary/PAD differs')
+    return projected, {'recipe': requested, 'source': source, 'pca': pca,
+        'artifact_sha256': requested['artifact_sha256'], 'provenance_record_sha256': requested['provenance_record_sha256'],
+        'initializer_source_sha256': requested['initializer_source_sha256']}
+
+
 def train_one(model_spec, recipe, prepared_root, output_root=DEST, budget=None, device='cpu'):
     """Development selection or fixed-epoch final fit; never loads confirmation."""
     recipe = dict(recipe); run_id = recipe['run_id']
@@ -365,6 +401,26 @@ def train_one(model_spec, recipe, prepared_root, output_root=DEST, budget=None, 
         if objective != 'document_max_bce': raise ValueError('Distillation intervention requires document objective')
         teacher = teacher_cache(recipe['teacher_cache'], fit, recipe)
         association['teacher_cache_sha256'] = sha(recipe['teacher_cache'])
+    embedding_request = recipe.get('embedding_initialization')
+    if embedding_request:
+        from cnn_adoption_embedding_init import apply_projected_embedding, tensor_sha
+        projected, embedding_binding = projected_embedding_artifact(model_spec, embedding_request)
+        source_hashes['embedding_initializer'] = embedding_request['initializer_source_sha256']
+        seed = recipe.get('seed', 42); setup(seed, device, recipe.get('cpu_threads', 1))
+        # Same seeded construction; transfer follows the isolated replacement.
+        model, initialization = model_for(model_spec, 'cpu')
+        before_rng = torch.get_rng_state().clone()
+        before_nonembedding = {name: tensor_sha(value) for name, value in model.state_dict().items() if name != 'embedding.weight'}
+        applied = apply_projected_embedding(model, projected, pad_id=model_spec.get('pad_id', 0))
+        after_nonembedding = {name: tensor_sha(value) for name, value in model.state_dict().items() if name != 'embedding.weight'}
+        if not torch.equal(before_rng, torch.get_rng_state()) or before_nonembedding != after_nonembedding:
+            raise RuntimeError('Embedding replacement changed RNG/nonembedding state')
+        embedding_binding.update(applied=applied, nonembedding_state_sha256=identity(before_nonembedding),
+                                 rng_unchanged=True, nonembedding_unchanged=True)
+        association['embedding_initialization'] = embedding_binding
+        initialization.update(base_initialization=initialization['initialization'], initialization=embedding_request['method'],
+                              embedding_initialization=embedding_binding)
+        del projected
     folder = output_root / 'runs' / run_id; folder.mkdir(parents=True, exist_ok=True)
     association_hash = identity(association)
     if (folder / 'run.json').exists() and read(folder / 'run.json')['association'] != association:
@@ -374,8 +430,12 @@ def train_one(model_spec, recipe, prepared_root, output_root=DEST, budget=None, 
         if done['association_sha256'] != association_hash or sha(ROOT / done['checkpoint']) != done['checkpoint_sha256']:
             raise ValueError('Completed checkpoint association changed')
         return done
-    seed = recipe.get('seed', 42); setup(seed, device, recipe.get('cpu_threads', 1))
-    model, initialization = model_for(model_spec, device)
+    seed = recipe.get('seed', 42)
+    if embedding_request:
+        model = model.to(device)
+    else:
+        setup(seed, device, recipe.get('cpu_threads', 1))
+        model, initialization = model_for(model_spec, device)
     parameters = list(model.named_parameters())
     if recipe.get('exclude_bias_norm_weight_decay', model_spec['kind'] == 'bert'):
         groups = [{'params': [p for name, p in parameters if p.ndim > 1 and 'LayerNorm' not in name], 'weight_decay': recipe.get('weight_decay', .01)},
@@ -434,7 +494,8 @@ def train_one(model_spec, recipe, prepared_root, output_root=DEST, budget=None, 
                 best_key, best_epoch = key, epoch
                 save(folder / 'checkpoint_selected.pt', {'state_dict': model.state_dict(), 'model_spec': model_spec,
                      'config': initialization.get('config'), 'epoch': epoch, 'recipe': recipe,
-                     'data_identity': fit['identity'], 'source_sha256': source_hashes, 'association_sha256': association_hash})
+                     'data_identity': fit['identity'], 'source_sha256': source_hashes, 'association_sha256': association_hash,
+                     'embedding_initialization': association.get('embedding_initialization')})
                 for name, values in (('calibration', cal_rows), ('selection', selection_rows)):
                     path = folder / (name + '_scores.jsonl'); temporary = path.with_suffix('.jsonl.tmp')
                     temporary.write_text(''.join(json.dumps(row, ensure_ascii=False) + '\n' for row in values), encoding='utf-8'); os.replace(temporary, path)
@@ -442,6 +503,7 @@ def train_one(model_spec, recipe, prepared_root, output_root=DEST, budget=None, 
         save(latest, {'state_dict': model.state_dict(), 'model_spec': model_spec, 'config': initialization.get('config'),
              'optimizer': optimizer.state_dict(), 'scheduler': scheduler.state_dict(), 'epoch': epoch, 'history': history,
              'association_sha256': association_hash, 'recipe': recipe, 'data_identity': fit['identity'], 'source_sha256': source_hashes,
+             'embedding_initialization': association.get('embedding_initialization'),
              'best_key': best_key, 'best_epoch': best_epoch,
              'rng_state': rng_state(next(model.parameters()).device), 'training_seconds': prior_seconds + time.perf_counter() - started})
         write(folder / 'history.json', history); print(json.dumps({'event': 'epoch', 'run_id': run_id, **record}), flush=True)

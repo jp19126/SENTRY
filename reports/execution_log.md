@@ -2821,3 +2821,204 @@ is unproven. Saved artifacts/results remain tied to that sampler. Repair needs
 new qualification and preservation of existing artifacts. Confirmation remains
 unopened; distillation and frozen three-seed confirmation are pending.
 The user requested synchronization of this incomplete study state to Git.
+
+
+### Qualified teacher and bounded distillation dispatch
+
+Independent refined-BERT score audit passed (2.906 CPU seconds): primary
+316/400 attacks, 0/800 benign false positives, hard 0/182, natural-email
+72/100 attacks and 0/200 benign. Common BERT gives 275/400 and 2/800.
+The refined FP32 checkpoint is selected as a useful same-FIT teacher, not a
+security-qualified guard. FIT-only cache binds its exact checkpoint, completed
+development record and FIT identities. Before any distillation fit, weight .3
+and temperature2 were fixed for LocalContext and C98 replacement, with .7
+ground-truth BCE and .3 temperature-squared soft Bernoulli BCE of document-max
+margins. Corresponding supervised runs are same-architecture/data/seed/optimizer
+controls. No inference teacher, new architecture or confirmation access.
+
+FIT-only refined-BERT cache completed: 36,370 documents/47,283 windows,
+26.407 seconds; cache SHA256
+3e97743cb216568d31d7f463b4428d25dca72e89afc92cceb2ed64578896c182.
+Serial distillation queue started with LocalContext; no confirmation access.
+
+
+### First bounded distillation result
+
+LocalContext KD completed12epochs, selectedepoch2 by the unchanged development
+rule. Checkpoint SHA256:3361e55b6cb16dc6b770baf89ad8d65b2a9e0e5ae21a19b222aef3b72d41a2b7.
+Training/scoring interval784.1493201seconds. Full FP32 development primary
+TP192/FN208/FP6/TN794, threshold .9986555576324463 (48%recall/.75%FPR).
+Same-data/seed/architecture supervised control188/212/16/784 (47%/2%).
+KD improves observed FPR but fails fixed99% recall; no confirmation claim.
+The serial C98 replacement KD job is live. Independent score audit and corrected
+FIT-calibrated numerical export of the completed first checkpoint are underway.
+
+Independent Local KD saved-score audit passed3.281CPU seconds. Hard-benign FP
+6/182=3.30% versus16/182=8.79% supervised; natural-email TP48/100 andFP1/200
+versus47/100 and2/200. Exact-control audit .469CPU seconds binds same model,
+FIT/development inputs,seed,optimizer,scheduler andepochs. Own-threshold paired
+changes:28attackgains/24losses;13benignFPremoved/3added. Old96TP0/FN64/FP0/TN32.
+Thus KD's observed benefit primarily reduces FP-tail risk without closing the
+recall gap to useful BERT. Required withheld strata remain absent ondevelopment.
+New corrected Local KD export uses512FITwindows/500groups/12strata and shared
+calibration5a11a1c9...c7624e. Packedbytes3,440,780; fourFITrefmax/mean logitdelta
+.127228/.040494, argmax4/4,CPU10.140seconds. ManifestSHA256
+616cc048b8bb6ad7032c7f700fd7c1b96c23263983e804c734def3d003c7cb29.
+GPU packed qualification and actualformat full quality are still pending.
+
+
+### Prospective second-intervention selection rule
+
+Before C98 KD finishes, the remaining intervention is bounded to one existing
+contextualCNN: if completed KD still fails primary recall, choose the stronger
+of the two KD-only recipes by the existing checkpoint quality key (highest
+primary recall while below99%, then FPR; fixed tie priority LocalContext).
+Test raw-pretrained PCA embedding initialization plus the identical KD recipe
+against that KD-only control, with the same12epoch horizon, seed42, architecture,
+FIT/cache, optimizer and decision policy. Pretraining representation is a named
+remaining difference from BERT after KD's limited recall improvement. This is
+standard transfer learning, not a new security contribution; PCA/centering/
+anisotropy and lexical knowledge change together. No runtime BERT or new encoder
+computation enters the CNN. All nonembedding weights and RNG must remain equal.
+No improvement of the prespecified development primary key would falsify its
+usefulness for selection. No further training intervention or architecture
+search follows this bounded test. Final recipes/formats/priority must then freeze
+on development evidence, with all3seed comparison and once-only confirmation.
+Integration is prepared separately and cannot replace the trainer until the
+live KD queue terminates; original executed source/artifacts stay preserved.
+
+Paired Local KD FP32 vs refined BERT FP32 development comparison executed
+1,000 draws, seed20261014. Nominal CNN-minus-BERT recall -31pp andFPR+.75pp.
+Selection-source800group percentile95% sensitivity interval: recall[-36.041,
+-25.309]pp,FPR[+.25,+1.375]pp; attackpayload20group recall[-47.727,-11.744]pp,
+FPRundefined. Paired1000benigncalibration-group refits withselectionfixed yield
+recall[-41.25,+15.75]pp,FPR[+.25,+1.125]pp. These distinct dependence/tail
+sensitivities neither rescue fixed nominal gates nor prove noninferiority.
+OutputSHA256:947aa7f83ea3167d456c6b7ca331a271576e8623a6a438d94239a9b7ff28fcb7;
+results/cnn_adoption_v1/local_kd_vs_refined_bert_comparison_r2.json.
+No inference/GPU/reserved access. Whole-process CPU duration was not captured
+by the comparator; recorded as unknown, not zero or inferred from wait timeout.
+
+
+### Second KD completed; final bounded intervention released
+
+C98 KD completed12epochs, selected4, CPd17e8e63c177a8a2ae6d21d02ae7159c8ad07a3117b6e5fab1365ceeaa9196b6,
+816.9545773training/scoring seconds. Full FP32 primary TP171/FN229/FP7/TN793,
+threshold .9994576573371887 (42.75%/.875%), vs supervised165/3.
+Local KD192/6 wins the prospectively recorded rule. The isolated reviewed
+PCA integration was applied only after serial KD queue terminal0; original
+trainer689391...14d04 preserved, newtrainer a9589bd633b67f413be2cafdf3b79f3f4d4f1bdbcb18c48fdb724ee434f34e4f.
+The Local PCA+KD recipe retains allarchitecture/data/loss/seed/optimizer/horizon
+fields and binds frozen projection/source/provenance hashes. No further training
+intervention or newarchitecture search remains. Serial queue first confirms
+actual LocalKD W8/A8 development quality then fits/evaluates Local PCA+KD.
+LocalKD native signed integer qualification passed35dots/4FITwindows5.1374104s.
+C98KD corrected CPU export:3,439,184bytes, max/mean4FITdelta .076938/.035418,
+9.922CPU seconds; manifest6d57a4abab0e457351fe9ced9252e1ee5f3b146a08445926cf648c2bddbc63e7.
+All existing scores preserve executed oldsources; no re-association or overwrite.
+Confirmation remains unopened; final3seed/format/priority freeze still pending.
+
+Local KD W8/A8 independent audit passed5.657CPU seconds; ownthreshold
+.998722493648529 gives189TP/5FP vsFP32192/6. Exactly3attacklosses and1FPremoved;
+emailunchanged48/100TP/1/200FP, hard5/182=2.747%, old96zeroTP/FP.
+NineW8packed tensors and8A8scales matched codes/manifest and35dotnativeproof;
+actualCPtrainingtrainer689391... andcurrentW8scoringtrainera9589... are retained
+as separate identities. No inherited floating quality or newconfirmation claim.
+Actual PCA training association confirms96dims, PADzero/trainable, nonembedding
+state/RNGunchanged, scratchRMS .9997781367 vs initialized .9997781573.
+Initializerartifact/source/provenance/teacher-cache hashes are bound inrun.json.
+Accountusage actual45%, cap60; noresetused.
+
+
+### Fixed three-seed stage released before confirmation
+
+All additional training interventions are complete. Final Local PCA+KD selected7
+CP6f34e8c...63f342d,12epoch fit/scoring850.8515419seconds; fullFP32207TP/7FP.
+Independent audit verifies51/100emailTP/1FP,hard6/182,old96knownTP16/64.
+PCA gain is concentratedtranslation; response-redirectionTP49→31/per80.
+Corrected512FIT-window CPUexport3,440,780B,13.187seconds, fourFITmaxlogitdelta
+.059180; native35dotcheck4.9811459seconds passed. FullW8/A8TP211/FP8
+(52.75%/1%),threshold .9997921586036682. C98KD native35dotcheck4.7931423s
+passed; fullW8/A8TP172/FP7 (43%/.875%),threshold .9994614720344543.
+Both intendedroutes fail99%recall; noQAT is warranted to rescue a floating
+securityfailure. No numerical quality/timing from a parent is inherited by
+a new final checkpoint.
+
+Before final fits, existing primary development key selected LocalPCA+KD7,
+C98KD4, and matchedBERT5e-5 epoch4 withschedule_total_epochs5. Nine newfixed
+fits for42/1337/2026 nowrun serially without development monitoring; eachnewCP
+then gets full development qualification. Priority LocalContext→C98, deployment
+seed42. IntendedCNNadoptionformatW8/A8 with explicitFP32exceptions; matched
+BERTFP32. CNNFP32confirmation companions diagnose conversion and cannotrescue
+failed intendedformat/seed. These rules precede newconfirmation scoring.
+Currentconfig/archiveparentrecord preserves exactrecipes and allsources.
+FreshhistoricalW8 development alias will qualify the current scoring-source
+closure without altering its oldcheckpoint/threshold orcanonicalevidence.
+Actualfinal exports, arithmetic/profile qualification and prospective freeze
+remain required before once-only heldout scoring. No further tuning follows.
+
+
+### LocalContext final development replication
+
+All three fixed seven-epoch LocalContext fits and FP32 development evaluations
+completed. Independent saved-score audits passed. Seed42: TP207/400, FP7/800;
+seed1337: TP256/400, FP19/800; seed2026: TP170/400, FP6/800. Natural-email
+TP counts are51/69/36 per100 andFP1/3/1 per200. Hard-benign FP counts are
+6/19/6 per182. All fail pooled/email99% recall; seed1337 additionally fails
+pooled/email FPR and hard-benign bounds. These are development observations,
+not a confirmation verdict or sampled-seed population claim.
+
+The seed42 fixed FIT-only final checkpoint50eefbb95597519ef268d0e7262c05f470b947076c167c7603f762a5060a08eb
+reproduces all29 model-state tensors of its selected parent exactly. The newly
+completed C98 seed42 checkpointecf5a25b99bd810ce624cad9eac95682af2db5e7de6d8623b1c6a0d67183ce72
+also reproduces all29 parent tensors despite the recorded trainer-source change.
+Final-fit associations/history contain no development monitoring. New checkpoint
+files retain their own digests and still require fresh numerical/profile checks.
+Three Local CPU exports completed; a watcher association-field lookup error
+delayed the first export, was corrected, and its interrupted record preserved.
+No training was restarted and no partial export was overwritten.
+
+
+### Prospective final timing routes and loader qualification
+
+Before final profiling, the FP32 benchmark loader was optimized to restore the
+exact fitted state directly, with lazy ZIP mapping and no redundant pretrained
+base-weight load. CPU checks passed in42.078seconds: exact descriptors, model
+states and nonpersistent buffers; identical logits onfour actual FIT windows;
+matching BERT SDPA classes, padding invariance and strict missing-key rejection.
+Profiler SHA25620da10034392fb4e4661af29886e756755d389e3c90b9048be51d03dca0e2849.
+Original profiler and proof are preserved underprofile_loader_check. Trainer,
+evaluator, checkpoint and decision policy were unchanged. New final checkpoints
+still require full saved-score route qualification before timing.
+
+Fixed seed42 comparative routes: FP32CNNs/BERT onCPU1/4threads andCUDA eager/
+graph; W8/A8CNNs onactualCUDA integer eager/graph. Coldstartup uses two matched
+fresh-child documents onCPU1 FP32 andCUDAgraph intendedformats, with noOS-cache
+flush. The CPU INT64integer oracle is a correctness implementation, so its
+nonoptimized latency is omitted from the practical speed comparison. Sampling
+remains seed424242, two pergenre/label/window-count stratum plus two longest
+perlabel, three warmups and20retained repetitions; all rawtext, tokenization,
+copies, complete windows, aggregation and fixed-threshold decisions are timed.
+Scope is deploymentseed42; otherseeds inherit no timing claim.
+Accountusage last observed48% against60%; noresetused.
+
+
+### Final training completed; numerical and timing qualification live
+
+All nine fixed fits completed:19 terminal learning jobs including the initial
+interrupted fit. Independent FP32development audits passed for allnine. BERT
+recall/FPR for42/1337/2026:79%/0%,47%/.375%,75.75%/.125%; emailTP72/33/70
+per100 andFP0/0/0 per200; hardFP0/3/1 per182. BERT is not uniformly stronger
+acrossseeds. Every finalmodel still fails pooled/email99%recall. All3seed42
+parent reproductions are bitwise proven (Local29, C9829, BERT73state tensors).
+All6 finalCPUexports completed; driverelapsed990.766seconds includeswaiting
+and is distinct from activeexport processwalls. Finalsource/manifest bindings
+and prospective profiling/intended-format policies were recorded after training
+terminal and before qualification. Serial native/fullW8-A8/profile dispatch is
+live. Newconfirmation remains unopened and noverdict is claimed.
+Savedhistorical canonicalmetrics were reused without reopening protectedinputs:
+results/span_coupled_pilot_v1/reference_bert_v1/metrics.json SHA256
+b05b6664129286bac67639fad24f5524b68ce54548cfcb9f77d5e41fadedd9e8.
+SavedcanonicalN4107, TP2738/FN0; alpha .005/.01/.02 FP4/13/43 per1369benign.
+Thresholds .41116243600845337/.004557917360216379/.0004980998346582055.
+Originalalpha.01threshold is preserved separately from new-panel recalibration.

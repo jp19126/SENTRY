@@ -79,6 +79,22 @@ def _stable_order(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
+def _content_length_tokens(document: dict) -> int:
+    """Read the prepared token count across supported metadata generations."""
+    for key in ("content_token_count", "content_tokens", "content_length"):
+        value = document.get(key)
+        if value is not None:
+            length = int(value)
+            if length < 0:
+                raise ValueError(f"Negative content length in {key}: {length}")
+            return length
+    return 0
+
+
+def _length_bin(length: int) -> str:
+    return "0-127" if length < 128 else "128-255" if length < 256 else "256-511" if length < 512 else "512+"
+
+
 def calibration_indices(cal_dir: Path, max_windows: int):
     """Deterministic group/genre/length-stratified FIT-only window sample.
 
@@ -101,8 +117,7 @@ def calibration_indices(cal_dir: Path, max_windows: int):
     for di, d in enumerate(docs):
         lo, hi = int(starts[di]), int(starts[di + 1])
         gid = d.get("source_group_id") or d["document_id"]
-        length = int(d.get("content_token_count", d.get("content_length", 0)))
-        length_bin = "0-127" if length < 128 else "128-255" if length < 256 else "256-511" if length < 512 else "512+"
+        length_bin = _length_bin(_content_length_tokens(d))
         genre = d.get("genre") or d.get("source_dataset") or "unspecified"
         stratum = "|".join((str(d.get("source_dataset", "unspecified")), str(genre), length_bin))
         groups.setdefault(gid, []).append((stratum, di, lo, hi))
@@ -152,7 +167,7 @@ def calibration_indices(cal_dir: Path, max_windows: int):
     records = []
     for wi, di, round_index in chosen:
         d = docs[di]
-        records.append({k: d.get(k) for k in ("document_id", "source_group_id", "source_dataset", "genre", "text_sha256", "content_token_count", "content_length")}
+        records.append({k: d.get(k) for k in ("document_id", "source_group_id", "source_dataset", "genre", "text_sha256", "content_token_count", "content_tokens", "content_length")}
                        | {"window_index": int(wi - int(starts[di])), "round": round_index})
     sources = {p.name: sha(p) for p in required}
     selection = {
@@ -162,7 +177,7 @@ def calibration_indices(cal_dir: Path, max_windows: int):
         "selected_windows": len(records),
         "selected_documents": len(chosen_docs),
         "source_group_count": len({r["source_group_id"] or r["document_id"] for r in records}),
-        "strata": sorted({"|".join((str(r["source_dataset"] or "unspecified"), str(r["genre"] or r["source_dataset"] or "unspecified"), ("0-127" if int(r.get("content_token_count") or r.get("content_length") or 0) < 128 else "128-255" if int(r.get("content_token_count") or r.get("content_length") or 0) < 256 else "256-511" if int(r.get("content_token_count") or r.get("content_length") or 0) < 512 else "512+"))) for r in records}),
+        "strata": sorted({"|".join((str(r["source_dataset"] or "unspecified"), str(r["genre"] or r["source_dataset"] or "unspecified"), _length_bin(_content_length_tokens(r)))) for r in records}),
         "prepared_manifest": manifest,
         "input_file_sha256": sources,
         "calibration_id_sha256": canonical_sha(records),

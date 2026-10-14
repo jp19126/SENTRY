@@ -12,6 +12,7 @@ import os
 import subprocess
 import sys
 import time
+import zipfile
 from pathlib import Path
 
 PROCESS_STARTED = time.perf_counter()
@@ -65,6 +66,133 @@ def policy_for(args):
             'cold_documents': args.cold_documents, 'cold_selection': 'shortest and longest shared warm-sample documents'}
 
 
+def cpu_checkpoint(path):
+    """Lazy ZIP storage mapping: unused optimizer tensors are never materialized.
+
+    Older non-ZIP checkpoints use the explicit legacy CPU reader. File identity
+    verification still reads every byte and is measured separately.
+    """
+    import torch
+    mapped = zipfile.is_zipfile(path)
+    began = time.perf_counter()
+    state = torch.load(path, map_location='cpu', weights_only=False, mmap=mapped)
+    return state, {'storage_reader': 'cpu_zip_mmap' if mapped else 'legacy_cpu_eager',
+                   'mmap': mapped, 'metadata_parse_seconds': time.perf_counter() - began}
+
+
+def resolve_profile_target(plan, run_id=None, reference_id=None, numerical_format=None):
+    """Same qualified target guards; FP32 checkpoint metadata uses lazy mapping."""
+    from cnn_adoption_train import identity
+    from cnn_adoption_evaluate import resolve_target, path, relative
+    if bool(run_id) == bool(reference_id): raise ValueError('Exactly one run/reference required')
+    identifier = run_id or reference_id
+    if Path(identifier).name != identifier or identifier in ('.', '..'): raise ValueError('Unsafe profiling ID')
+    specs = plan.get('model_specs', plan.get('models', {}))
+    if run_id:
+        choices = [r for r in plan['runs'] if r['run_id'] == run_id]
+        if len(choices) != 1: raise ValueError('Run absent/duplicated in plan')
+        recipe = choices[0]; spec = specs[recipe['model_id']]
+    else:
+        reference = plan['references'][reference_id]
+        spec = reference.get('model_spec') or specs[reference['model_id']]
+    fmt = numerical_format or ('historical_w8_qat' if spec['kind'] == 'historical_bert_w8' else 'fp32')
+    if fmt != 'fp32' or spec['kind'] not in ('cnn', 'bert'):
+        return resolve_target(plan, run_id, reference_id, numerical_format), {'resolver': 'existing_evaluator'}
+    began = time.perf_counter()
+    if run_id:
+        folder = DEST / 'runs' / identifier
+        run, done = read_json(folder / 'run.json'), read_json(folder / 'complete.json')
+        if not done['complete'] or run['association']['recipe'] != recipe or run['association']['model_spec'] != spec:
+            raise ValueError('Completed training differs from exact planned recipe/model')
+        if done['association_sha256'] != run['association_sha256'] or identity(run['association']) != run['association_sha256']:
+            raise ValueError('Training association changed')
+        checkpoint = path(done['checkpoint'])
+        hash_began = time.perf_counter(); checkpoint_hash = digest(checkpoint); hash_seconds = time.perf_counter() - hash_began
+        if checkpoint_hash != done['checkpoint_sha256']: raise ValueError('Checkpoint bytes changed')
+        checkpoint_identity = {'path': relative(checkpoint), 'sha256': checkpoint_hash,
+                               'training_association_sha256': done['association_sha256']}
+        stored, storage = cpu_checkpoint(checkpoint)
+        if stored['association_sha256'] != done['association_sha256'] or stored['recipe'] != recipe or stored['model_spec'] != spec or stored['epoch'] != done['selected_epoch']:
+            raise ValueError('Checkpoint payload differs from recipe/model/epoch association')
+        del stored
+        if run['association']['sources']['cnn_models'] != digest(ROOT / 'scripts/cnn_models.py'):
+            raise ValueError('Model implementation changed since training')
+        if spec['kind'] == 'bert' and run['association']['pretrained_policy'] != read_json(ROOT / 'configs/project.json')['models']['detector']:
+            raise ValueError('Pretrained model policy changed since training')
+    else:
+        if spec['kind'] != 'cnn' or not reference.get('checkpoint'): raise ValueError('Explicit frozen CNN checkpoint required')
+        checkpoint = path(reference['checkpoint'])
+        hash_began = time.perf_counter(); checkpoint_hash = digest(checkpoint); hash_seconds = time.perf_counter() - hash_began
+        if checkpoint_hash != reference['checkpoint_sha256']: raise ValueError('Frozen reference checkpoint changed')
+        checkpoint_identity = {'path': relative(checkpoint), 'sha256': checkpoint_hash}
+        storage = {'storage_reader': 'metadata_validated_during_restore'}
+    descriptor = {'model_spec': spec, 'checkpoint_identity': checkpoint_identity,
+                  'numerical_format': 'fp32', 'export_manifest_sha256': None}
+    return (identifier, descriptor, checkpoint, None, None), {'resolver': 'profiler_fp32_lazy_checkpoint_metadata',
+        'checkpoint_hash_seconds': hash_seconds, 'total_validation_seconds': time.perf_counter() - began, **storage}
+
+
+def load_profile_target(descriptor, checkpoint, exported, device):
+    """Direct FP32 inference restore; all other numerical routes retain loaders."""
+    from cnn_adoption_evaluate import load_target
+    from cnn_adoption_train import cnn_config, identity
+    import torch
+    spec = descriptor['model_spec']; kind = spec['kind']
+    if descriptor['numerical_format'] != 'fp32' or kind not in ('cnn', 'bert'):
+        return load_target(descriptor, checkpoint, exported, device)
+    if exported is not None or checkpoint is None: raise ValueError('Qualified FP32 checkpoint required')
+    began = time.perf_counter(); hash_began = began
+    actual_hash = digest(checkpoint); hash_seconds = time.perf_counter() - hash_began
+    if actual_hash != descriptor['checkpoint_identity']['sha256'] or spec.get('initial_checkpoint_sha256', actual_hash) != actual_hash:
+        raise ValueError('Qualified FP32 checkpoint bytes changed')
+    stored, storage = cpu_checkpoint(checkpoint)
+    if stored.get('model_spec') and stored['model_spec'] != spec: raise ValueError('Checkpoint model specification differs')
+    expected_association = descriptor['checkpoint_identity'].get('training_association_sha256')
+    if expected_association and stored['association_sha256'] != expected_association: raise ValueError('Checkpoint training association differs')
+    construction = time.perf_counter()
+    if kind == 'cnn':
+        from cnn_models import build_model
+        config = spec.get('config') or cnn_config(spec['config_id'])
+        if stored.get('config') and stored['config'] != config: raise ValueError('Checkpoint CNN topology differs')
+        model = build_model(config, spec.get('vocab_size', 30522), spec.get('pad_id', 0))
+        config_identity = {'configuration_sha256': identity(config)}
+        attention = None; library = None
+    else:
+        from transformers import BertConfig, BertForSequenceClassification, __version__ as library
+        from transformers.models.bert.modeling_bert import BertSdpaSelfAttention
+        policy = read_json(ROOT / 'configs/project.json')['models']['detector']
+        snapshot = ROOT / 'checkpoints/huggingface' / ('models--' + policy['id'].replace('/', '--')) / 'snapshots' / policy['revision']
+        config_path = snapshot / 'config.json'
+        run_metadata = read_json(checkpoint.parent / 'run.json')
+        if run_metadata['association_sha256'] != expected_association or digest(config_path) != run_metadata['initialization']['pretrained_files_sha256']['config.json']:
+            raise ValueError('Pinned local BERT configuration differs from qualified training provenance')
+        config = BertConfig.from_pretrained(snapshot, local_files_only=True, num_labels=2)
+        # Current qualified AutoModel loader uses SDPA, confirmed by CPU proof.
+        config._attn_implementation = 'sdpa'
+        model = BertForSequenceClassification(config)
+        if model.config._attn_implementation != 'sdpa' or not all(isinstance(layer.attention.self, BertSdpaSelfAttention) for layer in model.bert.encoder.layer):
+            raise ValueError('Direct BERT constructor did not retain qualified SDPA attention')
+        attention = {'implementation': model.config._attn_implementation,
+                     'classes': [type(layer.attention.self).__name__ for layer in model.bert.encoder.layer]}
+        config_identity = {'model_id': policy['id'], 'revision': policy['revision'],
+            'path': str(config_path.relative_to(ROOT)).replace('\\', '/'), 'file_sha256': digest(config_path),
+            'effective_configuration_sha256': identity(config.to_dict()), 'num_labels': model.config.num_labels}
+    constructed = time.perf_counter()
+    weights = stored['state_dict']; del stored
+    model.load_state_dict(weights, strict=True)
+    del weights
+    restored = time.perf_counter(); model = model.float().to(device).eval()
+    if str(device).startswith('cuda'): torch.cuda.synchronize()
+    finished = time.perf_counter()
+    metadata = {'route': 'native_fp32_tf32_disabled', 'inference_loader': 'direct_exact_state_no_pretrained_weight_load_v1',
+        'checkpoint_sha256': actual_hash, 'configuration_identity': config_identity, 'attention': attention,
+        'transformers': library, **storage, 'optimizer_tensors_transferred': False, 'pretrained_base_weights_loaded': False,
+        'strict_state_restore': True, 'timings': {'checkpoint_hash_seconds': hash_seconds,
+            'construct_seconds': constructed - construction, 'state_restore_seconds': restored - constructed,
+            'device_transfer_seconds': finished - restored, 'total_restore_seconds': finished - began}}
+    return model, metadata
+
+
 class CNNGraph:
     def __init__(self, model, first, torch):
         self.torch = torch; began = time.perf_counter()
@@ -94,13 +222,15 @@ def context(args):
     import numpy as np
     import torch
     from cnn_adoption_train import Budget, identity, load_prepared, setup, write
-    from cnn_adoption_evaluate import (resolve_target, path, load_target, confirmation_authorization, verify_membership)
+    from cnn_adoption_evaluate import (path, confirmation_authorization, verify_membership)
     from gate_eval import load_config, window_document
     from r1_challengers import tokenizer
     imports_finished = time.perf_counter()
     setup(42, args.device, args.cpu_threads); budget = Budget(args.max_seconds)
     if args.backend == 'cuda_graph' and args.device != 'cuda': raise ValueError('CUDA graph requires CUDA device')
-    plan = read_json(args.plan); identifier, descriptor, checkpoint, exported, _ = resolve_target(plan, args.run_id, args.reference_id, args.format)
+    plan = read_json(args.plan)
+    resolved, checkpoint_validation = resolve_profile_target(plan, args.run_id, args.reference_id, args.format)
+    identifier, descriptor, checkpoint, exported, _ = resolved
     fmt = descriptor['numerical_format']; target_key = identifier + ':' + fmt
     policy = policy_for(args)
     frozen = confirmation_authorization(plan, target_key, descriptor) if args.stage == 'confirmation' else None
@@ -142,7 +272,7 @@ def context(args):
     if config['models']['detector']['id'] != manifest['tokenizer']['name'] or config['models']['detector']['tokenizer_revision'] != manifest['tokenizer']['revision']:
         raise ValueError('Current tokenizer policy differs from prepared reference')
     validated = time.perf_counter(); load_started = validated
-    model, backend_record = load_target(descriptor, checkpoint, exported, args.device)
+    model, backend_record = load_profile_target(descriptor, checkpoint, exported, args.device)
     if args.device == 'cuda': torch.cuda.synchronize()
     loaded = time.perf_counter(); tok = tokenizer(config); tokenizer_ready = time.perf_counter()
 
@@ -170,6 +300,8 @@ def context(args):
                    'threshold': threshold, 'sample_document_ids': [r['document_id'] for r in sample],
                    'profiler_source_sha256': digest(Path(__file__)),
                    'graph_helper_sha256': digest(ROOT / 'scripts/r1_bert_cuda_graph.py') if graph and hasattr(model, 'bert') else None,
+                   'inference_loader': backend_record.get('inference_loader', 'existing_numerical_loader'),
+                   'loader_configuration_identity': backend_record.get('configuration_identity'),
                    'cpu_threads': args.cpu_threads,
                    'cache_limit': os.environ.get('TORCH_CUDNN_V8_API_LRU_CACHE_LIMIT'),
                    'cudnn_v8_api_disabled': os.environ.get('TORCH_CUDNN_V8_API_DISABLED', '0')}
@@ -280,6 +412,7 @@ def warm(c):
               'qualification': qualification, 'population_strata': c['population'], 'samples': observations,
               'sample_count': len(observations), 'timed_document_repetitions': len(observations) * c['args'].repeats,
               'model_load_seconds': c['loaded'] - c['load_started'], 'tokenizer_load_seconds': c['tokenizer_ready'] - c['loaded'],
+              'checkpoint_validation': c['checkpoint_validation'],
               'wall_seconds': time.monotonic() - c['budget'].started, 'memory_observations': c['budget'].observations,
               'boundary': 'Complete raw text to fixed-threshold document decision; serial B1 windows, explicit stage synchronization. Loading/capture/qualification excluded from warm latency. Sample is stratified/stress-selected, not a workload-frequency estimate.'}
     c['write'](file, result); return result
@@ -354,6 +487,7 @@ def main():
                           'imports_seconds': c['imports_finished'] - PROCESS_STARTED,
                           'validation_and_setup_seconds': c['validated'] - c['imports_finished'],
                           'model_load_seconds': c['loaded'] - c['load_started'],
+                          'checkpoint_validation': c['checkpoint_validation'], 'inference_loader': c['backend_record'],
                           'tokenizer_load_seconds': c['tokenizer_ready'] - c['loaded'],
                           'graph_setup': c['graph_setup'], 'child_start_to_decision_seconds': finished - PROCESS_STARTED})); return
     result = warm(c); print(json.dumps({'complete': True, 'sample_count': result['sample_count'], 'timed_document_repetitions': result['timed_document_repetitions']}))

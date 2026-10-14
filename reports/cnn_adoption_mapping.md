@@ -65,6 +65,38 @@ packed-loader use are in [`execution.json`](../results/cnn_adoption_v1/exports/s
 The corrected scale-serialization mismatch from the first loader attempt is
 recorded in [`execution_attempts.json`](../results/cnn_adoption_v1/exports/stacked_01_final_s42/execution_attempts.json).
 
+## R2 FIT calibration length-strata correction
+
+A metadata compatibility fault was found in the activation-calibration sampler.
+The R2 `documents.jsonl` schema stores token length as `content_tokens`, while
+the sampler previously looked only for `content_token_count` and
+`content_length`. Consequently those documents defaulted to zero for length
+stratification, collapsing selection into the `0-127` bin; the selected-record
+sidecar also omitted `content_tokens`. The corrected reader accepts all three
+field names, preserves the R2 count in each selected-window record, and derives
+the recorded strata from the same resolved count. Existing exports and their
+source-version records were left untouched; their activation-calibration
+sidecars must not be treated as length-stratified R2 calibrations.
+
+The FIT-only check
+[`check_cnn_adoption_sampler.py`](../scripts/check_cnn_adoption_sampler.py)
+ran against `results/cnn_adoption_v1/prepared/token_r2/fit`: it checked 36,370
+FIT documents, selected 512 windows deterministically across 500 source groups,
+and verified all four length bins and 12 source/genre/length strata against the
+actual `content_tokens` values. The prepared `documents.jsonl` SHA-256 was
+`967f925657675c1cf90c19d947c538396af41c4cfbdb5a0a439088cc675badc8`; the
+corrected ordered calibration-record identity was
+`5a11a1c912c7eb2f50ab4763a348348fd327d9e8f76a61b74040913d90c7624e`.
+The check reads prepared FIT metadata and arrays only and performs no model
+forward pass. New calibration exports must bind this corrected sampler source,
+ordered records and FIT artifact hashes before their scales can qualify for a
+frozen comparison. Since the calibration identity changes, a prior export
+directory is intentionally rejected; generate a new output/run identity.
+For current corrected-R2 supervised and distilled control exports, target
+storage/dataflow evidence and its analytical-versus-unmeasured boundary are
+consolidated in
+[`hardware_benefit_evidence_boundary.json`](../results/cnn_adoption_v1/hardware_benefit_evidence_boundary.json).
+
 ## Four original structures: exact shape costs
 
 [`original_static_mapping.json`](../results/cnn_adoption_v1/original_static_mapping.json)
@@ -257,3 +289,24 @@ the requested FIT-only reference vectors) is:
   --calibration-dir results/cnn_study_v1/prepared/token/full_train `
   --max-calibration-windows 512 --reference-windows 4
 ```
+
+## Matched BERT payload alignment reconciliation
+
+The two saved BERT figures use different alignment rules. The existing
+`mapping_assessment.json` sidecars report 11,375,464 bytes by summing raw W8
+matrix bytes, raw scale/vector bytes, and FP32 non-matrix parameters. This is
+the unaligned subtotal. Applying the same 64-byte tensor-start alignment as
+the CNN exports leaves W8 weights at 11,156,992 bytes and FP32 parameters at
+56,328 bytes, while scale tensors rise from 162,144 raw bytes to 163,780 bytes
+(1,636 bytes alignment padding). The consistent aligned total is therefore
+11,377,100 bytes.
+
+The 11,377,100-byte figure in the earlier mapping report and
+`original_static_mapping.json` is retained as the correct aligned comparator;
+the sidecar's 11,375,464-byte raw subtotal is not a replacement aligned
+estimate. Historical export sidecars and reported bytes remain unchanged. The
+current corrected-R2 reductions are 69.75697% for LocalContext and 69.770996%
+for C98 against the aligned hypothetical BERT payload. This is still shape
+accounting only; the all-matrix-W8 BERT format has no numerical qualification
+or packed deployment artifact. Component counts and source hashes are in
+[`bert_payload_alignment_reconciliation.json`](../results/cnn_adoption_v1/bert_payload_alignment_reconciliation.json).
