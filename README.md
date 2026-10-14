@@ -19,8 +19,9 @@ or general proof against LLM/model poisoning.
 | [RESEARCH_SCOPE.md](RESEARCH_SCOPE.md) | Approved scientific purpose, application boundary and criteria for a contribution |
 | [AGENTS.md](AGENTS.md) | Standing execution and evidence rules; deliberately **no specific research goals** |
 | [STATUS.md](STATUS.md) | Current findings, unresolved claims, permissions and next decision |
-| [SENTRY_codex_execution_prompt.md](SENTRY_codex_execution_prompt.md) | Current staged Codex research prompt; the named span pilot is approved, with integration conditional on its gates |
+| [SENTRY_codex_execution_prompt.md](SENTRY_codex_execution_prompt.md) | Current authorized broad CNN exploration prompt; earlier method-first instructions are archived |
 | [Method study](reports/method_study.md) | Verified prior art, approved span-coupled experiment contract, executed results and limitations |
+| [CNN study](reports/cnn_study.md) | Authorized broad architecture exploration, current offline execution and evidence boundaries |
 | [Experimental protocol](reports/protocol.md) | Saved pilot data, split, threshold, numerical and evaluation definitions |
 | [Execution log](reports/execution_log.md) | Detailed historical actions and evidence paths |
 | [Documentation archive](docs/archive/README.md) | Old goal documents, execution prompts and setup handoffs |
@@ -49,6 +50,15 @@ or generated vendor builds.** Keep these separate artifacts and their
 identities when attempting reproduction.
 
 ## Latest bounded study
+
+The [CNN architecture exploration](reports/cnn_study.md) completed its authorized
+offline stage on 14 October 2026: 96 screens, 23 longer inner fits, one matched
+replacement and 24 frozen three-seed finalist fits, with checked confirmation
+and complete-document profiling. No architecture meets the primary empirical
+screen in all three seeds; authored diagnostics reveal substantial limitations.
+The report provides measured software/analytical cost trade-offs and bounded
+next research choices. This supports the later FPGA-centered method decision;
+it does not establish a robust guard or new FPGA-aware contribution.
 
 The approved [span-coupled pilot](reports/method_study.md) closed on 13 October
 with a **negative candidate result**. Six fits completed; the candidate failed

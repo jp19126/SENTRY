@@ -1,0 +1,2251 @@
+{
+  "schema_version": 1,
+  "study": "cnn_exploration_v1",
+  "description": "96 conventional architecture configurations, 16 families; no outcome-based selection. Token vocabulary and byte vocabulary supplied by data pipeline. Family learning rates are prespecified bring-up defaults, not validated optima.",
+  "configurations": [
+    {
+      "id": "textcnn_01",
+      "family": "textcnn",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 1,
+      "kernel_sizes": [
+        3,
+        5,
+        7
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.2,
+      "normalization": "none",
+      "training": {
+        "learning_rate": 0.001,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "textcnn_02",
+      "family": "textcnn",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 1,
+      "kernel_sizes": [
+        2,
+        3,
+        4
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max_mean",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.001,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "textcnn_03",
+      "family": "textcnn",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 96,
+      "depth": 1,
+      "kernel_sizes": [
+        3,
+        5,
+        9
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.001,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "textcnn_04",
+      "family": "textcnn",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 96,
+      "depth": 1,
+      "kernel_sizes": [
+        3,
+        7,
+        11
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max_mean",
+      "topk": 4,
+      "dropout": 0.15,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.001,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "textcnn_05",
+      "family": "textcnn",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 128,
+      "depth": 1,
+      "kernel_sizes": [
+        5,
+        9,
+        15
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "topk_mean",
+      "topk": 4,
+      "dropout": 0.15,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.001,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "textcnn_06",
+      "family": "textcnn",
+      "representation": "token",
+      "embedding_dim": 128,
+      "channels": 128,
+      "depth": 1,
+      "kernel_sizes": [
+        3,
+        5,
+        7,
+        11
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.2,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.001,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "stacked_01",
+      "family": "stacked",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 2,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.2,
+      "normalization": "none",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "stacked_02",
+      "family": "stacked",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 4,
+      "kernel_sizes": [
+        5
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max_mean",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "stacked_03",
+      "family": "stacked",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 96,
+      "depth": 4,
+      "kernel_sizes": [
+        3,
+        5
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "stacked_04",
+      "family": "stacked",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 96,
+      "depth": 6,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max_mean",
+      "topk": 4,
+      "dropout": 0.15,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "stacked_05",
+      "family": "stacked",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 128,
+      "depth": 8,
+      "kernel_sizes": [
+        5
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "topk_mean",
+      "topk": 4,
+      "dropout": 0.15,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "stacked_06",
+      "family": "stacked",
+      "representation": "token",
+      "embedding_dim": 128,
+      "channels": 128,
+      "depth": 10,
+      "kernel_sizes": [
+        3,
+        5,
+        7
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.2,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "residual_01",
+      "family": "residual",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 2,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.2,
+      "normalization": "none",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "residual_02",
+      "family": "residual",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 4,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max_mean",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "residual_03",
+      "family": "residual",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 96,
+      "depth": 4,
+      "kernel_sizes": [
+        5
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "residual_04",
+      "family": "residual",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 96,
+      "depth": 6,
+      "kernel_sizes": [
+        3,
+        5
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max_mean",
+      "topk": 4,
+      "dropout": 0.15,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "residual_05",
+      "family": "residual",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 128,
+      "depth": 8,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "topk_mean",
+      "topk": 4,
+      "dropout": 0.15,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "residual_06",
+      "family": "residual",
+      "representation": "token",
+      "embedding_dim": 128,
+      "channels": 128,
+      "depth": 10,
+      "kernel_sizes": [
+        5
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.2,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "dpcnn_01",
+      "family": "dpcnn",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 4,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.2,
+      "normalization": "none",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "dpcnn_02",
+      "family": "dpcnn",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 6,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max_mean",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "dpcnn_03",
+      "family": "dpcnn",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 96,
+      "depth": 8,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "dpcnn_04",
+      "family": "dpcnn",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 96,
+      "depth": 10,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max_mean",
+      "topk": 4,
+      "dropout": 0.15,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "dpcnn_05",
+      "family": "dpcnn",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 128,
+      "depth": 12,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "topk_mean",
+      "topk": 4,
+      "dropout": 0.15,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "dpcnn_06",
+      "family": "dpcnn",
+      "representation": "token",
+      "embedding_dim": 128,
+      "channels": 128,
+      "depth": 14,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.2,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "dilated_01",
+      "family": "dilated",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 2,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1,
+        2
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.2,
+      "normalization": "none",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "dilated_02",
+      "family": "dilated",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 4,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "pooling": "max_mean",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "dilated_03",
+      "family": "dilated",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 96,
+      "depth": 4,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "dilated_04",
+      "family": "dilated",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 96,
+      "depth": 6,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1,
+        2,
+        4
+      ],
+      "pooling": "max_mean",
+      "topk": 4,
+      "dropout": 0.15,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "dilated_05",
+      "family": "dilated",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 128,
+      "depth": 8,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "pooling": "topk_mean",
+      "topk": 4,
+      "dropout": 0.15,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "dilated_06",
+      "family": "dilated",
+      "representation": "token",
+      "embedding_dim": 128,
+      "channels": 128,
+      "depth": 10,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.2,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "idcnn_01",
+      "family": "idcnn",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 6,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1,
+        1,
+        2
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.2,
+      "normalization": "none",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      },
+      "repeats": 2
+    },
+    {
+      "id": "idcnn_02",
+      "family": "idcnn",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 6,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1,
+        2,
+        4
+      ],
+      "pooling": "max_mean",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      },
+      "repeats": 2
+    },
+    {
+      "id": "idcnn_03",
+      "family": "idcnn",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 96,
+      "depth": 9,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1,
+        1,
+        2
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      },
+      "repeats": 3
+    },
+    {
+      "id": "idcnn_04",
+      "family": "idcnn",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 96,
+      "depth": 9,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1,
+        2,
+        4
+      ],
+      "pooling": "max_mean",
+      "topk": 4,
+      "dropout": 0.15,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      },
+      "repeats": 3
+    },
+    {
+      "id": "idcnn_05",
+      "family": "idcnn",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 128,
+      "depth": 12,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "pooling": "topk_mean",
+      "topk": 4,
+      "dropout": 0.15,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      },
+      "repeats": 3
+    },
+    {
+      "id": "idcnn_06",
+      "family": "idcnn",
+      "representation": "token",
+      "embedding_dim": 128,
+      "channels": 128,
+      "depth": 16,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.2,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      },
+      "repeats": 4
+    },
+    {
+      "id": "tcn_01",
+      "family": "tcn",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 2,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1,
+        2
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.2,
+      "normalization": "none",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      },
+      "direction": "causal"
+    },
+    {
+      "id": "tcn_02",
+      "family": "tcn",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 4,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "pooling": "max_mean",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      },
+      "direction": "centered"
+    },
+    {
+      "id": "tcn_03",
+      "family": "tcn",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 96,
+      "depth": 4,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      },
+      "direction": "bidirectional"
+    },
+    {
+      "id": "tcn_04",
+      "family": "tcn",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 96,
+      "depth": 6,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        32
+      ],
+      "pooling": "max_mean",
+      "topk": 4,
+      "dropout": 0.15,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      },
+      "direction": "causal"
+    },
+    {
+      "id": "tcn_05",
+      "family": "tcn",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 128,
+      "depth": 8,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "pooling": "topk_mean",
+      "topk": 4,
+      "dropout": 0.15,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      },
+      "direction": "bidirectional"
+    },
+    {
+      "id": "tcn_06",
+      "family": "tcn",
+      "representation": "token",
+      "embedding_dim": 128,
+      "channels": 128,
+      "depth": 10,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.2,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      },
+      "direction": "centered"
+    },
+    {
+      "id": "depthwise_01",
+      "family": "depthwise",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 2,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.2,
+      "normalization": "none",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "depthwise_02",
+      "family": "depthwise",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 4,
+      "kernel_sizes": [
+        5
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max_mean",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "depthwise_03",
+      "family": "depthwise",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 96,
+      "depth": 4,
+      "kernel_sizes": [
+        7
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "depthwise_04",
+      "family": "depthwise",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 96,
+      "depth": 6,
+      "kernel_sizes": [
+        9
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max_mean",
+      "topk": 4,
+      "dropout": 0.15,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "depthwise_05",
+      "family": "depthwise",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 128,
+      "depth": 8,
+      "kernel_sizes": [
+        15
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "topk_mean",
+      "topk": 4,
+      "dropout": 0.15,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "depthwise_06",
+      "family": "depthwise",
+      "representation": "token",
+      "embedding_dim": 128,
+      "channels": 128,
+      "depth": 10,
+      "kernel_sizes": [
+        5,
+        9
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.2,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "grouped_01",
+      "family": "grouped",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 2,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.2,
+      "normalization": "none",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      },
+      "groups": 4
+    },
+    {
+      "id": "grouped_02",
+      "family": "grouped",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 4,
+      "kernel_sizes": [
+        5
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max_mean",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      },
+      "groups": 4
+    },
+    {
+      "id": "grouped_03",
+      "family": "grouped",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 96,
+      "depth": 4,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      },
+      "groups": 8
+    },
+    {
+      "id": "grouped_04",
+      "family": "grouped",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 96,
+      "depth": 6,
+      "kernel_sizes": [
+        7
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max_mean",
+      "topk": 4,
+      "dropout": 0.15,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      },
+      "groups": 8
+    },
+    {
+      "id": "grouped_05",
+      "family": "grouped",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 128,
+      "depth": 8,
+      "kernel_sizes": [
+        5
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "topk_mean",
+      "topk": 4,
+      "dropout": 0.15,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      },
+      "groups": 16
+    },
+    {
+      "id": "grouped_06",
+      "family": "grouped",
+      "representation": "token",
+      "embedding_dim": 128,
+      "channels": 128,
+      "depth": 10,
+      "kernel_sizes": [
+        3,
+        5
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.2,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      },
+      "groups": 4
+    },
+    {
+      "id": "large_kernel_01",
+      "family": "large_kernel",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 2,
+      "kernel_sizes": [
+        9
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.2,
+      "normalization": "none",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "large_kernel_02",
+      "family": "large_kernel",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 4,
+      "kernel_sizes": [
+        15
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max_mean",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "large_kernel_03",
+      "family": "large_kernel",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 96,
+      "depth": 4,
+      "kernel_sizes": [
+        21
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "large_kernel_04",
+      "family": "large_kernel",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 96,
+      "depth": 6,
+      "kernel_sizes": [
+        31
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max_mean",
+      "topk": 4,
+      "dropout": 0.15,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "large_kernel_05",
+      "family": "large_kernel",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 128,
+      "depth": 8,
+      "kernel_sizes": [
+        15,
+        31
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "topk_mean",
+      "topk": 4,
+      "dropout": 0.15,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "large_kernel_06",
+      "family": "large_kernel",
+      "representation": "token",
+      "embedding_dim": 128,
+      "channels": 128,
+      "depth": 10,
+      "kernel_sizes": [
+        63
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.2,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "gated_01",
+      "family": "gated",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 2,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.2,
+      "normalization": "none",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "gated_02",
+      "family": "gated",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 4,
+      "kernel_sizes": [
+        5
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max_mean",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "gated_03",
+      "family": "gated",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 96,
+      "depth": 4,
+      "kernel_sizes": [
+        7
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "gated_04",
+      "family": "gated",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 96,
+      "depth": 6,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1,
+        2,
+        4
+      ],
+      "pooling": "max_mean",
+      "topk": 4,
+      "dropout": 0.15,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "gated_05",
+      "family": "gated",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 128,
+      "depth": 8,
+      "kernel_sizes": [
+        5
+      ],
+      "dilations": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "pooling": "topk_mean",
+      "topk": 4,
+      "dropout": 0.15,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "gated_06",
+      "family": "gated",
+      "representation": "token",
+      "embedding_dim": 128,
+      "channels": 128,
+      "depth": 10,
+      "kernel_sizes": [
+        7
+      ],
+      "dilations": [
+        1,
+        2,
+        4
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.2,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "inception_01",
+      "family": "inception",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 1,
+      "kernel_sizes": [
+        1,
+        3,
+        5
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.2,
+      "normalization": "none",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "inception_02",
+      "family": "inception",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 2,
+      "kernel_sizes": [
+        3,
+        5,
+        7
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max_mean",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "inception_03",
+      "family": "inception",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 96,
+      "depth": 3,
+      "kernel_sizes": [
+        1,
+        5,
+        9
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "inception_04",
+      "family": "inception",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 96,
+      "depth": 3,
+      "kernel_sizes": [
+        3,
+        7,
+        11
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max_mean",
+      "topk": 4,
+      "dropout": 0.15,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "inception_05",
+      "family": "inception",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 128,
+      "depth": 4,
+      "kernel_sizes": [
+        1,
+        7,
+        15
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "topk_mean",
+      "topk": 4,
+      "dropout": 0.15,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "inception_06",
+      "family": "inception",
+      "representation": "token",
+      "embedding_dim": 128,
+      "channels": 128,
+      "depth": 5,
+      "kernel_sizes": [
+        3,
+        9,
+        21
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.2,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "local_context_01",
+      "family": "local_context",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 1,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.2,
+      "normalization": "none",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      },
+      "context_kernel": 7,
+      "gated": false
+    },
+    {
+      "id": "local_context_02",
+      "family": "local_context",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 2,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max_mean",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      },
+      "context_kernel": 11,
+      "gated": false
+    },
+    {
+      "id": "local_context_03",
+      "family": "local_context",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 96,
+      "depth": 2,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      },
+      "context_kernel": 15,
+      "gated": false
+    },
+    {
+      "id": "local_context_04",
+      "family": "local_context",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 96,
+      "depth": 3,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1,
+        2
+      ],
+      "pooling": "max_mean",
+      "topk": 4,
+      "dropout": 0.15,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      },
+      "context_kernel": 7,
+      "gated": true
+    },
+    {
+      "id": "local_context_05",
+      "family": "local_context",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 128,
+      "depth": 3,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1,
+        2,
+        4
+      ],
+      "pooling": "topk_mean",
+      "topk": 4,
+      "dropout": 0.15,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      },
+      "context_kernel": 11,
+      "gated": true
+    },
+    {
+      "id": "local_context_06",
+      "family": "local_context",
+      "representation": "token",
+      "embedding_dim": 128,
+      "channels": 128,
+      "depth": 4,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1,
+        2,
+        4
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.2,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      },
+      "context_kernel": 15,
+      "gated": true
+    },
+    {
+      "id": "dense_01",
+      "family": "dense",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 2,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.2,
+      "normalization": "none",
+      "training": {
+        "learning_rate": 0.0005,
+        "weight_decay": 0.01
+      },
+      "growth": 16
+    },
+    {
+      "id": "dense_02",
+      "family": "dense",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 4,
+      "kernel_sizes": [
+        5
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max_mean",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0005,
+        "weight_decay": 0.01
+      },
+      "growth": 16
+    },
+    {
+      "id": "dense_03",
+      "family": "dense",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 96,
+      "depth": 4,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0005,
+        "weight_decay": 0.01
+      },
+      "growth": 24
+    },
+    {
+      "id": "dense_04",
+      "family": "dense",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 96,
+      "depth": 6,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max_mean",
+      "topk": 4,
+      "dropout": 0.15,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0005,
+        "weight_decay": 0.01
+      },
+      "growth": 24
+    },
+    {
+      "id": "dense_05",
+      "family": "dense",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 128,
+      "depth": 8,
+      "kernel_sizes": [
+        5
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "topk_mean",
+      "topk": 4,
+      "dropout": 0.15,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0005,
+        "weight_decay": 0.01
+      },
+      "growth": 32
+    },
+    {
+      "id": "dense_06",
+      "family": "dense",
+      "representation": "token",
+      "embedding_dim": 128,
+      "channels": 128,
+      "depth": 10,
+      "kernel_sizes": [
+        3,
+        5
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.2,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0005,
+        "weight_decay": 0.01
+      },
+      "growth": 32
+    },
+    {
+      "id": "pooling_01",
+      "family": "pooling",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 4,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "pooling_02",
+      "family": "pooling",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 4,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "mean",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "pooling_03",
+      "family": "pooling",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 4,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max_mean",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "pooling_04",
+      "family": "pooling",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 4,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "topk",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "pooling_05",
+      "family": "pooling",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 4,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "topk_mean",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "pooling_06",
+      "family": "pooling",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 4,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "attention",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "byte_hierarchy_01",
+      "family": "byte_hierarchy",
+      "representation": "byte",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 4,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.2,
+      "normalization": "none",
+      "training": {
+        "learning_rate": 0.0007,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "byte_hierarchy_02",
+      "family": "byte_hierarchy",
+      "representation": "byte",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 6,
+      "kernel_sizes": [
+        5
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max_mean",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0007,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "byte_hierarchy_03",
+      "family": "byte_hierarchy",
+      "representation": "byte",
+      "embedding_dim": 96,
+      "channels": 96,
+      "depth": 8,
+      "kernel_sizes": [
+        7
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0007,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "byte_hierarchy_04",
+      "family": "byte_hierarchy",
+      "representation": "byte",
+      "embedding_dim": 64,
+      "channels": 96,
+      "depth": 10,
+      "kernel_sizes": [
+        3,
+        5
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max_mean",
+      "topk": 4,
+      "dropout": 0.15,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0007,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "byte_hierarchy_05",
+      "family": "byte_hierarchy",
+      "representation": "byte",
+      "embedding_dim": 96,
+      "channels": 128,
+      "depth": 12,
+      "kernel_sizes": [
+        5,
+        7
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "topk_mean",
+      "topk": 4,
+      "dropout": 0.15,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0007,
+        "weight_decay": 0.01
+      }
+    },
+    {
+      "id": "byte_hierarchy_06",
+      "family": "byte_hierarchy",
+      "representation": "byte",
+      "embedding_dim": 128,
+      "channels": 128,
+      "depth": 14,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.2,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0007,
+        "weight_decay": 0.01
+      }
+    }
+  ]
+}

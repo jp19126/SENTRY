@@ -1,0 +1,237 @@
+{
+  "stage": "stage_b",
+  "selection_rule": "One per family, then six next representatives from distinct families; recall floor then FPR then recall then parameter count. Add the exact R1-style TextCNN anchor for adequately trained competence comparison. Centered TCN computations duplicate dilated configurations and are already covered there; retain causal/bidirectional TCN for diversity. One of 24 promotion slots reserved for a controlled structural replacement; existing configurations may receive targeted repairs within the separate learning allowance.",
+  "stage_a_table_sha256": "cc13fcdb35ba9064862352b7c66ffc97822387ac09cbf5b6ed3b27fcccea5548",
+  "runs": [
+    {
+      "run_id": "byte_hierarchy_03_fit_s42",
+      "config_id": "byte_hierarchy_03",
+      "seed": 42,
+      "epochs": 12,
+      "fit_split": "fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "select_epoch": true
+    },
+    {
+      "run_id": "dense_05_fit_s42",
+      "config_id": "dense_05",
+      "seed": 42,
+      "epochs": 12,
+      "fit_split": "fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "select_epoch": true
+    },
+    {
+      "run_id": "depthwise_04_fit_s42",
+      "config_id": "depthwise_04",
+      "seed": 42,
+      "epochs": 12,
+      "fit_split": "fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "select_epoch": true
+    },
+    {
+      "run_id": "dilated_06_fit_s42",
+      "config_id": "dilated_06",
+      "seed": 42,
+      "epochs": 12,
+      "fit_split": "fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "select_epoch": true
+    },
+    {
+      "run_id": "dpcnn_05_fit_s42",
+      "config_id": "dpcnn_05",
+      "seed": 42,
+      "epochs": 12,
+      "fit_split": "fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "select_epoch": true
+    },
+    {
+      "run_id": "gated_04_fit_s42",
+      "config_id": "gated_04",
+      "seed": 42,
+      "epochs": 12,
+      "fit_split": "fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "select_epoch": true
+    },
+    {
+      "run_id": "grouped_06_fit_s42",
+      "config_id": "grouped_06",
+      "seed": 42,
+      "epochs": 12,
+      "fit_split": "fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "select_epoch": true
+    },
+    {
+      "run_id": "idcnn_01_fit_s42",
+      "config_id": "idcnn_01",
+      "seed": 42,
+      "epochs": 12,
+      "fit_split": "fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "select_epoch": true
+    },
+    {
+      "run_id": "inception_06_fit_s42",
+      "config_id": "inception_06",
+      "seed": 42,
+      "epochs": 12,
+      "fit_split": "fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "select_epoch": true
+    },
+    {
+      "run_id": "large_kernel_05_fit_s42",
+      "config_id": "large_kernel_05",
+      "seed": 42,
+      "epochs": 12,
+      "fit_split": "fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "select_epoch": true
+    },
+    {
+      "run_id": "local_context_03_fit_s42",
+      "config_id": "local_context_03",
+      "seed": 42,
+      "epochs": 12,
+      "fit_split": "fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "select_epoch": true
+    },
+    {
+      "run_id": "pooling_04_fit_s42",
+      "config_id": "pooling_04",
+      "seed": 42,
+      "epochs": 12,
+      "fit_split": "fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "select_epoch": true
+    },
+    {
+      "run_id": "residual_06_fit_s42",
+      "config_id": "residual_06",
+      "seed": 42,
+      "epochs": 12,
+      "fit_split": "fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "select_epoch": true
+    },
+    {
+      "run_id": "stacked_02_fit_s42",
+      "config_id": "stacked_02",
+      "seed": 42,
+      "epochs": 12,
+      "fit_split": "fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "select_epoch": true
+    },
+    {
+      "run_id": "tcn_04_fit_s42",
+      "config_id": "tcn_04",
+      "seed": 42,
+      "epochs": 12,
+      "fit_split": "fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "select_epoch": true
+    },
+    {
+      "run_id": "textcnn_05_fit_s42",
+      "config_id": "textcnn_05",
+      "seed": 42,
+      "epochs": 12,
+      "fit_split": "fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "select_epoch": true
+    },
+    {
+      "run_id": "stacked_01_fit_s42",
+      "config_id": "stacked_01",
+      "seed": 42,
+      "epochs": 12,
+      "fit_split": "fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "select_epoch": true
+    },
+    {
+      "run_id": "dilated_02_fit_s42",
+      "config_id": "dilated_02",
+      "seed": 42,
+      "epochs": 12,
+      "fit_split": "fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "select_epoch": true
+    },
+    {
+      "run_id": "textcnn_03_fit_s42",
+      "config_id": "textcnn_03",
+      "seed": 42,
+      "epochs": 12,
+      "fit_split": "fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "select_epoch": true
+    },
+    {
+      "run_id": "dense_06_fit_s42",
+      "config_id": "dense_06",
+      "seed": 42,
+      "epochs": 12,
+      "fit_split": "fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "select_epoch": true
+    },
+    {
+      "run_id": "large_kernel_06_fit_s42",
+      "config_id": "large_kernel_06",
+      "seed": 42,
+      "epochs": 12,
+      "fit_split": "fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "select_epoch": true
+    },
+    {
+      "run_id": "dpcnn_03_fit_s42",
+      "config_id": "dpcnn_03",
+      "seed": 42,
+      "epochs": 12,
+      "fit_split": "fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "select_epoch": true
+    },
+    {
+      "run_id": "textcnn_01_fit_s42",
+      "config_id": "textcnn_01",
+      "seed": 42,
+      "epochs": 12,
+      "fit_split": "fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "select_epoch": true
+    }
+  ]
+}

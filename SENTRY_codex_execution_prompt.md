@@ -1,97 +1,167 @@
-# SENTRY: method discovery to board-free research execution
+# SENTRY: broad CNN architecture exploration for an FPGA-oriented document guard
 
-Work in the existing SENTRY checkout. Carry out this as one continuous research workflow, with one planned scientific approval checkpoint before adopting a method and starting substantial experiments. After that approval, execute the agreed work rather than returning another plan at each phase.
+Work in the existing SENTRY checkout. Execute a substantial first-stage CNN study for indirect prompt-injection detection in external documents. Develop models, run experiments, analyze results and leave reproducible implementations—not just another research plan.
 
-## 1. Scientific purpose
+## 1. Purpose and authority of this execution request
 
-Develop and test a substantive new FPGA-aware guard algorithm or algorithm–hardware co-design method for protecting LLM applications against malicious influence in external documents. FPGA must be central to the proposed method and its implementation. The current application is indirect prompt-injection detection; do not silently broaden the claims to training/model poisoning or general misinformation.
+Investigate which convolutional representations, architectures and decision mechanisms can distinguish injected instructions from legitimate document content while offering a credible route to efficient FPGA implementation.
 
-Existing BERT, other transformers, CNNs and guard models may be baselines, teachers or reusable components. Implementing an unchanged existing detector on FPGA, replacing BERT with another off-the-shelf model, or moving transformer kernels to AIE-ML is not the contribution. Conversely, a completely new foundation model or unrelated theory of LLM security is not required. Identify an actual methodological change in computation, representation, decision-making or joint algorithm–hardware design.
+Explore broadly. Do not preselect the previously suggested local/context CNN, assume BERT is necessary, or stop after one unsuccessful CNN recipe. Established CNNs, substantial adaptations and new combinations are all legitimate candidates. Prefer genuinely different computational structures over many nearly identical width settings.
 
-The objective is a better useful security–hardware trade-off, not necessarily the highest standalone accuracy. Bounded quality degradation may be acceptable when justified by substantial hardware benefits. Specify protection and legitimate-use limits before selecting results. Do not invent novelty, force an FPGA win, or substitute a software-only defense when an FPGA hypothesis fails.
+This is preliminary architecture discovery. A successful first stage can identify promising models, explain their behavior and establish a useful security–cost frontier without demonstrating a novel algorithm or completing hardware/software co-design. Do not impose publication-level novelty as an entry requirement for each experiment. Equally, do not describe a conventional CNN that passes the benchmark as SENTRY's completed scientific contribution.
 
-## 2. Start from the real project; keep execution lightweight
+The overall project remains FPGA-centered. Software training and evaluation are instruments for selecting and understanding an eventual FPGA method; they are not authorization to turn SENTRY into a software-only security project. Full co-design is welcome where it answers a concrete question, but full FPGA integration is not required at this stage.
 
-Read README.md, AGENTS.md, RESEARCH_SCOPE.md and STATUS.md first. Then consult reports/protocol.md, reports/goal_r1_decision.md, configs/project.json and only the evidence/source needed for this task. Inspect the actual checkout, local changes and required saved artifacts once. Distinguish committed reports from locally available raw results and builds. A Git clone does not imply that ignored checkpoints or data are present.
+When submitted for execution, this request authorizes the local, board-free study and allowances below. It replaces the earlier requirement to select one specific new method before starting this CNN exploration. Do not repeatedly request permission for model choices, training, ordinary corrections or progression within this study. More recent explicit user decisions take precedence.
 
-Reuse valid work. Do not resume old Goal 4/5, R1, A/B/C searches or the legacy BERT hardware path merely because they are unfinished. Preserve their evidence, configurations and numerical identities. Keep research-specific tasks and decisions in the study report and STATUS.md, not embedded as permanent goals in AGENTS.md.
+It does not authorize physical-board operations, paid services/cloud compute, new target-LLM API calls, protected final evaluation, unrelated campaigns or GitHub synchronization.
 
-Use existing environments and vendor tools. Verify relevant access before dispatch, not repeatedly. Preserve memory/resource limits and other active permissions. No physical-board operation, paid service, new target-LLM API call or opening of protected final calibration/test/NotInject partitions is authorized by this prompt.
+## 2. Establish the actual starting point, then proceed
 
-Use at most two concurrent subagents when available and useful: one for algorithm/security/prior-art work and one for FPGA/AIE-ML architecture and implementation. Select actually configured agents; do not invent model names or capabilities. Give them independent tasks and non-overlapping file ownership. The coordinator owns the scientific question and dispatches resource-intensive jobs serially on shared hardware. Reuse agents for implementation or focused review; no nested review teams. Work sequentially if delegation is unavailable.
+Read README.md, AGENTS.md, RESEARCH_SCOPE.md and STATUS.md. Next inspect the current execution prompt, reports/protocol.md, reports/goal_r1_decision.md, scripts/r1_models.py, scripts/r1_challengers.py, the shared evaluator and relevant saved artifacts. Read any newer local CNN/method-study report before assuming R1 is the latest work.
 
-Run only checks tied to changed evaluator logic, arithmetic, interfaces and small real-input bring-up. Do not add CI, approval databases, integrity frameworks, unrelated tests or repeated environment audits.
+Distinguish committed reports from locally available checkpoints, raw scores and datasets. Check the working tree and necessary compute/tool access once; preserve unrelated changes and reuse valid artifacts. Do not rerun historical campaigns merely to reconstruct their documentation.
 
-## 3. Phase A: identify a concrete method and propose its decisive experiment
+Verify the previous CNN's actual architecture, training, scoring and error strata. The reported R1 outcome—high attack recall but excessive benign false positives—is a starting observation, not a diagnosis or a rejection of CNNs. Inspect available false positives, false negatives, length dependence and learning curves before proposing causes. Do not assume a newer quoted “negative candidate result” refers to R1.
 
-This phase authorizes focused literature research, source inspection, saved-result analysis and lightweight analytical calculations. It does not authorize new training, inference campaigns, vendor builds or simulations.
+Use the previous literature review as a set of leads. Verify the original papers, accessible implementations and relevant newer work for the families actually tested. Distinguish direct prompt-injection evidence from language, time-series or hardware analogies. Do not reproduce unverified bibliographic or performance claims from chat. Keep this focused literature check subordinate to implementation and experiments.
 
-First establish what the existing evidence actually says. Separate detector limitations, numerical differences, implementation bottlenecks and missing measurements. Do not infer that a transformer is necessary from a small number of failed compact-model recipes. Do not turn the saved CUDA timing into the scientific objective or a universal FPGA feasibility threshold.
+## 3. Establish data discipline suitable for a broad search
 
-Verify the nearest relevant literature as of the execution date. Prioritize journal articles and early-access publications, but include directly relevant conference papers and preprints with their status clearly labeled. Treat prior chat literature reviews as search leads, not verified evidence. Check bibliographic identity, publication dates, accessible method details and measurement boundaries. An abstract-only source cannot support detailed claims about an uninspected method. A search that finds no match is not proof of novelty.
+Keep the current task: classify external document content for injected instructions. Do not quietly introduce the user question, target response, attack-template identifier, label-derived span marker or other privileged metadata as an inference input. A document label does not establish that an attack succeeded against a target LLM.
 
-Cover the closest work on guard detection and overdefense, generalization across attack distributions, hardware-aware compression/co-design, and the particular FPGA/AIE computation being proposed. Include alternatives that avoid redundant guard computation when relevant to the deployment. Do not attempt to reproduce every paper or expand into a general survey.
+Preserve the canonical datasets and historical split files. Create study-specific, source-group-disjoint fit, inner-calibration and inner-selection folds inside the permitted training partition for architecture search. A practical starting split is approximately 70/15/15 by original source group; adjust once before fitting if group counts or composition require it, and record the choice. Keep each clean source and all its variants together. Inner-calibration benign examples fit thresholds; inner-selection examples guide architecture/hyperparameter choices. Never call either fold an independent final test.
 
-Propose at most two concrete methodological candidates and recommend one. For each, specify:
+Freeze these memberships before the search. Fit any learned vocabulary, normalization statistics or task-specific pretraining only on permitted fit data. Inner-selection may support checkpoint selection, but inner-calibration must not become extra optimization data during this phase. A historical checkpoint trained on these inner folds is not an unexposed comparator there: retrain the shallow CNN on the study fit data for the inner comparison.
 
-- The security limitation and FPGA constraint being addressed, with supporting evidence.
-- The mechanism in sufficient detail to implement: algorithm steps or pseudocode, learned/static quantities, inputs/outputs and its difference from the nearest existing method.
-- Why this changes the security–hardware trade-off rather than merely renaming standard quantization, pruning, distillation, loss reweighting or accelerator scheduling.
-- A preliminary computation, memory and communication model; intended PL/AIE-ML partition if relevant; and the condition under which the FPGA realization adds value.
-- The smallest experiment that distinguishes the claim, an essential ablation, and results that would support, contradict or leave the hypothesis unresolved.
+After architecture and training choices are frozen, finalists may train on the full canonical training partition. Use the existing search-threshold benign partition for each finalist's threshold and the separate search-scoring partition for post-search development evaluation. Do not use those results to launch another tuning loop within this study. These partitions have historical exposure and remain development evidence, not a newly untouched test. Keep final calibration, final test and NotInject closed.
 
-Do not select BERT, a non-transformer or AIE-ML in advance. Retain existing components when useful. For a transformer candidate, jointly consider native arithmetic, nonlinear operations, activation/weight storage and AIE–PL transfers. Verify device-specific capabilities; fewer bits, parameters or operations alone do not establish lower latency.
+Freeze separate development-only diagnostic probes before candidate evaluation where suitable permitted data exist: benign descriptions/quotations of attacks, ordinary imperative language, long documents, insertion positions, chunk boundaries, varied topics and text perturbations. Keep diagnostic inspection distinct from training augmentation. Check overlaps with all fitting and selection sources.
 
-Write one recommended experiment contract containing the method, scope, comparators, data protocol, primary hardware metric/workload, quality limits and finite execution budget. Use the current workload and protection limits as defaults; explicitly propose any changes before observing candidate outcomes. Distinguish absolute percentage-point quality losses from relative changes in missed-attack rates.
+Use genuinely withheld templates/families or new independent development examples for generalization claims. Existing templates do not become unseen by changing source emails or split names. Any leave-template/family-out experiment needs separately trained models with those mechanisms and near-duplicate payloads absent from fitting, tuning and teacher exposure. Synthetic inserted attacks demonstrate labeled detection behavior, not target-model compromise. If independent probes are unavailable, finish the usable comparisons and state the limitation.
 
-Separate a pilot allowance from a conditional integration allowance, so the user can approve the whole board-free workflow once, with progression tied to stated pilot results. The budget must cover necessary baseline training/adaptation, the candidate, its central ablation, numerical checks, representative hardware builds and informative repeats. Specify run/build counts and compute limits appropriate to available resources. Include a bounded correction allowance for diagnosed implementation failures, not unlimited model or parameter search. Do not charge fresh work against an exhausted historical allowance.
+For token/character/byte comparisons, process the same complete raw documents and preserve tails. Make overlap, span alignment, representation length and preprocessing explicit; do not compare a full-document model against a truncated-prefix model. Character and byte inputs are different. Label any change to context extent, windowing or document aggregation as its own experimental factor.
 
-Preserve protected final partitions. Explain how development-only hard-benign and generalization probes will be obtained without leaking them. Track source groups and attack-template exposure, including teacher/checkpoint exposure; relabeling an existing split cannot make it unseen. State limitations when suitable independent data are unavailable.
+## 4. Explore a broad structural search space
 
-Save the proposal and verified related-work comparison in reports/method_study.md, reusing that file if present. Keep a short pointer and decision in STATUS.md. Return the recommended method, its strongest competing explanation, the experiment contract and the specific approval requested. Pause here for the user's selection and budget approval. Do not claim that drafting the proposal completes the research.
+Aim for 12–16 meaningful architectural families or structural branches and roughly 80–120 distinct configurations, subject to the execution budget. The following are a starting map, not a whitelist or a requirement to force every possible combination:
 
-## 4. Phase B: execute a coupled algorithm-and-hardware feasibility study
+| Family or structural branch | Main variation/question |
+|---|---|
+| Original-style TextCNN | Parallel short kernels; reproduce a competent shallow reference. |
+| Stacked token CNN | Build context through ordinary successive convolutions without early pooling. |
+| Residual token-preserving CNN | Increase depth while retaining token resolution. |
+| Deep pyramid CNN | Progressive downsampling with residual blocks. |
+| Very deep/hierarchical character or byte CNN | Alternative input units and deeper local-to-global processing. |
+| Dilated and iterated dilated CNN | Receptive-field schedules; shared versus independent blocks. |
+| Temporal convolutional network | Causal, delayed/centered and bidirectional context where meaningful. |
+| Depthwise-separable/grouped CNN | Separate temporal processing from channel mixing. |
+| Large-kernel CNN | Compare contiguous wide context against dilated context. |
+| Gated CNN | GLU-style or simpler gates versus capacity-matched ungated computation. |
+| Multiscale/Inception-style CNN | Parallel receptive fields and fusion locations. |
+| Local-and-context CNN | Contextualize local evidence before pooling; test rather than assume its benefit. |
+| Hierarchical document CNN | Convolutional evidence combination across sentences/chunks. |
+| Dense-connected or alternative skip-connected CNN | Feature reuse, activation storage and trainability. |
+| Pooling/evidence-retention variants | Max, max-plus-mean, k-max/top-k and bounded learned summaries. |
+| Conditional or multi-representation CNN | Lightweight dynamic kernels or token/character fusion where simpler results justify them. |
 
-After the user explicitly approves the selected method and experiment contract, record the approval and execute that study autonomously. The approval covers the named method and allowance, not a generic license to change the research direction. Missing access should block only dependent work.
+Favor a strong token-preserving contextual branch, a competent DPCNN-style branch and a compact character/byte branch, without making any the presumed winner. Some rows overlap: record the implemented topology and count genuine distinctions, not labels.
 
-Implement the proposed computation and its software reference, the nearest appropriate baseline/adaptation, and the essential ablation. Use one study-specific configuration where needed; preserve frozen historical configurations. Reuse compatible checkpoints and results rather than retraining by default. A new co-design procedure does not require retraining unless its hypothesis requires it.
+Explore depth, channel width, embedding dimension, kernel sizes, dilation, residual paths, normalization, pooling, shared weights and fusion position. Include small, medium and larger reference capacities. Compare equal-resource or equal-receptive-field pairs where they answer a question. Use representative sampling and evidence-guided expansion rather than a huge Cartesian grid.
 
-Make training, pretraining/distillation access, data, search effort and threshold calibration comparable. A teacher-trained student must not receive undeclared information advantages. Fit operating thresholds only on the designated development-calibration subset; assess candidates on the separate scoring subset. Keep comparison arms named descriptively; do not silently redefine the historical A/B/C labels.
+Do not make every family inherit one unsuitable optimizer or learning rate. Give each a modest, comparable adaptation allowance using inner data. Record tuning effort. Conversely, avoid creating a different data/training advantage for every architecture.
 
-Run the approved experiments and inspect real results. Report recall and false positives at the declared operating points, relevant attack/benign strata and uncertainty respecting shared source groups. Inspect changed decisions and legitimate-task implications, not overall accuracy alone. Report development generalization honestly and distinguish it from a final held-out claim.
+Implement shared components and a small configuration-driven model registry using the repository's conventions. Do not build a general neural-architecture-search framework when ordinary scripts and a run table suffice.
 
-In parallel with algorithm development, develop the hardware cost model and representative design. Once the proposed arithmetic is sufficiently defined, test the smallest complete computational region that distinguishes the method from its baseline. Do not defer hardware evidence until after a large software search.
+## 5. Execute a broad-to-deep search, not a one-recipe screen
 
-Choose that region from the hypothesis: it might be a complete encoder block, aggregation stage or another method-specific chain. Include the buffering, conversions, nonlinear operations and producer–consumer transfers necessary for that chain. An isolated matrix kernel or softmax benchmark is insufficient when the claimed advantage depends on surrounding work.
+Use these proposed default allowances unless a newer explicit resource limit is smaller:
 
-Compile, simulate and synthesize the approved representative designs with the installed tools. Compare against a competent conventional implementation at comparable constraints. Reuse valid baseline components; do not start a second large generic accelerator project merely to create a comparator. Clearly label any unimplemented baseline or analytically projected cost.
+- Up to 128 distinct architecture configurations, including structurally motivated refinements.
+- Up to 24 configurations promoted to full inner-development training.
+- Up to 8 frozen finalist architectures, normally trained with three prespecified seeds each.
+- Up to 24 additional learning runs for targeted ablations, generalization experiments, quantization adaptation or controlled training comparisons.
+- A total ceiling of 48 hours of local accelerator job runtime for learning, scoring and profiling; record substantial CPU work separately and cap heavy CPU experimentation at 24 job-hours. Do not substitute a much longer CPU campaign if acceleration is unavailable. Existing explicit usage/resource limits still apply.
 
-Validate the new hardware against its own intended algorithm/numerical reference, not against compulsory bitwise identity with historical BERT. Set relevant numerical tolerances before evaluating discrepancies. Record meaningful quality effects of changed arithmetic rather than masking them with retuned tolerances or thresholds.
+These are ceilings, not spending targets. Establish per-stage allocations after a few representative timing runs and record them before dispatching the main search. Reallocate unused allowance inside the total budget toward informative breadth or confirmation. Preserve enough budget for adequately trained baselines, finalist repeats and analysis. Do not spend everything on screening.
 
-Measure useful cycles/rates, storage, transfers, stalls and resource requirements where the tools support them. Construct a dependency-aware full-check cost estimate with unresolved terms visible. Include tokenization/windowing, model parameters/embeddings, data transport and decision costs when applicable. Separate startup from steady-state cost. Do not sum overlapping costs twice or equate peak arithmetic throughput with achieved end-to-end performance.
+**Stage A—bring-up and broad screening.** Check small real inputs, masks, losses and gradients, then train a broad initial set with affordable, comparable exposure. Screening on a representative training subset is acceptable when sampling is source-group consistent and documented. Give architectural diversity priority over minor hyperparameter variants.
 
-Make two distinct judgments: does the method appear differentiated and supported, and does the FPGA realization offer a credible useful trade-off? Use the approved criteria to continue or stop. A negative or inconclusive result is legitimate. Do not automatically switch models, metrics or research questions until something wins. Reconsider the method with the user only when a substantive change is needed; routine fixes remain autonomous.
+**Stage B—deepen and refine.** Promote by a combination of low-FPR detection quality, learning trajectory, structural diversity and cost. Before rejecting a viable family, give at least one representative a meaningful training opportunity; a slow-learning deep model must not lose solely because a shallow model converges in fewer epochs. Apply successive-halving or similar scheduling with a grace period, not blind early elimination. Promote strong candidates and informative near-misses, not only those already crossing the nominal quality threshold.
 
-## 5. Phase C: complete justified board-free work and prepare the board handoff
+**Stage C—freeze and confirm.** Select up to eight diverse finalists using inner evidence. Freeze architecture, representation, training recipe, selection rule, intended arithmetic variants and diagnostic comparisons before post-search development scoring. Train the finalists with three fixed seeds rather than selecting a lucky seed. Reuse genuinely equivalent completed runs; do not repeat them simply to fill a count. Evaluate each frozen finalist on the prescribed common partitions and probes.
 
-If Phase B meets its declared continuation criteria and the approved allowance includes integration, continue without another planning-only handoff. Complete the board-free implementation and comparison needed for the selected contribution, not every historical milestone.
+A short diagnostic run is not a completed candidate result. Distinguish optimization failure, insufficient training, runtime/resource failure and a measured quality–cost limitation. Correct actual bugs and allow modest family-specific training repairs within budget.
 
-Integrate the method's FPGA or heterogeneous AIE-ML/PL path with model export, required host interfaces and numerical evaluation. Run supported simulation and implementation stages within budget. Use meaningful raw-document-to-decision checks where available; identify modeled or unvalidated host/transport components explicitly. Report achieved synthesis/routed timing and resources only when actual reports exist.
+Do not close the whole study after one candidate fails, or stop exploring merely because the first model passes. Finish the informative planned coverage, or explain the concrete budget/access limit. Continue useful independent tasks when one route is blocked.
 
-Isolate algorithmic and hardware effects using the agreed comparisons: established versus proposed computation on competent software; proposed computation on conventional versus co-designed FPGA mappings; and the central ablation. Compare complete deployment costs where evidence supports them. Do not claim FPGA value solely from comparing a smaller new model on FPGA against a larger old model on GPU.
+## 6. Select for the task, not headline accuracy
 
-Complete approved development evaluation, robustness probes and sensitivity checks without repeatedly tuning to the evaluation set. Keep protected final data closed. Prepare final-evaluation entry points, but do not execute them without later explicit authorization. Reuse saved target-LLM responses only where the inputs/actions match; do not invent downstream outcomes for new blocked, modified or sanitized inputs. Mark new target-model studies unresolved when calls are not authorized.
+Retain the inherited empirical operating screen—attack recall at least 99% and document-level benign false-positive rate at most 1%—unless a newer explicit decision changes it. Fit thresholds only on the designated benign calibration subset using the current strict decision rule. Do not optimize thresholds on the scoring labels.
 
-Prepare a concise board handoff: selected method/checkpoint and formats, target/platform/tool versions, actual build status, host interface, reproduction commands, initial real-input check and remaining physical measurements. Commands must correspond to existing artifacts and implemented scripts. Missing tool access or failed builds remain explicit blockers, not placeholders presented as deployable outputs.
+Report confusion counts, recall and false positives at the primary operating point, with 0.5% and 2% nominal calibration points as secondary trade-off views. Distinguish calibration targets from observed scoring FPR. Include uncertainty that respects source groups and separately report variability across seeds. A one-example crossing of the empirical boundary is not a statistically established superiority claim.
 
-Do not program a board or claim measured energy, physical throughput, tail latency or complete on-board correctness from simulation. Physical deployment is outside this prompt.
+Break down results by document length, window count, attack family/template exposure, source/topic, insertion position and relevant hard-benign categories. Inspect missed attacks as seriously as benign rejections. Do not use pooling that reduces false alarms by silently hiding localized attacks.
 
-## 6. Reporting, completion and Git
+Keep maximum-over-windows aggregation as the initial comparison baseline. Analyze alternative document aggregation separately, with its own training/calibration identity and ablation. Determine whether improvements arise from contextual features, document-length treatment, training information or changed operating points.
 
-Keep STATUS.md short. Use reports/method_study.md for the hypothesis, verified prior art, approved contract, findings and decisions; reports/execution_log.md for detailed attempts; and reports/board_handoff.md for deployment readiness. Use ordinary study/run identifiers and fresh result directories. Update Markdown handoffs with the repository's existing safe-update helper. Avoid duplicate planning documents or a new management framework.
+Maintain feasible and near-feasible security–cost frontiers. A near-miss is worth understanding but is not a passing model. Do not lower the primary threshold requirement after seeing results, and do not collapse all outcomes into one arbitrary weighted score.
 
-At meaningful checkpoints, report: what was predicted, what was observed, what the result says about the new method, what remains unmeasured and the next authorized action. Distinguish method evidence, supporting implementation and security/application claims.
+## 7. Isolate architecture from training and representation
 
-Finish this workflow with one of: a supported method and verified board-free handoff; a completed negative study explaining which hypothesis failed; or a precise evidence/access blocker with independent authorized work completed. Source code, a literature report, passing tests or a successful unchanged-model port alone is not research completion. Board-free completion is not final experimental validation.
+The core architecture comparison should share training information, source groups and broadly comparable fitting effort. Reproduce the shallow CNN under this study's conditions; reuse the historical BERT reference only on compatible partitions it was not fine-tuned on. Report its pretraining advantage rather than pretending it is an architecture-only comparison. Do not restart a BERT optimization campaign.
 
-Keep modifications local. Preserve unrelated changes and do not automatically pull, reset, push, open a PR or merge. Present the changed files, completed evidence, unresolved claims and Git diff summary, and obtain user confirmation before GitHub synchronization.
+Use a small number of controlled follow-ups for learned versus pretrained embeddings, hard-benign augmentation, teacher distillation, span-supervised auxiliary losses or document-level objectives where evidence justifies them. Give the relevant baseline comparable access. Teacher exposure must respect the evaluation boundary; a teacher fine-tuned on the inner holdout contaminates that comparison even if the student's optimizer never sees those rows.
+
+Span supervision may use legitimate training annotations, but annotations and attack-specific metadata must not enter inference. A quoted instruction or code block is context, not a trusted exemption. Preserve the distinction between detecting, locating, blocking and sanitizing an attack.
+
+For the strongest custom mechanism, run a capacity/cost-aware removal or replacement ablation. Include a competent conventional contextual CNN. Establish whether any advantage comes from the mechanism rather than more parameters, more examples, extra tuning or a weaker comparator.
+
+## 8. Keep hardware and software in the same decision process
+
+Hardware awareness is required; complete co-design and FPGA integration are optional in this stage.
+
+For all serious candidates, record parameter and embedding storage, operation counts, intermediate activation sizes, receptive field, lookahead, buffering and implementation-sensitive operations. Normalize costs per complete document and report length scaling. Character/byte models cannot claim efficiency from per-token numbers alone.
+
+For the shortlist, measure actual batch-one software inference and raw-document-to-decision cost, with representative short and long documents. Separate preprocessing, transfers, network execution, aggregation, cold startup and warm operation. Use enough recorded repetitions for the reported statistics. Compare like execution boundaries and disclose backend/precision; fake-quantization timing is not native INT8 timing.
+
+Investigate quantization sensitivity for a few diverse finalists or their inner-selected precursors, beginning with a practical 8-bit target. Declare weight, embedding, activation, accumulator and nonlinear formats. Use calibration/QAT only on the appropriate permitted data and freeze these choices before confirmation. Check changed decisions and the low-FPR score tail against each model's own floating reference. Do not inherit historical BERT bitwise-equivalence requirements for a new CNN.
+
+Develop a preliminary FPGA mapping for the most promising design styles. Include embedding access, convolution, normalization/gating, alignment buffers, pooling, decision logic and host transport. Distinguish a continuously pipelined design from a time-multiplexed engine; account for the latency/storage implications of weight sharing, dilation and context lookahead. Do not assume depthwise convolution, fewer MACs or fewer parameters guarantees lower hardware cost.
+
+Choose PL, AIE or a heterogeneous route from actual target capabilities and the candidate's computation—not from an a priori requirement to use AIE. Reuse suitable existing tooling and components rather than constructing another generic accelerator framework.
+
+If installed tools and available budget permit, test a small representative complete chain for a conventional baseline and one or two promising candidates. Up to six local synthesis/build attempts, including corrections, are allowed within a separate maximum of 12 hours of vendor-job runtime. Validate relevant numerical behavior and record measured cycles/resources and unresolved surrounding costs. Do not require full-device integration or board-ready packaging, and do not let vendor builds crowd out the architecture study.
+
+Without builds, provide transparent analytical estimates and implementation risks rather than invented LUT, BRAM, clock, power or speedup numbers. An uncalibrated cost model is not accurate enough to eliminate otherwise promising structures automatically. Retain a hardware-diverse shortlist when ranking uncertainty is material.
+
+Streaming inspection does not authorize forwarding unapproved content to the target LLM. Keep any document-retention/enforcement cost visible. No physical performance, energy or downstream protection claim follows from software scores or synthesis.
+
+## 9. Execute autonomously with lightweight coordination
+
+Use available subagents when they help: architecture/literature, implementation/experiments, and hardware/cost analysis are separable roles. Prefer at most three workers with non-overlapping ownership. Use actually configured agents; do not invent model names. The coordinator owns common evaluation, result reconciliation and the heavy-job queue. Run GPU-heavy jobs serially on a shared accelerator unless measured resources justify concurrency.
+
+Use existing environments, cache reusable preparation, checkpoint long work and keep ordinary machine-readable run records. Run focused checks for masking, variable lengths, complete coverage, span alignment, aggregation, calibration, numerical changes and actual interfaces. Avoid elaborate approval machinery, repeated environment audits, unrelated CI or large dependency churn.
+
+Report meaningful findings as they emerge: families covered, major error patterns, promising trade-offs, resource constraints and the next active experiment. Routine research decisions within this scope do not require another planning handoff.
+
+## 10. Deliver evidence and a clear next research decision
+
+Maintain one principal study report, preferably reports/cnn_study.md or an appropriate existing equivalent, with the verified references, search space, data protocol, budget, results, decisions and limitations. Keep detailed execution history in the existing log and machine-readable results under a new study-specific results directory. Preserve all historical evidence and make raw-score/checkpoint identities recoverable.
+
+Deliver executable model/training/scoring code, configurations, a complete run table including unsuccessful attempts, saved finalist scores/checkpoints, quality–cost comparisons and reproduction commands. For finalist comparisons, separate structural differences, training differences and actual numerical/backend differences.
+
+The closing report must answer:
+
+1. Which families were implemented, screened, adequately trained and confirmed? Which remain untested, and why?
+2. Which CNNs meet the current empirical screen, how stable are they across seeds, and what do the independent or reused-development probes actually establish?
+3. What explains the main gains and failures: context, representation, pooling, training, precision or another factor?
+4. Which designs occupy useful quality/latency/storage trade-offs, and which costs are measured versus estimated?
+5. What are the best two or three candidates for the next FPGA-centered stage, including a stronger conventional baseline and a hardware-efficient option where supported?
+6. Does the evidence suggest a defensible new co-design mechanism, only a promising conventional backbone, or an unresolved limitation? State the nearest competing explanation and the next decisive experiment.
+
+This stage is complete when the broad exploration and meaningful confirmation yield an evidence-backed recommendation or a precisely bounded limitation—not when every CNN has been exhausted or a model has been forced to win. A successful exploratory study need not already be a publishable FPGA contribution.
+
+Keep STATUS.md concise and factual. Preserve the responsibilities of README.md, AGENTS.md and RESEARCH_SCOPE.md; do not insert this study's model list, budgets or goals into standing instructions. Record the active task in the existing execution-prompt location rather than adding competing goal files. Preserve any superseded prompt as history where needed. Use the repository's existing safe-update helper for protected handoff files.
+
+Keep changes local. Do not automatically commit, push, merge, delete branches or overwrite unrelated work. Finish with the scientific findings, changed files, actual execution totals, unresolved claims and a concise diff summary. GitHub synchronization requires a separate explicit user request.

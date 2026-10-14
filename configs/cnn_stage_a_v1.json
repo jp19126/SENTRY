@@ -1,0 +1,883 @@
+{
+  "stage": "stage_a",
+  "allocation": "96 configs/16 families; 3 full screening-subset epochs; three equivalent timing runs reused",
+  "accelerator_job_hour_allocations": {
+    "stage_a_including_timing": 3,
+    "stage_b": 10,
+    "stage_c": 20,
+    "targeted_learning": 6,
+    "confirmation_scoring_profiling": 3,
+    "reserve": 6
+  },
+  "total_accelerator_hours_ceiling": 48,
+  "heavy_cpu_hours_ceiling": 24,
+  "optional_vendor_attempts_ceiling": 6,
+  "optional_vendor_hours_ceiling": 12,
+  "usage_used_percent_cap": 60,
+  "runs": [
+    {
+      "run_id": "timing_textcnn_01_s42",
+      "config_id": "textcnn_01",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "textcnn_02_screen_s42",
+      "config_id": "textcnn_02",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "textcnn_03_screen_s42",
+      "config_id": "textcnn_03",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "textcnn_04_screen_s42",
+      "config_id": "textcnn_04",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "textcnn_05_screen_s42",
+      "config_id": "textcnn_05",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "textcnn_06_screen_s42",
+      "config_id": "textcnn_06",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "stacked_01_screen_s42",
+      "config_id": "stacked_01",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "stacked_02_screen_s42",
+      "config_id": "stacked_02",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "stacked_03_screen_s42",
+      "config_id": "stacked_03",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "stacked_04_screen_s42",
+      "config_id": "stacked_04",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "stacked_05_screen_s42",
+      "config_id": "stacked_05",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "stacked_06_screen_s42",
+      "config_id": "stacked_06",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "timing_residual_01_s42",
+      "config_id": "residual_01",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "residual_02_screen_s42",
+      "config_id": "residual_02",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "residual_03_screen_s42",
+      "config_id": "residual_03",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "residual_04_screen_s42",
+      "config_id": "residual_04",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "residual_05_screen_s42",
+      "config_id": "residual_05",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "residual_06_screen_s42",
+      "config_id": "residual_06",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "timing_dpcnn_01_s42",
+      "config_id": "dpcnn_01",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "dpcnn_02_screen_s42",
+      "config_id": "dpcnn_02",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "dpcnn_03_screen_s42",
+      "config_id": "dpcnn_03",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "dpcnn_04_screen_s42",
+      "config_id": "dpcnn_04",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "dpcnn_05_screen_s42",
+      "config_id": "dpcnn_05",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "dpcnn_06_screen_s42",
+      "config_id": "dpcnn_06",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "dilated_01_screen_s42",
+      "config_id": "dilated_01",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "dilated_02_screen_s42",
+      "config_id": "dilated_02",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "dilated_03_screen_s42",
+      "config_id": "dilated_03",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "dilated_04_screen_s42",
+      "config_id": "dilated_04",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "dilated_05_screen_s42",
+      "config_id": "dilated_05",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "dilated_06_screen_s42",
+      "config_id": "dilated_06",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "idcnn_01_screen_s42",
+      "config_id": "idcnn_01",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "idcnn_02_screen_s42",
+      "config_id": "idcnn_02",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "idcnn_03_screen_s42",
+      "config_id": "idcnn_03",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "idcnn_04_screen_s42",
+      "config_id": "idcnn_04",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "idcnn_05_screen_s42",
+      "config_id": "idcnn_05",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "idcnn_06_screen_s42",
+      "config_id": "idcnn_06",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "tcn_01_screen_s42",
+      "config_id": "tcn_01",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "tcn_02_screen_s42",
+      "config_id": "tcn_02",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "tcn_03_screen_s42",
+      "config_id": "tcn_03",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "tcn_04_screen_s42",
+      "config_id": "tcn_04",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "tcn_05_screen_s42",
+      "config_id": "tcn_05",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "tcn_06_screen_s42",
+      "config_id": "tcn_06",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "depthwise_01_screen_s42",
+      "config_id": "depthwise_01",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "depthwise_02_screen_s42",
+      "config_id": "depthwise_02",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "depthwise_03_screen_s42",
+      "config_id": "depthwise_03",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "depthwise_04_screen_s42",
+      "config_id": "depthwise_04",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "depthwise_05_screen_s42",
+      "config_id": "depthwise_05",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "depthwise_06_screen_s42",
+      "config_id": "depthwise_06",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "grouped_01_screen_s42",
+      "config_id": "grouped_01",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "grouped_02_screen_s42",
+      "config_id": "grouped_02",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "grouped_03_screen_s42",
+      "config_id": "grouped_03",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "grouped_04_screen_s42",
+      "config_id": "grouped_04",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "grouped_05_screen_s42",
+      "config_id": "grouped_05",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "grouped_06_screen_s42",
+      "config_id": "grouped_06",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "large_kernel_01_screen_s42",
+      "config_id": "large_kernel_01",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "large_kernel_02_screen_s42",
+      "config_id": "large_kernel_02",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "large_kernel_03_screen_s42",
+      "config_id": "large_kernel_03",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "large_kernel_04_screen_s42",
+      "config_id": "large_kernel_04",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "large_kernel_05_screen_s42",
+      "config_id": "large_kernel_05",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "large_kernel_06_screen_s42",
+      "config_id": "large_kernel_06",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "gated_01_screen_s42",
+      "config_id": "gated_01",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "gated_02_screen_s42",
+      "config_id": "gated_02",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "gated_03_screen_s42",
+      "config_id": "gated_03",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "gated_04_screen_s42",
+      "config_id": "gated_04",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "gated_05_screen_s42",
+      "config_id": "gated_05",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "gated_06_screen_s42",
+      "config_id": "gated_06",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "inception_01_screen_s42",
+      "config_id": "inception_01",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "inception_02_screen_s42",
+      "config_id": "inception_02",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "inception_03_screen_s42",
+      "config_id": "inception_03",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "inception_04_screen_s42",
+      "config_id": "inception_04",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "inception_05_screen_s42",
+      "config_id": "inception_05",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "inception_06_screen_s42",
+      "config_id": "inception_06",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "local_context_01_screen_s42",
+      "config_id": "local_context_01",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "local_context_02_screen_s42",
+      "config_id": "local_context_02",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "local_context_03_screen_s42",
+      "config_id": "local_context_03",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "local_context_04_screen_s42",
+      "config_id": "local_context_04",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "local_context_05_screen_s42",
+      "config_id": "local_context_05",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "local_context_06_screen_s42",
+      "config_id": "local_context_06",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "dense_01_screen_s42",
+      "config_id": "dense_01",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "dense_02_screen_s42",
+      "config_id": "dense_02",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "dense_03_screen_s42",
+      "config_id": "dense_03",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "dense_04_screen_s42",
+      "config_id": "dense_04",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "dense_05_screen_s42",
+      "config_id": "dense_05",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "dense_06_screen_s42",
+      "config_id": "dense_06",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "pooling_01_screen_s42",
+      "config_id": "pooling_01",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "pooling_02_screen_s42",
+      "config_id": "pooling_02",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "pooling_03_screen_s42",
+      "config_id": "pooling_03",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "pooling_04_screen_s42",
+      "config_id": "pooling_04",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "pooling_05_screen_s42",
+      "config_id": "pooling_05",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "pooling_06_screen_s42",
+      "config_id": "pooling_06",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "byte_hierarchy_01_screen_s42",
+      "config_id": "byte_hierarchy_01",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "byte_hierarchy_02_screen_s42",
+      "config_id": "byte_hierarchy_02",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "byte_hierarchy_03_screen_s42",
+      "config_id": "byte_hierarchy_03",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "byte_hierarchy_04_screen_s42",
+      "config_id": "byte_hierarchy_04",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "byte_hierarchy_05_screen_s42",
+      "config_id": "byte_hierarchy_05",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    },
+    {
+      "run_id": "byte_hierarchy_06_screen_s42",
+      "config_id": "byte_hierarchy_06",
+      "seed": 42,
+      "epochs": 3,
+      "fit_split": "screen_fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection"
+    }
+  ]
+}

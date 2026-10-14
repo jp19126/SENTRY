@@ -1,0 +1,1096 @@
+{
+  "stage": "stage_c",
+  "record": "frozen before any CNN canonical post-search scoring or diagnostic inspection",
+  "frozen_unix": 1791954117.88625,
+  "selection_rationale_sha256": "41c8152deafb95738d578436222f2bb26365fa3c0ca78a0e02d34efc232a2ca6",
+  "architecture_ids": [
+    "textcnn_01",
+    "stacked_01",
+    "dpcnn_05",
+    "tcn_04",
+    "pooling_04",
+    "byte_hierarchy_03",
+    "local_context_03",
+    "local_context_03_residual_replace_c98"
+  ],
+  "quantization_config_ids": [
+    "textcnn_01",
+    "byte_hierarchy_03",
+    "local_context_03"
+  ],
+  "seeds": [
+    42,
+    1337,
+    2026
+  ],
+  "selection_evidence_sha256": "ae5e796b3e2feb937fa75e9d7643d212c704c272e60383887fcf489e7f0a7aa9",
+  "inner_selected_results": [
+    {
+      "complete": true,
+      "run_id": "textcnn_01_fit_s42",
+      "config_id": "textcnn_01",
+      "family": "textcnn",
+      "representation": "token",
+      "seed": 42,
+      "epochs": 12,
+      "selected_epoch": 8,
+      "checkpoint": "results\\cnn_study_v1\\runs\\textcnn_01_fit_s42\\checkpoint_selected.pt",
+      "checkpoint_sha256": "458ae530eb9be6d8ded5b87833702861c6d733c748004928e2cc65807ec83735",
+      "training_scoring_seconds": 101.20052429998759,
+      "metrics": {
+        "0.005": {
+          "level": "document",
+          "threshold": 0.03912129998207092,
+          "attack_rule": "score > threshold",
+          "documents": 4860,
+          "attacks": 3240,
+          "benign": 1620,
+          "tp": 3240,
+          "fn": 0,
+          "fp": 12,
+          "tn": 1608,
+          "recall": 1.0,
+          "fpr": 0.007407407407407408,
+          "accuracy": 0.9975308641975309,
+          "passes": true
+        },
+        "0.01": {
+          "level": "document",
+          "threshold": 0.024150094017386436,
+          "attack_rule": "score > threshold",
+          "documents": 4860,
+          "attacks": 3240,
+          "benign": 1620,
+          "tp": 3240,
+          "fn": 0,
+          "fp": 17,
+          "tn": 1603,
+          "recall": 1.0,
+          "fpr": 0.010493827160493827,
+          "accuracy": 0.9965020576131687,
+          "passes": false
+        },
+        "0.02": {
+          "level": "document",
+          "threshold": 0.003914245869964361,
+          "attack_rule": "score > threshold",
+          "documents": 4860,
+          "attacks": 3240,
+          "benign": 1620,
+          "tp": 3240,
+          "fn": 0,
+          "fp": 33,
+          "tn": 1587,
+          "recall": 1.0,
+          "fpr": 0.020370370370370372,
+          "accuracy": 0.9932098765432099,
+          "passes": false
+        }
+      },
+      "parameters": 2015426,
+      "quality_evidence": "Inner development selection only",
+      "peak_cuda_allocated_bytes": 386290176
+    },
+    {
+      "complete": true,
+      "run_id": "stacked_01_fit_s42",
+      "config_id": "stacked_01",
+      "family": "stacked",
+      "representation": "token",
+      "seed": 42,
+      "epochs": 12,
+      "selected_epoch": 1,
+      "checkpoint": "results\\cnn_study_v1\\runs\\stacked_01_fit_s42\\checkpoint_selected.pt",
+      "checkpoint_sha256": "455b4bb800b1417cb6ce51351814314e718989e4bd6f29e616035863d3500a87",
+      "training_scoring_seconds": 97.94725129997823,
+      "metrics": {
+        "0.005": {
+          "level": "document",
+          "threshold": 0.4351027011871338,
+          "attack_rule": "score > threshold",
+          "documents": 4860,
+          "attacks": 3240,
+          "benign": 1620,
+          "tp": 3240,
+          "fn": 0,
+          "fp": 9,
+          "tn": 1611,
+          "recall": 1.0,
+          "fpr": 0.005555555555555556,
+          "accuracy": 0.9981481481481481,
+          "passes": true
+        },
+        "0.01": {
+          "level": "document",
+          "threshold": 0.3315717279911041,
+          "attack_rule": "score > threshold",
+          "documents": 4860,
+          "attacks": 3240,
+          "benign": 1620,
+          "tp": 3240,
+          "fn": 0,
+          "fp": 12,
+          "tn": 1608,
+          "recall": 1.0,
+          "fpr": 0.007407407407407408,
+          "accuracy": 0.9975308641975309,
+          "passes": true
+        },
+        "0.02": {
+          "level": "document",
+          "threshold": 0.13957767188549042,
+          "attack_rule": "score > threshold",
+          "documents": 4860,
+          "attacks": 3240,
+          "benign": 1620,
+          "tp": 3240,
+          "fn": 0,
+          "fp": 26,
+          "tn": 1594,
+          "recall": 1.0,
+          "fpr": 0.016049382716049384,
+          "accuracy": 0.9946502057613169,
+          "passes": false
+        }
+      },
+      "parameters": 1982402,
+      "quality_evidence": "Inner development selection only",
+      "peak_cuda_allocated_bytes": 352272896
+    },
+    {
+      "complete": true,
+      "run_id": "dpcnn_05_fit_s42",
+      "config_id": "dpcnn_05",
+      "family": "dpcnn",
+      "representation": "token",
+      "seed": 42,
+      "epochs": 12,
+      "selected_epoch": 6,
+      "checkpoint": "results\\cnn_study_v1\\runs\\dpcnn_05_fit_s42\\checkpoint_selected.pt",
+      "checkpoint_sha256": "c94ff5897c2967b5f1cbe383e88529b78410a6b9bbb01f84190d9fefa7c6a169",
+      "training_scoring_seconds": 468.34152820002055,
+      "metrics": {
+        "0.005": {
+          "level": "document",
+          "threshold": 0.0052664149552583694,
+          "attack_rule": "score > threshold",
+          "documents": 4860,
+          "attacks": 3240,
+          "benign": 1620,
+          "tp": 3240,
+          "fn": 0,
+          "fp": 8,
+          "tn": 1612,
+          "recall": 1.0,
+          "fpr": 0.0049382716049382715,
+          "accuracy": 0.9983539094650206,
+          "passes": true
+        },
+        "0.01": {
+          "level": "document",
+          "threshold": 0.0025129057466983795,
+          "attack_rule": "score > threshold",
+          "documents": 4860,
+          "attacks": 3240,
+          "benign": 1620,
+          "tp": 3240,
+          "fn": 0,
+          "fp": 10,
+          "tn": 1610,
+          "recall": 1.0,
+          "fpr": 0.006172839506172839,
+          "accuracy": 0.9979423868312757,
+          "passes": true
+        },
+        "0.02": {
+          "level": "document",
+          "threshold": 0.0010657076491042972,
+          "attack_rule": "score > threshold",
+          "documents": 4860,
+          "attacks": 3240,
+          "benign": 1620,
+          "tp": 3240,
+          "fn": 0,
+          "fp": 21,
+          "tn": 1599,
+          "recall": 1.0,
+          "fpr": 0.012962962962962963,
+          "accuracy": 0.995679012345679,
+          "passes": false
+        }
+      },
+      "parameters": 3537218,
+      "peak_cuda_allocated_bytes": 535857664
+    },
+    {
+      "complete": true,
+      "run_id": "tcn_04_fit_s42",
+      "config_id": "tcn_04",
+      "family": "tcn",
+      "representation": "token",
+      "seed": 42,
+      "epochs": 12,
+      "selected_epoch": 4,
+      "checkpoint": "results\\cnn_study_v1\\runs\\tcn_04_fit_s42\\checkpoint_selected.pt",
+      "checkpoint_sha256": "f3f88c8992c5e302dce2a9af49621dcfa63647611d2cb5eab55f5fed447a9bc5",
+      "training_scoring_seconds": 287.92289869999513,
+      "metrics": {
+        "0.005": {
+          "level": "document",
+          "threshold": 0.003933301195502281,
+          "attack_rule": "score > threshold",
+          "documents": 4860,
+          "attacks": 3240,
+          "benign": 1620,
+          "tp": 3240,
+          "fn": 0,
+          "fp": 9,
+          "tn": 1611,
+          "recall": 1.0,
+          "fpr": 0.005555555555555556,
+          "accuracy": 0.9981481481481481,
+          "passes": true
+        },
+        "0.01": {
+          "level": "document",
+          "threshold": 0.0026921865064650774,
+          "attack_rule": "score > threshold",
+          "documents": 4860,
+          "attacks": 3240,
+          "benign": 1620,
+          "tp": 3240,
+          "fn": 0,
+          "fp": 10,
+          "tn": 1610,
+          "recall": 1.0,
+          "fpr": 0.006172839506172839,
+          "accuracy": 0.9979423868312757,
+          "passes": true
+        },
+        "0.02": {
+          "level": "document",
+          "threshold": 0.0014658498112112284,
+          "attack_rule": "score > threshold",
+          "documents": 4860,
+          "attacks": 3240,
+          "benign": 1620,
+          "tp": 3240,
+          "fn": 0,
+          "fp": 24,
+          "tn": 1596,
+          "recall": 1.0,
+          "fpr": 0.014814814814814815,
+          "accuracy": 0.9950617283950617,
+          "passes": false
+        }
+      },
+      "parameters": 2127650,
+      "quality_evidence": "Inner development selection only",
+      "peak_cuda_allocated_bytes": 470897152
+    },
+    {
+      "complete": true,
+      "run_id": "pooling_04_fit_s42",
+      "config_id": "pooling_04",
+      "family": "pooling",
+      "representation": "token",
+      "seed": 42,
+      "epochs": 12,
+      "selected_epoch": 4,
+      "checkpoint": "results\\cnn_study_v1\\runs\\pooling_04_fit_s42\\checkpoint_selected.pt",
+      "checkpoint_sha256": "0dd3cd4267776174ddfc4947f28109cf2083fccac242ccc1a5cf47eb1f422fce",
+      "training_scoring_seconds": 154.84147280000616,
+      "metrics": {
+        "0.005": {
+          "level": "document",
+          "threshold": 0.004785782657563686,
+          "attack_rule": "score > threshold",
+          "documents": 4860,
+          "attacks": 3240,
+          "benign": 1620,
+          "tp": 3240,
+          "fn": 0,
+          "fp": 8,
+          "tn": 1612,
+          "recall": 1.0,
+          "fpr": 0.0049382716049382715,
+          "accuracy": 0.9983539094650206,
+          "passes": true
+        },
+        "0.01": {
+          "level": "document",
+          "threshold": 0.001648655510507524,
+          "attack_rule": "score > threshold",
+          "documents": 4860,
+          "attacks": 3240,
+          "benign": 1620,
+          "tp": 3240,
+          "fn": 0,
+          "fp": 11,
+          "tn": 1609,
+          "recall": 1.0,
+          "fpr": 0.006790123456790123,
+          "accuracy": 0.9977366255144033,
+          "passes": true
+        },
+        "0.02": {
+          "level": "document",
+          "threshold": 0.00022712434292770922,
+          "attack_rule": "score > threshold",
+          "documents": 4860,
+          "attacks": 3240,
+          "benign": 1620,
+          "tp": 3240,
+          "fn": 0,
+          "fp": 20,
+          "tn": 1600,
+          "recall": 1.0,
+          "fpr": 0.012345679012345678,
+          "accuracy": 0.9958847736625515,
+          "passes": false
+        }
+      },
+      "parameters": 2008002,
+      "quality_evidence": "Inner development selection only",
+      "peak_cuda_allocated_bytes": 360136704
+    },
+    {
+      "complete": true,
+      "run_id": "byte_hierarchy_03_fit_s42",
+      "config_id": "byte_hierarchy_03",
+      "family": "byte_hierarchy",
+      "representation": "byte",
+      "seed": 42,
+      "epochs": 12,
+      "selected_epoch": 7,
+      "checkpoint": "results\\cnn_study_v1\\runs\\byte_hierarchy_03_fit_s42\\checkpoint_selected.pt",
+      "checkpoint_sha256": "23af31468781a3f1786efb1415bf1108753629e8ad73a2184ac0e5e2395fa333",
+      "training_scoring_seconds": 356.505040500022,
+      "metrics": {
+        "0.005": {
+          "level": "document",
+          "threshold": 0.0010843250202015042,
+          "attack_rule": "score > threshold",
+          "documents": 4860,
+          "attacks": 3240,
+          "benign": 1620,
+          "tp": 3240,
+          "fn": 0,
+          "fp": 7,
+          "tn": 1613,
+          "recall": 1.0,
+          "fpr": 0.004320987654320987,
+          "accuracy": 0.998559670781893,
+          "passes": true
+        },
+        "0.01": {
+          "level": "document",
+          "threshold": 0.0004287005867809057,
+          "attack_rule": "score > threshold",
+          "documents": 4860,
+          "attacks": 3240,
+          "benign": 1620,
+          "tp": 3240,
+          "fn": 0,
+          "fp": 9,
+          "tn": 1611,
+          "recall": 1.0,
+          "fpr": 0.005555555555555556,
+          "accuracy": 0.9981481481481481,
+          "passes": true
+        },
+        "0.02": {
+          "level": "document",
+          "threshold": 0.00012867627083323896,
+          "attack_rule": "score > threshold",
+          "documents": 4860,
+          "attacks": 3240,
+          "benign": 1620,
+          "tp": 3240,
+          "fn": 0,
+          "fp": 24,
+          "tn": 1596,
+          "recall": 1.0,
+          "fpr": 0.014814814814814815,
+          "accuracy": 0.9950617283950617,
+          "passes": false
+        }
+      },
+      "parameters": 552578,
+      "peak_cuda_allocated_bytes": 1720881664
+    },
+    {
+      "complete": true,
+      "run_id": "local_context_03_fit_s42",
+      "config_id": "local_context_03",
+      "family": "local_context",
+      "representation": "token",
+      "seed": 42,
+      "epochs": 12,
+      "selected_epoch": 4,
+      "checkpoint": "results\\cnn_study_v1\\runs\\local_context_03_fit_s42\\checkpoint_selected.pt",
+      "checkpoint_sha256": "b15f6166826efd98edf6676fb3f8f5d312e8deeafac0e91047659a56fb6d7abe",
+      "training_scoring_seconds": 211.29647390003083,
+      "metrics": {
+        "0.005": {
+          "level": "document",
+          "threshold": 0.028175873681902885,
+          "attack_rule": "score > threshold",
+          "documents": 4860,
+          "attacks": 3240,
+          "benign": 1620,
+          "tp": 3240,
+          "fn": 0,
+          "fp": 9,
+          "tn": 1611,
+          "recall": 1.0,
+          "fpr": 0.005555555555555556,
+          "accuracy": 0.9981481481481481,
+          "passes": true
+        },
+        "0.01": {
+          "level": "document",
+          "threshold": 0.010600453242659569,
+          "attack_rule": "score > threshold",
+          "documents": 4860,
+          "attacks": 3240,
+          "benign": 1620,
+          "tp": 3240,
+          "fn": 0,
+          "fp": 14,
+          "tn": 1606,
+          "recall": 1.0,
+          "fpr": 0.008641975308641974,
+          "accuracy": 0.997119341563786,
+          "passes": true
+        },
+        "0.02": {
+          "level": "document",
+          "threshold": 0.003034004708752036,
+          "attack_rule": "score > threshold",
+          "documents": 4860,
+          "attacks": 3240,
+          "benign": 1620,
+          "tp": 3240,
+          "fn": 0,
+          "fp": 25,
+          "tn": 1595,
+          "recall": 1.0,
+          "fpr": 0.015432098765432098,
+          "accuracy": 0.9948559670781894,
+          "passes": false
+        }
+      },
+      "parameters": 3309986,
+      "quality_evidence": "Inner development selection only",
+      "peak_cuda_allocated_bytes": 542953984
+    },
+    {
+      "complete": true,
+      "run_id": "local_context_03_residual_replace_c98_fit_s42",
+      "config_id": "local_context_03_residual_replace_c98",
+      "family": "residual",
+      "representation": "token",
+      "seed": 42,
+      "epochs": 12,
+      "selected_epoch": 10,
+      "checkpoint": "results\\cnn_study_v1\\runs\\local_context_03_residual_replace_c98_fit_s42\\checkpoint_selected.pt",
+      "checkpoint_sha256": "cb21001fccafe78bba00123bbfc8f3eaf54cd36da5fdf6409488bb13f290ec2a",
+      "training_scoring_seconds": 236.5144769999897,
+      "metrics": {
+        "0.005": {
+          "level": "document",
+          "threshold": 0.4246152639389038,
+          "attack_rule": "score > threshold",
+          "documents": 4860,
+          "attacks": 3240,
+          "benign": 1620,
+          "tp": 3240,
+          "fn": 0,
+          "fp": 6,
+          "tn": 1614,
+          "recall": 1.0,
+          "fpr": 0.003703703703703704,
+          "accuracy": 0.9987654320987654,
+          "passes": true
+        },
+        "0.01": {
+          "level": "document",
+          "threshold": 0.21998387575149536,
+          "attack_rule": "score > threshold",
+          "documents": 4860,
+          "attacks": 3240,
+          "benign": 1620,
+          "tp": 3240,
+          "fn": 0,
+          "fp": 8,
+          "tn": 1612,
+          "recall": 1.0,
+          "fpr": 0.0049382716049382715,
+          "accuracy": 0.9983539094650206,
+          "passes": true
+        },
+        "0.02": {
+          "level": "document",
+          "threshold": 0.03973110020160675,
+          "attack_rule": "score > threshold",
+          "documents": 4860,
+          "attacks": 3240,
+          "benign": 1620,
+          "tp": 3240,
+          "fn": 0,
+          "fp": 32,
+          "tn": 1588,
+          "recall": 1.0,
+          "fpr": 0.019753086419753086,
+          "accuracy": 0.9934156378600824,
+          "passes": false
+        }
+      },
+      "parameters": 3306532,
+      "quality_evidence": "Inner development selection only",
+      "peak_cuda_allocated_bytes": 490046464
+    }
+  ],
+  "extra_inner_plan_sha256": "19701e61cfb892d2b8f0ecc87034f943d5f42da3e0851953e0420821c51dd401",
+  "extra_inner_results_sha256": "03f61a73d874747c0cba37756f60c370a5d05fc0d547569c2be9818f0959f5f2",
+  "data_protocol_sha256": "ec69b5c350ed7378d22f6d205475746b319d3b4a3e1db946c538063e51571a10",
+  "prepared_representation_sha256": {
+    "token": "944d07f788cd16f2d05c018fe59ea39462e9a30654988a3577b4ccd998714178",
+    "byte": "da16e42a92a342b2c540af0379373fbc5d5ead579d1db249634fb1d2f2300719"
+  },
+  "raw_timing_source_sha256": "6c9f5d0f3a37c6573f33d9c24de77e4a64a79001433356edf859d2cec2337efb",
+  "finalist_configs": {
+    "textcnn_01": {
+      "id": "textcnn_01",
+      "family": "textcnn",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 1,
+      "kernel_sizes": [
+        3,
+        5,
+        7
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.2,
+      "normalization": "none",
+      "training": {
+        "learning_rate": 0.001,
+        "weight_decay": 0.01
+      }
+    },
+    "stacked_01": {
+      "id": "stacked_01",
+      "family": "stacked",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 2,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.2,
+      "normalization": "none",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    "dpcnn_05": {
+      "id": "dpcnn_05",
+      "family": "dpcnn",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 128,
+      "depth": 12,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "topk_mean",
+      "topk": 4,
+      "dropout": 0.15,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    "tcn_04": {
+      "id": "tcn_04",
+      "family": "tcn",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 96,
+      "depth": 6,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        32
+      ],
+      "pooling": "max_mean",
+      "topk": 4,
+      "dropout": 0.15,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      },
+      "direction": "causal"
+    },
+    "pooling_04": {
+      "id": "pooling_04",
+      "family": "pooling",
+      "representation": "token",
+      "embedding_dim": 64,
+      "channels": 64,
+      "depth": 4,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "topk",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      }
+    },
+    "byte_hierarchy_03": {
+      "id": "byte_hierarchy_03",
+      "family": "byte_hierarchy",
+      "representation": "byte",
+      "embedding_dim": 96,
+      "channels": 96,
+      "depth": 8,
+      "kernel_sizes": [
+        7
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0007,
+        "weight_decay": 0.01
+      }
+    },
+    "local_context_03": {
+      "id": "local_context_03",
+      "family": "local_context",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 96,
+      "depth": 2,
+      "kernel_sizes": [
+        3
+      ],
+      "dilations": [
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      },
+      "context_kernel": 15,
+      "gated": false
+    },
+    "local_context_03_residual_replace_c98": {
+      "id": "local_context_03_residual_replace_c98",
+      "family": "residual",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 98,
+      "depth": 6,
+      "kernel_sizes": [
+        3,
+        15,
+        1,
+        3,
+        15,
+        1
+      ],
+      "dilations": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      },
+      "gated": false,
+      "ablation": {
+        "source_config_id": "local_context_03",
+        "kind": "ordinary sequential residual replacement of local/context concatenation and fusion"
+      }
+    }
+  },
+  "model_source_sha256": "14e43ffcfae60023cbe5976e4ef3eb2b813a2eaa2e52e7139a3c9f11981107cc",
+  "epochs_by_architecture": {
+    "textcnn_01": 8,
+    "stacked_01": 1,
+    "dpcnn_05": 6,
+    "tcn_04": 4,
+    "pooling_04": 4,
+    "byte_hierarchy_03": 7,
+    "local_context_03": 12,
+    "local_context_03_residual_replace_c98": 12
+  },
+  "epoch_selection_policy": "inner-selected",
+  "common_epoch_pairs": [
+    [
+      "local_context_03",
+      "local_context_03_residual_replace_c98"
+    ]
+  ],
+  "common_pair_fixed_epoch": 12,
+  "extra_configs": [
+    {
+      "id": "local_context_03_residual_replace_c98",
+      "family": "residual",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 98,
+      "depth": 6,
+      "kernel_sizes": [
+        3,
+        15,
+        1,
+        3,
+        15,
+        1
+      ],
+      "dilations": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      },
+      "gated": false,
+      "ablation": {
+        "source_config_id": "local_context_03",
+        "kind": "ordinary sequential residual replacement of local/context concatenation and fusion"
+      }
+    }
+  ],
+  "arithmetic": [
+    "native CUDA FP32 TF32 disabled",
+    "static fake symmetric W8/inputA8 for three named configs; FP32 bias/norm/gates/accumulation"
+  ],
+  "cudnn_plan_cache_limit": 64,
+  "cudnn_cache_limits": {
+    "textcnn_01": 64,
+    "stacked_01": 64,
+    "dpcnn_05": 64,
+    "tcn_04": 64,
+    "pooling_04": 64,
+    "byte_hierarchy_03": 64,
+    "local_context_03": 64,
+    "local_context_03_residual_replace_c98": 64
+  },
+  "cudnn_v8_disabled": {
+    "textcnn_01": 0,
+    "stacked_01": 0,
+    "dpcnn_05": 0,
+    "tcn_04": 0,
+    "pooling_04": 0,
+    "byte_hierarchy_03": 0,
+    "local_context_03": 0,
+    "local_context_03_residual_replace_c98": 0
+  },
+  "quantization_calibration": "first512 canonical-full-training windows; peroutput/perembeddingrow weights and pertensor inputs maxabs/127",
+  "postsearch_calibration": "search_temporary_threshold benign only; primary .01, secondary .005/.02, strict >",
+  "postsearch_scoring": "batch-one native CUDA windows on search_candidate_scoring and frozen authored diagnostics, no further tuning",
+  "timing": "seed42 B1 CUDA eager; same sixshortest/sixlongest benign docs, fivewarmups/twentyrepeats; coldprocess separate",
+  "diagnostics_sha256": "6b47ab2ce26828c264cff9e125477ef1f345a7af3e7fcc29d144feddaef58ce6",
+  "runs": [
+    {
+      "run_id": "textcnn_01_final_s42",
+      "config_id": "textcnn_01",
+      "seed": 42,
+      "epochs": 8,
+      "fit_split": "full_train",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "time": true
+    },
+    {
+      "run_id": "textcnn_01_final_s1337",
+      "config_id": "textcnn_01",
+      "seed": 1337,
+      "epochs": 8,
+      "fit_split": "full_train",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "time": false
+    },
+    {
+      "run_id": "textcnn_01_final_s2026",
+      "config_id": "textcnn_01",
+      "seed": 2026,
+      "epochs": 8,
+      "fit_split": "full_train",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "time": false
+    },
+    {
+      "run_id": "stacked_01_final_s42",
+      "config_id": "stacked_01",
+      "seed": 42,
+      "epochs": 1,
+      "fit_split": "full_train",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "time": true
+    },
+    {
+      "run_id": "stacked_01_final_s1337",
+      "config_id": "stacked_01",
+      "seed": 1337,
+      "epochs": 1,
+      "fit_split": "full_train",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "time": false
+    },
+    {
+      "run_id": "stacked_01_final_s2026",
+      "config_id": "stacked_01",
+      "seed": 2026,
+      "epochs": 1,
+      "fit_split": "full_train",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "time": false
+    },
+    {
+      "run_id": "dpcnn_05_final_s42",
+      "config_id": "dpcnn_05",
+      "seed": 42,
+      "epochs": 6,
+      "fit_split": "full_train",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "time": true
+    },
+    {
+      "run_id": "dpcnn_05_final_s1337",
+      "config_id": "dpcnn_05",
+      "seed": 1337,
+      "epochs": 6,
+      "fit_split": "full_train",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "time": false
+    },
+    {
+      "run_id": "dpcnn_05_final_s2026",
+      "config_id": "dpcnn_05",
+      "seed": 2026,
+      "epochs": 6,
+      "fit_split": "full_train",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "time": false
+    },
+    {
+      "run_id": "tcn_04_final_s42",
+      "config_id": "tcn_04",
+      "seed": 42,
+      "epochs": 4,
+      "fit_split": "full_train",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "time": true
+    },
+    {
+      "run_id": "tcn_04_final_s1337",
+      "config_id": "tcn_04",
+      "seed": 1337,
+      "epochs": 4,
+      "fit_split": "full_train",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "time": false
+    },
+    {
+      "run_id": "tcn_04_final_s2026",
+      "config_id": "tcn_04",
+      "seed": 2026,
+      "epochs": 4,
+      "fit_split": "full_train",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "time": false
+    },
+    {
+      "run_id": "pooling_04_final_s42",
+      "config_id": "pooling_04",
+      "seed": 42,
+      "epochs": 4,
+      "fit_split": "full_train",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "time": true
+    },
+    {
+      "run_id": "pooling_04_final_s1337",
+      "config_id": "pooling_04",
+      "seed": 1337,
+      "epochs": 4,
+      "fit_split": "full_train",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "time": false
+    },
+    {
+      "run_id": "pooling_04_final_s2026",
+      "config_id": "pooling_04",
+      "seed": 2026,
+      "epochs": 4,
+      "fit_split": "full_train",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "time": false
+    },
+    {
+      "run_id": "byte_hierarchy_03_final_s42",
+      "config_id": "byte_hierarchy_03",
+      "seed": 42,
+      "epochs": 7,
+      "fit_split": "full_train",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "time": true
+    },
+    {
+      "run_id": "byte_hierarchy_03_final_s1337",
+      "config_id": "byte_hierarchy_03",
+      "seed": 1337,
+      "epochs": 7,
+      "fit_split": "full_train",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "time": false
+    },
+    {
+      "run_id": "byte_hierarchy_03_final_s2026",
+      "config_id": "byte_hierarchy_03",
+      "seed": 2026,
+      "epochs": 7,
+      "fit_split": "full_train",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "time": false
+    },
+    {
+      "run_id": "local_context_03_final_s42",
+      "config_id": "local_context_03",
+      "seed": 42,
+      "epochs": 12,
+      "fit_split": "full_train",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "time": true
+    },
+    {
+      "run_id": "local_context_03_final_s1337",
+      "config_id": "local_context_03",
+      "seed": 1337,
+      "epochs": 12,
+      "fit_split": "full_train",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "time": false
+    },
+    {
+      "run_id": "local_context_03_final_s2026",
+      "config_id": "local_context_03",
+      "seed": 2026,
+      "epochs": 12,
+      "fit_split": "full_train",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "time": false
+    },
+    {
+      "run_id": "local_context_03_residual_replace_c98_final_s42",
+      "config_id": "local_context_03_residual_replace_c98",
+      "seed": 42,
+      "epochs": 12,
+      "fit_split": "full_train",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "time": true
+    },
+    {
+      "run_id": "local_context_03_residual_replace_c98_final_s1337",
+      "config_id": "local_context_03_residual_replace_c98",
+      "seed": 1337,
+      "epochs": 12,
+      "fit_split": "full_train",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "time": false
+    },
+    {
+      "run_id": "local_context_03_residual_replace_c98_final_s2026",
+      "config_id": "local_context_03_residual_replace_c98",
+      "seed": 2026,
+      "epochs": 12,
+      "fit_split": "full_train",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "time": false
+    }
+  ]
+}

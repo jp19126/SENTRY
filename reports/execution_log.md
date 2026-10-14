@@ -2203,3 +2203,503 @@ Remaining caps are ceilings, not obligations or new retry authority. Any revised
 study needs new approval. No protected held-out contents or metadata, target-model API
 calls, physical-board actions or GitHub synchronization were used. Latest
 official usage is 7% at reset boundary 1792472301; the 50%-used cap remains active.
+
+### 2026-10-14 - authorized broad CNN exploration started
+
+The user submitted SENTRY_CNN_development_prompt.md for local board-free
+execution; its permission supersedes the old method-first prerequisite for this
+stage. Initial official account usage was28%, initially capped at40%used; the
+user explicitly raised this execution cap to60%used. No reset was consumed.
+Three native workers: gpt-6.1-sol models/data and gpt-6-luna prior-art/cost;
+coordinator owns common evaluation and serial GPU dispatch. No protected final
+partitions, target calls, paid services, board or GitHub actions.
+
+Read README/scope/status/protocol/R1/source/current prompt; WSL git status clean
+at starting inspection (native Windows Git UNC status failed). Native Python
+C:/research/GATE/.venv/Scripts/python.exe verified3.11.16/Torch2.9.1+cu128/RTX4070.
+Old execution prompt preserved in docs/archive before copying submitted CNN
+prompt to active execution location. Pre-study status preserved verbatim in
+reports/status_before_cnn_20261014.md; STATUS safely updated/check passed.
+
+96 configurations/16 branches implemented; independent cost audit identifies
+94 unique evaluation-forward computations (two centered TCN/dilated duplicate
+pairs), not96 independent structures. CPU contracts passed96 configurations;
+dense_06 alternating-kernel correction occurred before GPU dispatch and its
+focused recheck passed. Native real-fit CPU document-loss/microbatch gradients
+passed in FP64; FP32 forward/backward/update tests passed four representatives.
+
+Token preparation63.797s and byte69.625s:7552/1618/1620 source-group fit/cal/selection,
+1200 fitgroups screening. Frozen memberships and full-document token/byte/raw
+identities verified; independent combined checks44.078s and50.937s, plus timing
+input equivalence27.829s. Authored96diagnostics have zero group/exact/normalized
+text overlaps; known concepts are not an unseen-attack-family benchmark.
+
+First timing dispatch refused three jobs before optimizer steps because runner
+used a nonexistent top-level preparation summary. Fixed to stable protocol plus
+per-representation manifests; failures preserved under runs/*/failure.json.
+Corrected three representative3epoch timings completed in25.594 dispatchseconds.
+All current training uses native FP32 TF32disabled, deterministic CUDA,
+CUBLAS_WORKSPACE_CONFIG=:4096:8, document32 batches, window128 microbatches,
+span-window CE averaged within documents and gradientclip5. Plans/history/raw
+scores/checkpoints under results/cnn_study_v1. A3h/B10h/C20h/targeted6h/scoring3h/
+reserve6h accelerator allocations total48h; heavyCPU24h ceiling. These are ceilings.
+
+StageA main serial-process dispatch completed20screens, then stopped at the
+Windows2GiB runtime floor on dpcnn_03 (1,869,197,312B; WSL24,124,461,056B).
+Resource floor unchanged; after actual process exit preflight observed
+Windows14,812,319,744B/WSL24,112,955,392B. Initial table/dispatch copied to explicit
+memory-stop evidence. Dispatch changed to isolated serial groups of4 jobs so
+native allocations are released between groups, resumed from saved epochs.
+No quality gate or training recipe changed. scripts/cnn_queue.py preserves per
+subprocess plans/logs/dispatch resources; root common evaluator remains shared.
+Atomic checkpoint writes, identity guards, fit-fold restrictions and per-run
+CUDA peaks added after focused implementation review. Current screen queue live;
+these short results guide longer fitting rather than reject families.
+
+### 2026-10-14 - broad screen complete; deeper fits executing
+
+All96 StageA runs completed (94 unique eval-forward computations,16branches).
+23 runs/21 unique computations meet the inner empirical screen; no post-search
+or frozen diagnostic scoring has occurred. Completed fit+score time1420.619236s
+includes three reused equivalent timing runs. All96 saved-score/checkpoint
+identity/window-max/calibration/confusion checks passed independently.
+
+Serial groups stopped again on byte_hierarchy_04 with Windows658,010,112B free,
+WSL24,130,318,336B. Group1 continuation after process exit observed
+Windows17,742,647,296B/WSL24,118,521,856B preflight and completed all remaining
+screens. First group queue wall1188.953s; final isolated continuation175.140s;
+the prior initial dispatch/three timing jobs are separately preserved. Counts
+are process wall/runtime evidence, not device-active GPU utilization.
+
+Native cache bounded to64 execution plans for longer fits/scoring; PyTorch2.9.1
+Conv_v8.cpp documents envcontrol and default10000. Cause attribution remains
+inferred, not a measured component attribution. scripts/check_cnn_cache.py
+completed17.265s:28 realfit variablebatch cases, four representatives, default
+versus64 in fresh CUDA processes; all logits/loss/allparameter grads bitwise
+identical. No optimizer/fits occurred. Full tensor/hashes/memory records saved.
+This qualifies these cases, not all shapes. Floors remainunchanged.
+
+StageB plan froze23 configs:one perbranch + six second representatives from
+different branches + exact R1 TextCNN competence anchor. Initial22 plan archived
+unexecuted as stage_b_unexecuted_without_anchor.json. One24-promotion slot remains
+for a controlled local/context replacement. All12 full-fit epochs are required;
+innercal benign thresholds/innerselection checkpointing only. Parent serial
+queue session60603 is confirmed live; first byte fit progressing. Latestaccount
+usage30%, cap60%used. No final/test/NotInject, newtargetcalls/paidservices/board/
+Git sync. Finalist freeze and confirmation remain required before completion.
+
+Independent review fixed missing freeze identities (all finalist configdicts,
+model/protocol/representation/probe hashes) and scoringreuse/checkpoint/raw-score
+checks, including diagnostic scorehashes. Warmtiming preprocessing uses cached
+policy and actualhelper input-equivalence recheck passed28.234s. Final scoring
+will use B1 windows, matching timed network shape rather than combining B256
+quality with B1 cost. Coldprocess measurement driver implemented, unexecuted.
+
+Firstfour StageB fits completed:byte_hierarchy_03/dense_05/depthwise_04/dilated_06,
+selectedepochs7/1/12/6, each TP3240/FN0 and FP9/9/15/7 among1620 innerbenign.
+CompletedB fit+score1348.622902s; allfour savedscore checks passed1.585s.
+These selected checkpoints use innerdata and are not frozen post-search results.
+The differing useful epochs show why an arbitrary identical20-epoch final recipe
+is not justified. Finalist freezer now supports transferring each architecture's
+inner-selected epoch count (fixed before outer scoring), or an explicit fixed
+recipe, plus common fixed epochs for the capacity-aware mechanism pair.
+Actual choices remain pending alladequatefits; no finalist freeze exists yet.
+Current queue continues, handle60603; observed WindowsparentPID51184 and wrapper
+41700. ChildPIDs change; current_process_observation.json is only a recorded
+observation, not independent proof of ongoing liveness. Re-poll handle or inspect
+actualOS process/creationtime before any continuation restart.
+
+### 2026-10-14 - confirmation safeguards and controlled comparison prepared
+
+User reiterated the 60%-used cap; official usage remains30%used. Existing serial
+GPU queue60603 was re-polled, never restarted. Nine of23 full inner fits are
+complete at this checkpoint, with inception_06 selectedepoch7. StageB remains live;
+all configurations still receive12epochs. No canonical CNN confirmation or
+model diagnostic scores have been inspected.
+
+CPU-only independent review verified full_train fits do no in-fit inner scoring,
+reject checkpoint selection and save no quality assertion. Root fixed two guard
+gaps before StageC: exact fitted-spec equality against freeze, and prepared-file
+SHA256 checks against fold manifests plus pinned representation summaries.
+Actual validation passed64files/token+byte/fulltrain/searchcal/searchscore/probes
+in3.985s; prepared_artifact_check.json records identities. Raw timing-source hash
+will also freeze; source files compiled after focused edits.
+
+Controlled local_context_03 replacement is frozen in configs/cnn_ablation_v1.json
+as local_context_03_residual_replace_c98,12full-fit epochs/seed42. CPU matcher
+execution6.84s; nonembedding parameters/MACs within1%, sameRF33/lookahead16.
+Remaining residual/LayerNorm/dropout/channel-packing and activation-hook confounds
+are preserved in capacity_review.json. Learned ablation awaits serial StageB
+completion. scripts/cnn_pair_analysis.py implements matched seed/source-group
+differences using each model's own benign-calibrated cutoff; synthetic strict
+ties/count/bootstrap/identity rejection check passes. Actual results pending.
+
+Independent probe audit found8authored backgrounds crossed with12recipes,
+one attack intent/template and4payload forms, not96 independent natural examples.
+No probes changed or scores inspected. Quotation/wrapper, repetition/length,
+uncased-token and typography/context confounds now appear in principal report.
+
+CPU saved-reference reducer scripts/cnn_references.py executed12.694s and saved
+reused_references.json. All3reference paths match ordered canonical IDs/labels/
+sourcegroups and R1window counts; original score rows lack text_sha256, explicitly
+limited. Own .01 benign thresholds reproduce R1 W8GraphBERT2738/0/13/1356,
+R1scratchCNN2738/0/24/1345, FP32epoch3BERT2738/0/18/1351. Secondary .005/.02,
+strata/source-group uncertainty/hashes retained. No new inference/BERT training;
+pretraining/mixed arithmetic/unmatched latency/known templates are disclosed.
+
+scripts/cnn_runtime.py reconciles terminal child walls, avoids summing nested
+group dispatches and reused timing fits twice, and keeps unquantified first
+timing-refusal startup time unresolved. As-of ledger4197.497recorded accelerator
+jobseconds,3955.508completed unique fit+scores/104learningruns; live child excluded
+until terminal. These are process walls, not device-active measurements. New
+trajectory/length summaries show grouped_06 selectedinnerFP14/1620 overall,
+including8/208multiwindow benign; nominal overall success does not establish
+uniform length robustness. No success criterion or tuning boundary changed.
+
+Historical/new shallow anchor check scripts/check_cnn_anchor.py passed four
+matched-weight CPU comparisons with bitwise logits equality (7.91s processwall,
+.51s checks after imports). Empty-input extension differs intentionally.
+R1 already used document-averaged span-window CE/batch32/AdamW/clip5; shuffle,
+microbatch64vs128, exposure and epoch/checkpoint rules differ. Saved matching
+tensors/hashes are in anchor_equivalence_check.json and companionnpz. NoGPU.
+Final quantization metadata now separately estimates packed W8 plus FP32
+remaining parameters/scales; fake tensors remain FP32, and no nativeINT8memory
+or timing is claimed. Confirmation CSV will distinguish measured seed42 native
+FP32 cost from unmeasured seed/quantization latency rather than duplicate values.
+
+### 2026-10-14 - inner fits continue; profiling contract inspected
+
+Prior goal turn made progress (data/recipe guards, paired analysis, reference
+reduction, anchor check) and confirmed a live queue. Continuation re-polled the
+same60603handle, without restart. Fourteen23fits completed at this checkpoint;
+TCN04 is live. Adequatefits continue to all12epochs; lowFP selections at early
+epochs are development checkpoint choices, not stable late-epoch superiority.
+
+CPU review confirmed complete raw-document warmtiming, B1windows, documentmax,
+strict cutoff and floating-reference matching across quantized variants.
+Raw timing-sourceSHA already frozen; root added current detector/tokenizer/window
+policy comparison against prepared protocol, verified actual pinned revision/
+L256/overlap64 in9.14s processwall. Cold profiler now reports floating warmrisk
+delta/decision change; no cold/profile run yet. Bytewindowpolicy remains fixed
+in code as1024/256 and verified against original prepared input checks.
+
+Quantization prefix inspection used only fulltrain prepared metadata:512token
+windows touch447docs/149sourcegroups,512bytewindows419docs/140groups; allAESLC,
+all55known templates. Quantized() never reads labels to choose windows/scales.
+The orderedprefix is not randomized, and representation-specific windowcounts
+give different calibrationcontents. Bias is disclosed, not silently repaired.
+
+Seven analytical shortliststyle profiles saved in shortlist_mapping_inputs.json,
+with exact inner-selection complete-document scaling and formula checks. Six
+registry hookprofiles and the separately analytical capacity matcher are
+distinguished; buffering/normalization/pool/transport costs remain unresolved.
+No CNN hardwareutilization/timing was inferred from historical BERT routes.
+
+Focused newer-primary review added RepLKNet/BSConv/MobileNetV2 vision boundaries
+and PIGuard(ACL2025) detector trigger-bias/training alternative to priorhardware
+report. Coordinator verified ACLabstract/arXivprimary. Published NotInject was
+read as bibliographic priorwork only; protected localdata remains closed. No
+borrowed benchmarkperformance or broad nonexistence claim. Finalist selection
+still awaits all23fits + controlled replacement, not outer/probe CNN outcomes.
+
+Coverage checkpoint:17/23inner fits completed, all16branches/12epochs each.
+Independent check_cnn_scores.py --stage stage_b passed all17 score identities,
+windowmax/benign strict calibration/confusion/checkpoint hashes in7.907s internal
+wall (9.673s commandwall). Sixteen selectedinnercheckpoints pass; large_kernel05
+has19/1620benignFP, zeroFN, and remains a measured near-miss. Safe STATUS update
+used status_candidate_coverage.md and update_handoff.py --write/--check; strict
+UTF8/LF checks pass and historicalcontent retained. No finalist frozen yet.
+
+### 2026-10-14 - remaining deeper fits and error reconciliation
+
+Prior turn progressed to all16branches/17verifiedfullfits plus profiling guards,
+literature and mapping inputs; continuation re-polled live60603without restart.
+Twenty23fits complete at latest checkpoint. The completion evidence map in
+reports/cnn_completion_audit.md was inspected against submittedprompt and actual
+artifacts; no Cfreeze/learnedablation/confirmation/timing exists yet. Pending
+requirements remain pending rather than being satisfied by source/scaffolding.
+
+CPU-only inner inspection7.593s rechecked4,860IDs/textsha/labels/groups against
+canonical train and five models' own calibration/counts/maxima/checkpoint digests.
+Stacked01/pooling04/dilated06/localcontext03/byte03 allFN0/3240; FP12/11/7/14/9,
+union40benign/53incidents. Only one benign sharedby4, noneall5. Qualitative errors
+include ordinary contract/admin/repair questions and longer procedural/newsletter
+content. Near-copy seminar invitations reveal semantic dependencies across
+exact sourcegroups. Artifact inner_error_inspection.json contains13anonymized
+paraphrases/identities/counts, no rawemail bodies. No augmentation/tuning or
+canonical/probe CNN score inspection occurred.
+
+Innertrajectory comparison highlights stacked01's low9.145M countedMAC/doc and
+9/12passing epochs versus dilated06's7bestFP/161.995M MAC/doc but lateFPRgrowth.
+This informs hardware-diverse roles, not statistically established superiority.
+Mapping artifact extended to12styles; sharedIDCNN weightstorage vs repeatedMACs,
+topkretention/ranking and normalization exclusions are explicit. Analyzer now
+reports separate excessbenign/missedattack counts beyond originalscreen for
+nonpassing three-seed architectures; no new near-miss passing tolerance or
+weighted successscore introduced. Final choices still await allinnerfits.
+
+StageB firstqueue60603 terminal after21complete+DP03resourcefailure; observed
+Windows993,656,832B at04:15:48UTC belowunchanged2GiBfloor, WSL24.12GB. No first
+epoch checkpoint exists. Postexit preflight16,795,693,056B/WSL24.11GB recovered.
+Bounded two-case DP03cache64vs8 CUDA forward/CE/fullgradient probe passed
+bitwise10.813s; first sandbox UNCmkdir refusal did noGPU and its dispatch is
+preserved separately. Newwrapper reuses original worker without overwriting
+historicalcacheproof. Isolatedcache8fullretry86216 terminal again at1,253,363,712B
+after60.297guardedseconds(64.765childwall). Initial64attempt60.610guarded/
+65.266childseconds; both metadata/failure copies retained with corrected
+attempt_metadata_path. Failure-table reconciliation now deduplicates copies
+but retains distinct observed failures. Cache narrowing alone did not solve
+the dynamic fitting memory condition; no exclusive root-cause claim.
+
+One final alternative cuDNNAPI repair qualified on two same-weight realfit
+B32/B45 cases in10.765s: logit/lossmaxabs<=1e-5, fullgradientabs<=1e-6 or
+relativeL2<=1e-4, declaredbeforeexecution; finite/padgradient checks pass.
+PyTorch2.9.1ConvUtils.h switch verified directly. No BERTbitwisecriterion or
+architecture/optimizer/data/floor change. Final serialretry61140 islive with
+DP03cache8/TORCH_CUDNN_V8_API_DISABLED=1; first5epochs completed. This is a
+legacy API within the installed cuDNNlibrary, not installation of cuDNN7.
+Frozen per-architecture API/cache settings are now propagated/checked through
+future fit/confirmation/cold profiling and CSVmetadata. TextCNN01 remains next;
+ifthisboundedrepairfails, preserveDP03resource limitation and proceed with
+the already adequateP05 comparator, without labelingDP03qualitynegative.
+
+### 2026-10-14 - full inner coverage and matched replacement complete
+
+Serial repair queue 61140 exited0: DP03 completed12epochs with the recorded
+legacy cuDNN API/cache8, then the exact TextCNN anchor completed12epochs with
+default API/cache64. DP03 child359.562s/fit+score354.127s; TextCNN child106.812s/
+fit+score101.20s. DP03 minute memory observations stayed15.50-16.56GB available.
+Both original resource failures remain preserved; API workaround does not
+establish an exclusive cause. Independent saved-score check passed all23 B
+configurations in7.157s internal/8.286s commandwall. All16branches had12epochs;
+21selected checkpoints pass. Large_kernel05 FP19 and TextCNN01 FP17 exceed
+16/1620allowed benign rejections; every selected checkpoint has0/3240misses.
+Total completed B fit+score6432.404s. No canonical CNN development/probe scoring.
+
+Matched residual replacement queue88595 exited0 after all12epochs. Fit+score
+236.514s, child242.125s,parent242.281s. Selectedepoch10 FP8/FN0 versus source
+selectedepoch4 FP14/FN0; both only1/12passing epochs. FinalepochFP18 vs21.
+Independent ablation scorecheck passed0.463s internal/1.867s commandwall.
+No mechanism benefit inferred from the different selected epochs/one seed.
+Common12epoch three-seed confirmation remains the declared controlled comparison.
+
+Runtime ledger refreshed:120unique completedlearningruns/8089.538s completed
+fit+score;8577.197s recorded accelerator childwalls including stoppedjobs and
+supportchecks, without nested-time double counting. Unrecorded smallstartup
+and first timingrefusal walls remain unknown. User60%-used cap is operative;
+officialaccount reading now33%used. No reset consumed.
+
+### 2026-10-14 - finalist freeze and Stage C dispatch
+
+Root reconciled native models-worker selection using only B/ablation inner
+evidence. SelectionJSON SHA41c8152deafb95738d578436222f2bb26365fa3c0ca78a0e02d34efc232a2ca6
+is pinned in configs/cnn_stage_c_v1.json, written before any canonical CNN
+postsearch/probe scores. Selected eight: exactTextCNN01, stacked01, DP05,
+causalTCN04, topkPooling04, byte03, localcontext03 and matchedresidualc98.
+Ordinary epochs transfer inner-selected8/1/6/4/4/7; pair common12, seeds42/1337/
+2026 throughout. Root checked24unique fulltrain specs,162epochs, expected
+quantIDs(text01/byte03/local03), actualprepared hashvalidation and API0/cache64.
+DP03 remains adequate inner evidence with a different backend, not a finalist.
+
+Authorized serial Cqueue launched with nativePython, --group-size1,
+--max-seconds72000, session41368. The first two eight-epoch TextCNN fits exited0;
+third is active at the recorded continuation. Fulltraining doesn't load/score
+innercalibration/selection and emits no quality assertion. Data, model, optimizer,
+loss, operatingpoint and closedpartitions remain unchanged. NoGPU concurrency.
+
+Supporting review found confirmation queue could return0 on missing/failing
+children and overwrite retrywalls/logs. Native data-worker corrected cumulative
+wallledger and immutableattempt evidence with exactfreeze/result verification;
+synthetic noGPU verification pending before realconfirmation dispatch. Root
+added all20warm stage-timing repetitions/risks/decisions and independent means/
+percentiles/strictdecision verification; cold profiler records/checks its actual
+API/cache. These collection/verification corrections precede confirmation and
+do not change the frozen model/fit recipe. Syntaxchecks pass; actualscore/profile
+checks remain pending savedresults. STATUS safelyupdated/checkpassed; README and
+principalreport now state Ctraining active. NoGit synchronization.
+
+Confirmation queue repair independently inspected:18stdlib-only synthetic
+checks passed11.062s, result+driver/sourcehash+fixtures preserved in
+confirmation_queue_synthetic_v2. Cases include nonzero failedchild, stop/deadline,
+zeroexit withoutresults, immutable retrylogs/jobs/terminal records, exact frozen
+membership/spec/seed/config/checkpoint/backend/cache/B1/arithmeticvariants,
+changed scoreSHA rejection and byte-preserving legacyledger snapshot. Earlier
+synthetic UNC-directory setup refusals preserved in v1; no realGPU children or
+scoringdata accessed. Cumulative jobs[].wall_seconds remains compatible with
+cnn_runtime.py and avoids discarding failed childwalls on resume.
+Per-repetition/cold collection source review found no new blocker; actual
+model/profile verification awaits completed confirmations. Hardware review also
+corrected a parameter-layout signature interpretation: stacked01/residual01
+share learned layer shapes but differ in actual skips/forward computation.
+Registry exactduplicate count remains only the two centeredTCN/dilated pairs,
+94unique computations. No numerical/cost values or frozen choices changed.
+
+### 2026-10-14 - frozen comparison and final analysis preparation
+
+Continuation re-polled the same live41368handle; no restart. Native models-worker
+read-only reconciliation found no frozen recipe/configuration/epoch/selection
+identity discrepancy and checked seven then-terminal fulltraining records with
+metrics{}; frozen_comparison_review.json retains sourcehashes and confounds.
+Cold evaluator model-load cost is distinct from processstartup: the separate
+cnn_cold.py execution remains pending. Exact freeze rerun validated prepared
+files and preserved byte-identical SHA19aaffdbfd50ebfe37d843788ad40a61bca7ec3dcb2520fac6888f1ea9ffbf82.
+
+Native data-worker built cnn_final_errors.py for postconfirmation CPU inspection.
+It refuses until all24 fixedseed confirmations and independent scorechecks exist,
+then revalidates raw/prepared/score/checkpoint/backend identities. It reports
+common UTF8length and representationwindow strata, FP/FN unions/seedoverlaps,
+probe categories and quantization transitions at own benign thresholds. Synthetic
+function checks passed; actualanalysis is pending. Anonymous keyword-based
+descriptions are not exhaustive manual labeling or demonstrated detector causes.
+Root read source, added command to principalreport and added explicit fakequant
+benign-tail/margin fields in finalanalyzer; syntaxchecks pass, no newinference.
+
+Final evaluator now records sourceSHA/runnerSHA/Python/Torch/device metadata;
+cold profiler records its sourceSHA/freezeSHA. Current38 source/configuration/
+protocol files preserved as immutable bytecopies in source_snapshots with
+manifest_bce33b79281e4e3bda3f52570c158979a798606fd9094cc14d862f8ea09ba138.json
+(0.248s CPU). This does not reconstruct all historicalsourcebytes from hashes.
+GPUqueue progressed to11/24 terminal fits; third causalTCN seed live. No canonical
+CNN postsearch/probe scores or finaltimings yet. Officialusage34%used versus
+user60%cap; noreset, protecteddata, APIs, vendorbuild or boardoperation.
+
+Ccontinuation checkpoint:17/24 fulltraining fits terminal; finalbyte seed2026
+live at epoch5/7, followed by the two common12 architectures across three seeds.
+Same41368handle confirmed running. All five preceding architecture roles have
+all three fixedseed fits complete. Ledger as-of11171.368 recordedaccelerator
+seconds/10564.545 completedunique fit+score seconds/137learningruns, excludes
+the livechild until terminal wall is recorded. Officialusage remains34%used.
+Actualfrozen confirmation/quantization/profile/paired/error results are still
+pending; prepared helpers or fitcompletion are not quality assertions.
+
+### 2026-10-14 - verified wait on the same finalist queue
+
+Re-polled session41368 directly throughout this continuation; it remains live.
+Ccompleted18 after the lastbyte seed, then19/20/21 after all localcontext seeds.
+The first matchedresidual common12 fit is now live at epoch2/12; two further
+matchedseeds follow. Localcontext childwalls308.906/307.968/304.907s. Ledger
+refreshed12380.024 recordedaccelerator seconds/11744.703 completedunique
+fit+score seconds/141learningruns; excludes stilllive childwalls until terminal.
+No new queue, recipe change, tuning or scoring dispatch. This is verified
+waiting and actual checkpoint progress, not a completed quality conclusion.
+
+### 2026-10-14 - all finalist fits complete; frozen confirmation live
+
+Same41368session exited0 after24/24 fixed fulltrain fits; stage_c_q1 parentwall
+4761.516s. Residualreplacement childwalls313.531/319.937/318.203s across42/1337/
+2026. Independent checkpoint/spec/fulltrain/fixedepoch/emptyquality checks
+passed all24 in5.556s internal. Generic saved-score output wording was corrected
+to explicitly fit-only (no scoring/quality assertion); recheck passed4.385s.
+Current38-file source snapshot3147a262532037e063e3e74975f6fadcc20d851e056deb74281e58c890a78c6a
+saved0.270s CPU, preserves original bytecopies/manifest. No method or input change.
+
+Serial confirmation launched after verified training exit, session22214,
+--freeze configs/cnn_stage_c_v1.json --max-seconds10800. Parentattempt0001 keeps
+immutable childlogs/metadata and cumulative walls. First5 children completed
+at observed checkpoint, remainderlive. Provisional firstTextCNN42 canonical
+TP2738/FN0/FP16/TN1353 (1.169%FPR) and authoredprobes TP62/FN2/FP17/TN15.
+These actualscores remain pending final independentchecks; no tuning response.
+Scoringbody usesbenign-only ownthresholds, both arithmeticvariants B1, frozen
+probeinputs and20recordedwarmrepetitions. Source/device/environment fields saved.
+Ledger as-of13708.211 accelerator seconds/12674.951 completedlearning fit+score
+seconds/144uniquelearningruns; scoring/cold jobwalls are separate, livechild
+excluded until recorded. STATUS safelyupdated/checkpassed; principalreport and
+README mark trainingcomplete/confirmationlive. Protectedfinalsets remainclosed.
+
+### 2026-10-14 - confirmation progress and focused DPCNN diagnostic check
+
+The same confirmation session22214 is verified live with19/24 terminal children;
+no second accelerator job was dispatched. Account usage observed35% used; the
+latest explicit user ceiling remains60%, overriding the older40% goal snapshot.
+The evaluator's transient one-child confirmation_table is not a complete-study
+table; the parent merges all frozen records at terminal completion.
+
+The CPU-only worker independently reconstructed all96 diagnostic texts and187
+token windows with the pinned tokenizer and manual254/64 slicing. IDs, masks,
+labels, starts, contents, tails, checkpoint/freeze/score associations and saved
+maxima/counts pass. Two highest-risk diagnostic documents were replayed on CPU:
+positive library/spacing and benign software/quotation. Their CPU/CUDA risk
+differences are2.91e-10 and4.66e-10, within the unchanged1e-5 tolerance. DP05
+seed42 recordsTP0/FN64/FP0/TN32 at its own fixed threshold0.004971844144165516.
+Evidence is dpcnn_diagnostic_check.json and scripts/check_dpcnn_diagnostics.py;
+checks after imports took3.388s, with process-start time not separately reported.
+No inspected path fault was found. This supports the recorded low-score limit
+on those documents, not its cause or all-case CPU/CUDA equivalence. No new GPU
+inference, fitting, input, calibration, threshold or protected-data access.
+
+### 2026-10-14 - terminal confirmation and final offline reconciliation
+
+Session22214 exited0 with all24 frozen children verified, no missing/invalid
+records, attempt0001 parentwall3286.219s. The final aggregate contains24runs/
+33variants/99rawscorefiles. Independent command
+`python -B scripts/check_cnn_scores.py --stage confirmation` passed exact24
+in13.133149s. CPUworker command
+`python -B scripts/check_cnn_confirmation_associations.py` passed all24table/
+per-run/freeze associations and all9ID-joined fake8changed-decision lists in
+4.85s, with no discrepancies. Review artifact SHA256
+71c27fea7034c8db773b4fa12e33c74032e2274e15986f69b0f6c1940ecf1471.
+
+After actualconfirmationexit, the soleGPUjob was
+`python -B scripts/cnn_cold.py --freeze configs/cnn_stage_c_v1.json`, session63179;
+it is terminalexit0 with8fresh-process seed42 observations. Independentcoordinator
+and dataworker reconciledexact8frozenIDs/configs/specs/checkpointbytes/backendcache,
+firstwarmdocument/windowcounts, risks andstrictdecisions. Allriskdeltas0/nochanges;
+coordinator proof cold_process_check.json pins actualartifactSHA256
+3a4f2dbd8906fd2bfb23cb811165306b488bf102180b4f885b9dd4cef8786f30.
+Spawn-through-exit3.776-10.829s; one shortdoc, unflushedsystem/filecaches, no
+startupdistribution or deploymentclaim. Actual8parentwalls sum70.956950s.
+
+Independent CPU postprocessing executed aftercomplete savedchecks:
+`python -B scripts/cnn_final_errors.py` terminalexit0/all24 in19.016s;
+`python -B scripts/cnn_pair_analysis.py --freeze configs/cnn_stage_c_v1.json`
+completeall3seeds/no pending in4.235825s;
+`python -B scripts/cnn_analyze.py` terminalexit0/144learning/eightconfirmedconfigs;
+`python -B scripts/cnn_runtime.py` terminalexit0. Analyzer's full asynchronous
+CPU process wall was not separately retained; successfulexecution is confirmed,
+not an invented exactCPUtime. Ledger records16,675.151950accelerator process-wall
+seconds (4.632h),12,674.951489completeduniquelearning fit/scoringseconds and144fits.
+Known stopped/support/confirmation/cold walls are includedonce; initialrefusal/
+smallstartup omissions remainunquantified. Vendor0, targetsAPI0, physical0.
+
+Allprimary canonical attacks are detected by all33variants. FP32individual
+passingruns5/24; noarchitecture passesall3fixedseeds. Local/contextpasses2/3
+but finds only1/3/6of64authored attacks. DP05 missesall64inall3seeds. TextCNN
+finds61-63/64but rejects16-18/32authoredbenigns, includingallquoted/codequoted
+cases inseed42. The common12pair's meanFPRdifference is-0.340881percentagepoints,
+paired95%[-0.730460,+0.024349], crossingzero. Nofusioncausation orrobustguard claim.
+Fake8primary canonicalchanges5newbenignFP/4recoveredFP, noattacktransitions;
+quality/timing/nativeINT8/analyticalpayload remainseparate evidence.
+
+Root manually inspected sixselectedrawbenignexamples fromfinal_error_inspection:
+outagenewsletter/unsubscribe, quotednewsdiscussion, meeting/reply-allrequest,
+corporateeventsbulletin, businessmodelingquestions andsocialpuzzlecorrespondence.
+This refinesautomaticruleparaphrases anddoesnotannotateall195canonicalFPuniontexts
+or identifycausalfeatures. Text42travelstart/middlemisses andthe focusedDPquoted/
+spacingtexts were inspected asfrozenexamples, never treatedasinstructions.
+Current40-source immutable snapshot
+2ed6f630bfadb0b83bd02d78805a0a851383a442d85ff0684aa14183e7cb3f27 includesnewassociation/
+DPhelpers; saved1.293486s CPU. Prior39-file diagnostic snapshot
+10b361ddb2b46262a9a4316caa15b4a1cefb6b91af7511818913a4f4eea894f4 took1.509925s;
+alloldermanifests/bytecopies preserved. Olderunsnapshottedrun versions remaina
+reproductionlimit. Mainreport tables wereindependently reconciled; anincorrect
+hierarchicaldocumentcoverage label wascorrected toseparatedepthwise/grouped,
+andsecondaryuncertainty wording nowexplicitly limitsCI/strata toprimarypoint.
+
+Principalreport/mapping/README now distinguishcompletedofflineexplorationfrom
+unresolvedgeneralization, targetutility, nativeINT8, physicalFPGA andnewco-design
+contribution. No postconfirmationtuning orcentralresearchscopechange. Read-only
+WSLgitstatus wasinspected; no commits, pushes, merges orremotes changed.
+
+### 2026-10-14 - final handoff and closure
+
+Finalcompletionaudit independently reconcilesallsixrequestedanswers andfinds
+no remainingauthorizedoffline requirementgap. Earlierinterim audits arepreserved
+ashistorical/non-authorizing snapshots. STATUSupdatedonlythrough safehelper
+fromstatus_candidate_final.md, existingHistorypreservedexact; read-only--check
+passedSTATUS3426bytes anduntouchedboardhandoff16388bytes. Finalread-onlyGitdiff
+checkpassed afterfocusedCRLF-only correction ofthree addedhistorical loglines;
+no scientificcontentchanged. Fulltable151rows includes144learningruns andseven
+distinctunsuccessfulattempts; confirmationCSV33rows. Latestofficialusage36%used,
+belowexplicit60%ceiling; noreset consumed. PrincipalreportUIopen returnedqueued,
+notconfirmed visible. The authorizedfirststage iscomplete; generalization,
+targetprotection, nativeINT8, physicalFPGA andnewco-designclaims remainunresolved.

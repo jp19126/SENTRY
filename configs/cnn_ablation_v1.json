@@ -1,0 +1,58 @@
+{
+  "stage": "ablations",
+  "question": "Does local/context fusion improve the same low-FPR task versus an ordinary contextual CNN at matched cost and receptive field?",
+  "comparison": "same fit/inner calibration/selection, seed42, all12epochs, same learning defaults and checkpoint selection rule; no outer scoring or probe inspection",
+  "matcher_sha256": "8310d3c68486f75ebb2c54483abf6a3a0cc5751304546dd3c6b46232058bf06d",
+  "source_config_id": "local_context_03",
+  "extra_configs": [
+    {
+      "id": "local_context_03_residual_replace_c98",
+      "family": "residual",
+      "representation": "token",
+      "embedding_dim": 96,
+      "channels": 98,
+      "depth": 6,
+      "kernel_sizes": [
+        3,
+        15,
+        1,
+        3,
+        15,
+        1
+      ],
+      "dilations": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "pooling": "max",
+      "topk": 4,
+      "dropout": 0.1,
+      "normalization": "layer",
+      "training": {
+        "learning_rate": 0.0008,
+        "weight_decay": 0.01
+      },
+      "gated": false,
+      "ablation": {
+        "source_config_id": "local_context_03",
+        "kind": "ordinary sequential residual replacement of local/context concatenation and fusion"
+      }
+    }
+  ],
+  "runs": [
+    {
+      "run_id": "local_context_03_residual_replace_c98_fit_s42",
+      "config_id": "local_context_03_residual_replace_c98",
+      "seed": 42,
+      "epochs": 12,
+      "fit_split": "fit",
+      "cal_split": "inner_calibration",
+      "selection_split": "inner_selection",
+      "select_epoch": true
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "stage": "timing",
+  "runs": [
+    {"run_id":"timing_textcnn_01_s42","config_id":"textcnn_01","seed":42,"epochs":3,"fit_split":"screen_fit","cal_split":"inner_calibration","selection_split":"inner_selection"},
+    {"run_id":"timing_residual_01_s42","config_id":"residual_01","seed":42,"epochs":3,"fit_split":"screen_fit","cal_split":"inner_calibration","selection_split":"inner_selection"},
+    {"run_id":"timing_dpcnn_01_s42","config_id":"dpcnn_01","seed":42,"epochs":3,"fit_split":"screen_fit","cal_split":"inner_calibration","selection_split":"inner_selection"}
+  ]
+}
