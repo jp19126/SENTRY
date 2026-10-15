@@ -72,6 +72,8 @@ These are implementation choices awaiting synthesis, not measured resource use.
    2025.2 `--help` explicitly describes`--Xelfgen` as a Makefile option, with
    `-j2` as its example. The same finite timeout and memory floors remain.
 
+The HLS configuration places the device part in the general section and explicitly sets `package.output.syn=true` with `package.output.format=xo`, following the installed Vitis help and [2025.2 package options](https://docs.amd.com/r/2025.2-English/ug1702-vitis-accelerated-reference/Package-Options). Link implementation is restricted to one synthesis and implementation job using the documented `vivado.synth.jobs` and `vivado.impl.jobs` options.
+
 The shared build driver acquires the vendor lock per vendor stage and also the
 GPU lock during AIE compilation. It never steals a sibling lock. Memory checks
 require4GiB Windows/8GiB WSL available before launch and abort at2GiB/4GiB runtime

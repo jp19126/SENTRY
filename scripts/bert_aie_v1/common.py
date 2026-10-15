@@ -49,7 +49,9 @@ def lock(name, timeout=0):
         except FileExistsError:
             if time.monotonic() - start >= timeout:
                 raise RuntimeError(f'Shared resource occupied: {directory}')
-            time.sleep(1)
+            # Short released leases between sequential sibling runs must be
+            # observable; atomic mkdir remains the sole ownership decision.
+            time.sleep(.05)
     try:
         write(directory / 'owner.json', {'task':'bert_aie_v1','pid':os.getpid(),
               'host':socket.gethostname(),'created_unix':time.time(), 'resource':name})

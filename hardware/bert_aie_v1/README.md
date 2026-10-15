@@ -105,8 +105,9 @@ build/package the linked design with the platform's matching Linux/XRT sysroot,
 compile this host for that target, and run `host XCLBIN EXPORT_DIR THRESHOLD
 DOC_WINDOWS.bin...`. Every document file must contain all complete window
 records from the frozen tokenizer/window manifest. Host output labels measured
-time as excluding tokenization; complete raw-document timing must add measured
-tokenization/packing and retain the document until all windows return.
+time as excluding tokenization; the persistent host wrapper must measure a
+contiguous interval from raw-document preparation through final return and
+retain the document until all windows complete.
 Packaging/host compilation and physical measurements remain pending until
 their dependencies and actual outcomes are established.
 

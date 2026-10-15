@@ -39,18 +39,26 @@ def main():
     p.add_argument('--evaluation',type=Path,help='Completed frozen-format score record supplying the calibrated margin threshold')
     p.add_argument('--alpha',type=float,choices=(.01,.005,.02,.05),default=.01)
     p.add_argument('--host',type=Path);p.add_argument('--xclbin',type=Path)
-    p.add_argument('--out',required=True,type=Path);p.add_argument('--repeats',type=int,default=3);p.add_argument('--warmups',type=int,default=1)
+    p.add_argument('--out',required=True,type=Path);p.add_argument('--repeats',type=int);p.add_argument('--warmups',type=int)
     p.add_argument('--max-seconds',type=int,default=3600);p.add_argument('--execute',action='store_true');p.add_argument('--board-authorized',action='store_true')
     a=p.parse_args()
     if a.execute and not a.board_authorized:p.error('--execute requires explicit prior human board permission and --board-authorized')
-    if not 1<=a.repeats<=20 or not 0<=a.warmups<=5 or not 1<=a.max_seconds<=7200:p.error('Finite repeats/warmups/time bounds required')
+    if not 1<=a.max_seconds<=7200:p.error('Finite time bound required')
     if a.execute and not all((a.host,a.xclbin,a.evaluation)):p.error('Physical execution requires --host --xclbin --evaluation')
     for path in reversed([a.out.absolute(),*a.out.absolute().parents]):
         if str(path)!=path.anchor:path.mkdir(exist_ok=True)
     if (a.out/'package.json').exists():p.error('Preserve previous packages; choose a new --out directory')
     began=time.perf_counter();deadline=time.monotonic()+a.max_seconds
     timing=read(a.timing_manifest);contract=read(SHARED/'contract.json')
-    if timing.get('common_contract_sha256')!=sha(SHARED/'contract.json'):raise ValueError('Timing/shared contract mismatch')
+    for key,default in (('repeats',3),('warmups',1)):
+        supplied=getattr(a,key)
+        if key in timing and supplied is not None and supplied!=timing[key]:raise ValueError('Shared timing '+key+' cannot change')
+        setattr(a,key,timing.get(key,default) if supplied is None else supplied)
+    if not 1<=a.repeats<=20 or not 0<=a.warmups<=5:p.error('Finite repeats/warmups bounds required')
+    if timing.get('common_contract_sha256') is not None:
+        if timing['common_contract_sha256']!=sha(SHARED/'contract.json'):raise ValueError('Timing/shared contract mismatch')
+    elif a.timing_manifest.resolve()!=(SHARED/contract['timing']['manifest']).resolve():
+        raise ValueError('Legacy timing manifest must be the exact contract-owned path')
     if 'documents' in timing:
         documents=timing['documents']
     else:
@@ -71,6 +79,17 @@ def main():
         if evaluation['target']['score']!='max_window_logit1_minus_logit0':raise ValueError('Expected margin score domain')
         threshold=evaluation['thresholds'][str(a.alpha)]
         if not math.isfinite(threshold):raise ValueError('Finite frozen threshold required')
+        if 'source_role' in timing:
+            selection=Path(evaluation['data']['selection']['directory'])
+            if selection.name!=timing['source_role'] or sha(selection/'manifest.json')!=timing['source_manifest_sha256']:
+                raise ValueError('Timing/evaluation prepared selection identity mismatch')
+        else:
+            expected_role={d.get('construction_role') for d in documents if not d.get('timing_only')}
+            # Supplemental timings use new_selection, while the matched primary
+            # threshold is from new_calibration; this is an explicit timing-only
+            # workload, not re-evaluation of its labels or threshold fitting.
+            if expected_role!={'new_selection'} or Path(evaluation['data']['calibration']['directory']).name!='new_calibration':
+                raise ValueError('Supplemental timing needs the primary calibrated candidate')
     tokpath=ROOT/contract['tokenizer']['path']
     for filename,digest in contract['tokenizer']['files_sha256'].items():
         if sha(tokpath/filename)!=digest:raise ValueError('Tokenizer identity changed')
@@ -79,6 +98,7 @@ def main():
     if (tokenizer.cls_token_id,tokenizer.sep_token_id,tokenizer.pad_token_id)!=(101,102,0):raise ValueError('Unexpected tokenizer special IDs')
     package={'schema':'sentry_bert_aie_board_package_v1','physical_executed':a.execute,'timing_manifest_sha256':sha(a.timing_manifest),
              'export_manifest_sha256':export_hash,'evaluation_sha256':evaluation_hash,'threshold_margin':threshold,'alpha':a.alpha,
+             'repeats':a.repeats,'warmups':a.warmups,
              'decision':'max(logit1-logit0) > threshold_margin','tokenizer':contract['tokenizer'],'tokenizer_load_seconds':tokenizer_load,
              'host_source_sha256':sha(ROOT/'hardware/bert_aie_v1/host.cpp'),'wrapper_sha256':sha(Path(__file__)),
              'documents':[],'window_record':'3072 bytes little-endian int32 ids256 then key_mask256 then token_types256; consecutive complete windows',

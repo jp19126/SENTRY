@@ -1,5 +1,6 @@
 """Coordinator-dispatched bounded child with canonical cross-track resource lock."""
 import argparse
+from contextlib import ExitStack
 import os
 from pathlib import Path
 import subprocess
@@ -10,7 +11,7 @@ from common import OUT, CANONICAL, lock, write
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--name',required=True)
-    p.add_argument('--resource',choices=('gpu0','cpu'),required=True)
+    p.add_argument('--resource',choices=('gpu0','cpu','gpu_vendor'),required=True)
     p.add_argument('--timeout',type=int,required=True)
     p.add_argument('--lock-wait',type=int,default=0)
     p.add_argument('command',nargs=argparse.REMAINDER)
@@ -25,7 +26,11 @@ def main():
     start=time.monotonic()
     result={'command':command,'cwd':str(CANONICAL),'resource':a.resource,'timeout_seconds':a.timeout,'started_unix':time.time(),'pid':os.getpid()}
     try:
-        with lock(a.resource,timeout=a.lock_wait):
+        with ExitStack() as held:
+            # Same order as build_hardware.py: never hold GPU while waiting for
+            # a vendor owner which might itself need the GPU lease.
+            resources=('vendor','gpu0') if a.resource=='gpu_vendor' else (a.resource,)
+            for resource in resources:held.enter_context(lock(resource,timeout=a.lock_wait))
             start=time.monotonic()
             result['acquired_unix']=time.time()
             sys.path.insert(0,str(CANONICAL/'scripts'))
