@@ -50,7 +50,7 @@ population; every individual seed still controls readiness.
 | Hard-benign FPR at most 5% | Fail | Fail | Every intended CNN seed exceeds 22/457 allowable false positives |
 | Adequate withheld code recall at least 95% | Fail | Fail | 125 attacks / 125 backgrounds / 21 payload groups, every seed below 95% |
 | Role-delimiter / encoding mechanism readiness | Uncertain | Uncertain | Only 4 / 13 payload groups, below the frozen minimum 20; never passed by default |
-| At most 1 pp observed recall loss versus matched BERT | Fail across seeds | Fail across seeds | Local loses 36.9 / -4.8 / 32.8 pp; C98 loses 43.9 / 13.2 / 52.7 pp |
+| At most 1 pp observed recall loss versus matched BERT | Fails three-seed condition | Fail across seeds | Local loses 36.9 / -4.8 / 32.8 pp; C98 loses 43.9 / 13.2 / 52.7 pp |
 | Reproducible intended export and actual arithmetic | Qualified | Qualified | Six actual packed exports, native checks, full intended-format scoring |
 | Bounded competent software route | Qualified | Qualified | Matched complete-document CUDA Graph and CPU routes; no intended-format GPU latency win |
 | Material target-specific hardware benefit | Conditional; unproven | Conditional; unproven | >69.7% hypothetical precision-matched payload saving; target allocation/closure/transport remain unmeasured |
@@ -574,3 +574,30 @@ remain unchanged. Git commits 38c294b and 6e566a0 exist locally; the requested
 push to origin/main was rejected by automatic approval review and remains
 pending explicit destination/payload approval. This final study handoff
 does not imply GitHub synchronization.
+
+
+## Changed files and handoff
+
+The study adds `scripts/cnn_adoption_data.py`, `scripts/cnn_adoption_train.py`,
+`scripts/cnn_adoption_evaluate.py`, `scripts/cnn_adoption_export.py`,
+`scripts/cnn_adoption_profile.py` and `scripts/cnn_adoption_compare.py`, with
+independent verification in `scripts/check_cnn_adoption_confirmation.py` and
+the focused saved-score compatibility adapter
+`scripts/run_cnn_adoption_confirmation_compare.py`. These implement grouped
+data preparation, document-level training, calibration/evaluation, packed
+arithmetic references, complete-document timing and paired uncertainty.
+The principal configuration binds the bounded recipes and unchanged freeze;
+README/STATUS summarize the completed negative decision. Detailed attempts
+remain in `reports/execution_log.md`, target mapping in
+`reports/cnn_adoption_mapping.md`, and previous report chronology in
+`reports/cnn_adoption_execution_history_20261015.md`. Numerical evidence and
+checkpoints remain under the ignored `results/cnn_adoption_v1/` directory.
+The final handoff edits are local and are not part of the previously requested
+Git synchronization snapshot. Local commit `d8a6e39` records the preceding
+verified report and checks; three commits await approved push.
+
+Original-CNN known-96 replays are saved in
+`results/cnn_adoption_v1/evaluation/development/original_<architecture>_r2/fp32/`:
+the `complete.json` summary and `known_diagnostics_scores.jsonl` preserve each
+of the four original structures. They are descriptive known examples, not
+independent confirmation or an extra opportunity for candidate selection.

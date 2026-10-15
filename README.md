@@ -51,12 +51,14 @@ identities when attempting reproduction.
 
 ## Latest bounded study
 
-The [CNN adoption study](reports/cnn_adoption_study.md) is now executing under
-the separately submitted adoption prompt. It prepares new grouped development
-and confirmation data, compares supervised CNN adaptation with historical and
-matched-data BERT, and requires a qualified numerical/export and hardware-cost
-case before adopting a research backbone. This new study has not yet reached
-an adoption verdict; it preserves the completed exploration below.
+The [CNN adoption study](reports/cnn_adoption_study.md) completed its bounded
+offline comparison on 15 October 2026: **do not adopt these CNNs yet**.
+All sixteen frozen confirmation evaluations and six paired uncertainty
+analyses passed independent reconciliation. Both intended CNNs fail the
+primary quality bounds in all three seeds; matched-data BERT also fails.
+Export and software qualification support the comparison, while conditional
+storage savings do not establish a physical FPGA advantage. The study leaves
+the project's FPGA-centered scientific purpose and earlier findings intact.
 
 The [CNN architecture exploration](reports/cnn_study.md) completed its authorized
 offline stage on 14 October 2026: 96 screens, 23 longer inner fits, one matched

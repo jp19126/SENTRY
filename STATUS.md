@@ -1,6 +1,6 @@
 # SENTRY status
 
-**Updated: 2026-10-15 - CNN confirmation verified; final handoff in progress.**
+**Updated: 2026-10-15 - CNN adoption study completed; negative decision.**
 
 The user submitted SENTRY_CNN_adoption_prompt.md for execution, with a 60%-used
 account ceiling (raised explicitly by the user; initial observation36%). It authorizes a new board-free
@@ -47,14 +47,19 @@ qualified; intended CNN Graph means show no GPU latency win over BERT FP32.
 BERT CPU timing remains unqualified. Conditional payload savings do not prove
 target allocation, clock closure, transport integration or physical advantage.
 
-Six paired confirmation uncertainty analyses are running from saved scores,
-after the full independent audit. Final report, resource reconciliation and
-requirement-by-requirement completion handoff remain pending; the goal is active.
-Failed resource preflights and focused verification-helper corrections remain
-preserved. Scoring sources, models and scientific choices were unchanged.
-Account usage last observed 53% against the user-raised 60% cap; no reset used.
-Local Git commits 38c294b and 6e566a0 exist. Push awaits explicit remote/branch approval
-after automatic review rejected egress; scientific work continues locally.
+Six paired confirmation uncertainty analyses completed and reconciled all
+54 seed/operating-point comparisons and resampled intervals. The principal
+report and resource ledger now contain the final decision and reproducible
+evidence. Recorded accelerator/CPU charges are below the ceilings; eight
+untimed intervals prevent an exact total or strict accounting upper bound.
+Failed preflights and focused verification corrections are preserved; scoring
+sources and frozen scientific choices remain unchanged. Account usage was
+last observed at 53% against the user-raised 60% cap, without a reset.
+The final requirement audit is results/cnn_adoption_v1/prompt_completion_requirements_audit_final_r2.json.
+Local Git commits 38c294b, 6e566a0 and d8a6e39 exist; push awaits explicit
+remote/branch/payload approval after automatic review rejected egress.
+Final handoff edits after that snapshot remain local. No further experiment
+or physical FPGA stage is authorized by this negative adoption conclusion.
 
 ## Preserved limits and findings
 

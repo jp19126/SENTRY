@@ -310,3 +310,15 @@ for C98 against the aligned hypothetical BERT payload. This is still shape
 accounting only; the all-matrix-W8 BERT format has no numerical qualification
 or packed deployment artifact. Component counts and source hashes are in
 [`bert_payload_alignment_reconciliation.json`](../results/cnn_adoption_v1/bert_payload_alignment_reconciliation.json).
+
+
+## Final reconciliation, 15 October 2026
+
+The six actual frozen finalist exports passed packed CPU reference checks and
+native INT8/INT32 software arithmetic qualification. All sixteen confirmation
+evaluations completed, including every intended W8/A8 CNN, with independent
+saved-score verification. Earlier unqualified-route statements describe the
+historical state. The qualified software route still includes explicit FP32
+exceptions; it does not prove an implemented PL chain, allocated target RAM,
+CNN transport integration or achieved FPGA timing. Quality failures prevent
+adoption; no vendor build or physical operation was performed.

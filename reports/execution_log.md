@@ -3112,3 +3112,19 @@ integer Graph means are 5.211408 ms LocalContext and 5.601936 ms C98 versus
 claimed. The prompt requirement audit remains explicitly incomplete pending
 all sixteen confirmation evaluations, released saved-score checks, paired
 analyses, the frozen-rule verdict and final documentation handoff.
+
+
+## 2026-10-15 — final CNN adoption handoff
+
+All 16 frozen confirmation outputs passed independent score/identity checks;
+all six paired analyses completed, with 54 point comparisons and saved-draw
+intervals independently reconciled. No model was retrained or threshold rescued
+after release. The final report records DO NOT ADOPT THESE CNNs YET: all
+intended CNN seeds and matched BERT fail primary bounds. Sparse stresses and
+unvalidated physical hardware claims remain explicit. The resource ledger
+separates known lower bounds, interrupted charges and eight unknown intervals.
+README, safe-helper STATUS, configuration phase and mapping reconcile the
+completed offline state. Previous report/config/status bytes are preserved in
+results/cnn_adoption_v1/. The final completion audit binds the current files.
+Local commit d8a6e39 stores the preceding requested Git snapshot; push of three
+commits remains blocked by automatic approval review pending explicit approval.

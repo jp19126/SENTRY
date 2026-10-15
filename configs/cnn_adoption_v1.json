@@ -1,6 +1,6 @@
 {
   "study_id": "cnn_adoption_v1",
-  "phase": "frozen_once_confirmation_evaluation",
+  "phase": "completed_negative_adoption_decision",
   "execution_authority": "User submitted SENTRY_CNN_adoption_prompt.md; local adoption study only",
   "usage_cap_used_percent": 60,
   "initial_used_percent": 36,
@@ -1312,5 +1312,14 @@
     "local_context_03_residual_replace_c98": "w8a8_export",
     "bert_matched": "fp32"
   },
-  "fp32_cnn_companions": "diagnostic; cannotrescue intendedformat orfailedseed"
+  "fp32_cnn_companions": "diagnostic; cannotrescue intendedformat orfailedseed",
+  "final_decision": {
+    "verdict": "DO NOT ADOPT THESE CNNs YET",
+    "basis": "Measured primary and stress quality failures across intended-format seeds; matched BERT also fails primary bounds.",
+    "confirmation_targets_verified": 16,
+    "paired_analyses_reconciled": 6,
+    "report": "reports/cnn_adoption_study.md",
+    "precompletion_config_sha256": "fdf04b2fe30946200c8f5148dd6a3666cce2f276786802923040ccfd3f199082",
+    "scientific_freeze_unchanged": true
+  }
 }
