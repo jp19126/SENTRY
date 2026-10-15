@@ -39,14 +39,29 @@ def run(cmd, cwd, seconds, label):
     vendor_only=label.startswith('aie_') and '--aie-vendor-only' in sys.argv
     data['resource_policy']={
         'aie_vendor_only':vendor_only,
+        'hls_isolated_admission':'--isolate-hls' in sys.argv,
         'compatibility_assumption':('Coordinator-authorized CPU/AIE overlap with GPU training; single ELF job; '
             'launch requires Windows4GiB/WSL8GiB and runtime aborts below2GiB/4GiB.' if vendor_only
-            else 'AIE and link take vendor then GPU locks; other vendor stages take vendor lock. Link requires Windows8GiB/WSL8GiB at launch; runtime floors remain2GiB/4GiB.'),
+            else 'AIE, link and --isolate-hls take vendor then GPU locks; other vendor stages take vendor lock. Link requires Windows8GiB/WSL8GiB at launch; runtime floors remain2GiB/4GiB.'),
         'sampled_descendant_rss_boundary':'Sum RSS for owned process and descendants across process groups; shared pages can be counted multiple times; detached/reparented children may be excluded; not physical/PSS peak.'}
     if vendor:
         data['preflight_memory']=memory_available()
         windows_launch_gib=8 if label.startswith('link_') else 4
         data['resource_policy']['windows_launch_gib']=windows_launch_gib
+        if '--isolate-hls' in sys.argv:
+            admission_start=time.monotonic()
+            while (data['preflight_memory']['windows_available_bytes']<windows_launch_gib*2**30 or
+                   data['preflight_memory']['wsl_available_bytes']<8*2**30):
+                data['status']='waiting_memory_under_both_leases'
+                data['under_lock_memory_wait_seconds']=time.monotonic()-admission_start
+                record.write_text(json.dumps(data,indent=2)+'\n')
+                if data['under_lock_memory_wait_seconds']>=600:
+                    data['status']='blocked_memory_admission_timeout';data['child_launched']=False
+                    record.write_text(json.dumps(data,indent=2)+'\n')
+                    raise RuntimeError('Bounded isolated memory admission expired; no vendor child launched')
+                time.sleep(10);data['preflight_memory']=memory_available()
+            data['under_lock_memory_wait_seconds']=time.monotonic()-admission_start
+            start=time.monotonic()
         if data['preflight_memory']['windows_available_bytes']<windows_launch_gib*2**30 or data['preflight_memory']['wsl_available_bytes']<8*2**30:
             data['status']='blocked_memory_preflight';record.write_text(json.dumps(data,indent=2)+'\n');raise RuntimeError(f'Vendor memory preflight below{windows_launch_gib}GiB Windows/8GiB WSL')
     record.write_text(json.dumps(data,indent=2)+'\n')
@@ -147,8 +162,10 @@ def main():
     ap.add_argument('--attempt',type=int,default=0)
     ap.add_argument('--timeout',type=int,default=900)
     ap.add_argument('--aie-vendor-only',action='store_true',help='Coordinator-authorized AIE/GPU overlap under unchanged memory guards')
+    ap.add_argument('--isolate-hls',action='store_true',help='Take vendor/GPU leases and wait at most600s for memory before HLS child launch')
     args=ap.parse_args()
     if args.aie_vendor_only and args.stage!='aie':ap.error('--aie-vendor-only applies only to AIE compilation')
+    if args.isolate_hls and args.stage!='hls':ap.error('--isolate-hls applies only to HLS')
     if os.name=='nt':raise RuntimeError('Use Linux Python after sourcing installed Vitis settings64.sh')
     if not 1<=args.timeout<=7200:raise ValueError('Finite timeout in [1,7200] required')
     dst=BUILD/(args.mapping if args.stage in ('hls','link') else 'common');dst.mkdir(parents=True,exist_ok=True)
@@ -182,10 +199,8 @@ def main():
                 if (dst/name).exists():(dst/name).rename(saved/name)
         cfg=dst/'hls.cfg'
         cfg.write_text('part=xcve2802-vsvh1760-2MP-e-S\n[hls]\nflow_target=vitis\nsyn.top=bert_pl\nsyn.file='+str(SOURCE/'pl.cpp')+'\nsyn.cflags=-std=c++14 -ffp-contract=off -DBERT_RESIDENT='+str(int(args.mapping=='resident'))+'\nclock=4ns\npackage.output.syn=true\npackage.output.format=xo\npackage.output.file='+str(dst/'bert_pl.xo')+'\n')
-        # Only the pointwise normalization output loop: distinct c iterations
-        # access distinct x elements; gamma/beta are separate immutable BOs.
-        # Mean/variance reduction dependence and source arithmetic stay intact.
-        with cfg.open('a') as f:f.write('syn.directive.dependence=variable=x type=inter dependent=false bert_aie::norm/VITIS_LOOP_49_4\n')
+        # Both scoped norm dependence target spellings were ignored by HLS.
+        # Attempt configs/logs preserve them; no unverified directive is emitted.
         run([TOOLS/'bin/v++','--compile','--mode','hls','--config',cfg,'--work_dir',dst/'hls'],dst,args.timeout,label)
     else:
         if (dst/'link_tmp').exists():
@@ -197,8 +212,20 @@ def main():
 if __name__=='__main__':
     if len(sys.argv)>1 and sys.argv[1] in ('aie','aiesim','hls','link'):
         from common import lock
+        isolated='--isolate-hls' in sys.argv
+        admission=None
+        if isolated:
+            mapping=sys.argv[sys.argv.index('--mapping')+1];attempt=sys.argv[sys.argv.index('--attempt')+1]
+            admission=BUILD/mapping/f'hls_attempt{attempt}_admission.json'
+            state={'pid':os.getpid(),'status':'waiting_vendor','child_launched':False,'started_unix':time.time()}
+            admission.write_text(json.dumps(state,indent=2)+'\n')
         with contextlib.ExitStack() as resources:
-            resources.enter_context(lock('vendor'))
-            if sys.argv[1]=='link' or (sys.argv[1]=='aie' and '--aie-vendor-only' not in sys.argv):resources.enter_context(lock('gpu0',timeout=900))
+            resources.enter_context(lock('vendor',timeout=600 if isolated else 0))
+            if isolated:
+                state['status']='waiting_gpu';admission.write_text(json.dumps(state,indent=2)+'\n')
+            if isolated or sys.argv[1]=='link' or (sys.argv[1]=='aie' and '--aie-vendor-only' not in sys.argv):resources.enter_context(lock('gpu0',timeout=600 if isolated else 900))
+            if isolated:
+                state['status']='leases_acquired_driver_entered';state['lease_wait_seconds']=time.time()-state['started_unix']
+                state['child_launched']='See stage record owned_root_pid';admission.write_text(json.dumps(state,indent=2)+'\n')
             main()
     else:main()

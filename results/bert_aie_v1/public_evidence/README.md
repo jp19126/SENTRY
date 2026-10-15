@@ -13,3 +13,5 @@ Remaining release concern: the new calibration/confirmation outcomes and outcome
 Original external HLS estimate uses 839,976 LUTs and exceeds device LUT capacity. Its external LayerNorm schedule contains a diagnosed false dependence. Interface-cap and normalization-dependence corrections retain separate attribution. These HLS estimates are not routed timing or measured runtime and do not establish a residency speedup. No active connected-link attempt is included.
 
 The completed original resident connected-link abort is archived separately. It reached Vivado synthesis after block-design generation, then stopped at the required Windows memory floor; no routed XSA or successful link is inferred.
+
+Completed resident128-bit-cap evidence is included separately: the normalization directive was ignored. The partial external retry and its admission are archived as paused at90% weekly usage, not successful synthesis. Both leases were released. No background continuation is active.

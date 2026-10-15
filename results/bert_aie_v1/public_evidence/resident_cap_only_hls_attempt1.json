@@ -1,0 +1,66 @@
+{
+  "command": [
+    "/home/jp19126/Xilinx/2025.2/Vitis/bin/v++",
+    "--compile",
+    "--mode",
+    "hls",
+    "--config",
+    "/home/jp19126/Projects/SENTRY/build/bert_aie_v1/resident/hls.cfg",
+    "--work_dir",
+    "/home/jp19126/Projects/SENTRY/build/bert_aie_v1/resident/hls"
+  ],
+  "cwd": "/home/jp19126/Projects/SENTRY/build/bert_aie_v1/resident",
+  "timeout_seconds": 1800,
+  "started_utc": "2026-10-15T22:12:07.631481+00:00",
+  "build_driver_sha256": "edf5ba76675a13a9f022fdf024a815a78fc010fa015bc3db136498a0bd36fabb",
+  "input_artifact_sha256": {
+    "/home/jp19126/Projects/SENTRY/build/bert_aie_v1/resident/hls.cfg": "1ae1e88d551bafaf43f66a32a4966a5afa057c84afa41baa0609c452feb59138"
+  },
+  "source_sha256": {
+    "tiles.cpp": "e8658e58d59972c1cb02762dc4859e227191df04ecb9774c05688a88f4e8cece",
+    "functional.cpp": "1007909eb3b8c41e481f287e61d01c3ff20bad19b5ea9c60713168b51c45642a",
+    "wire_test.cpp": "2d5259b28055eafafe76c5b32bc762637a0217e04107dcafd59f611cbc4e467b",
+    "pl.cpp": "447086ce699d527b6dc2a7ac087f960d4d828fef732d21e8761c788e8f35ef34",
+    "model.hpp": "c2c5b58b1edb573f992a4f556b6e8ff7040d9cbe5236173c71b8f81dd4497c58",
+    "BUILD_NOTES.md": "35b657feb759c52d4cb8b80bab4d247e9108143a5871e26e73abbdce3c4dac43",
+    "host.cpp": "7563f60ea7420e0b0cf73eb6ea68d22f7f0f000f8729f35091cc6be31917c022",
+    "graph.cpp": "c8b5926d6e48a71c067c3976503cc7020dd939fbca0edbc8c25bf2c01d157b9e",
+    "tiles.hpp": "ad5ffbe26a47170d553be8e508eb2a5a9f035e932041f3003a0ff750f0405f01",
+    "README.md": "64aacb8bd313239c07a4c4b4c532c35cfc31ccd66ff4be0ea451498ecb7a9f51",
+    "system.cfg": "97cb5315d373c22b27ea4e1bb160b50bd5fb41b3adf7fb2aa015757db3a14223"
+  },
+  "boundary": "offline tool execution, no physical device access",
+  "resource_policy": {
+    "aie_vendor_only": false,
+    "compatibility_assumption": "AIE and link take vendor then GPU locks; other vendor stages take vendor lock. Link requires Windows8GiB/WSL8GiB at launch; runtime floors remain2GiB/4GiB.",
+    "sampled_descendant_rss_boundary": "Sum RSS for owned process and descendants across process groups; shared pages can be counted multiple times; detached/reparented children may be excluded; not physical/PSS peak.",
+    "windows_launch_gib": 4
+  },
+  "preflight_memory": {
+    "windows_available_bytes": 5930496000,
+    "wsl_available_bytes": 24184479744
+  },
+  "owned_root_pid": 379845,
+  "status": "command_completed",
+  "minimum_available_memory": {
+    "windows_available_bytes": 2512957440,
+    "wsl_available_bytes": 22013935616
+  },
+  "processes_at_minimum_windows_memory": [
+    "    PID    PPID   RSS COMMAND",
+    " 383966  383895 1279032 vivado",
+    " 380075  379992 1269812 vitis_hls",
+    " 379988  379977 245400 xcd",
+    " 379977  379907 241884 v++",
+    "  17253   17118 239392 hermes",
+    "  17107       1 24972 unattended-upgr",
+    "2897181       1 23364 systemd-journal",
+    " 379841  379671 19084 python3",
+    "  16925       1 18652 NetworkManager",
+    " 379671  379669 17928 python3",
+    "  16821       1 16668 gnome-remote-de"
+  ],
+  "maximum_sampled_descendant_rss_bytes": 3130716160,
+  "returncode": 0,
+  "elapsed_seconds": 224.33803305006586
+}

@@ -256,8 +256,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 2998,
-      "sha256": "e016b47490e48b293c05f2660149b060768ef82e61f0df776244644c5cc7dd57",
+      "bytes": 3284,
+      "sha256": "f778892c42535a86dd9a9a2318119dda9af67de9b07100bb51d15403927e589d",
       "sources": [],
       "selection": "Authored archive scope and omission note"
     },
@@ -327,17 +327,64 @@
         }
       ],
       "selection": "Exact completed original connected-link memory-floor abort record; no private outcomes."
+    },
+    {
+      "path": "resident_cap_only_hls_attempt1.json",
+      "bytes": 3163,
+      "sha256": "65a55fd4f3472978717145f9cc65517fa86a78e29ab66c62a7ddd9f698f60e75",
+      "sources": [
+        {
+          "path": "build/bert_aie_v1/resident/hls_attempt1.json",
+          "sha256": "65a55fd4f3472978717145f9cc65517fa86a78e29ab66c62a7ddd9f698f60e75"
+        }
+      ],
+      "selection": "Completed resident128-bit interface-cap attempt1; normalization dependence directive ignored, not applied; no private outcomes."
+    },
+    {
+      "path": "resident_cap_only_hls_costs.json",
+      "bytes": 104621,
+      "sha256": "1ed110157e6ceaaad65e5173f8fd3b3e3deadcebc36d00b211e0ffe0ff610b67",
+      "sources": [
+        {
+          "path": "build/bert_aie_v1/resident/hls_costs.json",
+          "sha256": "1ed110157e6ceaaad65e5173f8fd3b3e3deadcebc36d00b211e0ffe0ff610b67"
+        }
+      ],
+      "selection": "Completed resident128-bit interface-cap attempt1; normalization dependence directive ignored, not applied; no private outcomes."
+    },
+    {
+      "path": "external_paused_hls_attempt1.json",
+      "bytes": 3476,
+      "sha256": "a62186e03a883505512fbb66745e7cfce3a58135eb350dcd7e3cd60e3d10f9bb",
+      "sources": [
+        {
+          "path": "build/bert_aie_v1/external/hls_attempt1.json",
+          "sha256": "a62186e03a883505512fbb66745e7cfce3a58135eb350dcd7e3cd60e3d10f9bb"
+        }
+      ],
+      "selection": "Exact user-usage-cap pause record; partial build, no successful corrected external XO."
+    },
+    {
+      "path": "external_paused_hls_attempt1_admission.json",
+      "bytes": 167,
+      "sha256": "4eda5acc2a25ff69099ea98e3a371a5089dde231a4148348c151617afc7c937c",
+      "sources": [
+        {
+          "path": "build/bert_aie_v1/external/hls_attempt1_admission.json",
+          "sha256": "4eda5acc2a25ff69099ea98e3a371a5089dde231a4148348c151617afc7c937c"
+        }
+      ],
+      "selection": "Exact user-usage-cap pause record; partial build, no successful corrected external XO."
     }
   ],
-  "payload_bytes": 342027,
+  "payload_bytes": 453740,
   "forbidden_content_omitted": [
     "calibration_scores",
     "confirmation_scores",
     "outcome analyses",
     "final confirmed-candidate software timing",
     "private principal report",
-    "sibling outcomes",
-    "active/retry HLS and link artifacts"
+    "sibling outcomes"
   ],
   "no_experiments_or_git_operations": true
 }

@@ -9,9 +9,11 @@ This view is not a claim that private evidence is missing or passed.
 
 This is the task-owned report for the user-authorized 15 October 2026 Path 2
 execution. It preserves the historical adoption decision and does not authorize
-another research direction. **Execution is in progress. Physical validation is
-not authorized. A scientific contribution is not established.** The final
-offline completion state will distinguish successful builds from blocked stages.
+another research direction. **Paused at the user's limit: 90% weekly usage used
+(10% remaining). Offline study incomplete; physical validation pending and not
+authorized; scientific contribution not established.** No usage reset was used.
+The external corrected HLS run was stopped at this boundary; completed artifacts
+and partial build state are preserved for an explicit continuation.
 
 ## Question, controls and evidence boundary
 
@@ -266,7 +268,7 @@ bottleneck even though native matrix tiles execute quickly. A wider accessor
 and banked gather would be a further implementation variant; it is not silently
 substituted for the frozen mapping during this connected-build campaign.
 
-The current competent tile refinement is INT8 32x256x32 and BF16 32x64x32;
+The current selected tile refinement is INT8 32x256x32 and BF16 32x64x32;
 inner BF16 accumulation remains 64, so refinement does not change the numerical
 model. It reduces calls to 3,072 INT8 and 2,048 BF16 services per window. Aggregate
 PLIO operand/result payload is 62,914,560 + 25,165,824 = 88,080,384 bytes/window,
@@ -306,6 +308,30 @@ Image/root filesystem, XRT headers or `libxrt_coreutil`. Thus a connected emulat
 smoke also requires missing target runtime assets; simulator templates alone do
 not establish whole-system functional execution.
 No physical access, probing, programming, power or energy measurement occurred.
+
+Resident HLS attempt 1 completed in 224.34 seconds with the 128-bit interface cap.
+Its estimate fell from 320,294 to 135,220 LUT and from 81,199 to 49,319 FF;
+BRAM18 fell from 124 to 113, with 129 DSP and 113 URAM unchanged. The actual
+parameter interface is now 128 bits. The schedule estimate remains almost
+unchanged at 57,338,057 cycles (229.352 ms at the requested 4 ns), and the HLS
+effective timing margin remains -0.585 ns. This demonstrates a synthesis-estimate
+resource improvement from avoiding wide pipeline registers, not measured speedup
+or routed timing closure. The normalization directive in this attempt was
+ignored: its namespaced function location did not resolve. Its zero effect is
+recorded explicitly. Generated reports identify `norm/VITIS_LOOP_49_4`; a single
+exact-location correction was also ignored in external attempt 1 (HLS 200-1986).
+No further guessed target or blanket dependence removal is attempted. Both
+corrected builds therefore test the 128-bit interface cap only; the external
+LayerNorm scheduling defect remains unresolved. Mean/variance reductions and
+frozen numerical sources remain unchanged.
+
+External attempt 1 acquired vendor then GPU leases, waited 205.615 seconds for
+natural memory recovery without a vendor child, and then launched with
+8,666,914,816 bytes Windows available. A focused host snapshot during the wait
+found three native Windows Vivado processes using about 3.88/3.25/3.23 GiB,
+while WSL used about 2.97 GiB. Those processes were not presumed owned by this
+task and were not terminated. No cache flush or system setting change was used.
+Its lock wait, under-lock memory wait and actual execution remain distinct costs.
 
 ## Offline board continuation
 
@@ -369,7 +395,7 @@ filename shadowing Python's stdlib module (renamed `profile_detector.py`) and
 resource-busy admission. No dependency reinstall or result fabrication was used.
 `configs/bert_aie_v1.json` records the bounded matrix and cumulative ceilings.
 Weekly usage is checked periodically; work must pause at 90% used (10% remaining),
-without consuming a reset. The latest checkpoint observed 83% used.
+without consuming a reset. The pause checkpoint observed 90% used.
 `results/bert_aie_v1/cost_ledger.json` separates outer lock waiting, admitted
 child wall time and vendor stages. The profile dispatch reserved resources for
 902.27 seconds, much of it waiting for the C++ CPU lease; that is not 902 seconds
@@ -412,6 +438,52 @@ The first implementation checkpoint, `ad7eead`, was committed and successfully
 pushed to `origin/codex/bert-aie-v1`; it explicitly records execution as in progress.
 The second implementation checkpoint, `90aff0a`, was also pushed normally. It
 adds corpus/profiling/trace/board tools without releasing confirmation outcomes.
+The third checkpoint, `601fe93`, was pushed with native AIE/original HLS/link-abort
+evidence and bounded integration repairs. All 12 task-owned frozen source/config
+identities match the staged bytes. Original vendor report whitespace is preserved
+for hash identity. The Git report is a clearly marked release view withholding
+new calibration/confirmation outcomes, derived thresholds and final comparisons;
+the complete canonical report remains local until the sibling candidate freeze.
 The Windows worktree used the existing WSL-configured author identity via
 per-command Git options. No main-branch switch, force push or shared-file edit
 was performed. Later evidence and focused fixes require another ordinary commit.
+
+## Pause conclusion and exact continuation
+
+The user-requested weekly limit was reached during external HLS attempt 1.
+Only the owned HLS process tree was terminated; the driver exited and both
+resource leases were verified absent. The attempt/admission records explicitly
+say `paused_user_usage_cap`. Partial RTL generation is preserved, with no
+completed corrected external top report or XO. The completed resident cap-only
+XO is 142,019,094 bytes at `build/bert_aie_v1/resident/bert_pl.xo`.
+
+The supporting engineering result is a complete software/portable model,
+prospective numerical evaluation, matched software timing, native AIE arithmetic
+checks, paired original HLS XOs and a substantial resident HLS resource reduction
+from the interface cap. Complete target feasibility, routed clock, connected
+whole-model numerical behavior and measured residency benefit remain open.
+The ignored normalization directives leave a known external-baseline scheduling
+defect; the original slow baseline cannot substantiate a speedup claim. No
+complete AIE-versus-GPU, energy or novel co-design benefit is established.
+This is an incomplete offline study, not a scientific success or a negative
+verdict on all BERT FPGA implementations.
+
+After explicit resumption, first source
+`/home/jp19126/Xilinx/2025.2/Vitis/settings64.sh` in the canonical checkout, then:
+
+```bash
+python3 scripts/bert_aie_v1/build_hardware.py hls --mapping external --attempt 2 --timeout 1800 --isolate-hls
+```
+
+This preserves the partial attempt and uses the corrected interface without the
+ineffective directive. Inspect the resulting paired costs before continuing
+`link --mapping resident --attempt 1 --timeout 7200`; connected link requires
+both leases and at least 8 GiB Windows launch headroom. Continue the external
+connected build only after its actual resource evidence is assessed. Reuse all
+completed numerical, corpus and timing artifacts. Host compilation, packaging
+and connected Linux/XRT emulation additionally require the missing matching SDK,
+Linux Image and root filesystem listed in `board_packages/resume.json`.
+Physical operations remain separately unauthorized. No background continuation
+or automation was installed.
+
+Final recorded vendor-stage wall time is 2,178.95 seconds; dispatch reservations remain CPU951.28s, GPU171.42s and combined918.58s. These are ledger wall-time categories, not active-device time or energy.

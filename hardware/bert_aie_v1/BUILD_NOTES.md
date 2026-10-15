@@ -191,6 +191,25 @@ a competence-based speedup claim. AMD UG1399 2025.2 documents this config syntax
 and warns that false dependencies must be proved; the proof above is scoped to
 this output loop only.
 
+Resident HLS attempt1 parsed but ignored that namespaced directive with warning
+HLS200-1986. It is retained as an interface-cap-only attempt. The generated
+`norm_csynth.xml` identifies TopModelName `norm`, and the generated output-loop
+module is `norm_Pipeline_VITIS_LOOP_49_4`. The single authorized spelling retry
+therefore uses `norm/VITIS_LOOP_49_4`, keeping variable x and inter-only scope.
+No other targets or pointer-wide dependence removal are attempted. Applied
+status must still be established from the subsequent synthesis log.
+
+Resident cap-only HLS attempt1 completed cleanly in224.338s. Estimated LUT
+fell320,294 to135,220, FF81,199 to49,319 and BRAM18K124 to113; DSP129 and
+URAM113 were unchanged. The actual parameters interface is128 bits; weights
+remain32 bits and unused resident scratch32 bits. Actual-shape reconstruction
+is57,338,057 cycles at requested4ns (229.352ms), assuming ready interfaces;
+the estimate remains3.505ns versus2.92ns effective timing budget. No routed
+clock or runtime is established. Minimum Windows availability was2,512,957,440
+bytes and sampled owned RSS3,130,716,160 bytes. This attempt did not apply the
+norm dependence directive. Exact reports are in resident/hls_costs.json;
+the original HLS/XO are in resident/preserved_before_hls_attempt1.
+
 Original resident connected link attempt0 completed block-design creation,
 update and target generation, then was aborted during Vivado synthesis after
 241.568s by the runtime Windows memory floor:1,655,484,416 bytes available;
@@ -202,3 +221,17 @@ this observed footprint plus2GiB headroom, and general.maxThreads=1 in addition
 to synth.jobs=impl.jobs=1. Runtime floors remain Windows2GiB/WSL4GiB. No global
 WSL/cache settings or unrelated processes were changed. A waiting lease or
 failed preflight is not vendor execution. Numerical sources remain frozen.
+
+External attempt1 readiness waiter was cancelled before child launch after natural
+memory recovery remained insufficient. The authorized --isolate-hls admission
+reserves vendor then GPU, records each lease phase, and waits at most600s for
+Windows4GiB/WSL8GiB before any vendor child. It releases leases on timeout;
+no cache flush, settings change, lease stealing or floor relaxation is allowed.
+The admission and stage JSON distinguish lock wait, memory wait and runtime.
+
+External attempt1 began after205.615s of isolated memory recovery. Its one
+exact-name dependence retry was also ignored with HLS200-1986. Both attempt1
+configs/logs are preserved; both builds are therefore interface-cap-only.
+The ineffective directive was removed from future config generation without
+altering the active attempt config or frozen arithmetic. The norm dependence
+remains unresolved; no additional targets or broad dependence removal follow.
