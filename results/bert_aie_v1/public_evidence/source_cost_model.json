@@ -1,0 +1,73 @@
+{
+  "schema": "sentry_bert_aie_v1_source_costs_v1",
+  "source_sha256": {
+    "model.hpp": "c2c5b58b1edb573f992a4f556b6e8ff7040d9cbe5236173c71b8f81dd4497c58",
+    "pl.cpp": "0face15a9e1a6592cf6ff753af7ec149005af772c23723fcc6ccf0caebc36efa",
+    "tiles.cpp": "e8658e58d59972c1cb02762dc4859e227191df04ecb9774c05688a88f4e8cece"
+  },
+  "export_manifest_sha256": "c4fe164a48051ca3834e112f5efd6564c559d8d62604dfe716cb2c1c097d92a3",
+  "dimensions": {
+    "sequence": 256,
+    "hidden": 256,
+    "ff": 1024,
+    "heads": 4,
+    "head_width": 64,
+    "layers": 4
+  },
+  "matrix_macs": {
+    "encoder_dense": 805306368,
+    "encoder_attention": 134217728,
+    "pooler_classifier": 66048
+  },
+  "engine_calls": {
+    "int8": 3072,
+    "bf16_qk": 1024,
+    "bf16_pv": 1024
+  },
+  "plio_payload_bytes": {
+    "int8": {
+      "a": 25165824,
+      "b": 25165824,
+      "c": 12582912
+    },
+    "bf16": {
+      "a": 8388608,
+      "b": 8388608,
+      "c": 8388608
+    },
+    "total": 88080384
+  },
+  "double_buffer_data_bytes": {
+    "int8": 40960,
+    "bf16": 24576
+  },
+  "resident_storage_bytes": {
+    "full_fp32_intermediates": 2883584,
+    "quantized_activation": 262144,
+    "excludes": "temporary operand/result tiles, score panels, norm buffers, stream FIFOs and compiler replication"
+  },
+  "external_scratch_logical_accesses": {
+    "reads_float32": 12582912,
+    "writes_float32": 4849664,
+    "bytes": 69730304,
+    "per_layer_reads": 3080192,
+    "per_layer_writes": 1179648,
+    "boundary": "Source-level scalar tensor accesses; repeated same-address expression loads assumed CSE. Not measured AXI traffic: caching, coalescing, burst widening and compiler scheduling can change physical bytes. Resident mapping relocates these accesses rather than eliminating their compute/local-storage cost."
+  },
+  "other_logical_payloads": {
+    "input_int32_bytes": 3072,
+    "output_logits_status_bytes": 12,
+    "embedding_value_reads_bytes": 786432,
+    "dense_weight_reads_bytes": 25165824,
+    "excludes": "normalization/head/scale/bias parameter accesses, AXI transaction overhead, padding, repetition/cache behavior and initial model transfer"
+  },
+  "port_bound": {
+    "assumed_pl_clock_hz": 250000000,
+    "bits": 128,
+    "ideal_bytes_per_second_per_port": 4000000000,
+    "int8_a_seconds": 0.006291456,
+    "boundary": "Ideal necessary bound for this graph at the requested port clock. Achieved routed clock and sustained bandwidth are unmeasured; not a general BERT/FPGA bound or prediction of complete latency."
+  },
+  "pl_only_comparison": "Buffered PL has the same operation counts and can hold operator tiles, but dense multiplier allocation/clock and FP32 nonlinear costs are not measured here. No PL-only advantage claim; the implemented external/resident heterogeneous pair isolates scratch placement.",
+  "evidence_type": "Analytical source counts; no synthesis, simulation-cycle, routed timing, board power or energy claim."
+}

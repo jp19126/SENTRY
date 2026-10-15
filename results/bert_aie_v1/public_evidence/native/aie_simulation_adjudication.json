@@ -1,0 +1,38 @@
+{
+  "command": [
+    "/home/jp19126/Xilinx/2025.2/Vitis/aietools/bin/aiesimulator",
+    "--pkg-dir=Work",
+    "--input-dir=.",
+    "--enable-memory-check",
+    "--simulation-cycle-timeout=200000"
+  ],
+  "cwd": "/home/jp19126/Projects/SENTRY/build/bert_aie_v1/common",
+  "started_utc": "2026-10-15T23:42:46.600795+02:00",
+  "build_driver_sha256": "0cd214ac18b8e29226f3fc2d0640c1dbd55a3248af97c71c0047630716db764b",
+  "source_sha256": {
+    "tiles.cpp": "e8658e58d59972c1cb02762dc4859e227191df04ecb9774c05688a88f4e8cece",
+    "functional.cpp": "1007909eb3b8c41e481f287e61d01c3ff20bad19b5ea9c60713168b51c45642a",
+    "wire_test.cpp": "2d5259b28055eafafe76c5b32bc762637a0217e04107dcafd59f611cbc4e467b",
+    "pl.cpp": "0face15a9e1a6592cf6ff753af7ec149005af772c23723fcc6ccf0caebc36efa",
+    "model.hpp": "c2c5b58b1edb573f992a4f556b6e8ff7040d9cbe5236173c71b8f81dd4497c58",
+    "BUILD_NOTES.md": "2ba3a685a6ac7020de6d32a1a76ce63fc1de4d7da143f61c421f3ba6bc6fbcdb",
+    "host.cpp": "7563f60ea7420e0b0cf73eb6ea68d22f7f0f000f8729f35091cc6be31917c022",
+    "graph.cpp": "c8b5926d6e48a71c067c3976503cc7020dd939fbca0edbc8c25bf2c01d157b9e",
+    "tiles.hpp": "ad5ffbe26a47170d553be8e508eb2a5a9f035e932041f3003a0ff750f0405f01",
+    "README.md": "64aacb8bd313239c07a4c4b4c532c35cfc31ccd66ff4be0ea451498ecb7a9f51",
+    "system.cfg": "d87b6c20806a624e1f1d5179903b43c005889790a364f89c4c31d25cf30d821e"
+  },
+  "boundary": "offline tool execution, no physical device access",
+  "returncode": 0,
+  "elapsed_seconds": 250.8399053219473,
+  "completion_adjudication": {
+    "native_outputs": "All declared outputs produced and independently validated",
+    "clean_simulator_exit": false,
+    "reason": "Post-completion teardown stalled after cores-done and repeated SIGINT messages; main thread futex-wait with busy workers; no log progress for over two minutes",
+    "manual_sigterm_owned_pids": [
+      247262,
+      247273
+    ],
+    "wrapper_returncode_caveat": "Wrapper returned 0 despite explicit child termination; must not be interpreted as clean simulator exit"
+  }
+}

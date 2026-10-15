@@ -1,0 +1,134 @@
+{
+  "schema": "bert_aie_primary_data_check_v1",
+  "passed": true,
+  "errors": [],
+  "protocol_sha256": "614549f8a1eeac21cc4168f551812fe6398c3da2e856529f81bb55910ce1b398",
+  "audit_script_sha256": "0e3d3ff5905459ae2121c3d48b65c8dd0dd040d834e098a279842b20e9bc82ab",
+  "old_protocol_sha256": "c84c7c0ca42b3099a95e7f48471788e221873ef694bf4e7cf96fe6d3f7a62cb7",
+  "old_source_groups_excluded": 8800,
+  "roles": {
+    "fit_transfer": {
+      "documents": 1000,
+      "labels": {
+        "0": 500,
+        "1": 500
+      },
+      "hard_benign": 300,
+      "source_groups": 500,
+      "payload_families": 12,
+      "context_families": 3,
+      "raw_sha256": "db4261b00a1e88674a0208fbf17d0d5acfa51391081364e8a6974e7110835b52"
+    },
+    "new_selection": {
+      "documents": 300,
+      "labels": {
+        "0": 200,
+        "1": 100
+      },
+      "hard_benign": 50,
+      "source_groups": 200,
+      "payload_families": 12,
+      "context_families": 3,
+      "raw_sha256": "9871cbbe79a9c2d1b6bf3e81b2c4988c9ee2db78dd01359da6668c8f2af7f0d0"
+    },
+    "new_development_calibration": {
+      "documents": 500,
+      "labels": {
+        "0": 500
+      },
+      "hard_benign": 125,
+      "source_groups": 500,
+      "payload_families": 12,
+      "context_families": 3,
+      "raw_sha256": "c762ba23192547164e311e0aa16c200689086c0a0428743165443e66b7de60e1"
+    },
+    "new_calibration": {
+      "documents": 1000,
+      "labels": {
+        "0": 1000
+      },
+      "hard_benign": 250,
+      "source_groups": 1000,
+      "payload_families": 12,
+      "context_families": 3,
+      "raw_sha256": "70e2d205a69690832272966a221060f671f07cfe08016edb793ecc8e8333b66d",
+      "exactly_reconstructed_documents": 1000,
+      "exactly_reconstructed_windows": 1146,
+      "padded_tail_windows": 993,
+      "multiwindow_documents": 140
+    },
+    "new_confirmation": {
+      "documents": 600,
+      "labels": {
+        "0": 400,
+        "1": 200
+      },
+      "hard_benign": 100,
+      "source_groups": 400,
+      "payload_families": 12,
+      "context_families": 3,
+      "raw_sha256": "f84bd149d7de2776b06098364a8d689d31db47399388c3ebe31448cfaf19c12e",
+      "exactly_reconstructed_documents": 600,
+      "exactly_reconstructed_windows": 703,
+      "padded_tail_windows": 597,
+      "multiwindow_documents": 97
+    }
+  },
+  "role_intersections": {
+    "source": {
+      "fit_transfer / new_selection": 0,
+      "fit_transfer / new_development_calibration": 0,
+      "fit_transfer / new_calibration": 0,
+      "fit_transfer / new_confirmation": 0,
+      "new_selection / new_development_calibration": 0,
+      "new_selection / new_calibration": 0,
+      "new_selection / new_confirmation": 0,
+      "new_development_calibration / new_calibration": 0,
+      "new_development_calibration / new_confirmation": 0,
+      "new_calibration / new_confirmation": 0
+    },
+    "payload": {
+      "fit_transfer / new_selection": 0,
+      "fit_transfer / new_development_calibration": 0,
+      "fit_transfer / new_calibration": 0,
+      "fit_transfer / new_confirmation": 0,
+      "new_selection / new_development_calibration": 0,
+      "new_selection / new_calibration": 0,
+      "new_selection / new_confirmation": 0,
+      "new_development_calibration / new_calibration": 0,
+      "new_development_calibration / new_confirmation": 0,
+      "new_calibration / new_confirmation": 0
+    },
+    "context": {
+      "fit_transfer / new_selection": 0,
+      "fit_transfer / new_development_calibration": 0,
+      "fit_transfer / new_calibration": 0,
+      "fit_transfer / new_confirmation": 0,
+      "new_selection / new_development_calibration": 0,
+      "new_selection / new_calibration": 0,
+      "new_selection / new_confirmation": 0,
+      "new_development_calibration / new_calibration": 0,
+      "new_development_calibration / new_confirmation": 0,
+      "new_calibration / new_confirmation": 0
+    }
+  },
+  "primary_reconstructed_documents": 1600,
+  "primary_reconstructed_windows": 1849,
+  "model_scores_read": false,
+  "old_confirmation_rows_read": false,
+  "sibling_outcome_reports_read": false,
+  "model_training_or_inference": false,
+  "findings": [
+    "Source/payload/context identities and exact text are disjoint across declared roles, including sibling FIT transfer, conditional on zero reported errors.",
+    "All positive source backgrounds also have benign examples; payload families contain both classes where positives occur.",
+    "Model arrays contain only text-derived WordPiece IDs and masks; metadata/labels/IDs/URLs are absent from model input.",
+    "Hard benign contexts are authored discussion wrappers, while positives are operative redirection; frequent wrapper prefixes are a potential learnable construction cue, not evidence of natural attack generalization."
+  ],
+  "limits": [
+    "Role IDs are author-assigned ancestry, not proof of semantic independence. Exact set/text checks cannot detect paraphrase or semantic overlap.",
+    "One-author response-redirection payloads/contexts and Wikipedia backgrounds; no natural-population or unseen-mechanism claim.",
+    "Old source exclusion verified from frozen role metadata only; old confirmation rows/scores and protected data remain unopened.",
+    "No target-LLM outcomes inspected; labels describe authored intent. Prefix/source checks cannot rule out all label shortcuts.",
+    "Primary calibration/confirmation data were inspected score-free for this audit; this is not a blind reannotation."
+  ]
+}

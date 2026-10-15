@@ -1,0 +1,209 @@
+{
+  "schema": "sentry_bert_aie_v1_evaluation_freeze_v1",
+  "complete": true,
+  "nomination_before_confirmation": true,
+  "preparation_mode": "final",
+  "selected_variant": "w8a8_bf16_attention",
+  "models": {
+    "source": {
+      "variant": "source",
+      "checkpoint_sha256": "95025bfc0e29163efea613d556d7da0b516ec1bb6c6fac9d9c4c9c6f1f373525",
+      "config_sha256": "61716a972c73e9cc1d6f1165e27e577c1f4012a3cc480e431f427a78d5071ece",
+      "score": "max_window_logit1_minus_logit0",
+      "scale_calibration_sha256": null,
+      "export_manifest_sha256": null
+    },
+    "fp32": {
+      "variant": "fp32",
+      "checkpoint_sha256": "95025bfc0e29163efea613d556d7da0b516ec1bb6c6fac9d9c4c9c6f1f373525",
+      "config_sha256": "61716a972c73e9cc1d6f1165e27e577c1f4012a3cc480e431f427a78d5071ece",
+      "score": "max_window_logit1_minus_logit0",
+      "scale_calibration_sha256": null,
+      "export_manifest_sha256": null
+    },
+    "w8a8_fp32_attention": {
+      "variant": "w8a8_fp32_attention",
+      "checkpoint_sha256": "95025bfc0e29163efea613d556d7da0b516ec1bb6c6fac9d9c4c9c6f1f373525",
+      "config_sha256": "61716a972c73e9cc1d6f1165e27e577c1f4012a3cc480e431f427a78d5071ece",
+      "score": "max_window_logit1_minus_logit0",
+      "scale_calibration_sha256": "6bda96b7d50f55299523e9bde8e3ee3339cebd1619837670a17879e4a55cad73",
+      "export_manifest_sha256": null
+    },
+    "w8a8_bf16_attention": {
+      "variant": "w8a8_bf16_attention",
+      "checkpoint_sha256": "95025bfc0e29163efea613d556d7da0b516ec1bb6c6fac9d9c4c9c6f1f373525",
+      "config_sha256": "61716a972c73e9cc1d6f1165e27e577c1f4012a3cc480e431f427a78d5071ece",
+      "score": "max_window_logit1_minus_logit0",
+      "scale_calibration_sha256": "6bda96b7d50f55299523e9bde8e3ee3339cebd1619837670a17879e4a55cad73",
+      "export_manifest_sha256": "c4fe164a48051ca3834e112f5efd6564c559d8d62604dfe716cb2c1c097d92a3"
+    }
+  },
+  "data": {
+    "calibration": {
+      "directory": "\\\\wsl.localhost\\Ubuntu\\home\\jp19126\\Projects\\SENTRY\\results\\dual_track_v1\\shared\\data\\prepared\\new_calibration",
+      "files": {
+        "manifest.json": "a6543e9f21d1081f2f2b72e554438b09f1896a20d4bab7391e8490be8ea9f104",
+        "ids.npy": "6d2749f04a8bbd339023450b531aadec1d262989245c0953a314b16241fb9bc4",
+        "masks.npy": "529557009e0aa5ed407de2d16d36c7db16d42757b1a67238c9b30070ce97d573",
+        "starts.npy": "9b7886b2901663f93897fea9209019a6959d2504c7f99c56d5090d5e69732b90",
+        "content_start.npy": "aefd037727ede1fbe07e7d5fcb610603685d6eddae0185c16565e5d54054c901",
+        "document_content_length.npy": "0d0707def29441d99173589adc0156b37e07eb8a4fddb28e95b8b390d143b7b8",
+        "documents.jsonl": "92297d9c44173e9a4f283ceb93376c859ff4e6eb4cc74c40ffb851166e307545"
+      }
+    },
+    "selection": {
+      "directory": "\\\\wsl.localhost\\Ubuntu\\home\\jp19126\\Projects\\SENTRY\\results\\dual_track_v1\\shared\\data\\prepared\\new_confirmation",
+      "files": {
+        "manifest.json": "2760d4110fda6c33717c8ccff089cb5195d53a0ab008e82e36822e76b2232cfa",
+        "ids.npy": "03c7052ae81d9d772c5ca654e53ac481160ab444417c28a82005c25fa48e13fa",
+        "masks.npy": "ee8d8e92b86b408761014859a5e85b877668a633cf85a57d0ecf992cf1403a2f",
+        "starts.npy": "e72e135ebefc9a5d28102fda700244caed8ffa724bfca84d822b50675e59b6f8",
+        "content_start.npy": "ac7c0608bd99e1f936e76c324efe57269aa2af6b1632e31e3d2be6165abef5c9",
+        "document_content_length.npy": "cf3b8cabc980b5475db8b4c89252ae22bcd2e6c797a002f0622ec80ab7c66da7",
+        "documents.jsonl": "23abba814d8ef2f289646654bfeb8e6b40acb38950a6591eb53ff38514faaf98"
+      }
+    }
+  },
+  "execution_routes": {
+    "source": {
+      "backend": "cuda_graph",
+      "batch_windows": 1,
+      "window_length": 256,
+      "attention_mask_policy": "always additive4D constructed inside graph",
+      "operations": "embeddings→encoder→pooler→eval dropout→classifier",
+      "adapted_from_sha256": "ee276904da6b586ed0442da7348d96e508bb86c4c726127b61325394b3dbe86b",
+      "distinct_from": "ordinary HF 2D-mask SDPA dispatch",
+      "profile_detector_source_sha256": "70d58ce5db35313e8e35808ac92f10cd9c30baa74c9901293b3924b53a21e33e"
+    },
+    "w8a8_bf16_attention": {
+      "backend": "cuda_graph",
+      "batch_windows": 1,
+      "window_length": 256,
+      "attention_mask_policy": "readable model original additive4D",
+      "operations": "readable complete model.forward",
+      "adapted_from_sha256": null,
+      "distinct_from": "eager execution scheduling",
+      "profile_detector_source_sha256": "70d58ce5db35313e8e35808ac92f10cd9c30baa74c9901293b3924b53a21e33e"
+    }
+  },
+  "profile_qualification": {
+    "source": {
+      "profile_path": "results/bert_aie_v1/profiling/source_graph.json",
+      "profile_sha256": "773718e7e76b8c6ba9018299aaea1ad75573c064112238a0001ec591245a350f",
+      "evidence_files_sha256": {
+        "results/bert_aie_v1/profiling/source_graph.json": "773718e7e76b8c6ba9018299aaea1ad75573c064112238a0001ec591245a350f",
+        "results/bert_aie_v1/profiling/source_graph_calibration_execution_scores.jsonl": "f35c3446ab0a240e008b7ca5df93666a7aa8c36ad4aaed05e2c4d5d8d06cb7f4",
+        "results/bert_aie_v1/profiling/source_graph_selection_execution_scores.jsonl": "a6514003981c6973c32bab39f4bf6f957ec4ebfd4e3e2e6ae9aec671c142a23a"
+      },
+      "threshold_policy": "execution_calibrated",
+      "reference_transfer_qualified": false,
+      "own_calibration_reported": true,
+      "stage": "development_only"
+    },
+    "w8a8_bf16_attention": {
+      "profile_path": "results/bert_aie_v1/profiling/candidate_graph.json",
+      "profile_sha256": "0ed19032a73fed2e6887b1597ac533f75efdbed8a4b934305d8777734cf6367c",
+      "evidence_files_sha256": {
+        "results/bert_aie_v1/profiling/candidate_graph.json": "0ed19032a73fed2e6887b1597ac533f75efdbed8a4b934305d8777734cf6367c",
+        "results/bert_aie_v1/profiling/candidate_graph_calibration_execution_scores.jsonl": "9d4df4b715f9b41422288cc0f823cc257e1e011154a005452d0d046a054c47ab",
+        "results/bert_aie_v1/profiling/candidate_graph_selection_execution_scores.jsonl": "c4ebf3fd6349789b81991080c57cce776a64eb973713a0f6a2a850476660a8c7"
+      },
+      "threshold_policy": "execution_calibrated",
+      "reference_transfer_qualified": false,
+      "own_calibration_reported": true,
+      "stage": "development_only"
+    }
+  },
+  "pending_required_profiles": [],
+  "calibration_policy": {
+    "alphas": [
+      0.01,
+      0.005,
+      0.02,
+      0.05
+    ],
+    "primary": 0.01,
+    "rule": "margin > threshold",
+    "aggregation": "max_window_margin"
+  },
+  "source_sha256": {
+    "scripts/bert_aie_v1/common.py": "6b1c0d0c8fd6afb357ab5ca04dae8596a6d346f1aa87dea628aa77f1c1bace20",
+    "scripts/bert_aie_v1/evaluate.py": "b632accb0afbca7c5d7919127e1363f095f26932f52792941b8088ad1f990714",
+    "scripts/bert_aie_v1/analyze.py": "d0d54f1443b81e46e899885bfb9ba0ec6c1d20e8a1b4c32554a18f5e10a07f9b",
+    "scripts/bert_aie_v1/model.py": "c0c7fa19a4d435f1089055c1ce1798b8fbb7cf270870ed92ffd9ecbff1caa2aa",
+    "scripts/bert_aie_v1/export.py": "ad8a889f268003982ce4e0e9bc57e82b423672bf0854684974a1c93a9e3ec72c",
+    "scripts/bert_aie_v1/qualify.py": "d9de2589c50dc25fe3e1c3c65ec8288e587191e6346aa6c6a7923902f3af9f21",
+    "scripts/bert_aie_v1/profile_detector.py": "70d58ce5db35313e8e35808ac92f10cd9c30baa74c9901293b3924b53a21e33e",
+    "scripts/bert_aie_v1/freeze_evaluation.py": "dde0254274f55ef765f3b45bf8c4caa6f59081f92b31197fd3a0df0546605e80",
+    "scripts/r1_bert_cuda_graph.py": "ee276904da6b586ed0442da7348d96e508bb86c4c726127b61325394b3dbe86b",
+    "gate_eval.py": "262b178aca71e401c87c048b841d0b6bf39f6f32be4e8c5abc09063b4776ee2b",
+    "configs/bert_aie_v1.json": "bc3356faf1fdf6f4f5c92fafb4dcbda2c990b24ecd722b1dc79ca4759c7208b5",
+    "scripts/bert_aie_v1/evaluate_cpp.py": "acfdcbae4c66bf1909ddd14d697fc25a35f36cdb362374eb7ccaf3a81104a2f3",
+    "hardware/bert_aie_v1/functional.cpp": "1007909eb3b8c41e481f287e61d01c3ff20bad19b5ea9c60713168b51c45642a",
+    "hardware/bert_aie_v1/model.hpp": "c2c5b58b1edb573f992a4f556b6e8ff7040d9cbe5236173c71b8f81dd4497c58",
+    "build/bert_aie_v1/common/bert_functional_stream": "c72f63cc95c5bc0dba6e7f640c31c4acd4cab3a7a13e6413d045f9dedb2be740"
+  },
+  "artifact_sha256": {
+    "results/dual_track_v1/shared/contract.json": "1dc93c47389aec8e823defebc578ed5d0d553c3df3c2045b5d9f6f781f1933b8",
+    "results/dual_track_v1/shared/data/protocol.json": "614549f8a1eeac21cc4168f551812fe6398c3da2e856529f81bb55910ce1b398",
+    "results/bert_aie_v1/numerics/calibration_fit64.json": "6bda96b7d50f55299523e9bde8e3ee3339cebd1619837670a17879e4a55cad73",
+    "results/bert_aie_v1/export/w8a8_bf16_attention/manifest.json": "c4fe164a48051ca3834e112f5efd6564c559d8d62604dfe716cb2c1c097d92a3",
+    "results/bert_aie_v1/export/w8a8_bf16_attention/parameters_f32.bin": "6a0a05a080adc603bb5f9c2d005c760a7f6f27b73d08d5518eb80422544a2cb5",
+    "results/bert_aie_v1/export/w8a8_bf16_attention/weights_i8.bin": "8ac3bcfdfabb47ebf65e47ddf26f2139bb148a37eb5377b1bc3a109956c79aa2",
+    "results/bert_aie_v1/export/w8a8_bf16_attention/scales_f32.bin": "41ed7f63ba5ac5b6515ad3d9e3dbea29d7f5153ff81fe6cbb222211b2adb2e78",
+    "results/bert_aie_v1/export/w8a8_bf16_attention/input_scales_f32.bin": "6756e830e07c641dc7d576e74357763164cff4800da098cbc9c7895bf96c5866",
+    "results/bert_aie_v1/export/w8a8_bf16_attention/parameters.hpp": "3b10696d9d52517997603fd40c1dedb2eeab07a1f7f04b0ae7805115bb141fa7",
+    "build/bert_aie_v1/common/bert_functional_stream": "c72f63cc95c5bc0dba6e7f640c31c4acd4cab3a7a13e6413d045f9dedb2be740",
+    "results/dual_track_v1/shared/data/raw/new_calibration.jsonl": "70e2d205a69690832272966a221060f671f07cfe08016edb793ecc8e8333b66d",
+    "results/dual_track_v1/shared/data/raw/new_confirmation.jsonl": "f84bd149d7de2776b06098364a8d689d31db47399388c3ebe31448cfaf19c12e",
+    "checkpoints/floating/epoch_3/tokenizer.json": "d241a60d5e8f04cc1b2b3e9ef7a4921b27bf526d9f6050ab90f9267a1f9e5c66",
+    "checkpoints/floating/epoch_3/tokenizer_config.json": "584049ddfff5d6aa7c6c839da38fdd25ae3af017385120c99db5140d77315d2f",
+    "checkpoints/floating/epoch_3/special_tokens_map.json": "3c3507f36dff57bce437223db3b3081d1e2b52ec3e56ee55438193ecb2c94dd6"
+  },
+  "hardware_source_snapshot": {
+    "included": true,
+    "files_sha256": {
+      "hardware/bert_aie_v1/BUILD_NOTES.md": "4f78c857a72305f072e6f32b19ad2756e2f4561b18d7624874469d9da5020e19",
+      "hardware/bert_aie_v1/functional.cpp": "1007909eb3b8c41e481f287e61d01c3ff20bad19b5ea9c60713168b51c45642a",
+      "hardware/bert_aie_v1/graph.cpp": "c8b5926d6e48a71c067c3976503cc7020dd939fbca0edbc8c25bf2c01d157b9e",
+      "hardware/bert_aie_v1/host.cpp": "7563f60ea7420e0b0cf73eb6ea68d22f7f0f000f8729f35091cc6be31917c022",
+      "hardware/bert_aie_v1/model.hpp": "c2c5b58b1edb573f992a4f556b6e8ff7040d9cbe5236173c71b8f81dd4497c58",
+      "hardware/bert_aie_v1/pl.cpp": "0face15a9e1a6592cf6ff753af7ec149005af772c23723fcc6ccf0caebc36efa",
+      "hardware/bert_aie_v1/README.md": "2cea3658e709b2bac5c4526a407d50ff8735175cca202a6c521012c52b5a059b",
+      "hardware/bert_aie_v1/system.cfg": "d87b6c20806a624e1f1d5179903b43c005889790a364f89c4c31d25cf30d821e",
+      "hardware/bert_aie_v1/tiles.cpp": "e8658e58d59972c1cb02762dc4859e227191df04ecb9774c05688a88f4e8cece",
+      "hardware/bert_aie_v1/tiles.hpp": "ad5ffbe26a47170d553be8e508eb2a5a9f035e932041f3003a0ff750f0405f01",
+      "hardware/bert_aie_v1/wire_test.cpp": "2d5259b28055eafafe76c5b32bc762637a0217e04107dcafd59f611cbc4e467b"
+    },
+    "canonical_scripts_sha256": {
+      "scripts/bert_aie_v1/analyze.py": "d0d54f1443b81e46e899885bfb9ba0ec6c1d20e8a1b4c32554a18f5e10a07f9b",
+      "scripts/bert_aie_v1/board_measure.py": "d97bbf94d50809dc0c8dfbaf05dbdd762f19b4a62f63e17f7bf99b265f975a66",
+      "scripts/bert_aie_v1/build_hardware.py": "68a271e49bfe5d438f90d4b9e0c5efd69007f879b4533eabe75e40ae9260cc59",
+      "scripts/bert_aie_v1/check_primary_data.py": "0e3d3ff5905459ae2121c3d48b65c8dd0dd040d834e098a279842b20e9bc82ab",
+      "scripts/bert_aie_v1/check_shared.py": "158ef598a334de4743116d5b207b7631b01eb2f9466ae881ae448e360da40ed0",
+      "scripts/bert_aie_v1/common.py": "6b1c0d0c8fd6afb357ab5ca04dae8596a6d346f1aa87dea628aa77f1c1bace20",
+      "scripts/bert_aie_v1/coordinate_shared.py": "212b56c06e680a02d393d0f340b3a3a1801e39bab0ecf926f4eb0d6c5d0622dc",
+      "scripts/bert_aie_v1/cost_model.py": "55c8c8b8a8194b146bc1a1c18ef7c4e16b9c0cd1d2451d816f23ede1b7d83cdd",
+      "scripts/bert_aie_v1/evaluate.py": "b632accb0afbca7c5d7919127e1363f095f26932f52792941b8088ad1f990714",
+      "scripts/bert_aie_v1/evaluate_cpp.py": "acfdcbae4c66bf1909ddd14d697fc25a35f36cdb362374eb7ccaf3a81104a2f3",
+      "scripts/bert_aie_v1/export.py": "ad8a889f268003982ce4e0e9bc57e82b423672bf0854684974a1c93a9e3ec72c",
+      "scripts/bert_aie_v1/export_real_tiles.py": "84c7deb532d32673fb1c2698727ffe8541809a0861d3e094d0a19d44f8d66e7a",
+      "scripts/bert_aie_v1/freeze_evaluation.py": "dde0254274f55ef765f3b45bf8c4caa6f59081f92b31197fd3a0df0546605e80",
+      "scripts/bert_aie_v1/inspect_inputs.py": "76dac15e0a6556c877eefdbad3130e14157a1e1069c00739465696920fab1f44",
+      "scripts/bert_aie_v1/model.py": "c0c7fa19a4d435f1089055c1ce1798b8fbb7cf270870ed92ffd9ecbff1caa2aa",
+      "scripts/bert_aie_v1/prepare_shared.py": "214bd83032a8383baa4e3b9a34b3d828dcaa479c0df4682013f9c27fce48b56c",
+      "scripts/bert_aie_v1/profile_detector.py": "70d58ce5db35313e8e35808ac92f10cd9c30baa74c9901293b3924b53a21e33e",
+      "scripts/bert_aie_v1/qualify.py": "d9de2589c50dc25fe3e1c3c65ec8288e587191e6346aa6c6a7923902f3af9f21",
+      "scripts/bert_aie_v1/run_confirmation.py": "40003b15fd6300ef9604d3c6acbc00611064c709a669af2b5ed34ff43d2ce2da",
+      "scripts/bert_aie_v1/run_development.py": "d9163659d181454cb5af632870d48f1b0b316ac41c70d93fab5add223c2d79cb",
+      "scripts/bert_aie_v1/run_job.py": "d4a20370a6f7608afecbc1368fdbca57c4d7bfb0a767d6b9b602826505a0eeb4",
+      "scripts/bert_aie_v1/run_profiles.py": "87ba231150756115601ba4cef04932e146d61094858c5a1a5afa0a9e3ff277d0",
+      "scripts/bert_aie_v1/setup_shared.py": "4d8e857b7134290cf58c73ccf41b5c80e50362bddf3a8300cfcebc1619426fd7",
+      "scripts/bert_aie_v1/test_numerics.py": "cb7606207fa9aa9aca2251578fef37fad5274b436579018d10fde082b460d897"
+    },
+    "note": "Final-only implementation provenance; generated build reports/logs excluded. Evaluation invalidation uses source_sha256, which includes functional.cpp/model.hpp/the compiled C++ binary. Unrelated PL pragmas and integration source hashes are separately recorded so subsequent build-only edits cannot silently invalidate or alter frozen numerical scoring."
+  },
+  "selection_rationale": "Fixed matched checkpoint; native W8/A8 plus BF16 attention is nominated to isolate target-native numerical and residency mechanisms. Preserve FP32/source and W8/A8 FP32-attention controls. Development quality differences remain reported, with no confirmation-based format/threshold/seed rescue.",
+  "evidence_boundary": "Numerical/model and supporting engineering comparison; no novel scientific contribution, physical performance, deployment safety or downstream LLM protection is established by this nomination.",
+  "data_access": "Only manifests decoded. Confirmation arrays, document JSONL and raw JSONL hashed as opaque bytes; no model loaded for inference or scores computed."
+}

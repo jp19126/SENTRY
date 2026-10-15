@@ -1,0 +1,12 @@
+Note: All sizes are in bytes. Actual usage can be slightly higher due to alignment.
+
+Core 10_0
+	Stack Size Used = 32
+	Stack Size Allotted = 1024
+	Stack Addr : [ startAddress = 0x00054020; endAddress = 0x0005441f ]
+	Stack Usage by Functions : Refer Work/aie/10_0/Release/10_0.calltree
+Core 11_0
+	Stack Size Used = 32
+	Stack Size Allotted = 1024
+	Stack Addr : [ startAddress = 0x00078020; endAddress = 0x0007841f ]
+	Stack Usage by Functions : Refer Work/aie/11_0/Release/11_0.calltree

@@ -41,11 +41,11 @@ extern "C" void bert_pl(const int32_t* inputs,const float* parameters,const int8
     const float* scales,const float* input_scales,float* scratch,float* output,
     Stream& ia,Stream& ib,Stream& ic,Stream& fa,Stream& fb,Stream& fc) {
 #pragma HLS INTERFACE m_axi port=inputs offset=slave bundle=inputs depth=768
-#pragma HLS INTERFACE m_axi port=parameters offset=slave bundle=parameters depth=8025346
+#pragma HLS INTERFACE m_axi port=parameters offset=slave bundle=parameters depth=8025346 max_widen_bitwidth=128
 #pragma HLS INTERFACE m_axi port=weights offset=slave bundle=weights depth=3145728 max_read_burst_length=256 num_read_outstanding=16 max_widen_bitwidth=512
 #pragma HLS INTERFACE m_axi port=scales offset=slave bundle=parameters depth=9216
 #pragma HLS INTERFACE m_axi port=input_scales offset=slave bundle=parameters depth=24
-#pragma HLS INTERFACE m_axi port=scratch offset=slave bundle=scratch depth=720896
+#pragma HLS INTERFACE m_axi port=scratch offset=slave bundle=scratch depth=720896 max_widen_bitwidth=128
 #pragma HLS INTERFACE m_axi port=output offset=slave bundle=inputs depth=3
 #pragma HLS INTERFACE s_axilite port=inputs bundle=control
 #pragma HLS INTERFACE s_axilite port=parameters bundle=control

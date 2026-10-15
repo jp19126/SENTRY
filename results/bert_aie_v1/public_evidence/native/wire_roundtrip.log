@@ -1,0 +1,2 @@
+PASS actual PL AXIS packing/roundtrip: int8 32x256x32, BF16 32x64x32. Arithmetic response injected from independent portable service; not AIE simulation.
+INFO [HLS SIM]: The maximum depth reached by any hls::stream() instance in the design is 512

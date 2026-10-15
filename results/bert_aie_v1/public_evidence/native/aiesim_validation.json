@@ -1,0 +1,15 @@
+{
+  "int8": {
+    "count": 2048,
+    "passed": true,
+    "max_absolute_error": 0.0,
+    "max_bound_ratio": 0
+  },
+  "bf16": {
+    "count": 2048,
+    "passed": true,
+    "max_absolute_error": 3.635639188814821e-06,
+    "max_bound_ratio": 0.06706087419060623
+  },
+  "boundary": "actual AIE simulator real FIT tiles plus INT8 boundary tile; not full-model hardware simulation"
+}

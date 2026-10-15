@@ -1,0 +1,25 @@
+{
+  "schema": "bert_aie_original_hls_xo_identities_v1",
+  "boundary": "Original binary hashes/sizes only; large binaries omitted. Paths may subsequently move for corrected retries; SHA256 remains the identity.",
+  "objects": [
+    {
+      "mapping": "resident",
+      "path_at_archive": "build/bert_aie_v1/resident/bert_pl.xo",
+      "bytes": 142022083,
+      "sha256": "c162663343806db79d6a9522ab06e38a8c4d11fde3478aff44463780858c72df",
+      "binary_included": false,
+      "attribution": "Original completed hls_attempt0; not corrected retry or connected link artifact",
+      "hls_attempt0_sha256": "8a3eb7b1399d8edc49eeb0fc7bf5f1dc04bab86efa78b59b045a646dd524d03b"
+    },
+    {
+      "mapping": "external",
+      "path_at_archive": "build/bert_aie_v1/external/bert_pl.xo",
+      "bytes": 123693838,
+      "sha256": "dcf22ced97dc7a9b529355cff3d581575e4d8a6d56fa6780d0c4a4323b09fbc4",
+      "binary_included": false,
+      "attribution": "Original completed hls_attempt0; not corrected retry or connected link artifact",
+      "hls_attempt0_sha256": "3319cd1dc9684ad9973f25aad3f5fda8c3047fbb64a4083e98450fd1c9912e54"
+    }
+  ],
+  "interpretation": "Original external HLS estimate uses 839,976 LUTs and exceeds device LUT capacity. Its external LayerNorm schedule contains a diagnosed false dependence. Interface-cap and normalization-dependence corrections retain separate attribution. These HLS estimates are not routed timing or measured runtime and do not establish a residency speedup. No active connected-link attempt is included."
+}

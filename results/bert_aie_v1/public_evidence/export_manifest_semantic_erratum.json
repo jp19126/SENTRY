@@ -1,0 +1,14 @@
+{
+  "schema": "sentry_bert_aie_v1_manifest_erratum_v1",
+  "manifest_sha256": "c4fe164a48051ca3834e112f5efd6564c559d8d62604dfe716cb2c1c097d92a3",
+  "field": "semantics.document_score",
+  "original_value": "max window positive softmax; strictly greater than frozen threshold",
+  "correct_value": "max_window(logit[1] - logit[0]); rejection iff document margin > separately calibrated frozen margin threshold",
+  "discovered_by": "Independent source and saved-score review after prospective freeze",
+  "impact": "Metadata description only. evaluate.py, profile_detector.py, evaluate_cpp.py, hardware host and freeze all implement raw margins. No weights, logits, thresholds, scores or numerical choices are changed. Original frozen manifest is retained byte-for-byte.",
+  "source_of_truth": [
+    "confirmation_freeze_v1.json calibration_policy",
+    "evaluate.py score_role",
+    "hardware/bert_aie_v1/host.cpp max_margin"
+  ]
+}

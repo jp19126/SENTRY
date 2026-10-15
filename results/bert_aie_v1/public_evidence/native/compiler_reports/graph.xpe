@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<POWERDATA data="AI-Engine Compiler" dataVersion="2025.2" design="graph" date="Thu Oct 15 23:38:50 2026
+">
+ <DEVICE part="xcve2802" grade="extended" package="vsvh1760" speed="-2MP" process="typical" vid="No"></DEVICE>
+  <AIE status="COMPILER_OUTPUT">
+    <AIE_MODULE name="graph" num_tiles="5" clk_freq="1250">
+      <TILE name="CR(9,0)" type="none" int_core_load="0" fp_core_load="0" mem_banks="6" mem_rw_rate="0.2" stream_util="0.037" coordinates="9,1">
+      </TILE>
+      <TILE name="CR(10,0)" type="int16" int_core_load="0.54" fp_core_load="0" mem_banks="0" mem_rw_rate="0.2" stream_util="0.079" coordinates="10,1">
+        <KERNEL name="i6"  int_core_load="0.9" fp_core_load="0"></KERNEL>
+      </TILE>
+      <TILE name="CR(10,1)" type="none" int_core_load="0" fp_core_load="0" mem_banks="8" mem_rw_rate="0.2" stream_util="0.079" coordinates="10,2">
+      </TILE>
+      <TILE name="CR(11,0)" type="int16" int_core_load="0.54" fp_core_load="0" mem_banks="8" mem_rw_rate="0.2" stream_util="0.12" coordinates="11,1">
+        <KERNEL name="i7"  int_core_load="0.9" fp_core_load="0"></KERNEL>
+      </TILE>
+      <TILE name="CR(11,1)" type="none" int_core_load="0" fp_core_load="0" mem_banks="4" mem_rw_rate="0.2" stream_util="0.042" coordinates="11,2">
+      </TILE>
+      <SHIM name="SHIM(9, 0)" type="AIE_PL_SHIM" stream_util="0.04" num_pl_streams="0" num_aximm_connections="0" coordinates="9,0"></SHIM>
+      <SHIM name="SHIM(10, 0)" type="AIE_PL_SHIM" stream_util="0.12" num_pl_streams="6" num_aximm_connections="0" coordinates="10,0"></SHIM>
+      <SHIM name="SHIM(11, 0)" type="AIE_PL_SHIM" stream_util="0.12" num_pl_streams="6" num_aximm_connections="0" coordinates="11,0"></SHIM>
+      <MEM name="MEM(9,0)" type="AIE_MEM" mem_banks="0" mem_rw_rate="0.2" stream_util="0.038" coordinates="9,0"></MEM>
+      <MEM name="MEM(9,1)" type="AIE_MEM" mem_banks="0" mem_rw_rate="0.2" stream_util="0.038" coordinates="9,1"></MEM>
+      <MEM name="MEM(10,0)" type="AIE_MEM" mem_banks="0" mem_rw_rate="0.2" stream_util="0.081" coordinates="10,0"></MEM>
+      <MEM name="MEM(10,1)" type="AIE_MEM" mem_banks="0" mem_rw_rate="0.2" stream_util="0.081" coordinates="10,1"></MEM>
+      <MEM name="MEM(11,0)" type="AIE_MEM" mem_banks="0" mem_rw_rate="0.2" stream_util="0.12" coordinates="11,0"></MEM>
+      <MEM name="MEM(11,1)" type="AIE_MEM" mem_banks="0" mem_rw_rate="0.2" stream_util="0.12" coordinates="11,1"></MEM>
+    </AIE_MODULE>
+  </AIE>
+</POWERDATA>

@@ -1,0 +1,60 @@
+{
+  "command": [
+    "/home/jp19126/Xilinx/2025.2/Vitis/bin/v++",
+    "--compile",
+    "--mode",
+    "hls",
+    "--config",
+    "/home/jp19126/Projects/SENTRY/build/bert_aie_v1/external/hls.cfg",
+    "--work_dir",
+    "/home/jp19126/Projects/SENTRY/build/bert_aie_v1/external/hls"
+  ],
+  "cwd": "/home/jp19126/Projects/SENTRY/build/bert_aie_v1/external",
+  "timeout_seconds": 1800,
+  "started_utc": "2026-10-15T21:52:49.730175+00:00",
+  "build_driver_sha256": "0cd214ac18b8e29226f3fc2d0640c1dbd55a3248af97c71c0047630716db764b",
+  "source_sha256": {
+    "tiles.cpp": "e8658e58d59972c1cb02762dc4859e227191df04ecb9774c05688a88f4e8cece",
+    "functional.cpp": "1007909eb3b8c41e481f287e61d01c3ff20bad19b5ea9c60713168b51c45642a",
+    "wire_test.cpp": "2d5259b28055eafafe76c5b32bc762637a0217e04107dcafd59f611cbc4e467b",
+    "pl.cpp": "0face15a9e1a6592cf6ff753af7ec149005af772c23723fcc6ccf0caebc36efa",
+    "model.hpp": "c2c5b58b1edb573f992a4f556b6e8ff7040d9cbe5236173c71b8f81dd4497c58",
+    "BUILD_NOTES.md": "4f7d398a0e022fa01f9eee486ec84f074750732d6882459316a0a0118b23e5f5",
+    "host.cpp": "7563f60ea7420e0b0cf73eb6ea68d22f7f0f000f8729f35091cc6be31917c022",
+    "graph.cpp": "c8b5926d6e48a71c067c3976503cc7020dd939fbca0edbc8c25bf2c01d157b9e",
+    "tiles.hpp": "ad5ffbe26a47170d553be8e508eb2a5a9f035e932041f3003a0ff750f0405f01",
+    "README.md": "64aacb8bd313239c07a4c4b4c532c35cfc31ccd66ff4be0ea451498ecb7a9f51",
+    "system.cfg": "d87b6c20806a624e1f1d5179903b43c005889790a364f89c4c31d25cf30d821e"
+  },
+  "boundary": "offline tool execution, no physical device access",
+  "resource_policy": {
+    "aie_vendor_only": false,
+    "compatibility_assumption": "AIE takes vendor and GPU locks; other vendor stages take vendor lock.",
+    "sampled_descendant_rss_boundary": "Sum RSS for owned process and descendants across process groups; shared pages can be counted multiple times; detached/reparented children may be excluded; not physical/PSS peak."
+  },
+  "preflight_memory": {
+    "windows_available_bytes": 6491099136,
+    "wsl_available_bytes": 24134131712
+  },
+  "minimum_available_memory": {
+    "windows_available_bytes": 3762847744,
+    "wsl_available_bytes": 21996105728
+  },
+  "processes_at_minimum_windows_memory": [
+    "    PID    PPID   RSS COMMAND",
+    " 288726  288643 1060068 vitis_hls",
+    " 288635  288630 245828 xcd",
+    " 288630  288560 243452 v++",
+    "  17253   17118 239316 hermes",
+    "  17107       1 24972 unattended-upgr",
+    "2897181       1 23340 systemd-journal",
+    " 288470  288468 19068 python3",
+    "  16925       1 18652 NetworkManager",
+    "  16821       1 16668 gnome-remote-de",
+    "  17256   17118 15964 wireplumber",
+    "      1       0 13748 systemd"
+  ],
+  "maximum_sampled_descendant_rss_bytes": 3132784640,
+  "returncode": 0,
+  "elapsed_seconds": 446.5915628399234
+}

@@ -1,0 +1,2256 @@
+{
+  "schema": "sentry_bert_aie_v1_raw_v1",
+  "model": {
+    "checkpoint": "\\\\wsl.localhost\\Ubuntu\\home\\jp19126\\Projects\\SENTRY\\results\\cnn_adoption_v1\\runs\\bert_matched_lr5e5_supervised_s42_r2\\checkpoint_selected.pt",
+    "checkpoint_sha256": "95025bfc0e29163efea613d556d7da0b516ec1bb6c6fac9d9c4c9c6f1f373525",
+    "variant": "w8a8_bf16_attention",
+    "config": {
+      "attention_probs_dropout_prob": 0.1,
+      "hidden_act": "gelu",
+      "hidden_dropout_prob": 0.1,
+      "hidden_size": 256,
+      "initializer_range": 0.02,
+      "intermediate_size": 1024,
+      "layer_norm_eps": 1e-12,
+      "max_position_embeddings": 512,
+      "model_type": "bert",
+      "num_attention_heads": 4,
+      "num_hidden_layers": 4,
+      "pad_token_id": 0,
+      "type_vocab_size": 2,
+      "vocab_size": 30522
+    },
+    "source_config_sha256": "61716a972c73e9cc1d6f1165e27e577c1f4012a3cc480e431f427a78d5071ece",
+    "model_source_sha256": "c0c7fa19a4d435f1089055c1ce1798b8fbb7cf270870ed92ffd9ecbff1caa2aa",
+    "attention": "bidirectional key padding; FP32 minimum additive mask",
+    "dropout": "disabled evaluation",
+    "weight_codes": "symmetric per output RNE [-127,127]",
+    "linear_accumulator": "INT32 exact",
+    "nonlinear": "FP32 exact erf GELU, LayerNorm eps1e-12, softmax, tanh",
+    "pooler_classifier": "FP32",
+    "calibration_sha256": "6bda96b7d50f55299523e9bde8e3ee3339cebd1619837670a17879e4a55cad73",
+    "calibration_identity": {
+      "folder": "\\\\wsl.localhost\\Ubuntu\\home\\jp19126\\Projects\\SENTRY\\results\\cnn_adoption_v1\\prepared\\token_r2\\fit",
+      "ids_sha256": "0fb61e893fc156ba87f8a25cfc498768606349b65e9d6f699a7cda60f4a50b6d",
+      "masks_sha256": "a34c81f5967f23f905170e2bb55a67ddea5d44d6a70587f3c428cac8adf2e5cf"
+    }
+  },
+  "variant": "w8a8_bf16_attention",
+  "byte_order": "little",
+  "layout": "C contiguous row major; weight [out,in]",
+  "linear_order": [
+    "bert.encoder.layer.0.attention.self.query",
+    "bert.encoder.layer.0.attention.self.key",
+    "bert.encoder.layer.0.attention.self.value",
+    "bert.encoder.layer.0.attention.output.dense",
+    "bert.encoder.layer.0.intermediate.dense",
+    "bert.encoder.layer.0.output.dense",
+    "bert.encoder.layer.1.attention.self.query",
+    "bert.encoder.layer.1.attention.self.key",
+    "bert.encoder.layer.1.attention.self.value",
+    "bert.encoder.layer.1.attention.output.dense",
+    "bert.encoder.layer.1.intermediate.dense",
+    "bert.encoder.layer.1.output.dense",
+    "bert.encoder.layer.2.attention.self.query",
+    "bert.encoder.layer.2.attention.self.key",
+    "bert.encoder.layer.2.attention.self.value",
+    "bert.encoder.layer.2.attention.output.dense",
+    "bert.encoder.layer.2.intermediate.dense",
+    "bert.encoder.layer.2.output.dense",
+    "bert.encoder.layer.3.attention.self.query",
+    "bert.encoder.layer.3.attention.self.key",
+    "bert.encoder.layer.3.attention.self.value",
+    "bert.encoder.layer.3.attention.output.dense",
+    "bert.encoder.layer.3.intermediate.dense",
+    "bert.encoder.layer.3.output.dense"
+  ],
+  "files": {
+    "parameters_f32.bin": {
+      "bytes": 32101384,
+      "sha256": "6a0a05a080adc603bb5f9c2d005c760a7f6f27b73d08d5518eb80422544a2cb5"
+    },
+    "weights_i8.bin": {
+      "bytes": 3145728,
+      "sha256": "8ac3bcfdfabb47ebf65e47ddf26f2139bb148a37eb5377b1bc3a109956c79aa2"
+    },
+    "scales_f32.bin": {
+      "bytes": 36864,
+      "sha256": "41ed7f63ba5ac5b6515ad3d9e3dbea29d7f5153ff81fe6cbb222211b2adb2e78"
+    },
+    "input_scales_f32.bin": {
+      "bytes": 96,
+      "sha256": "6756e830e07c641dc7d576e74357763164cff4800da098cbc9c7895bf96c5866"
+    },
+    "parameters.hpp": {
+      "bytes": 9925,
+      "sha256": "3b10696d9d52517997603fd40c1dedb2eeab07a1f7f04b0ae7805115bb141fa7"
+    }
+  },
+  "tensors": [
+    {
+      "name": "bert.embeddings.word_embeddings.weight",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 0,
+      "shape": [
+        30522,
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 31254528
+    },
+    {
+      "name": "bert.embeddings.position_embeddings.weight",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31254528,
+      "shape": [
+        512,
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 524288
+    },
+    {
+      "name": "bert.embeddings.token_type_embeddings.weight",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31778816,
+      "shape": [
+        2,
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 2048
+    },
+    {
+      "name": "bert.embeddings.LayerNorm.weight",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31780864,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.embeddings.LayerNorm.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31781888,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.0.attention.self.query.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31782912,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.0.attention.self.key.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31783936,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.0.attention.self.value.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31784960,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.0.attention.output.dense.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31785984,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.0.attention.output.LayerNorm.weight",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31787008,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.0.attention.output.LayerNorm.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31788032,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.0.intermediate.dense.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31789056,
+      "shape": [
+        1024
+      ],
+      "dtype": "float32",
+      "nbytes": 4096
+    },
+    {
+      "name": "bert.encoder.layer.0.output.dense.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31793152,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.0.output.LayerNorm.weight",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31794176,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.0.output.LayerNorm.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31795200,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.1.attention.self.query.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31796224,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.1.attention.self.key.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31797248,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.1.attention.self.value.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31798272,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.1.attention.output.dense.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31799296,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.1.attention.output.LayerNorm.weight",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31800320,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.1.attention.output.LayerNorm.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31801344,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.1.intermediate.dense.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31802368,
+      "shape": [
+        1024
+      ],
+      "dtype": "float32",
+      "nbytes": 4096
+    },
+    {
+      "name": "bert.encoder.layer.1.output.dense.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31806464,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.1.output.LayerNorm.weight",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31807488,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.1.output.LayerNorm.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31808512,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.2.attention.self.query.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31809536,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.2.attention.self.key.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31810560,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.2.attention.self.value.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31811584,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.2.attention.output.dense.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31812608,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.2.attention.output.LayerNorm.weight",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31813632,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.2.attention.output.LayerNorm.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31814656,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.2.intermediate.dense.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31815680,
+      "shape": [
+        1024
+      ],
+      "dtype": "float32",
+      "nbytes": 4096
+    },
+    {
+      "name": "bert.encoder.layer.2.output.dense.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31819776,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.2.output.LayerNorm.weight",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31820800,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.2.output.LayerNorm.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31821824,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.3.attention.self.query.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31822848,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.3.attention.self.key.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31823872,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.3.attention.self.value.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31824896,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.3.attention.output.dense.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31825920,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.3.attention.output.LayerNorm.weight",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31826944,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.3.attention.output.LayerNorm.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31827968,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.3.intermediate.dense.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31828992,
+      "shape": [
+        1024
+      ],
+      "dtype": "float32",
+      "nbytes": 4096
+    },
+    {
+      "name": "bert.encoder.layer.3.output.dense.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31833088,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.3.output.LayerNorm.weight",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31834112,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.3.output.LayerNorm.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31835136,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.pooler.dense.weight",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 31836160,
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 262144
+    },
+    {
+      "name": "bert.pooler.dense.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 32098304,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "classifier.weight",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 32099328,
+      "shape": [
+        2,
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 2048
+    },
+    {
+      "name": "classifier.bias",
+      "file": "parameters_f32.bin",
+      "offset_bytes": 32101376,
+      "shape": [
+        2
+      ],
+      "dtype": "float32",
+      "nbytes": 8
+    },
+    {
+      "name": "bert.encoder.layer.0.attention.self.query.weight",
+      "file": "weights_i8.bin",
+      "offset_bytes": 0,
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "int8",
+      "nbytes": 65536
+    },
+    {
+      "name": "bert.encoder.layer.0.attention.self.key.weight",
+      "file": "weights_i8.bin",
+      "offset_bytes": 65536,
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "int8",
+      "nbytes": 65536
+    },
+    {
+      "name": "bert.encoder.layer.0.attention.self.value.weight",
+      "file": "weights_i8.bin",
+      "offset_bytes": 131072,
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "int8",
+      "nbytes": 65536
+    },
+    {
+      "name": "bert.encoder.layer.0.attention.output.dense.weight",
+      "file": "weights_i8.bin",
+      "offset_bytes": 196608,
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "int8",
+      "nbytes": 65536
+    },
+    {
+      "name": "bert.encoder.layer.0.intermediate.dense.weight",
+      "file": "weights_i8.bin",
+      "offset_bytes": 262144,
+      "shape": [
+        1024,
+        256
+      ],
+      "dtype": "int8",
+      "nbytes": 262144
+    },
+    {
+      "name": "bert.encoder.layer.0.output.dense.weight",
+      "file": "weights_i8.bin",
+      "offset_bytes": 524288,
+      "shape": [
+        256,
+        1024
+      ],
+      "dtype": "int8",
+      "nbytes": 262144
+    },
+    {
+      "name": "bert.encoder.layer.1.attention.self.query.weight",
+      "file": "weights_i8.bin",
+      "offset_bytes": 786432,
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "int8",
+      "nbytes": 65536
+    },
+    {
+      "name": "bert.encoder.layer.1.attention.self.key.weight",
+      "file": "weights_i8.bin",
+      "offset_bytes": 851968,
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "int8",
+      "nbytes": 65536
+    },
+    {
+      "name": "bert.encoder.layer.1.attention.self.value.weight",
+      "file": "weights_i8.bin",
+      "offset_bytes": 917504,
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "int8",
+      "nbytes": 65536
+    },
+    {
+      "name": "bert.encoder.layer.1.attention.output.dense.weight",
+      "file": "weights_i8.bin",
+      "offset_bytes": 983040,
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "int8",
+      "nbytes": 65536
+    },
+    {
+      "name": "bert.encoder.layer.1.intermediate.dense.weight",
+      "file": "weights_i8.bin",
+      "offset_bytes": 1048576,
+      "shape": [
+        1024,
+        256
+      ],
+      "dtype": "int8",
+      "nbytes": 262144
+    },
+    {
+      "name": "bert.encoder.layer.1.output.dense.weight",
+      "file": "weights_i8.bin",
+      "offset_bytes": 1310720,
+      "shape": [
+        256,
+        1024
+      ],
+      "dtype": "int8",
+      "nbytes": 262144
+    },
+    {
+      "name": "bert.encoder.layer.2.attention.self.query.weight",
+      "file": "weights_i8.bin",
+      "offset_bytes": 1572864,
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "int8",
+      "nbytes": 65536
+    },
+    {
+      "name": "bert.encoder.layer.2.attention.self.key.weight",
+      "file": "weights_i8.bin",
+      "offset_bytes": 1638400,
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "int8",
+      "nbytes": 65536
+    },
+    {
+      "name": "bert.encoder.layer.2.attention.self.value.weight",
+      "file": "weights_i8.bin",
+      "offset_bytes": 1703936,
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "int8",
+      "nbytes": 65536
+    },
+    {
+      "name": "bert.encoder.layer.2.attention.output.dense.weight",
+      "file": "weights_i8.bin",
+      "offset_bytes": 1769472,
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "int8",
+      "nbytes": 65536
+    },
+    {
+      "name": "bert.encoder.layer.2.intermediate.dense.weight",
+      "file": "weights_i8.bin",
+      "offset_bytes": 1835008,
+      "shape": [
+        1024,
+        256
+      ],
+      "dtype": "int8",
+      "nbytes": 262144
+    },
+    {
+      "name": "bert.encoder.layer.2.output.dense.weight",
+      "file": "weights_i8.bin",
+      "offset_bytes": 2097152,
+      "shape": [
+        256,
+        1024
+      ],
+      "dtype": "int8",
+      "nbytes": 262144
+    },
+    {
+      "name": "bert.encoder.layer.3.attention.self.query.weight",
+      "file": "weights_i8.bin",
+      "offset_bytes": 2359296,
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "int8",
+      "nbytes": 65536
+    },
+    {
+      "name": "bert.encoder.layer.3.attention.self.key.weight",
+      "file": "weights_i8.bin",
+      "offset_bytes": 2424832,
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "int8",
+      "nbytes": 65536
+    },
+    {
+      "name": "bert.encoder.layer.3.attention.self.value.weight",
+      "file": "weights_i8.bin",
+      "offset_bytes": 2490368,
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "int8",
+      "nbytes": 65536
+    },
+    {
+      "name": "bert.encoder.layer.3.attention.output.dense.weight",
+      "file": "weights_i8.bin",
+      "offset_bytes": 2555904,
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "int8",
+      "nbytes": 65536
+    },
+    {
+      "name": "bert.encoder.layer.3.intermediate.dense.weight",
+      "file": "weights_i8.bin",
+      "offset_bytes": 2621440,
+      "shape": [
+        1024,
+        256
+      ],
+      "dtype": "int8",
+      "nbytes": 262144
+    },
+    {
+      "name": "bert.encoder.layer.3.output.dense.weight",
+      "file": "weights_i8.bin",
+      "offset_bytes": 2883584,
+      "shape": [
+        256,
+        1024
+      ],
+      "dtype": "int8",
+      "nbytes": 262144
+    },
+    {
+      "name": "bert.encoder.layer.0.attention.self.query.weight_scale",
+      "file": "scales_f32.bin",
+      "offset_bytes": 0,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.0.attention.self.key.weight_scale",
+      "file": "scales_f32.bin",
+      "offset_bytes": 1024,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.0.attention.self.value.weight_scale",
+      "file": "scales_f32.bin",
+      "offset_bytes": 2048,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.0.attention.output.dense.weight_scale",
+      "file": "scales_f32.bin",
+      "offset_bytes": 3072,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.0.intermediate.dense.weight_scale",
+      "file": "scales_f32.bin",
+      "offset_bytes": 4096,
+      "shape": [
+        1024
+      ],
+      "dtype": "float32",
+      "nbytes": 4096
+    },
+    {
+      "name": "bert.encoder.layer.0.output.dense.weight_scale",
+      "file": "scales_f32.bin",
+      "offset_bytes": 8192,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.1.attention.self.query.weight_scale",
+      "file": "scales_f32.bin",
+      "offset_bytes": 9216,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.1.attention.self.key.weight_scale",
+      "file": "scales_f32.bin",
+      "offset_bytes": 10240,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.1.attention.self.value.weight_scale",
+      "file": "scales_f32.bin",
+      "offset_bytes": 11264,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.1.attention.output.dense.weight_scale",
+      "file": "scales_f32.bin",
+      "offset_bytes": 12288,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.1.intermediate.dense.weight_scale",
+      "file": "scales_f32.bin",
+      "offset_bytes": 13312,
+      "shape": [
+        1024
+      ],
+      "dtype": "float32",
+      "nbytes": 4096
+    },
+    {
+      "name": "bert.encoder.layer.1.output.dense.weight_scale",
+      "file": "scales_f32.bin",
+      "offset_bytes": 17408,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.2.attention.self.query.weight_scale",
+      "file": "scales_f32.bin",
+      "offset_bytes": 18432,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.2.attention.self.key.weight_scale",
+      "file": "scales_f32.bin",
+      "offset_bytes": 19456,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.2.attention.self.value.weight_scale",
+      "file": "scales_f32.bin",
+      "offset_bytes": 20480,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.2.attention.output.dense.weight_scale",
+      "file": "scales_f32.bin",
+      "offset_bytes": 21504,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.2.intermediate.dense.weight_scale",
+      "file": "scales_f32.bin",
+      "offset_bytes": 22528,
+      "shape": [
+        1024
+      ],
+      "dtype": "float32",
+      "nbytes": 4096
+    },
+    {
+      "name": "bert.encoder.layer.2.output.dense.weight_scale",
+      "file": "scales_f32.bin",
+      "offset_bytes": 26624,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.3.attention.self.query.weight_scale",
+      "file": "scales_f32.bin",
+      "offset_bytes": 27648,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.3.attention.self.key.weight_scale",
+      "file": "scales_f32.bin",
+      "offset_bytes": 28672,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.3.attention.self.value.weight_scale",
+      "file": "scales_f32.bin",
+      "offset_bytes": 29696,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.3.attention.output.dense.weight_scale",
+      "file": "scales_f32.bin",
+      "offset_bytes": 30720,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.3.intermediate.dense.weight_scale",
+      "file": "scales_f32.bin",
+      "offset_bytes": 31744,
+      "shape": [
+        1024
+      ],
+      "dtype": "float32",
+      "nbytes": 4096
+    },
+    {
+      "name": "bert.encoder.layer.3.output.dense.weight_scale",
+      "file": "scales_f32.bin",
+      "offset_bytes": 35840,
+      "shape": [
+        256
+      ],
+      "dtype": "float32",
+      "nbytes": 1024
+    },
+    {
+      "name": "bert.encoder.layer.0.attention.self.query.input_scale",
+      "file": "input_scales_f32.bin",
+      "offset_bytes": 0,
+      "shape": [
+        1
+      ],
+      "dtype": "float32",
+      "nbytes": 4
+    },
+    {
+      "name": "bert.encoder.layer.0.attention.self.key.input_scale",
+      "file": "input_scales_f32.bin",
+      "offset_bytes": 4,
+      "shape": [
+        1
+      ],
+      "dtype": "float32",
+      "nbytes": 4
+    },
+    {
+      "name": "bert.encoder.layer.0.attention.self.value.input_scale",
+      "file": "input_scales_f32.bin",
+      "offset_bytes": 8,
+      "shape": [
+        1
+      ],
+      "dtype": "float32",
+      "nbytes": 4
+    },
+    {
+      "name": "bert.encoder.layer.0.attention.output.dense.input_scale",
+      "file": "input_scales_f32.bin",
+      "offset_bytes": 12,
+      "shape": [
+        1
+      ],
+      "dtype": "float32",
+      "nbytes": 4
+    },
+    {
+      "name": "bert.encoder.layer.0.intermediate.dense.input_scale",
+      "file": "input_scales_f32.bin",
+      "offset_bytes": 16,
+      "shape": [
+        1
+      ],
+      "dtype": "float32",
+      "nbytes": 4
+    },
+    {
+      "name": "bert.encoder.layer.0.output.dense.input_scale",
+      "file": "input_scales_f32.bin",
+      "offset_bytes": 20,
+      "shape": [
+        1
+      ],
+      "dtype": "float32",
+      "nbytes": 4
+    },
+    {
+      "name": "bert.encoder.layer.1.attention.self.query.input_scale",
+      "file": "input_scales_f32.bin",
+      "offset_bytes": 24,
+      "shape": [
+        1
+      ],
+      "dtype": "float32",
+      "nbytes": 4
+    },
+    {
+      "name": "bert.encoder.layer.1.attention.self.key.input_scale",
+      "file": "input_scales_f32.bin",
+      "offset_bytes": 28,
+      "shape": [
+        1
+      ],
+      "dtype": "float32",
+      "nbytes": 4
+    },
+    {
+      "name": "bert.encoder.layer.1.attention.self.value.input_scale",
+      "file": "input_scales_f32.bin",
+      "offset_bytes": 32,
+      "shape": [
+        1
+      ],
+      "dtype": "float32",
+      "nbytes": 4
+    },
+    {
+      "name": "bert.encoder.layer.1.attention.output.dense.input_scale",
+      "file": "input_scales_f32.bin",
+      "offset_bytes": 36,
+      "shape": [
+        1
+      ],
+      "dtype": "float32",
+      "nbytes": 4
+    },
+    {
+      "name": "bert.encoder.layer.1.intermediate.dense.input_scale",
+      "file": "input_scales_f32.bin",
+      "offset_bytes": 40,
+      "shape": [
+        1
+      ],
+      "dtype": "float32",
+      "nbytes": 4
+    },
+    {
+      "name": "bert.encoder.layer.1.output.dense.input_scale",
+      "file": "input_scales_f32.bin",
+      "offset_bytes": 44,
+      "shape": [
+        1
+      ],
+      "dtype": "float32",
+      "nbytes": 4
+    },
+    {
+      "name": "bert.encoder.layer.2.attention.self.query.input_scale",
+      "file": "input_scales_f32.bin",
+      "offset_bytes": 48,
+      "shape": [
+        1
+      ],
+      "dtype": "float32",
+      "nbytes": 4
+    },
+    {
+      "name": "bert.encoder.layer.2.attention.self.key.input_scale",
+      "file": "input_scales_f32.bin",
+      "offset_bytes": 52,
+      "shape": [
+        1
+      ],
+      "dtype": "float32",
+      "nbytes": 4
+    },
+    {
+      "name": "bert.encoder.layer.2.attention.self.value.input_scale",
+      "file": "input_scales_f32.bin",
+      "offset_bytes": 56,
+      "shape": [
+        1
+      ],
+      "dtype": "float32",
+      "nbytes": 4
+    },
+    {
+      "name": "bert.encoder.layer.2.attention.output.dense.input_scale",
+      "file": "input_scales_f32.bin",
+      "offset_bytes": 60,
+      "shape": [
+        1
+      ],
+      "dtype": "float32",
+      "nbytes": 4
+    },
+    {
+      "name": "bert.encoder.layer.2.intermediate.dense.input_scale",
+      "file": "input_scales_f32.bin",
+      "offset_bytes": 64,
+      "shape": [
+        1
+      ],
+      "dtype": "float32",
+      "nbytes": 4
+    },
+    {
+      "name": "bert.encoder.layer.2.output.dense.input_scale",
+      "file": "input_scales_f32.bin",
+      "offset_bytes": 68,
+      "shape": [
+        1
+      ],
+      "dtype": "float32",
+      "nbytes": 4
+    },
+    {
+      "name": "bert.encoder.layer.3.attention.self.query.input_scale",
+      "file": "input_scales_f32.bin",
+      "offset_bytes": 72,
+      "shape": [
+        1
+      ],
+      "dtype": "float32",
+      "nbytes": 4
+    },
+    {
+      "name": "bert.encoder.layer.3.attention.self.key.input_scale",
+      "file": "input_scales_f32.bin",
+      "offset_bytes": 76,
+      "shape": [
+        1
+      ],
+      "dtype": "float32",
+      "nbytes": 4
+    },
+    {
+      "name": "bert.encoder.layer.3.attention.self.value.input_scale",
+      "file": "input_scales_f32.bin",
+      "offset_bytes": 80,
+      "shape": [
+        1
+      ],
+      "dtype": "float32",
+      "nbytes": 4
+    },
+    {
+      "name": "bert.encoder.layer.3.attention.output.dense.input_scale",
+      "file": "input_scales_f32.bin",
+      "offset_bytes": 84,
+      "shape": [
+        1
+      ],
+      "dtype": "float32",
+      "nbytes": 4
+    },
+    {
+      "name": "bert.encoder.layer.3.intermediate.dense.input_scale",
+      "file": "input_scales_f32.bin",
+      "offset_bytes": 88,
+      "shape": [
+        1
+      ],
+      "dtype": "float32",
+      "nbytes": 4
+    },
+    {
+      "name": "bert.encoder.layer.3.output.dense.input_scale",
+      "file": "input_scales_f32.bin",
+      "offset_bytes": 92,
+      "shape": [
+        1
+      ],
+      "dtype": "float32",
+      "nbytes": 4
+    }
+  ],
+  "source_inventory": {
+    "parameters": [
+      {
+        "name": "bert.embeddings.word_embeddings.weight",
+        "shape": [
+          30522,
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 7813632,
+        "bytes": 31254528
+      },
+      {
+        "name": "bert.embeddings.position_embeddings.weight",
+        "shape": [
+          512,
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 131072,
+        "bytes": 524288
+      },
+      {
+        "name": "bert.embeddings.token_type_embeddings.weight",
+        "shape": [
+          2,
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 512,
+        "bytes": 2048
+      },
+      {
+        "name": "bert.embeddings.LayerNorm.weight",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.embeddings.LayerNorm.bias",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.0.attention.self.query.weight",
+        "shape": [
+          256,
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 65536,
+        "bytes": 262144
+      },
+      {
+        "name": "bert.encoder.layer.0.attention.self.query.bias",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.0.attention.self.key.weight",
+        "shape": [
+          256,
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 65536,
+        "bytes": 262144
+      },
+      {
+        "name": "bert.encoder.layer.0.attention.self.key.bias",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.0.attention.self.value.weight",
+        "shape": [
+          256,
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 65536,
+        "bytes": 262144
+      },
+      {
+        "name": "bert.encoder.layer.0.attention.self.value.bias",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.0.attention.output.dense.weight",
+        "shape": [
+          256,
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 65536,
+        "bytes": 262144
+      },
+      {
+        "name": "bert.encoder.layer.0.attention.output.dense.bias",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.0.attention.output.LayerNorm.weight",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.0.attention.output.LayerNorm.bias",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.0.intermediate.dense.weight",
+        "shape": [
+          1024,
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 262144,
+        "bytes": 1048576
+      },
+      {
+        "name": "bert.encoder.layer.0.intermediate.dense.bias",
+        "shape": [
+          1024
+        ],
+        "dtype": "torch.float32",
+        "elements": 1024,
+        "bytes": 4096
+      },
+      {
+        "name": "bert.encoder.layer.0.output.dense.weight",
+        "shape": [
+          256,
+          1024
+        ],
+        "dtype": "torch.float32",
+        "elements": 262144,
+        "bytes": 1048576
+      },
+      {
+        "name": "bert.encoder.layer.0.output.dense.bias",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.0.output.LayerNorm.weight",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.0.output.LayerNorm.bias",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.1.attention.self.query.weight",
+        "shape": [
+          256,
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 65536,
+        "bytes": 262144
+      },
+      {
+        "name": "bert.encoder.layer.1.attention.self.query.bias",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.1.attention.self.key.weight",
+        "shape": [
+          256,
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 65536,
+        "bytes": 262144
+      },
+      {
+        "name": "bert.encoder.layer.1.attention.self.key.bias",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.1.attention.self.value.weight",
+        "shape": [
+          256,
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 65536,
+        "bytes": 262144
+      },
+      {
+        "name": "bert.encoder.layer.1.attention.self.value.bias",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.1.attention.output.dense.weight",
+        "shape": [
+          256,
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 65536,
+        "bytes": 262144
+      },
+      {
+        "name": "bert.encoder.layer.1.attention.output.dense.bias",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.1.attention.output.LayerNorm.weight",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.1.attention.output.LayerNorm.bias",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.1.intermediate.dense.weight",
+        "shape": [
+          1024,
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 262144,
+        "bytes": 1048576
+      },
+      {
+        "name": "bert.encoder.layer.1.intermediate.dense.bias",
+        "shape": [
+          1024
+        ],
+        "dtype": "torch.float32",
+        "elements": 1024,
+        "bytes": 4096
+      },
+      {
+        "name": "bert.encoder.layer.1.output.dense.weight",
+        "shape": [
+          256,
+          1024
+        ],
+        "dtype": "torch.float32",
+        "elements": 262144,
+        "bytes": 1048576
+      },
+      {
+        "name": "bert.encoder.layer.1.output.dense.bias",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.1.output.LayerNorm.weight",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.1.output.LayerNorm.bias",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.2.attention.self.query.weight",
+        "shape": [
+          256,
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 65536,
+        "bytes": 262144
+      },
+      {
+        "name": "bert.encoder.layer.2.attention.self.query.bias",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.2.attention.self.key.weight",
+        "shape": [
+          256,
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 65536,
+        "bytes": 262144
+      },
+      {
+        "name": "bert.encoder.layer.2.attention.self.key.bias",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.2.attention.self.value.weight",
+        "shape": [
+          256,
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 65536,
+        "bytes": 262144
+      },
+      {
+        "name": "bert.encoder.layer.2.attention.self.value.bias",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.2.attention.output.dense.weight",
+        "shape": [
+          256,
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 65536,
+        "bytes": 262144
+      },
+      {
+        "name": "bert.encoder.layer.2.attention.output.dense.bias",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.2.attention.output.LayerNorm.weight",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.2.attention.output.LayerNorm.bias",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.2.intermediate.dense.weight",
+        "shape": [
+          1024,
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 262144,
+        "bytes": 1048576
+      },
+      {
+        "name": "bert.encoder.layer.2.intermediate.dense.bias",
+        "shape": [
+          1024
+        ],
+        "dtype": "torch.float32",
+        "elements": 1024,
+        "bytes": 4096
+      },
+      {
+        "name": "bert.encoder.layer.2.output.dense.weight",
+        "shape": [
+          256,
+          1024
+        ],
+        "dtype": "torch.float32",
+        "elements": 262144,
+        "bytes": 1048576
+      },
+      {
+        "name": "bert.encoder.layer.2.output.dense.bias",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.2.output.LayerNorm.weight",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.2.output.LayerNorm.bias",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.3.attention.self.query.weight",
+        "shape": [
+          256,
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 65536,
+        "bytes": 262144
+      },
+      {
+        "name": "bert.encoder.layer.3.attention.self.query.bias",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.3.attention.self.key.weight",
+        "shape": [
+          256,
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 65536,
+        "bytes": 262144
+      },
+      {
+        "name": "bert.encoder.layer.3.attention.self.key.bias",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.3.attention.self.value.weight",
+        "shape": [
+          256,
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 65536,
+        "bytes": 262144
+      },
+      {
+        "name": "bert.encoder.layer.3.attention.self.value.bias",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.3.attention.output.dense.weight",
+        "shape": [
+          256,
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 65536,
+        "bytes": 262144
+      },
+      {
+        "name": "bert.encoder.layer.3.attention.output.dense.bias",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.3.attention.output.LayerNorm.weight",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.3.attention.output.LayerNorm.bias",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.3.intermediate.dense.weight",
+        "shape": [
+          1024,
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 262144,
+        "bytes": 1048576
+      },
+      {
+        "name": "bert.encoder.layer.3.intermediate.dense.bias",
+        "shape": [
+          1024
+        ],
+        "dtype": "torch.float32",
+        "elements": 1024,
+        "bytes": 4096
+      },
+      {
+        "name": "bert.encoder.layer.3.output.dense.weight",
+        "shape": [
+          256,
+          1024
+        ],
+        "dtype": "torch.float32",
+        "elements": 262144,
+        "bytes": 1048576
+      },
+      {
+        "name": "bert.encoder.layer.3.output.dense.bias",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.3.output.LayerNorm.weight",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.encoder.layer.3.output.LayerNorm.bias",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "bert.pooler.dense.weight",
+        "shape": [
+          256,
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 65536,
+        "bytes": 262144
+      },
+      {
+        "name": "bert.pooler.dense.bias",
+        "shape": [
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 256,
+        "bytes": 1024
+      },
+      {
+        "name": "classifier.weight",
+        "shape": [
+          2,
+          256
+        ],
+        "dtype": "torch.float32",
+        "elements": 512,
+        "bytes": 2048
+      },
+      {
+        "name": "classifier.bias",
+        "shape": [
+          2
+        ],
+        "dtype": "torch.float32",
+        "elements": 2,
+        "bytes": 8
+      }
+    ],
+    "parameter_elements": 11171074,
+    "parameter_bytes_fp32": 44684296,
+    "matrix_macs_per_layer": {
+      "qkv": 50331648,
+      "attention_output": 16777216,
+      "qk_and_pv": 33554432,
+      "feed_forward": 134217728
+    },
+    "encoder_macs_per_window": 939524096,
+    "pooler_classifier_macs": 66048,
+    "window_length": 256,
+    "layers": 4,
+    "heads": 4,
+    "head_dim": 64,
+    "operators": [
+      {
+        "name": "word_embedding",
+        "parameter_shape": [
+          30522,
+          256
+        ],
+        "output": [
+          1,
+          256,
+          256
+        ]
+      },
+      {
+        "name": "position_embedding",
+        "parameter_shape": [
+          512,
+          256
+        ],
+        "output": [
+          1,
+          256,
+          256
+        ]
+      },
+      {
+        "name": "token_type_embedding",
+        "parameter_shape": [
+          2,
+          256
+        ],
+        "output": [
+          1,
+          256,
+          256
+        ]
+      },
+      {
+        "name": "embedding_sum_then_LayerNorm",
+        "shape": [
+          1,
+          256,
+          256
+        ],
+        "epsilon": 1e-12
+      },
+      {
+        "name": "Q/K/V_each_per_layer",
+        "input": [
+          1,
+          256,
+          256
+        ],
+        "weight": [
+          256,
+          256
+        ],
+        "bias": [
+          256
+        ],
+        "output": [
+          1,
+          4,
+          256,
+          64
+        ]
+      },
+      {
+        "name": "QK_per_layer",
+        "left": [
+          1,
+          4,
+          256,
+          64
+        ],
+        "right": [
+          1,
+          4,
+          64,
+          256
+        ],
+        "output": [
+          1,
+          4,
+          256,
+          256
+        ],
+        "scale": 0.125
+      },
+      {
+        "name": "masked_softmax_per_layer",
+        "shape": [
+          1,
+          4,
+          256,
+          256
+        ],
+        "axis": -1,
+        "mask": "keys only; bidirectional"
+      },
+      {
+        "name": "PV_per_layer",
+        "left": [
+          1,
+          4,
+          256,
+          256
+        ],
+        "right": [
+          1,
+          4,
+          256,
+          64
+        ],
+        "output": [
+          1,
+          256,
+          256
+        ]
+      },
+      {
+        "name": "attention_output_per_layer",
+        "weight": [
+          256,
+          256
+        ],
+        "bias": [
+          256
+        ],
+        "residual_then_LayerNorm": true
+      },
+      {
+        "name": "FF1_per_layer",
+        "input": [
+          1,
+          256,
+          256
+        ],
+        "weight": [
+          1024,
+          256
+        ],
+        "bias": [
+          1024
+        ],
+        "output": [
+          1,
+          256,
+          1024
+        ],
+        "activation": "erf GELU"
+      },
+      {
+        "name": "FF2_per_layer",
+        "weight": [
+          256,
+          1024
+        ],
+        "bias": [
+          256
+        ],
+        "output": [
+          1,
+          256,
+          256
+        ],
+        "residual_then_LayerNorm": true
+      },
+      {
+        "name": "pooler",
+        "input": [
+          1,
+          256
+        ],
+        "weight": [
+          256,
+          256
+        ],
+        "bias": [
+          256
+        ],
+        "activation": "tanh",
+        "selection": "CLS index0"
+      },
+      {
+        "name": "classifier",
+        "input": [
+          1,
+          256
+        ],
+        "weight": [
+          2,
+          256
+        ],
+        "bias": [
+          2
+        ],
+        "output": [
+          1,
+          2
+        ]
+      }
+    ],
+    "excluded_from_macs": "embedding/LN/softmax/GELU/residual and host/document operations; analytical not measured",
+    "activation_live_fp32_bytes": {
+      "hidden": 262144,
+      "qkv": 786432,
+      "attention_scores": 1048576,
+      "ff_intermediate": 1048576
+    }
+  },
+  "semantics": {
+    "input_ids": "int32 [B,N], vocabulary30522",
+    "mask": "int32 [B,N], 1=valid key; bidirectional",
+    "token_type_ids": "int32 optional; default zero",
+    "positions": "0..N-1",
+    "N": 256,
+    "quantization": "RNE signed[-127,127], zero_point0, per-output weight scalar/per-linear input scalar",
+    "bias": "(FP32(acc32)*input_scale)*weight_scale+bias in this order",
+    "attention": "BF16 operands/FP32 accumulation in K64 chunks",
+    "nonlinear": "FP32 erf GELU; FP32 LayerNorm epsilon1e-12; FP32 stable softmax; FP32 pooler tanh",
+    "document_score": "max window positive softmax; strictly greater than frozen threshold"
+  }
+}

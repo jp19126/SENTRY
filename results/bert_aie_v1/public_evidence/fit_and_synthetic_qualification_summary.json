@@ -1,0 +1,186 @@
+{
+  "data_role": "fit_and_synthetic",
+  "calibration_sha256": "6bda96b7d50f55299523e9bde8e3ee3339cebd1619837670a17879e4a55cad73",
+  "device": "cpu",
+  "threads": 1,
+  "source_differential_qualified": true,
+  "source_differential_tolerance": "1e-4 absolute logits engineering regression tolerance; not a scientific quality acceptance gate",
+  "evidence_boundary": "software numerical differential; no device throughput or corpus quality claim",
+  "cases": [
+    {
+      "case": "fit_0",
+      "source_reference_max_logit_error": 4.76837158203125e-07,
+      "source_reference_hidden_max_errors": [
+        0.0,
+        3.814697265625e-06,
+        3.933906555175781e-06,
+        7.3909759521484375e-06,
+        4.947185516357422e-06
+      ],
+      "variants": {
+        "w8a8_fp32_attention": {
+          "max_logit_error": 0.008779525756835938,
+          "masked_key_mutation_max_logit_error": 0.0
+        },
+        "w8a8_bf16_attention": {
+          "max_logit_error": 0.010068416595458984,
+          "masked_key_mutation_max_logit_error": 0.0
+        },
+        "packed_reload": {
+          "max_logit_error": 0.010068416595458984,
+          "masked_key_mutation_max_logit_error": 0.0
+        }
+      }
+    },
+    {
+      "case": "fit_47282",
+      "source_reference_max_logit_error": 0.0,
+      "source_reference_hidden_max_errors": [
+        0.0,
+        3.814697265625e-06,
+        3.6954879760742188e-06,
+        4.0531158447265625e-06,
+        6.288290023803711e-06
+      ],
+      "variants": {
+        "w8a8_fp32_attention": {
+          "max_logit_error": 0.02431774139404297,
+          "masked_key_mutation_max_logit_error": 0.0
+        },
+        "w8a8_bf16_attention": {
+          "max_logit_error": 0.02639007568359375,
+          "masked_key_mutation_max_logit_error": 0.0
+        },
+        "packed_reload": {
+          "max_logit_error": 0.02639007568359375,
+          "masked_key_mutation_max_logit_error": 0.0
+        }
+      }
+    },
+    {
+      "case": "fit_6",
+      "source_reference_max_logit_error": 4.76837158203125e-07,
+      "source_reference_hidden_max_errors": [
+        0.0,
+        1.9073486328125e-06,
+        4.202127456665039e-06,
+        5.7220458984375e-06,
+        3.5762786865234375e-06
+      ],
+      "variants": {
+        "w8a8_fp32_attention": {
+          "max_logit_error": 0.007854461669921875,
+          "masked_key_mutation_max_logit_error": 0.0
+        },
+        "w8a8_bf16_attention": {
+          "max_logit_error": 0.009874820709228516,
+          "masked_key_mutation_max_logit_error": 0.0
+        },
+        "packed_reload": {
+          "max_logit_error": 0.009874820709228516,
+          "masked_key_mutation_max_logit_error": 0.0
+        }
+      }
+    },
+    {
+      "case": "tail_7_token_type1",
+      "source_reference_max_logit_error": 1.6689300537109375e-06,
+      "source_reference_hidden_max_errors": [
+        0.0,
+        1.9073486328125e-06,
+        2.384185791015625e-06,
+        3.814697265625e-06,
+        4.5299530029296875e-06
+      ],
+      "variants": {
+        "w8a8_fp32_attention": {
+          "max_logit_error": 1.7617827653884888,
+          "masked_key_mutation_max_logit_error": 0.0
+        },
+        "w8a8_bf16_attention": {
+          "max_logit_error": 1.6621981859207153,
+          "masked_key_mutation_max_logit_error": 0.0
+        },
+        "packed_reload": {
+          "max_logit_error": 1.6621981859207153,
+          "masked_key_mutation_max_logit_error": 0.0
+        }
+      }
+    },
+    {
+      "case": "tail_65_token_type1",
+      "source_reference_max_logit_error": 7.152557373046875e-07,
+      "source_reference_hidden_max_errors": [
+        0.0,
+        2.384185791015625e-06,
+        4.0531158447265625e-06,
+        5.9604644775390625e-06,
+        4.291534423828125e-06
+      ],
+      "variants": {
+        "w8a8_fp32_attention": {
+          "max_logit_error": 0.684638261795044,
+          "masked_key_mutation_max_logit_error": 0.0
+        },
+        "w8a8_bf16_attention": {
+          "max_logit_error": 0.6035492420196533,
+          "masked_key_mutation_max_logit_error": 0.0
+        },
+        "packed_reload": {
+          "max_logit_error": 0.6035492420196533,
+          "masked_key_mutation_max_logit_error": 0.0
+        }
+      }
+    },
+    {
+      "case": "tail_255_token_type1",
+      "source_reference_max_logit_error": 0.0,
+      "source_reference_hidden_max_errors": [
+        0.0,
+        2.384185791015625e-06,
+        3.5762786865234375e-06,
+        6.67572021484375e-06,
+        3.874301910400391e-06
+      ],
+      "variants": {
+        "w8a8_fp32_attention": {
+          "max_logit_error": 0.01712799072265625,
+          "masked_key_mutation_max_logit_error": 0.0
+        },
+        "w8a8_bf16_attention": {
+          "max_logit_error": 0.04273271560668945,
+          "masked_key_mutation_max_logit_error": 0.0
+        },
+        "packed_reload": {
+          "max_logit_error": 0.04273271560668945,
+          "masked_key_mutation_max_logit_error": 0.0
+        }
+      }
+    },
+    {
+      "case": "tail_256_token_type1",
+      "source_reference_max_logit_error": 0.0,
+      "source_reference_hidden_max_errors": [
+        0.0,
+        2.384185791015625e-06,
+        4.291534423828125e-06,
+        5.4836273193359375e-06,
+        4.0531158447265625e-06
+      ],
+      "variants": {
+        "w8a8_fp32_attention": {
+          "max_logit_error": 0.0386810302734375,
+          "masked_key_mutation_max_logit_error": 0.0
+        },
+        "w8a8_bf16_attention": {
+          "max_logit_error": 0.05357694625854492,
+          "masked_key_mutation_max_logit_error": 0.0
+        },
+        "packed_reload": {
+          "max_logit_error": 0.05357694625854492,
+          "masked_key_mutation_max_logit_error": 0.0
+        }
+      }
+    }
+  ]
+}

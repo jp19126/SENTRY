@@ -1,0 +1,72 @@
+{
+  "scope": "Focused saved historical BERT costs only; no old campaign rerun or new benchmark.",
+  "historical_paragraph": "The legacy static-bank64 schedule has a source-derived W8 integer subtotal of 142,925,208 cycles (714.626040 ms at the 200 MHz objective), a 411-call FP32 weighted RTL sum of 94,864,971 cycles (474.324855 ms), and 5,399,345 conditional control/layout cycles (26.996725 ms), totaling 1,215.947620 ms of known internal cost. QK/AV contribute 326.734240 ms of the FP32 sum; softmax, quantization, rescale/bias, LayerNorm and GELU contribute 32.789440, 35.454240, 35.446680, 18.778320 and 15.773440 ms. The integer total is an algebraic model validated on targeted calls; the FP32 sum weights 15 formula-fixture shapes, each observed twice under registered one-outstanding-per-port simulated memory without added DDR delay/cross-port contention; control/layout uses arithmetic-completion stubs. These are not full-detector or board latencies. The 105,393,192 useful service bytes already incur nominal interface waits, so charging them again would double-count. Historical CUDA Graph W8 measured 1.707225 ms complete warm mean over 32 single-window raw-text-to-strict-decision checks after eight warmups; that different checkpoint/workload is context, not the new matched baseline. None of these historical times is a lower bound for the new 939,524,096-MAC encoder or its separately derived 6.291456-ms ideal INT8 A-port bound.",
+  "mapping_rationale": "Buffered PL remains plausible with weight reuse/prefetch, row/panel attention and reusable engines, but its actual multiplier allocation/clock and nonlinear schedule are unmeasured for the new arithmetic. Native AIE-ML INT8/INT32 and BF16/FP32 operations motivate the heterogeneous route; 64 KiB compute-tile local data RAM versus a 256 KiB full head score matrix necessitates tiling, and distributed RAM is not a shared global buffer. Compare the implemented external-scratch and resident AIE/PL mappings because they hold native tile shapes, numerical arithmetic, weights, local per-operator reuse and graph crossings fixed while changing full intermediate placement. This isolates residency feasibility/traffic/latency with an engineered conventional heterogeneous control; it does not demonstrate superiority over a matched PL-only implementation, which would require its own completed implementation and measurements.",
+  "sources": [
+    {
+      "path": "reports/goal_r1_decision.md",
+      "lines": [
+        132,
+        150,
+        153,
+        195,
+        218,
+        235
+      ]
+    },
+    {
+      "path": "reports/goal4_symbolic_cost.md",
+      "lines": [
+        59,
+        70,
+        75,
+        77
+      ]
+    },
+    {
+      "path": "reports/goal4_fixed_fp32_results.md",
+      "lines": [
+        33,
+        38,
+        40,
+        63,
+        67
+      ]
+    },
+    {
+      "path": "reports/hardware_cost_model.md",
+      "lines": [
+        50,
+        95,
+        97,
+        103
+      ]
+    },
+    {
+      "path": "results/goal_r1/architecture_facts.json",
+      "fields": [
+        "current_best_available_software_path",
+        "pl_known_l256_internal",
+        "fixed_fp32_service_l256",
+        "aie_ml_memory_facts"
+      ]
+    },
+    {
+      "path": "hardware/bert_aie_v1/model.hpp",
+      "symbols": [
+        "model<Resident>",
+        "linear",
+        "attention"
+      ]
+    },
+    {
+      "path": "results/bert_aie_v1/source_cost_model.json",
+      "fields": [
+        "matrix_macs",
+        "pl_only_comparison",
+        "port_bound"
+      ]
+    }
+  ],
+  "evidence_warning": "Architectural native rates/memory sizes are saved official-source facts; no new external verification performed. Historical data and arithmetic identities are distinct from the current fixed matched checkpoint."
+}

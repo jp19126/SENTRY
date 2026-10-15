@@ -1,0 +1,77 @@
+{
+  "boundary": "Prerequisites and source identities only; no threshold, evaluation outcomes, input data, physical operation or system-completion claim",
+  "physical_authorized": false,
+  "required": [
+    "Separate explicit human board permission before --execute --board-authorized",
+    "Matching VEK280 Linux/XRT host headers/libraries or verified sysroot; not found in inspected installation",
+    "Completed connected xclbin and compiled persistent host, each hash-bound",
+    "Exact numerical export identity, route-specific frozen margin threshold and timing manifest must be bound locally at continuation; threshold intentionally omitted here",
+    "Retain all document windows before strict max-margin decision; measure cold setup separately from complete warm raw-document-to-decision"
+  ],
+  "sources": {
+    "hardware/bert_aie_v1/BUILD_NOTES.md": "4f7d398a0e022fa01f9eee486ec84f074750732d6882459316a0a0118b23e5f5",
+    "scripts/bert_aie_v1/board_measure.py": "b632740b6ce923f93f37fd72d14c10371048f579c5be24509fc711b482b3db64",
+    "hardware/bert_aie_v1/host.cpp": "7563f60ea7420e0b0cf73eb6ea68d22f7f0f000f8729f35091cc6be31917c022",
+    "results/bert_aie_v1/board_packages/resume.json": "602ce04a409024bc4b2591b44393ea76274d5ad7bc93aba025b5ed6d69a00ca7"
+  },
+  "actual_builder_paths": {
+    "platform": "/home/jp19126/Xilinx/2025.2/Vitis/base_platforms/xilinx_vek280_base_202520_1/xilinx_vek280_base_202520_1.xpfm",
+    "common_aie_archive": "/home/jp19126/Projects/SENTRY/build/bert_aie_v1/common/libadf.a",
+    "mappings": {
+      "resident": {
+        "pl_object": "/home/jp19126/Projects/SENTRY/build/bert_aie_v1/resident/bert_pl.xo",
+        "configured_link_output": "/home/jp19126/Projects/SENTRY/build/bert_aie_v1/resident/bert.xsa",
+        "future_package_directory": "/home/jp19126/Projects/SENTRY/build/bert_aie_v1/resident/package",
+        "future_xclbin_output": "/home/jp19126/Projects/SENTRY/build/bert_aie_v1/resident/package/bert.xclbin"
+      },
+      "external": {
+        "pl_object": "/home/jp19126/Projects/SENTRY/build/bert_aie_v1/external/bert_pl.xo",
+        "configured_link_output": "/home/jp19126/Projects/SENTRY/build/bert_aie_v1/external/bert.xsa",
+        "future_package_directory": "/home/jp19126/Projects/SENTRY/build/bert_aie_v1/external/package",
+        "future_xclbin_output": "/home/jp19126/Projects/SENTRY/build/bert_aie_v1/external/package/bert.xclbin"
+      }
+    }
+  },
+  "missing_dependencies": {
+    "linux_kernel_image": "<MISSING_MATCHING_VEK280_2025_2_LINUX_IMAGE>",
+    "root_filesystem": "<MISSING_MATCHING_VEK280_2025_2_ROOTFS_EXT4>",
+    "aarch64_cxx": "<MISSING_MATCHING_CORTEX_A72_SDK_CXX>",
+    "target_sysroot": "<MISSING_MATCHING_CORTEX_A72_LINUX_XRT_SYSROOT>",
+    "target_xrt_include": "<MISSING_TARGET_INCLUDE_CONTAINING_EXPERIMENTAL_XRT_KERNEL_H_AND_XRT_GRAPH_H>",
+    "target_xrt_library": "<MISSING_TARGET_LIBRARY_DIRECTORY_CONTAINING_LIBXRT_COREUTIL>",
+    "target_python_runtime": "<MISSING_VERIFIED_TARGET_PYTHON3_WITH_TRANSFORMERS_AND_NUMPY>"
+  },
+  "host_compile": {
+    "status": "not compiled; dependency-blocked",
+    "source": "/home/jp19126/Projects/SENTRY/hardware/bert_aie_v1/host.cpp",
+    "future_output": "/home/jp19126/Projects/SENTRY/build/bert_aie_v1/board/bert_host",
+    "template_only_not_executable_as_written": true,
+    "command_template": "\"<MISSING_MATCHING_CORTEX_A72_SDK_CXX>\" --sysroot=\"<MISSING_MATCHING_CORTEX_A72_LINUX_XRT_SYSROOT>\" -std=c++17 -O2 -I\"<MISSING_TARGET_XRT_INCLUDE>\" /home/jp19126/Projects/SENTRY/hardware/bert_aie_v1/host.cpp -L\"<MISSING_TARGET_XRT_LIBRARY_DIRECTORY>\" -lxrt_coreutil -pthread -o /home/jp19126/Projects/SENTRY/build/bert_aie_v1/board/bert_host",
+    "static_inspection": [
+      "host.cpp requires experimental/xrt_kernel.h and experimental/xrt_graph.h plus the target XRT runtime library; neither headers nor library are installed in a verified matching target sysroot.",
+      "The host runs on Cortex-A72 Linux/XRT. A native x86 Windows or WSL g++ output is not a target host binary.",
+      "No additional definite C++ source compile error was established without these headers. XRT constructor/API compatibility and target ABI remain unverified.",
+      "The source expects kernel bert_pl, graph bert_graph, device index 0, and the seven buffer arguments defined by the connected design. These runtime assumptions require the final linked/package metadata and actual board checks."
+    ]
+  },
+  "offline_package": {
+    "status": "not attempted; requires successfully linked mapping XSA plus missing Linux/SDK inputs",
+    "template_only_not_executable_as_written": true,
+    "official_installed_help_command": "/home/jp19126/Xilinx/2025.2/Vitis/bin/v++ --help --package",
+    "verified_help_options": {
+      "package.defer_aie_run": "PS application enables AIE cores; matches host graph.run(-1).",
+      "package.boot_mode": "sd is valid for embedded Edge platforms.",
+      "package.rootfs": "Linux root filesystem file with ext4 extension.",
+      "package.kernel_image": "Linux kernel image file.",
+      "package.sd_file": "ELF or other data file copied into the SD directory/image.",
+      "package.out_dir": "Package output directory.",
+      "output": "Explicit package XCLBIN output filename."
+    },
+    "command_templates": {
+      "resident": "/home/jp19126/Xilinx/2025.2/Vitis/bin/v++ --package --target hw --platform /home/jp19126/Xilinx/2025.2/Vitis/base_platforms/xilinx_vek280_base_202520_1/xilinx_vek280_base_202520_1.xpfm --package.defer_aie_run --package.boot_mode sd --package.rootfs \"<MISSING_MATCHING_VEK280_2025_2_ROOTFS_EXT4>\" --package.kernel_image \"<MISSING_MATCHING_VEK280_2025_2_LINUX_IMAGE>\" --package.sd_file /home/jp19126/Projects/SENTRY/build/bert_aie_v1/board/bert_host --package.out_dir /home/jp19126/Projects/SENTRY/build/bert_aie_v1/resident/package --output /home/jp19126/Projects/SENTRY/build/bert_aie_v1/resident/package/bert.xclbin /home/jp19126/Projects/SENTRY/build/bert_aie_v1/resident/bert.xsa /home/jp19126/Projects/SENTRY/build/bert_aie_v1/common/libadf.a",
+      "external": "/home/jp19126/Xilinx/2025.2/Vitis/bin/v++ --package --target hw --platform /home/jp19126/Xilinx/2025.2/Vitis/base_platforms/xilinx_vek280_base_202520_1/xilinx_vek280_base_202520_1.xpfm --package.defer_aie_run --package.boot_mode sd --package.rootfs \"<MISSING_MATCHING_VEK280_2025_2_ROOTFS_EXT4>\" --package.kernel_image \"<MISSING_MATCHING_VEK280_2025_2_LINUX_IMAGE>\" --package.sd_file /home/jp19126/Projects/SENTRY/build/bert_aie_v1/board/bert_host --package.out_dir /home/jp19126/Projects/SENTRY/build/bert_aie_v1/external/package --output /home/jp19126/Projects/SENTRY/build/bert_aie_v1/external/package/bert.xclbin /home/jp19126/Projects/SENTRY/build/bert_aie_v1/external/bert.xsa /home/jp19126/Projects/SENTRY/build/bert_aie_v1/common/libadf.a"
+    }
+  },
+  "next_dependency": "Obtain the VEK280 platform-matched 2025.2 embedded Linux Image, rootfs.ext4, and Cortex-A72 Linux SDK containing compatible XRT headers/libraries/compiler/sysroot. Preserve their version/hash identities; then complete mapping-specific linking, host compilation and v++ packaging before any physical command.",
+  "projection_note": "Explicitly copied only builder paths, missing dependencies, host/package templates and next dependency from corrected resume. Physical command packages, thresholds, evaluation outcomes and numerical-outcome prerequisites omitted. XSA link output is not a packaged XCLBIN."
+}

@@ -2,7 +2,7 @@
   "study_id": "bert_aie_v1",
   "authorized_by": "User submitted SENTRY_Path2_BERT_AIE_Execution_Prompt.md on 2026-10-15; approved Git synchronization separately",
   "decision_stage": "whole-model offline feasibility and isolated co-design comparison",
-  "phase": "implementation_and_development_qualification",
+  "phase": "frozen_numerical_and_mapping_nomination",
   "shared_root": "/home/jp19126/Projects/SENTRY/results/dual_track_v1/shared",
   "canonical_root": "/home/jp19126/Projects/SENTRY",
   "teacher": {
@@ -77,5 +77,12 @@
     "windows": 77,
     "repetitions": 20,
     "warmups": 3
-  }
+  },
+  "software_execution_controls": [
+    "source_eager_cuda",
+    "source_eager_cpu",
+    "source_cuda_graph",
+    "candidate_cuda_graph"
+  ],
+  "configuration_policy": "Scientific configuration freezes here; subsequent actual execution states and cumulative resources are recorded in task report and result ledgers."
 }

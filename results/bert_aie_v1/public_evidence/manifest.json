@@ -1,0 +1,343 @@
+{
+  "schema": "bert_aie_public_evidence_allowlist_v1",
+  "scope": "Score-free supporting engineering archive; source-backed copies and explicit field projections",
+  "files": [
+    {
+      "path": "source_cost_model.json",
+      "bytes": 3009,
+      "sha256": "cc34ac5d5a0bdc4929fc17b57b5db1d31a3d4c482c88cfba31c3aa025274b862",
+      "sources": [
+        {
+          "path": "results/bert_aie_v1/source_cost_model.json",
+          "sha256": "cc34ac5d5a0bdc4929fc17b57b5db1d31a3d4c482c88cfba31c3aa025274b862"
+        }
+      ],
+      "selection": "Exact byte copy from explicit allowlist; no task confirmation outcomes"
+    },
+    {
+      "path": "export_manifest.json",
+      "bytes": 54034,
+      "sha256": "c4fe164a48051ca3834e112f5efd6564c559d8d62604dfe716cb2c1c097d92a3",
+      "sources": [
+        {
+          "path": "results/bert_aie_v1/export/w8a8_bf16_attention/manifest.json",
+          "sha256": "c4fe164a48051ca3834e112f5efd6564c559d8d62604dfe716cb2c1c097d92a3"
+        }
+      ],
+      "selection": "Exact byte copy from explicit allowlist; no task confirmation outcomes"
+    },
+    {
+      "path": "export_manifest_semantic_erratum.json",
+      "bytes": 941,
+      "sha256": "06a059b7bd3c0e80a60c65831c017b04ac09b50d714f2ee9b4d408cab168f7fd",
+      "sources": [
+        {
+          "path": "results/bert_aie_v1/export/w8a8_bf16_attention/manifest_semantic_erratum.json",
+          "sha256": "06a059b7bd3c0e80a60c65831c017b04ac09b50d714f2ee9b4d408cab168f7fd"
+        }
+      ],
+      "selection": "Exact byte copy from explicit allowlist; no task confirmation outcomes"
+    },
+    {
+      "path": "preconfirmation_freeze.json",
+      "bytes": 15535,
+      "sha256": "dbb8bf7b114b49bf18e4ca9c2dd0b5ca2e3072cea242859061ff8fd60824264d",
+      "sources": [
+        {
+          "path": "results/bert_aie_v1/confirmation_freeze_v1.json",
+          "sha256": "dbb8bf7b114b49bf18e4ca9c2dd0b5ca2e3072cea242859061ff8fd60824264d"
+        }
+      ],
+      "selection": "Exact byte copy from explicit allowlist; no task confirmation outcomes"
+    },
+    {
+      "path": "fit64_activation_scales.json",
+      "bytes": 5790,
+      "sha256": "6bda96b7d50f55299523e9bde8e3ee3339cebd1619837670a17879e4a55cad73",
+      "sources": [
+        {
+          "path": "results/bert_aie_v1/numerics/calibration_fit64.json",
+          "sha256": "6bda96b7d50f55299523e9bde8e3ee3339cebd1619837670a17879e4a55cad73"
+        }
+      ],
+      "selection": "Exact byte copy from explicit allowlist; no task confirmation outcomes"
+    },
+    {
+      "path": "historical_context.json",
+      "bytes": 3875,
+      "sha256": "cc9730993b4bb9ddc981a5418361a35a72d282781f732f91f2a8dcaa4c263980",
+      "sources": [
+        {
+          "path": "results/bert_aie_v1/historical_context.json",
+          "sha256": "cc9730993b4bb9ddc981a5418361a35a72d282781f732f91f2a8dcaa4c263980"
+        }
+      ],
+      "selection": "Exact byte copy from explicit allowlist; no task confirmation outcomes"
+    },
+    {
+      "path": "literature.md",
+      "bytes": 9617,
+      "sha256": "31b2a2f8625aa61c3ef1708cc6819981f7647c48d32b032d165c68f181e215f4",
+      "sources": [
+        {
+          "path": "results/bert_aie_v1/literature.md",
+          "sha256": "31b2a2f8625aa61c3ef1708cc6819981f7647c48d32b032d165c68f181e215f4"
+        }
+      ],
+      "selection": "Exact byte copy from explicit allowlist; no task confirmation outcomes"
+    },
+    {
+      "path": "cpp_semantics_boundary.json",
+      "bytes": 1436,
+      "sha256": "a9f41edc96c323bb428aecb85f42eda351c01935db3d7c86c3328fa6cb7cfb2b",
+      "sources": [
+        {
+          "path": "results/bert_aie_v1/checks/cpp_semantics_boundary.json",
+          "sha256": "a9f41edc96c323bb428aecb85f42eda351c01935db3d7c86c3328fa6cb7cfb2b"
+        }
+      ],
+      "selection": "Exact byte copy from explicit allowlist; no task confirmation outcomes"
+    },
+    {
+      "path": "native/aiesim_validation.json",
+      "bytes": 376,
+      "sha256": "b6eea8d91cad247b5282f07816fc9c19312cea0742c3fb0b728ce6bd03840e3b",
+      "sources": [
+        {
+          "path": "build/bert_aie_v1/common/aiesim_validation.json",
+          "sha256": "b6eea8d91cad247b5282f07816fc9c19312cea0742c3fb0b728ce6bd03840e3b"
+        }
+      ],
+      "selection": "Exact byte copy from explicit allowlist; no task confirmation outcomes"
+    },
+    {
+      "path": "native/native_costs.json",
+      "bytes": 6038,
+      "sha256": "4158a585b9b41e5349c45b5bf88e41f40d7c45386a930a1be9f718f5bad1d9e8",
+      "sources": [
+        {
+          "path": "build/bert_aie_v1/common/native_costs.json",
+          "sha256": "4158a585b9b41e5349c45b5bf88e41f40d7c45386a930a1be9f718f5bad1d9e8"
+        }
+      ],
+      "selection": "Exact byte copy from explicit allowlist; no task confirmation outcomes"
+    },
+    {
+      "path": "native/wire_roundtrip.log",
+      "bytes": 247,
+      "sha256": "292e07ba559d296baae1260254eb2464f1cdd12f4b9e41f8c21b56c50db6d111",
+      "sources": [
+        {
+          "path": "build/bert_aie_v1/common/wire_attempt2_run.log",
+          "sha256": "292e07ba559d296baae1260254eb2464f1cdd12f4b9e41f8c21b56c50db6d111"
+        }
+      ],
+      "selection": "Exact byte copy from explicit allowlist; no task confirmation outcomes"
+    },
+    {
+      "path": "primary_data_membership_audit.json",
+      "bytes": 5584,
+      "sha256": "ef9688c5cfd14a719e1ea77577a66bee644a9400cae53900d0da16a926e71714",
+      "sources": [
+        {
+          "path": "results/bert_aie_v1/primary_data_check.json",
+          "sha256": "3fe0d8ac4163fddc10c74a4525fa12e7dee9de5f9ffe3bf2826bff82afa39c7c"
+        }
+      ],
+      "selection": "Explicit top-level field projection; excludes diagnostic text prefixes and authored payload content"
+    },
+    {
+      "path": "fit_and_synthetic_qualification_summary.json",
+      "bytes": 5924,
+      "sha256": "0fe7f227dabfe062fc33d32fbc61caa71af560cdf0debc5ec36761013737866a",
+      "sources": [
+        {
+          "path": "results/bert_aie_v1/numerics/differential_cpu_full_padded.json",
+          "sha256": "a4c4f7985fd6c132ccc3081c449409de3d93067e11cc105476233436aa8a4aaa"
+        }
+      ],
+      "selection": "Only FIT/synthetic numerical error checks; per-input logits/probabilities and arrays omitted"
+    },
+    {
+      "path": "native/aie_compile_completed.json",
+      "bytes": 1763,
+      "sha256": "f8295001360848219a2de97c0db726475131e97ecfbada755c0017e8791dbb6a",
+      "sources": [
+        {
+          "path": "build/bert_aie_v1/common/aie_attempt2.json",
+          "sha256": "111bc62bb6fc373a340540ff23860b419a17dfed639555a98859b7307f616968"
+        }
+      ],
+      "selection": "Completed native stage provenance; process inventory and memory snapshots omitted; simulator unclean-termination caveat retained"
+    },
+    {
+      "path": "native/aie_simulation_adjudication.json",
+      "bytes": 2087,
+      "sha256": "faca2a517fa7e583853901ef783e1ea313cf34048ca31be3bdd24d312efe4d8c",
+      "sources": [
+        {
+          "path": "build/bert_aie_v1/common/aiesim_attempt1.json",
+          "sha256": "ce8a2547d32b7242a12dc07a0d0a3bf7f5168159e1f68b6e42ff226111487bf0"
+        }
+      ],
+      "selection": "Completed native stage provenance; process inventory and memory snapshots omitted; simulator unclean-termination caveat retained"
+    },
+    {
+      "path": "native/compiler_reports/graph_mapping_analysis_report.txt",
+      "bytes": 5953,
+      "sha256": "f0accb2ed61b9f8a348b5fec5a6ac1c2881d66ed7a753c17a3907c14e225a4bb",
+      "sources": [
+        {
+          "path": "build/bert_aie_v1/common/Work/reports/graph_mapping_analysis_report.txt",
+          "sha256": "f0accb2ed61b9f8a348b5fec5a6ac1c2881d66ed7a753c17a3907c14e225a4bb"
+        }
+      ],
+      "selection": "Completed AIE compiler report explicitly referenced by native_costs; no HLS/link artifact"
+    },
+    {
+      "path": "native/compiler_reports/graph.xpe",
+      "bytes": 2471,
+      "sha256": "ee620ab7cc54c7fcfe2f29aeefe43ffec778dd8d3fc2071a3cbb6d1837d5cd74",
+      "sources": [
+        {
+          "path": "build/bert_aie_v1/common/Work/reports/graph.xpe",
+          "sha256": "ee620ab7cc54c7fcfe2f29aeefe43ffec778dd8d3fc2071a3cbb6d1837d5cd74"
+        }
+      ],
+      "selection": "Completed AIE compiler report explicitly referenced by native_costs; no HLS/link artifact"
+    },
+    {
+      "path": "native/compiler_reports/report_pm.txt",
+      "bytes": 277,
+      "sha256": "7d9c2dd88fd3a3c75fbec68f8b3f1d04b1bc12c8c6d1d1c5aa71b61e3200e56d",
+      "sources": [
+        {
+          "path": "build/bert_aie_v1/common/Work/reports/report_pm.txt",
+          "sha256": "7d9c2dd88fd3a3c75fbec68f8b3f1d04b1bc12c8c6d1d1c5aa71b61e3200e56d"
+        }
+      ],
+      "selection": "Completed AIE compiler report explicitly referenced by native_costs; no HLS/link artifact"
+    },
+    {
+      "path": "native/compiler_reports/report_stack.txt",
+      "bytes": 482,
+      "sha256": "4097348f5e77a33e677ce434879a86969afee790021d7be7e3c42df3d5265948",
+      "sources": [
+        {
+          "path": "build/bert_aie_v1/common/Work/reports/report_stack.txt",
+          "sha256": "4097348f5e77a33e677ce434879a86969afee790021d7be7e3c42df3d5265948"
+        }
+      ],
+      "selection": "Completed AIE compiler report explicitly referenced by native_costs; no HLS/link artifact"
+    },
+    {
+      "path": "board_continuation_prerequisites.json",
+      "bytes": 7551,
+      "sha256": "8d4dcf4805196354f8b5747644e37165279a8f2fd453ebba5833118604d3e8f5",
+      "sources": [
+        {
+          "path": "hardware/bert_aie_v1/BUILD_NOTES.md",
+          "sha256": "4f7d398a0e022fa01f9eee486ec84f074750732d6882459316a0a0118b23e5f5"
+        },
+        {
+          "path": "scripts/bert_aie_v1/board_measure.py",
+          "sha256": "b632740b6ce923f93f37fd72d14c10371048f579c5be24509fc711b482b3db64"
+        },
+        {
+          "path": "hardware/bert_aie_v1/host.cpp",
+          "sha256": "7563f60ea7420e0b0cf73eb6ea68d22f7f0f000f8729f35091cc6be31917c022"
+        },
+        {
+          "path": "results/bert_aie_v1/board_packages/resume.json",
+          "sha256": "602ce04a409024bc4b2591b44393ea76274d5ad7bc93aba025b5ed6d69a00ca7"
+        }
+      ],
+      "selection": "Threshold-free prerequisite summary plus explicit builder-path/dependency/host-package-template projection from corrected resume; no physical commands, score data or numerical outcomes"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2998,
+      "sha256": "e016b47490e48b293c05f2660149b060768ef82e61f0df776244644c5cc7dd57",
+      "sources": [],
+      "selection": "Authored archive scope and omission note"
+    },
+    {
+      "path": "hls_original/resident/hls_attempt0.json",
+      "bytes": 2817,
+      "sha256": "8a3eb7b1399d8edc49eeb0fc7bf5f1dc04bab86efa78b59b045a646dd524d03b",
+      "sources": [
+        {
+          "path": "build/bert_aie_v1/resident/hls_attempt0.json",
+          "sha256": "8a3eb7b1399d8edc49eeb0fc7bf5f1dc04bab86efa78b59b045a646dd524d03b"
+        }
+      ],
+      "selection": "Completed ORIGINAL HLS attempt0; exact byte copy. Corrected retries and active connected link excluded."
+    },
+    {
+      "path": "hls_original/resident/hls_costs.json",
+      "bytes": 104101,
+      "sha256": "840d81162dc723ece51cce928981122343b1b11115cef582c9bd0365cd0d998e",
+      "sources": [
+        {
+          "path": "build/bert_aie_v1/resident/hls_costs.json",
+          "sha256": "840d81162dc723ece51cce928981122343b1b11115cef582c9bd0365cd0d998e"
+        }
+      ],
+      "selection": "Completed ORIGINAL HLS attempt0; exact byte copy. Corrected retries and active connected link excluded."
+    },
+    {
+      "path": "hls_original/external/hls_attempt0.json",
+      "bytes": 2816,
+      "sha256": "3319cd1dc9684ad9973f25aad3f5fda8c3047fbb64a4083e98450fd1c9912e54",
+      "sources": [
+        {
+          "path": "build/bert_aie_v1/external/hls_attempt0.json",
+          "sha256": "3319cd1dc9684ad9973f25aad3f5fda8c3047fbb64a4083e98450fd1c9912e54"
+        }
+      ],
+      "selection": "Completed ORIGINAL HLS attempt0; exact byte copy. Corrected retries and active connected link excluded."
+    },
+    {
+      "path": "hls_original/external/hls_costs.json",
+      "bytes": 91115,
+      "sha256": "9abfd623d1b9e789b25b47a345c516f57e0110da96fa7e94097f87d19a24afbc",
+      "sources": [
+        {
+          "path": "build/bert_aie_v1/external/hls_costs.json",
+          "sha256": "9abfd623d1b9e789b25b47a345c516f57e0110da96fa7e94097f87d19a24afbc"
+        }
+      ],
+      "selection": "Completed ORIGINAL HLS attempt0; exact byte copy. Corrected retries and active connected link excluded."
+    },
+    {
+      "path": "hls_original/xo_identities.json",
+      "bytes": 1542,
+      "sha256": "c7b79e7f4bc59a2f5c5f2e89c42834602a2024d7700bc764e026e7abb98ac19e",
+      "sources": [],
+      "selection": "Original XO binary identities observed before corrected retry; binary bytes omitted"
+    },
+    {
+      "path": "resident_original_link_abort.json",
+      "bytes": 3648,
+      "sha256": "8138c9d7f3125da48c10b5cade7606bca1f569d3be6357489473d3d57ebc370b",
+      "sources": [
+        {
+          "path": "build/bert_aie_v1/resident/link_attempt0.json",
+          "sha256": "8138c9d7f3125da48c10b5cade7606bca1f569d3be6357489473d3d57ebc370b"
+        }
+      ],
+      "selection": "Exact completed original connected-link memory-floor abort record; no private outcomes."
+    }
+  ],
+  "payload_bytes": 342027,
+  "forbidden_content_omitted": [
+    "calibration_scores",
+    "confirmation_scores",
+    "outcome analyses",
+    "final confirmed-candidate software timing",
+    "private principal report",
+    "sibling outcomes",
+    "active/retry HLS and link artifacts"
+  ],
+  "no_experiments_or_git_operations": true
+}

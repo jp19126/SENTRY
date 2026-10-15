@@ -1,0 +1,2159 @@
+{
+  "boundary": "HLS estimates and scheduling facts; not physical timing or measured connected runtime. Module latency ranges may independently combine K/O limits that no actual encoder call uses.",
+  "mapping": "resident",
+  "clock": {
+    "target_ns": 4.0,
+    "uncertainty_ns": 1.08,
+    "effective_budget_ns": 2.92,
+    "estimated_ns": 3.505,
+    "effective_margin_ns": -0.585,
+    "routed_timing_met": null
+  },
+  "interface_bits": {
+    "s_axi_control_WDATA": 32,
+    "s_axi_control_RDATA": 32,
+    "m_axi_inputs_WDATA": 512,
+    "m_axi_inputs_RDATA": 512,
+    "m_axi_parameters_WDATA": 512,
+    "m_axi_parameters_RDATA": 512,
+    "m_axi_weights_WDATA": 32,
+    "m_axi_weights_RDATA": 32,
+    "m_axi_scratch_WDATA": 32,
+    "m_axi_scratch_RDATA": 32,
+    "ia_TDATA": 128,
+    "ib_TDATA": 128,
+    "ic_TDATA": 128,
+    "fa_TDATA": 128,
+    "fb_TDATA": 128,
+    "fc_TDATA": 128
+  },
+  "modules": {
+    "attention_AieTiles_s": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "3219785",
+        "Average-caseLatency": "3219785",
+        "Worst-caseLatency": "3219785",
+        "Best-caseRealTimeLatency": "12.879 ms",
+        "Average-caseRealTimeLatency": "12.879 ms",
+        "Worst-caseRealTimeLatency": "12.879 ms",
+        "Interval-min": "3219785",
+        "Interval-max": "3219785",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.915",
+      "resources": {
+        "BRAM_18K": "58",
+        "DSP": "8",
+        "FF": "4485",
+        "LUT": "55348",
+        "URAM": "0"
+      },
+      "loops": {
+        "VITIS_LOOP_90_1": {
+          "Slack": "2.92",
+          "TripCount": "4",
+          "isPerfectNested": "0",
+          "Latency": "3219784",
+          "AbsoluteTimeLatency": "12879136",
+          "IterationLatency": "804946",
+          "PerformancePragma": "-",
+          "InstanceList": "\n",
+          "VITIS_LOOP_90_2": {
+            "Slack": "2.92",
+            "TripCount": "8",
+            "isPerfectNested": "1",
+            "Latency": "804944",
+            "AbsoluteTimeLatency": "3219776",
+            "IterationLatency": "100618",
+            "PerformancePragma": "-",
+            "InstanceList": "\n",
+            "VITIS_LOOP_92_3": {
+              "Slack": "2.92",
+              "TripCount": "8",
+              "isPerfectNested": "0",
+              "Latency": "43864",
+              "AbsoluteTimeLatency": "175456",
+              "IterationLatency": "5483",
+              "PerformancePragma": "-",
+              "InstanceList": "\n"
+            },
+            "VITIS_LOOP_99_10": {
+              "Slack": "2.92",
+              "TripCount": "32",
+              "isPerfectNested": "0",
+              "Latency": "25824",
+              "AbsoluteTimeLatency": "103296",
+              "IterationLatency": "807",
+              "PerformancePragma": "-",
+              "InstanceList": "\n"
+            },
+            "VITIS_LOOP_105_14": {
+              "Slack": "2.92",
+              "TripCount": "2",
+              "isPerfectNested": "0",
+              "Latency": "30926",
+              "AbsoluteTimeLatency": "123704",
+              "IterationLatency": "15463",
+              "PerformancePragma": "-",
+              "InstanceList": "\n",
+              "VITIS_LOOP_107_15": {
+                "Slack": "2.92",
+                "TripCount": "4",
+                "isPerfectNested": "0",
+                "Latency": "13400",
+                "AbsoluteTimeLatency": "53600",
+                "IterationLatency": "3350",
+                "PerformancePragma": "-",
+                "InstanceList": "\n"
+              }
+            }
+          }
+        },
+        "VITIS_LOOP_90_2": {
+          "Slack": "2.92",
+          "TripCount": "8",
+          "isPerfectNested": "1",
+          "Latency": "804944",
+          "AbsoluteTimeLatency": "3219776",
+          "IterationLatency": "100618",
+          "PerformancePragma": "-",
+          "InstanceList": "\n",
+          "VITIS_LOOP_92_3": {
+            "Slack": "2.92",
+            "TripCount": "8",
+            "isPerfectNested": "0",
+            "Latency": "43864",
+            "AbsoluteTimeLatency": "175456",
+            "IterationLatency": "5483",
+            "PerformancePragma": "-",
+            "InstanceList": "\n"
+          },
+          "VITIS_LOOP_99_10": {
+            "Slack": "2.92",
+            "TripCount": "32",
+            "isPerfectNested": "0",
+            "Latency": "25824",
+            "AbsoluteTimeLatency": "103296",
+            "IterationLatency": "807",
+            "PerformancePragma": "-",
+            "InstanceList": "\n"
+          },
+          "VITIS_LOOP_105_14": {
+            "Slack": "2.92",
+            "TripCount": "2",
+            "isPerfectNested": "0",
+            "Latency": "30926",
+            "AbsoluteTimeLatency": "123704",
+            "IterationLatency": "15463",
+            "PerformancePragma": "-",
+            "InstanceList": "\n",
+            "VITIS_LOOP_107_15": {
+              "Slack": "2.92",
+              "TripCount": "4",
+              "isPerfectNested": "0",
+              "Latency": "13400",
+              "AbsoluteTimeLatency": "53600",
+              "IterationLatency": "3350",
+              "PerformancePragma": "-",
+              "InstanceList": "\n"
+            }
+          }
+        },
+        "VITIS_LOOP_92_3": {
+          "Slack": "2.92",
+          "TripCount": "8",
+          "isPerfectNested": "0",
+          "Latency": "43864",
+          "AbsoluteTimeLatency": "175456",
+          "IterationLatency": "5483",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        },
+        "VITIS_LOOP_99_10": {
+          "Slack": "2.92",
+          "TripCount": "32",
+          "isPerfectNested": "0",
+          "Latency": "25824",
+          "AbsoluteTimeLatency": "103296",
+          "IterationLatency": "807",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        },
+        "VITIS_LOOP_105_14": {
+          "Slack": "2.92",
+          "TripCount": "2",
+          "isPerfectNested": "0",
+          "Latency": "30926",
+          "AbsoluteTimeLatency": "123704",
+          "IterationLatency": "15463",
+          "PerformancePragma": "-",
+          "InstanceList": "\n",
+          "VITIS_LOOP_107_15": {
+            "Slack": "2.92",
+            "TripCount": "4",
+            "isPerfectNested": "0",
+            "Latency": "13400",
+            "AbsoluteTimeLatency": "53600",
+            "IterationLatency": "3350",
+            "PerformancePragma": "-",
+            "InstanceList": "\n"
+          }
+        },
+        "VITIS_LOOP_107_15": {
+          "Slack": "2.92",
+          "TripCount": "4",
+          "isPerfectNested": "0",
+          "Latency": "13400",
+          "AbsoluteTimeLatency": "53600",
+          "IterationLatency": "3350",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "attention_AieTiles_Pipeline_VITIS_LOOP_110_18_VITIS_LOOP_110_19": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "2056",
+        "Average-caseLatency": "2056",
+        "Worst-caseLatency": "2056",
+        "Best-caseRealTimeLatency": "8.224 us",
+        "Average-caseRealTimeLatency": "8.224 us",
+        "Worst-caseRealTimeLatency": "8.224 us",
+        "Interval-min": "2049",
+        "Interval-max": "2049",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.736",
+      "resources": {
+        "DSP": "1",
+        "FF": "531",
+        "LUT": "473",
+        "BRAM_18K": "0",
+        "URAM": "0"
+      },
+      "loops": {
+        "VITIS_LOOP_110_18_VITIS_LOOP_110_19": {
+          "Slack": "2.92",
+          "TripCount": "2048",
+          "isPerfectNested": "0",
+          "Latency": "2054",
+          "AbsoluteTimeLatency": "8216",
+          "PipelineII": "1",
+          "PipelineDepth": "8",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "attention_AieTiles_Pipeline_7": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "1026",
+        "Average-caseLatency": "1026",
+        "Worst-caseLatency": "1026",
+        "Best-caseRealTimeLatency": "4.104 us",
+        "Average-caseRealTimeLatency": "4.104 us",
+        "Worst-caseRealTimeLatency": "4.104 us",
+        "Interval-min": "1025",
+        "Interval-max": "1025",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.129",
+      "resources": {
+        "FF": "13",
+        "LUT": "49",
+        "BRAM_18K": "0",
+        "DSP": "0",
+        "URAM": "0"
+      },
+      "loops": {}
+    },
+    "bert_pl": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "80",
+        "Average-caseLatency": "undef",
+        "Worst-caseLatency": "284672201",
+        "Best-caseRealTimeLatency": "0.320 us",
+        "Average-caseRealTimeLatency": "undef",
+        "Worst-caseRealTimeLatency": "1.139 sec",
+        "Interval-min": "81",
+        "Interval-max": "284672202",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "3.505",
+      "resources": {
+        "BRAM_18K": "124",
+        "DSP": "129",
+        "FF": "81199",
+        "LUT": "320294",
+        "URAM": "113"
+      },
+      "loops": {}
+    },
+    "attention_AieTiles_Pipeline_VITIS_LOOP_114_21_VITIS_LOOP_114_22": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "1033",
+        "Average-caseLatency": "1033",
+        "Worst-caseLatency": "1033",
+        "Best-caseRealTimeLatency": "4.132 us",
+        "Average-caseRealTimeLatency": "4.132 us",
+        "Worst-caseRealTimeLatency": "4.132 us",
+        "Interval-min": "1025",
+        "Interval-max": "1025",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.736",
+      "resources": {
+        "DSP": "1",
+        "FF": "306",
+        "LUT": "344",
+        "BRAM_18K": "0",
+        "URAM": "0"
+      },
+      "loops": {
+        "VITIS_LOOP_114_21_VITIS_LOOP_114_22": {
+          "Slack": "2.92",
+          "TripCount": "1024",
+          "isPerfectNested": "0",
+          "Latency": "1031",
+          "AbsoluteTimeLatency": "4124",
+          "PipelineII": "1",
+          "PipelineDepth": "9",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "i8_Pipeline_VITIS_LOOP_20_8_VITIS_LOOP_20_9_VITIS_LOOP_20_10_VITIS_LOOP_20_11": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "258",
+        "Average-caseLatency": "258",
+        "Worst-caseLatency": "258",
+        "Best-caseRealTimeLatency": "1.032 us",
+        "Average-caseRealTimeLatency": "1.032 us",
+        "Worst-caseRealTimeLatency": "1.032 us",
+        "Interval-min": "257",
+        "Interval-max": "257",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.606",
+      "resources": {
+        "FF": "50",
+        "LUT": "229",
+        "BRAM_18K": "0",
+        "DSP": "0",
+        "URAM": "0"
+      },
+      "loops": {
+        "VITIS_LOOP_20_8_VITIS_LOOP_20_9_VITIS_LOOP_20_10_VITIS_LOOP_20_11": {
+          "Slack": "2.92",
+          "TripCount": "256",
+          "isPerfectNested": "0",
+          "Latency": "256",
+          "AbsoluteTimeLatency": "1024",
+          "PipelineII": "1",
+          "PipelineDepth": "2",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "model_true_AieTiles_Pipeline_VITIS_LOOP_149_6": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "65543",
+        "Average-caseLatency": "65543",
+        "Worst-caseLatency": "65543",
+        "Best-caseRealTimeLatency": "0.262 ms",
+        "Average-caseRealTimeLatency": "0.262 ms",
+        "Worst-caseRealTimeLatency": "0.262 ms",
+        "Interval-min": "65537",
+        "Interval-max": "65537",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.887",
+      "resources": {
+        "DSP": "4",
+        "FF": "436",
+        "LUT": "611",
+        "BRAM_18K": "0",
+        "URAM": "0"
+      },
+      "loops": {
+        "VITIS_LOOP_149_6": {
+          "Slack": "2.92",
+          "TripCount": "65536",
+          "isPerfectNested": "0",
+          "Latency": "65541",
+          "AbsoluteTimeLatency": "262164",
+          "PipelineII": "1",
+          "PipelineDepth": "7",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "linear_AieTiles_s": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "896430",
+        "Average-caseLatency": "undef",
+        "Worst-caseLatency": "11131182",
+        "Best-caseRealTimeLatency": "3.586 ms",
+        "Average-caseRealTimeLatency": "undef",
+        "Worst-caseRealTimeLatency": "44.525 ms",
+        "Interval-min": "896430",
+        "Interval-max": "11131182",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.919",
+      "resources": {
+        "BRAM_18K": "24",
+        "DSP": "25",
+        "FF": "4268",
+        "LUT": "12222",
+        "URAM": "22"
+      },
+      "loops": {
+        "VITIS_LOOP_74_2": {
+          "Slack": "2.92",
+          "TripCount": "8",
+          "isPerfectNested": "0",
+          "Latency": {
+            "range": {
+              "min": "830864",
+              "max": "10869008"
+            }
+          },
+          "AbsoluteTimeLatency": {
+            "range": {
+              "min": "3323456",
+              "max": "43476032"
+            }
+          },
+          "IterationLatency": {
+            "range": {
+              "min": "103858",
+              "max": "1358626"
+            }
+          },
+          "PerformancePragma": "-",
+          "InstanceList": "\n",
+          "VITIS_LOOP_74_3": {
+            "Slack": "2.92",
+            "TripCount": {
+              "range": {
+                "min": "8",
+                "max": "32"
+              }
+            },
+            "isPerfectNested": "1",
+            "Latency": {
+              "range": {
+                "min": "103856",
+                "max": "1358624"
+              }
+            },
+            "AbsoluteTimeLatency": {
+              "range": {
+                "min": "415424",
+                "max": "5434496"
+              }
+            },
+            "IterationLatency": {
+              "range": {
+                "min": "12982",
+                "max": "42457"
+              }
+            },
+            "PerformancePragma": "-",
+            "InstanceList": "\n",
+            "VITIS_LOOP_76_4": {
+              "Slack": "2.92",
+              "TripCount": {
+                "range": {
+                  "min": "1",
+                  "max": "4"
+                }
+              },
+              "isPerfectNested": "0",
+              "Latency": {
+                "range": {
+                  "min": "9825",
+                  "max": "39300"
+                }
+              },
+              "AbsoluteTimeLatency": {
+                "range": {
+                  "min": "39300",
+                  "max": "157200"
+                }
+              },
+              "IterationLatency": "9825",
+              "PerformancePragma": "-",
+              "InstanceList": "\n"
+            }
+          }
+        },
+        "VITIS_LOOP_74_3": {
+          "Slack": "2.92",
+          "TripCount": {
+            "range": {
+              "min": "8",
+              "max": "32"
+            }
+          },
+          "isPerfectNested": "1",
+          "Latency": {
+            "range": {
+              "min": "103856",
+              "max": "1358624"
+            }
+          },
+          "AbsoluteTimeLatency": {
+            "range": {
+              "min": "415424",
+              "max": "5434496"
+            }
+          },
+          "IterationLatency": {
+            "range": {
+              "min": "12982",
+              "max": "42457"
+            }
+          },
+          "PerformancePragma": "-",
+          "InstanceList": "\n",
+          "VITIS_LOOP_76_4": {
+            "Slack": "2.92",
+            "TripCount": {
+              "range": {
+                "min": "1",
+                "max": "4"
+              }
+            },
+            "isPerfectNested": "0",
+            "Latency": {
+              "range": {
+                "min": "9825",
+                "max": "39300"
+              }
+            },
+            "AbsoluteTimeLatency": {
+              "range": {
+                "min": "39300",
+                "max": "157200"
+              }
+            },
+            "IterationLatency": "9825",
+            "PerformancePragma": "-",
+            "InstanceList": "\n"
+          }
+        },
+        "VITIS_LOOP_76_4": {
+          "Slack": "2.92",
+          "TripCount": {
+            "range": {
+              "min": "1",
+              "max": "4"
+            }
+          },
+          "isPerfectNested": "0",
+          "Latency": {
+            "range": {
+              "min": "9825",
+              "max": "39300"
+            }
+          },
+          "AbsoluteTimeLatency": {
+            "range": {
+              "min": "39300",
+              "max": "157200"
+            }
+          },
+          "IterationLatency": "9825",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "model_true_AieTiles_Pipeline_VITIS_LOOP_132_2": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "846",
+        "Average-caseLatency": "846",
+        "Worst-caseLatency": "846",
+        "Best-caseRealTimeLatency": "3.384 us",
+        "Average-caseRealTimeLatency": "3.384 us",
+        "Worst-caseRealTimeLatency": "3.384 us",
+        "Interval-min": "771",
+        "Interval-max": "771",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.850",
+      "resources": {
+        "DSP": "2",
+        "FF": "663",
+        "LUT": "7176",
+        "BRAM_18K": "0",
+        "URAM": "0"
+      },
+      "loops": {
+        "VITIS_LOOP_132_2": {
+          "Slack": "2.92",
+          "TripCount": "256",
+          "isPerfectNested": "0",
+          "Latency": "844",
+          "AbsoluteTimeLatency": "3376",
+          "PipelineII": "3",
+          "PipelineDepth": "80",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "norm_Pipeline_VITIS_LOOP_45_2": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "268",
+        "Average-caseLatency": "268",
+        "Worst-caseLatency": "268",
+        "Best-caseRealTimeLatency": "1.072 us",
+        "Average-caseRealTimeLatency": "1.072 us",
+        "Worst-caseRealTimeLatency": "1.072 us",
+        "Interval-min": "257",
+        "Interval-max": "257",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.915",
+      "resources": {
+        "DSP": "2",
+        "FF": "827",
+        "LUT": "734",
+        "BRAM_18K": "0",
+        "URAM": "0"
+      },
+      "loops": {
+        "VITIS_LOOP_45_2": {
+          "Slack": "2.92",
+          "TripCount": "256",
+          "isPerfectNested": "0",
+          "Latency": "266",
+          "AbsoluteTimeLatency": "1064",
+          "PipelineII": "1",
+          "PipelineDepth": "12",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "linear_AieTiles_Pipeline_VITIS_LOOP_78_5_VITIS_LOOP_78_6": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "8201",
+        "Average-caseLatency": "8201",
+        "Worst-caseLatency": "8201",
+        "Best-caseRealTimeLatency": "32.804 us",
+        "Average-caseRealTimeLatency": "32.804 us",
+        "Worst-caseRealTimeLatency": "32.804 us",
+        "Interval-min": "8193",
+        "Interval-max": "8193",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.495",
+      "resources": {
+        "DSP": "1",
+        "FF": "77",
+        "LUT": "176",
+        "BRAM_18K": "0",
+        "URAM": "0"
+      },
+      "loops": {
+        "VITIS_LOOP_78_5_VITIS_LOOP_78_6": {
+          "Slack": "2.92",
+          "TripCount": "8192",
+          "isPerfectNested": "0",
+          "Latency": "8199",
+          "AbsoluteTimeLatency": "32796",
+          "PipelineII": "1",
+          "PipelineDepth": "9",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "model_true_AieTiles_Pipeline_VITIS_LOOP_157_9_VITIS_LOOP_158_10": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "1104",
+        "Average-caseLatency": "1104",
+        "Worst-caseLatency": "1104",
+        "Best-caseRealTimeLatency": "4.416 us",
+        "Average-caseRealTimeLatency": "4.416 us",
+        "Worst-caseRealTimeLatency": "4.416 us",
+        "Interval-min": "1026",
+        "Interval-max": "1026",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.861",
+      "resources": {
+        "DSP": "1",
+        "FF": "1066",
+        "LUT": "48524",
+        "BRAM_18K": "0",
+        "URAM": "0"
+      },
+      "loops": {
+        "VITIS_LOOP_157_9_VITIS_LOOP_158_10": {
+          "Slack": "2.92",
+          "TripCount": "512",
+          "isPerfectNested": "0",
+          "Latency": "1102",
+          "AbsoluteTimeLatency": "4408",
+          "PipelineII": "2",
+          "PipelineDepth": "80",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "linear_AieTiles_Pipeline_VITIS_LOOP_80_7_VITIS_LOOP_80_8": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "8271",
+        "Average-caseLatency": "8271",
+        "Worst-caseLatency": "8271",
+        "Best-caseRealTimeLatency": "33.084 us",
+        "Average-caseRealTimeLatency": "33.084 us",
+        "Worst-caseRealTimeLatency": "33.084 us",
+        "Interval-min": "8193",
+        "Interval-max": "8193",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.722",
+      "resources": {
+        "DSP": "2",
+        "FF": "430",
+        "LUT": "533",
+        "BRAM_18K": "0",
+        "URAM": "0"
+      },
+      "loops": {
+        "VITIS_LOOP_80_7_VITIS_LOOP_80_8": {
+          "Slack": "2.92",
+          "TripCount": "8192",
+          "isPerfectNested": "0",
+          "Latency": "8269",
+          "AbsoluteTimeLatency": "33076",
+          "PipelineII": "1",
+          "PipelineDepth": "79",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "bfloat": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "260",
+        "Average-caseLatency": "260",
+        "Worst-caseLatency": "260",
+        "Best-caseRealTimeLatency": "1.040 us",
+        "Average-caseRealTimeLatency": "1.040 us",
+        "Worst-caseRealTimeLatency": "1.040 us",
+        "Interval-min": "260",
+        "Interval-max": "260",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.907",
+      "resources": {
+        "FF": "442",
+        "LUT": "2097",
+        "BRAM_18K": "0",
+        "DSP": "0",
+        "URAM": "0"
+      },
+      "loops": {}
+    },
+    "bfloat_Pipeline_VITIS_LOOP_25_1_VITIS_LOOP_25_2_VITIS_LOOP_25_3": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "259",
+        "Average-caseLatency": "259",
+        "Worst-caseLatency": "259",
+        "Best-caseRealTimeLatency": "1.036 us",
+        "Average-caseRealTimeLatency": "1.036 us",
+        "Worst-caseRealTimeLatency": "1.036 us",
+        "Interval-min": "257",
+        "Interval-max": "257",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.907",
+      "resources": {
+        "FF": "39",
+        "LUT": "804",
+        "BRAM_18K": "0",
+        "DSP": "0",
+        "URAM": "0"
+      },
+      "loops": {
+        "VITIS_LOOP_25_1_VITIS_LOOP_25_2_VITIS_LOOP_25_3": {
+          "Slack": "2.92",
+          "TripCount": "256",
+          "isPerfectNested": "0",
+          "Latency": "257",
+          "AbsoluteTimeLatency": "1028",
+          "PipelineII": "1",
+          "PipelineDepth": "3",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "attention_AieTiles_Pipeline_VITIS_LOOP_101_11": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "260",
+        "Average-caseLatency": "260",
+        "Worst-caseLatency": "260",
+        "Best-caseRealTimeLatency": "1.040 us",
+        "Average-caseRealTimeLatency": "1.040 us",
+        "Worst-caseRealTimeLatency": "1.040 us",
+        "Interval-min": "257",
+        "Interval-max": "257",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.884",
+      "resources": {
+        "FF": "91",
+        "LUT": "155",
+        "BRAM_18K": "0",
+        "DSP": "0",
+        "URAM": "0"
+      },
+      "loops": {
+        "VITIS_LOOP_101_11": {
+          "Slack": "2.92",
+          "TripCount": "256",
+          "isPerfectNested": "0",
+          "Latency": "258",
+          "AbsoluteTimeLatency": "1032",
+          "PipelineII": "1",
+          "PipelineDepth": "4",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "model_true_AieTiles_Pipeline_VITIS_LOOP_147_5": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "262213",
+        "Average-caseLatency": "262213",
+        "Worst-caseLatency": "262213",
+        "Best-caseRealTimeLatency": "1.049 ms",
+        "Average-caseRealTimeLatency": "1.049 ms",
+        "Worst-caseRealTimeLatency": "1.049 ms",
+        "Interval-min": "262145",
+        "Interval-max": "262145",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "3.505",
+      "resources": {
+        "DSP": "51",
+        "FF": "8559",
+        "LUT": "6478",
+        "BRAM_18K": "0",
+        "URAM": "0"
+      },
+      "loops": {
+        "VITIS_LOOP_147_5": {
+          "Slack": "2.92",
+          "TripCount": "262144",
+          "isPerfectNested": "0",
+          "Latency": "262211",
+          "AbsoluteTimeLatency": "1048844",
+          "PipelineII": "1",
+          "PipelineDepth": "69",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "linear_AieTiles_Pipeline_2": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "1026",
+        "Average-caseLatency": "1026",
+        "Worst-caseLatency": "1026",
+        "Best-caseRealTimeLatency": "4.104 us",
+        "Average-caseRealTimeLatency": "4.104 us",
+        "Worst-caseRealTimeLatency": "4.104 us",
+        "Interval-min": "1025",
+        "Interval-max": "1025",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.129",
+      "resources": {
+        "FF": "13",
+        "LUT": "49",
+        "BRAM_18K": "0",
+        "DSP": "0",
+        "URAM": "0"
+      },
+      "loops": {}
+    },
+    "i8_Pipeline_VITIS_LOOP_16_5_VITIS_LOOP_16_6": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "520",
+        "Average-caseLatency": "520",
+        "Worst-caseLatency": "520",
+        "Best-caseRealTimeLatency": "2.080 us",
+        "Average-caseRealTimeLatency": "2.080 us",
+        "Worst-caseRealTimeLatency": "2.080 us",
+        "Interval-min": "513",
+        "Interval-max": "513",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.803",
+      "resources": {
+        "DSP": "16",
+        "FF": "388",
+        "LUT": "2319",
+        "BRAM_18K": "0",
+        "URAM": "0"
+      },
+      "loops": {
+        "VITIS_LOOP_16_5_VITIS_LOOP_16_6": {
+          "Slack": "2.92",
+          "TripCount": "512",
+          "isPerfectNested": "0",
+          "Latency": "518",
+          "AbsoluteTimeLatency": "2072",
+          "PipelineII": "1",
+          "PipelineDepth": "8",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "attention_AieTiles_Pipeline_VITIS_LOOP_95_6_VITIS_LOOP_95_7": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "2056",
+        "Average-caseLatency": "2056",
+        "Worst-caseLatency": "2056",
+        "Best-caseRealTimeLatency": "8.224 us",
+        "Average-caseRealTimeLatency": "8.224 us",
+        "Worst-caseRealTimeLatency": "8.224 us",
+        "Interval-min": "2049",
+        "Interval-max": "2049",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.860",
+      "resources": {
+        "DSP": "1",
+        "FF": "510",
+        "LUT": "431",
+        "BRAM_18K": "0",
+        "URAM": "0"
+      },
+      "loops": {
+        "VITIS_LOOP_95_6_VITIS_LOOP_95_7": {
+          "Slack": "2.92",
+          "TripCount": "2048",
+          "isPerfectNested": "0",
+          "Latency": "2054",
+          "AbsoluteTimeLatency": "8216",
+          "PipelineII": "1",
+          "PipelineDepth": "8",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "exp_generic_double_s": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "18",
+        "Average-caseLatency": "18",
+        "Worst-caseLatency": "18",
+        "Best-caseRealTimeLatency": "72.000 ns",
+        "Average-caseRealTimeLatency": "72.000 ns",
+        "Worst-caseRealTimeLatency": "72.000 ns",
+        "PipelineInitiationInterval": "1",
+        "PipelineDepth": "19",
+        "Interval-min": "1",
+        "Interval-max": "1",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.796",
+      "resources": {
+        "BRAM_18K": "3",
+        "DSP": "19",
+        "FF": "1988",
+        "LUT": "3563",
+        "URAM": "0"
+      },
+      "loops": {}
+    },
+    "i8_Pipeline_VITIS_LOOP_12_1_VITIS_LOOP_12_2_VITIS_LOOP_12_3": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "515",
+        "Average-caseLatency": "515",
+        "Worst-caseLatency": "515",
+        "Best-caseRealTimeLatency": "2.060 us",
+        "Average-caseRealTimeLatency": "2.060 us",
+        "Worst-caseRealTimeLatency": "2.060 us",
+        "Interval-min": "513",
+        "Interval-max": "513",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.455",
+      "resources": {
+        "FF": "43",
+        "LUT": "187",
+        "BRAM_18K": "0",
+        "DSP": "0",
+        "URAM": "0"
+      },
+      "loops": {
+        "VITIS_LOOP_12_1_VITIS_LOOP_12_2_VITIS_LOOP_12_3": {
+          "Slack": "2.92",
+          "TripCount": "512",
+          "isPerfectNested": "0",
+          "Latency": "513",
+          "AbsoluteTimeLatency": "2052",
+          "PipelineII": "1",
+          "PipelineDepth": "3",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "linear_AieTiles_Pipeline_VITIS_LOOP_82_9": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "1027",
+        "Average-caseLatency": "1027",
+        "Worst-caseLatency": "1027",
+        "Best-caseRealTimeLatency": "4.108 us",
+        "Average-caseRealTimeLatency": "4.108 us",
+        "Worst-caseRealTimeLatency": "4.108 us",
+        "Interval-min": "1025",
+        "Interval-max": "1025",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.843",
+      "resources": {
+        "FF": "102",
+        "LUT": "113",
+        "BRAM_18K": "0",
+        "DSP": "0",
+        "URAM": "0"
+      },
+      "loops": {
+        "VITIS_LOOP_82_9": {
+          "Slack": "2.92",
+          "TripCount": "1024",
+          "isPerfectNested": "0",
+          "Latency": "1025",
+          "AbsoluteTimeLatency": "4100",
+          "PipelineII": "1",
+          "PipelineDepth": "3",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "generic_erf_float_s": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "58",
+        "Average-caseLatency": "58",
+        "Worst-caseLatency": "58",
+        "Best-caseRealTimeLatency": "0.232 us",
+        "Average-caseRealTimeLatency": "0.232 us",
+        "Worst-caseRealTimeLatency": "0.232 us",
+        "PipelineInitiationInterval": "1",
+        "PipelineDepth": "59",
+        "Interval-min": "1",
+        "Interval-max": "1",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "3.505",
+      "resources": {
+        "DSP": "47",
+        "FF": "7722",
+        "LUT": "5501",
+        "BRAM_18K": "0",
+        "URAM": "0"
+      },
+      "loops": {}
+    },
+    "norm": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "297473",
+        "Average-caseLatency": "297473",
+        "Worst-caseLatency": "297473",
+        "Best-caseRealTimeLatency": "1.190 ms",
+        "Average-caseRealTimeLatency": "1.190 ms",
+        "Worst-caseRealTimeLatency": "1.190 ms",
+        "Interval-min": "297473",
+        "Interval-max": "297473",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.915",
+      "resources": {
+        "DSP": "10",
+        "FF": "3349",
+        "LUT": "7370",
+        "BRAM_18K": "0",
+        "URAM": "0"
+      },
+      "loops": {
+        "VITIS_LOOP_43_1": {
+          "Slack": "2.92",
+          "TripCount": "256",
+          "isPerfectNested": "0",
+          "Latency": "297472",
+          "AbsoluteTimeLatency": "1189888",
+          "IterationLatency": "1162",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "linear_AieTiles_Pipeline_VITIS_LOOP_73_1": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "65564",
+        "Average-caseLatency": "undef",
+        "Worst-caseLatency": "262172",
+        "Best-caseRealTimeLatency": "0.262 ms",
+        "Average-caseRealTimeLatency": "undef",
+        "Worst-caseRealTimeLatency": "1.049 ms",
+        "Interval-min": "65537",
+        "Interval-max": "262145",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.919",
+      "resources": {
+        "BRAM_18K": "0",
+        "DSP": "2",
+        "FF": "1146",
+        "LUT": "1595",
+        "URAM": "0"
+      },
+      "loops": {
+        "VITIS_LOOP_73_1": {
+          "Slack": "2.92",
+          "TripCount": {
+            "range": {
+              "min": "65536",
+              "max": "262144"
+            }
+          },
+          "isPerfectNested": "0",
+          "Latency": {
+            "range": {
+              "min": "65562",
+              "max": "262170"
+            }
+          },
+          "AbsoluteTimeLatency": {
+            "range": {
+              "min": "262248",
+              "max": "1048680"
+            }
+          },
+          "PipelineII": "1",
+          "PipelineDepth": "28",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "attention_AieTiles_Pipeline_VITIS_LOOP_112_20": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "1028",
+        "Average-caseLatency": "1028",
+        "Worst-caseLatency": "1028",
+        "Best-caseRealTimeLatency": "4.112 us",
+        "Average-caseRealTimeLatency": "4.112 us",
+        "Worst-caseRealTimeLatency": "4.112 us",
+        "Interval-min": "1025",
+        "Interval-max": "1025",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.715",
+      "resources": {
+        "DSP": "1",
+        "FF": "157",
+        "LUT": "97",
+        "BRAM_18K": "0",
+        "URAM": "0"
+      },
+      "loops": {
+        "VITIS_LOOP_112_20": {
+          "Slack": "2.92",
+          "TripCount": "1024",
+          "isPerfectNested": "0",
+          "Latency": "1026",
+          "AbsoluteTimeLatency": "4104",
+          "PipelineII": "1",
+          "PipelineDepth": "4",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "attention_AieTiles_Pipeline_VITIS_LOOP_97_8_VITIS_LOOP_97_9": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "1103",
+        "Average-caseLatency": "1103",
+        "Worst-caseLatency": "1103",
+        "Best-caseRealTimeLatency": "4.412 us",
+        "Average-caseRealTimeLatency": "4.412 us",
+        "Worst-caseRealTimeLatency": "4.412 us",
+        "Interval-min": "1025",
+        "Interval-max": "1025",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.861",
+      "resources": {
+        "FF": "756",
+        "LUT": "48162",
+        "BRAM_18K": "0",
+        "DSP": "0",
+        "URAM": "0"
+      },
+      "loops": {
+        "VITIS_LOOP_97_8_VITIS_LOOP_97_9": {
+          "Slack": "2.92",
+          "TripCount": "1024",
+          "isPerfectNested": "0",
+          "Latency": "1101",
+          "AbsoluteTimeLatency": "4404",
+          "PipelineII": "1",
+          "PipelineDepth": "79",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "norm_Pipeline_VITIS_LOOP_47_3": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "269",
+        "Average-caseLatency": "269",
+        "Worst-caseLatency": "269",
+        "Best-caseRealTimeLatency": "1.076 us",
+        "Average-caseRealTimeLatency": "1.076 us",
+        "Worst-caseRealTimeLatency": "1.076 us",
+        "Interval-min": "257",
+        "Interval-max": "257",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.868",
+      "resources": {
+        "DSP": "3",
+        "FF": "861",
+        "LUT": "767",
+        "BRAM_18K": "0",
+        "URAM": "0"
+      },
+      "loops": {
+        "VITIS_LOOP_47_3": {
+          "Slack": "2.92",
+          "TripCount": "256",
+          "isPerfectNested": "0",
+          "Latency": "267",
+          "AbsoluteTimeLatency": "1068",
+          "PipelineII": "1",
+          "PipelineDepth": "13",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "attention_AieTiles_Pipeline_VITIS_LOOP_103_13": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "270",
+        "Average-caseLatency": "270",
+        "Worst-caseLatency": "270",
+        "Best-caseRealTimeLatency": "1.080 us",
+        "Average-caseRealTimeLatency": "1.080 us",
+        "Worst-caseRealTimeLatency": "1.080 us",
+        "Interval-min": "257",
+        "Interval-max": "257",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.799",
+      "resources": {
+        "FF": "58",
+        "LUT": "70",
+        "BRAM_18K": "0",
+        "DSP": "0",
+        "URAM": "0"
+      },
+      "loops": {
+        "VITIS_LOOP_103_13": {
+          "Slack": "2.92",
+          "TripCount": "256",
+          "isPerfectNested": "0",
+          "Latency": "268",
+          "AbsoluteTimeLatency": "1072",
+          "PipelineII": "1",
+          "PipelineDepth": "14",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "model_true_AieTiles_Pipeline_VITIS_LOOP_154_8": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "334",
+        "Average-caseLatency": "334",
+        "Worst-caseLatency": "334",
+        "Best-caseRealTimeLatency": "1.336 us",
+        "Average-caseRealTimeLatency": "1.336 us",
+        "Worst-caseRealTimeLatency": "1.336 us",
+        "Interval-min": "257",
+        "Interval-max": "257",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.868",
+      "resources": {
+        "DSP": "2",
+        "FF": "39942",
+        "LUT": "72446",
+        "BRAM_18K": "0",
+        "URAM": "0"
+      },
+      "loops": {
+        "VITIS_LOOP_154_8": {
+          "Slack": "2.92",
+          "TripCount": "256",
+          "isPerfectNested": "0",
+          "Latency": "332",
+          "AbsoluteTimeLatency": "1328",
+          "PipelineII": "1",
+          "PipelineDepth": "78",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "model_true_AieTiles_s": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "2",
+        "Average-caseLatency": "undef",
+        "Worst-caseLatency": "284672123",
+        "Best-caseRealTimeLatency": "8.000 ns",
+        "Average-caseRealTimeLatency": "undef",
+        "Worst-caseRealTimeLatency": "1.139 sec",
+        "Interval-min": "2",
+        "Interval-max": "284672123",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "3.505",
+      "resources": {
+        "BRAM_18K": "86",
+        "DSP": "129",
+        "FF": "71615",
+        "LUT": "285265",
+        "URAM": "113"
+      },
+      "loops": {
+        "VITIS_LOOP_129_1": {
+          "Slack": "2.92",
+          "TripCount": {
+            "range": {
+              "min": "0",
+              "max": "256"
+            }
+          },
+          "isPerfectNested": "0",
+          "Latency": {
+            "range": {
+              "min": "0",
+              "max": "274913"
+            }
+          },
+          "AbsoluteTimeLatency": {
+            "range": {
+              "min": "0",
+              "max": "1099652"
+            }
+          },
+          "IterationLatency": "1073",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        },
+        "VITIS_LOOP_136_3": {
+          "Slack": "2.92",
+          "TripCount": "4",
+          "isPerfectNested": "0",
+          "Latency": {
+            "range": {
+              "min": "38347436",
+              "max": "283981484"
+            }
+          },
+          "AbsoluteTimeLatency": {
+            "range": {
+              "min": "153389744",
+              "max": "1135925936"
+            }
+          },
+          "IterationLatency": {
+            "range": {
+              "min": "9586859",
+              "max": "70995371"
+            }
+          },
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        },
+        "VITIS_LOOP_153_7": {
+          "Slack": "2.92",
+          "TripCount": "256",
+          "isPerfectNested": "0",
+          "Latency": {
+            "range": {
+              "min": "87808",
+              "max": "116992"
+            }
+          },
+          "AbsoluteTimeLatency": {
+            "range": {
+              "min": "351232",
+              "max": "467968"
+            }
+          },
+          "IterationLatency": {
+            "range": {
+              "min": "343",
+              "max": "457"
+            }
+          },
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "bfloat_Pipeline_VITIS_LOOP_33_8_VITIS_LOOP_33_9_VITIS_LOOP_33_10_VITIS_LOOP_33_1": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "258",
+        "Average-caseLatency": "258",
+        "Worst-caseLatency": "258",
+        "Best-caseRealTimeLatency": "1.032 us",
+        "Average-caseRealTimeLatency": "1.032 us",
+        "Worst-caseRealTimeLatency": "1.032 us",
+        "Interval-min": "257",
+        "Interval-max": "257",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.606",
+      "resources": {
+        "FF": "50",
+        "LUT": "229",
+        "BRAM_18K": "0",
+        "DSP": "0",
+        "URAM": "0"
+      },
+      "loops": {
+        "VITIS_LOOP_33_8_VITIS_LOOP_33_9_VITIS_LOOP_33_10_VITIS_LOOP_33_11": {
+          "Slack": "2.92",
+          "TripCount": "256",
+          "isPerfectNested": "0",
+          "Latency": "256",
+          "AbsoluteTimeLatency": "1024",
+          "PipelineII": "1",
+          "PipelineDepth": "2",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "attention_AieTiles_Pipeline_VITIS_LOOP_102_12": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "271",
+        "Average-caseLatency": "271",
+        "Worst-caseLatency": "271",
+        "Best-caseRealTimeLatency": "1.084 us",
+        "Average-caseRealTimeLatency": "1.084 us",
+        "Worst-caseRealTimeLatency": "1.084 us",
+        "Interval-min": "257",
+        "Interval-max": "257",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.915",
+      "resources": {
+        "DSP": "3",
+        "FF": "497",
+        "LUT": "1080",
+        "BRAM_18K": "0",
+        "URAM": "0"
+      },
+      "loops": {
+        "VITIS_LOOP_102_12": {
+          "Slack": "2.92",
+          "TripCount": "256",
+          "isPerfectNested": "0",
+          "Latency": "269",
+          "AbsoluteTimeLatency": "1076",
+          "PipelineII": "1",
+          "PipelineDepth": "15",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "bfloat_Pipeline_VITIS_LOOP_29_5_VITIS_LOOP_29_6": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "258",
+        "Average-caseLatency": "258",
+        "Worst-caseLatency": "258",
+        "Best-caseRealTimeLatency": "1.032 us",
+        "Average-caseRealTimeLatency": "1.032 us",
+        "Worst-caseRealTimeLatency": "1.032 us",
+        "Interval-min": "257",
+        "Interval-max": "257",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.907",
+      "resources": {
+        "FF": "26",
+        "LUT": "754",
+        "BRAM_18K": "0",
+        "DSP": "0",
+        "URAM": "0"
+      },
+      "loops": {
+        "VITIS_LOOP_29_5_VITIS_LOOP_29_6": {
+          "Slack": "2.92",
+          "TripCount": "256",
+          "isPerfectNested": "0",
+          "Latency": "256",
+          "AbsoluteTimeLatency": "1024",
+          "PipelineII": "1",
+          "PipelineDepth": "2",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "model_true_AieTiles_Pipeline_VITIS_LOOP_144_4": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "65543",
+        "Average-caseLatency": "65543",
+        "Worst-caseLatency": "65543",
+        "Best-caseRealTimeLatency": "0.262 ms",
+        "Average-caseRealTimeLatency": "0.262 ms",
+        "Worst-caseRealTimeLatency": "0.262 ms",
+        "Interval-min": "65537",
+        "Interval-max": "65537",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.887",
+      "resources": {
+        "DSP": "3",
+        "FF": "538",
+        "LUT": "715",
+        "BRAM_18K": "0",
+        "URAM": "0"
+      },
+      "loops": {
+        "VITIS_LOOP_144_4": {
+          "Slack": "2.92",
+          "TripCount": "65536",
+          "isPerfectNested": "0",
+          "Latency": "65541",
+          "AbsoluteTimeLatency": "262164",
+          "PipelineII": "1",
+          "PipelineDepth": "7",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "generic_tanh_float_s": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "2",
+        "Average-caseLatency": "20",
+        "Worst-caseLatency": "42",
+        "Best-caseRealTimeLatency": "8.000 ns",
+        "Average-caseRealTimeLatency": "80.000 ns",
+        "Worst-caseRealTimeLatency": "0.168 us",
+        "Interval-min": "2",
+        "Interval-max": "42",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.806",
+      "resources": {
+        "BRAM_18K": "3",
+        "DSP": "20",
+        "FF": "2869",
+        "LUT": "5025",
+        "URAM": "0"
+      },
+      "loops": {}
+    },
+    "norm_Pipeline_VITIS_LOOP_49_4": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "592",
+        "Average-caseLatency": "592",
+        "Worst-caseLatency": "592",
+        "Best-caseRealTimeLatency": "2.368 us",
+        "Average-caseRealTimeLatency": "2.368 us",
+        "Worst-caseRealTimeLatency": "2.368 us",
+        "Interval-min": "514",
+        "Interval-max": "514",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.907",
+      "resources": {
+        "DSP": "3",
+        "FF": "1373",
+        "LUT": "5444",
+        "BRAM_18K": "0",
+        "URAM": "0"
+      },
+      "loops": {
+        "VITIS_LOOP_49_4": {
+          "Slack": "2.92",
+          "TripCount": "256",
+          "isPerfectNested": "0",
+          "Latency": "590",
+          "AbsoluteTimeLatency": "2360",
+          "PipelineII": "2",
+          "PipelineDepth": "81",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "attention_AieTiles_Pipeline_VITIS_LOOP_94_4_VITIS_LOOP_94_5": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "2056",
+        "Average-caseLatency": "2056",
+        "Worst-caseLatency": "2056",
+        "Best-caseRealTimeLatency": "8.224 us",
+        "Average-caseRealTimeLatency": "8.224 us",
+        "Worst-caseRealTimeLatency": "8.224 us",
+        "Interval-min": "2049",
+        "Interval-max": "2049",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.854",
+      "resources": {
+        "DSP": "1",
+        "FF": "509",
+        "LUT": "430",
+        "BRAM_18K": "0",
+        "URAM": "0"
+      },
+      "loops": {
+        "VITIS_LOOP_94_4_VITIS_LOOP_94_5": {
+          "Slack": "2.92",
+          "TripCount": "2048",
+          "isPerfectNested": "0",
+          "Latency": "2054",
+          "AbsoluteTimeLatency": "8216",
+          "PipelineII": "1",
+          "PipelineDepth": "8",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "attention_AieTiles_Pipeline_VITIS_LOOP_109_16_VITIS_LOOP_109_17": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "2051",
+        "Average-caseLatency": "2051",
+        "Worst-caseLatency": "2051",
+        "Best-caseRealTimeLatency": "8.204 us",
+        "Average-caseRealTimeLatency": "8.204 us",
+        "Worst-caseRealTimeLatency": "8.204 us",
+        "Interval-min": "2049",
+        "Interval-max": "2049",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.747",
+      "resources": {
+        "FF": "56",
+        "LUT": "115",
+        "BRAM_18K": "0",
+        "DSP": "0",
+        "URAM": "0"
+      },
+      "loops": {
+        "VITIS_LOOP_109_16_VITIS_LOOP_109_17": {
+          "Slack": "2.92",
+          "TripCount": "2048",
+          "isPerfectNested": "0",
+          "Latency": "2049",
+          "AbsoluteTimeLatency": "8196",
+          "PipelineII": "1",
+          "PipelineDepth": "3",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    },
+    "i8": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "521",
+        "Average-caseLatency": "521",
+        "Worst-caseLatency": "521",
+        "Best-caseRealTimeLatency": "2.084 us",
+        "Average-caseRealTimeLatency": "2.084 us",
+        "Worst-caseRealTimeLatency": "2.084 us",
+        "Interval-min": "521",
+        "Interval-max": "521",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.803",
+      "resources": {
+        "DSP": "16",
+        "FF": "808",
+        "LUT": "3045",
+        "BRAM_18K": "0",
+        "URAM": "0"
+      },
+      "loops": {}
+    },
+    "linear_AieTiles_Pipeline_VITIS_LOOP_84_10_VITIS_LOOP_84_11": {
+      "latency": {
+        "unit": "clock cycles",
+        "Best-caseLatency": "2127",
+        "Average-caseLatency": "2127",
+        "Worst-caseLatency": "2127",
+        "Best-caseRealTimeLatency": "8.508 us",
+        "Average-caseRealTimeLatency": "8.508 us",
+        "Worst-caseRealTimeLatency": "8.508 us",
+        "Interval-min": "2050",
+        "Interval-max": "2050",
+        "PerformancePragma": "-"
+      },
+      "estimated_clock_ns": "2.919",
+      "resources": {
+        "DSP": "4",
+        "FF": "987",
+        "LUT": "5614",
+        "BRAM_18K": "0",
+        "URAM": "0"
+      },
+      "loops": {
+        "VITIS_LOOP_84_10_VITIS_LOOP_84_11": {
+          "Slack": "2.92",
+          "TripCount": "1024",
+          "isPerfectNested": "0",
+          "Latency": "2125",
+          "AbsoluteTimeLatency": "8500",
+          "PipelineII": "2",
+          "PipelineDepth": "80",
+          "PerformancePragma": "-",
+          "InstanceList": "\n"
+        }
+      }
+    }
+  },
+  "provenance": {
+    "build/bert_aie_v1/resident/hls/hls/syn/report/attention_AieTiles_s_csynth.xml": "66c061e412131844c4b4db7f0539b08590f3aef10dc5babea34b60462f7ce887",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/attention_AieTiles_Pipeline_VITIS_LOOP_110_18_VITIS_LOOP_110_19_csynth.xml": "7970eb9da4568e882f21a4877d9c1e67a8ba3b33f4af482fba606673e3a905ad",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/attention_AieTiles_Pipeline_7_csynth.xml": "1017e7731f7dc8dbda37df0181da93bbcc422fb9e9ce45afc11d3d1e18148d63",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/bert_pl_csynth.xml": "4666f564a46e6c3d8befd650df7987df9c8450797b01affa64f2f204ec7e1815",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/attention_AieTiles_Pipeline_VITIS_LOOP_114_21_VITIS_LOOP_114_22_csynth.xml": "cc02cf98d76ae5bbf8c4de9ef7726ed42272a6cc667a29d3ae028cb846971512",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/i8_Pipeline_VITIS_LOOP_20_8_VITIS_LOOP_20_9_VITIS_LOOP_20_10_VITIS_LOOP_20_11_csynth.xml": "7a63d50cf10c3d9781ddebdcda7bf9f674a487064eeb82f2c6949e201e860867",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/model_true_AieTiles_Pipeline_VITIS_LOOP_149_6_csynth.xml": "2ab0ff6a81f14253471ed0745e134722ffe03a421603d729ec068aba012ef6de",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/linear_AieTiles_s_csynth.xml": "a402b305f6e18a6771ba465e461bf682fb558fb42d1400bd0b86f8c84f052607",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/model_true_AieTiles_Pipeline_VITIS_LOOP_132_2_csynth.xml": "c79950b72710142702d4a5cf9dde85110ecdf063de32611f1e3a34b0706f8965",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/norm_Pipeline_VITIS_LOOP_45_2_csynth.xml": "62a389b8458137a818b820cbe27b23bf396db5666bbff488175e8e3f190a4c4c",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/linear_AieTiles_Pipeline_VITIS_LOOP_78_5_VITIS_LOOP_78_6_csynth.xml": "f39091ffd39c41414a7318b9b76f9785b67039dbb8f41cf6bcaaebac8f645d40",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/model_true_AieTiles_Pipeline_VITIS_LOOP_157_9_VITIS_LOOP_158_10_csynth.xml": "bf9e2b18a162737826ec3bb9749578b8c7fb52981f01013103e797b1cbf8adec",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/linear_AieTiles_Pipeline_VITIS_LOOP_80_7_VITIS_LOOP_80_8_csynth.xml": "9a04460a2f2757ac9756f6c90ffb69d120b3ba437ca50d878c4fefeef83e44d9",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/bfloat_csynth.xml": "de44f73b8ec5e2570c939d410c8ffef865d99bee21f658a207f424642a56c255",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/bfloat_Pipeline_VITIS_LOOP_25_1_VITIS_LOOP_25_2_VITIS_LOOP_25_3_csynth.xml": "d57d4bb4a580152b8b5301185854de9bfdc36443d68934ddd0b6a3e501f876b3",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/attention_AieTiles_Pipeline_VITIS_LOOP_101_11_csynth.xml": "b9edd14d81b862693956c852b6f2a5ea14594a9c4e9362e274829782056989c3",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/model_true_AieTiles_Pipeline_VITIS_LOOP_147_5_csynth.xml": "443eede2a2dae1c9d5e2bb60654e291d32d819eaada44a5cd20311ea649fcede",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/linear_AieTiles_Pipeline_2_csynth.xml": "d1e8c0d0e5ab7875f4d923b6bc793ecdd9e7b0bced9ba3c3f94a52b28fd2c92f",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/i8_Pipeline_VITIS_LOOP_16_5_VITIS_LOOP_16_6_csynth.xml": "def53db367add132a27a518fd5041fbbccdab04811064d785646b13f4cbd0279",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/attention_AieTiles_Pipeline_VITIS_LOOP_95_6_VITIS_LOOP_95_7_csynth.xml": "965f2d03febe549592b43217f5e3f3f501279ee19b449a26d2730fbdb0b0006d",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/exp_generic_double_s_csynth.xml": "0195511695fc92e856d6d28c19026c3ebb31ea4306dd2588dbe52b27d9fa6270",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/i8_Pipeline_VITIS_LOOP_12_1_VITIS_LOOP_12_2_VITIS_LOOP_12_3_csynth.xml": "0fb9bdb0a039e1e5be126a2f7fff9df64511e842b44f0c45eee4e736f4ebb4ed",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/linear_AieTiles_Pipeline_VITIS_LOOP_82_9_csynth.xml": "17dbad678c9afb74d17284129b75e5906faad4f56df76f8222dbc83b12e01677",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/generic_erf_float_s_csynth.xml": "681f555c42983c8e0434de8eabebf04ccd31297d2e0d2983ea9e9cc05505d90e",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/norm_csynth.xml": "2538381989fb86abd308119962cb3698e7e49e7ee0358f1752383720c8c414cd",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/linear_AieTiles_Pipeline_VITIS_LOOP_73_1_csynth.xml": "d1690d781a27bc3ded9b9890ffb4e697b6be99d54a2bbfc26e2e06161c769ffd",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/attention_AieTiles_Pipeline_VITIS_LOOP_112_20_csynth.xml": "3e8e68f0d94c2d8e4ef58af888999bbb6a6be612e15f0e4209fd3a90f260aa4d",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/attention_AieTiles_Pipeline_VITIS_LOOP_97_8_VITIS_LOOP_97_9_csynth.xml": "f3ae8679184a37f347b9d7aa8263112def8152f53eb9a47139664259da7b0730",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/norm_Pipeline_VITIS_LOOP_47_3_csynth.xml": "536865187c08f20b4852a39316f1fa6302091704d9c0f1c532294a92f80c9dc8",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/attention_AieTiles_Pipeline_VITIS_LOOP_103_13_csynth.xml": "26f9d8e1001501766544f98055c5cb8fb76c6431d899b8352abfd6e64b8e2352",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/model_true_AieTiles_Pipeline_VITIS_LOOP_154_8_csynth.xml": "b2837633330d415f9c1f3725ac2f6c6419a0471e08c4c2b5b8ad0b11dfe505f6",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/model_true_AieTiles_s_csynth.xml": "a380c5db1053b60a362b93734aee504cdf2569f6f31a5c7443454823586faf52",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/bfloat_Pipeline_VITIS_LOOP_33_8_VITIS_LOOP_33_9_VITIS_LOOP_33_10_VITIS_LOOP_33_1_csynth.xml": "ae98c49e5be3f49b8e2d7eeaf1f1dc4b4fa6a93c4c69d43fa11e828e0fd4f040",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/attention_AieTiles_Pipeline_VITIS_LOOP_102_12_csynth.xml": "954979d1525541ce0d1ca6dff46b0ddb3d153f3c717c3fd92c3162b39189f9de",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/bfloat_Pipeline_VITIS_LOOP_29_5_VITIS_LOOP_29_6_csynth.xml": "733d5cb8f622b12fd59d328f8720dce70200bbeae4ae47c8efb3b8dbf917c9b0",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/model_true_AieTiles_Pipeline_VITIS_LOOP_144_4_csynth.xml": "c65291c29768cfae797a537bc034834611dced8655234e869f06b4d33f17b890",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/generic_tanh_float_s_csynth.xml": "f301ed9854886bb70f421fc27794eda9d503ac83c78c2b4eae5970c7a425aaa0",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/norm_Pipeline_VITIS_LOOP_49_4_csynth.xml": "d365ccae8b474195758a17382a056382ef6be423cf9ffd5aa4bebb1675ee5339",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/attention_AieTiles_Pipeline_VITIS_LOOP_94_4_VITIS_LOOP_94_5_csynth.xml": "e2bf870bcaee47f9f326b095540da2842bf2d86dc11275bdbcca42255ec796ec",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/attention_AieTiles_Pipeline_VITIS_LOOP_109_16_VITIS_LOOP_109_17_csynth.xml": "1e6ea7cef85e8dd8c101799e08968254fae7545b1e41f38f6dab952e94e3446c",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/i8_csynth.xml": "f6650deb216bd2b09e31c4d6911dce86c4b04432be848c2aa3a6f4dbd6ebc0df",
+    "build/bert_aie_v1/resident/hls/hls/syn/report/linear_AieTiles_Pipeline_VITIS_LOOP_84_10_VITIS_LOOP_84_11_csynth.xml": "1ec28665c71eb9ca6d6b67c877125d715dc7053909a8a9b86658bae6ea7c170b"
+  },
+  "warnings": [
+    "WARNING: [HLS 207-1655] constexpr if is a C++17 extension (/home/jp19126/Xilinx/2025.2/Vitis/common/technology/autopilot/ap_axi_sdata.h:219:8)",
+    "WARNING: [HLS 207-1655] constexpr if is a C++17 extension (/home/jp19126/Xilinx/2025.2/Vitis/common/technology/autopilot/ap_axi_sdata.h:220:8)",
+    "WARNING: [HLS 207-1655] constexpr if is a C++17 extension (/home/jp19126/Xilinx/2025.2/Vitis/common/technology/autopilot/ap_axi_sdata.h:221:8)",
+    "WARNING: [HLS 207-1655] constexpr if is a C++17 extension (/home/jp19126/Xilinx/2025.2/Vitis/common/technology/autopilot/ap_axi_sdata.h:222:8)",
+    "WARNING: [HLS 207-1655] constexpr if is a C++17 extension (/home/jp19126/Xilinx/2025.2/Vitis/common/technology/autopilot/ap_axi_sdata.h:223:8)",
+    "WARNING: [HLS 207-1655] constexpr if is a C++17 extension (/home/jp19126/Xilinx/2025.2/Vitis/common/technology/autopilot/ap_axi_sdata.h:224:8)",
+    "WARNING: [HLS 207-1655] constexpr if is a C++17 extension (/home/jp19126/Xilinx/2025.2/Vitis/common/technology/autopilot/ap_axi_sdata.h:238:8)",
+    "WARNING: [HLS 207-1655] constexpr if is a C++17 extension (/home/jp19126/Xilinx/2025.2/Vitis/common/technology/autopilot/ap_axi_sdata.h:239:8)",
+    "WARNING: [HLS 207-1655] constexpr if is a C++17 extension (/home/jp19126/Xilinx/2025.2/Vitis/common/technology/autopilot/ap_axi_sdata.h:240:8)",
+    "WARNING: [HLS 207-1655] constexpr if is a C++17 extension (/home/jp19126/Xilinx/2025.2/Vitis/common/technology/autopilot/ap_axi_sdata.h:241:8)",
+    "WARNING: [HLS 207-1655] constexpr if is a C++17 extension (/home/jp19126/Xilinx/2025.2/Vitis/common/technology/autopilot/ap_axi_sdata.h:242:8)",
+    "WARNING: [HLS 207-1655] constexpr if is a C++17 extension (/home/jp19126/Xilinx/2025.2/Vitis/common/technology/autopilot/ap_axi_sdata.h:243:8)",
+    "WARNING: [HLS 207-1655] constexpr if is a C++17 extension (/home/jp19126/Xilinx/2025.2/Vitis/common/technology/autopilot/ap_axi_sdata.h:244:8)",
+    "WARNING: [HLS 214-464] Skipping array undecay on variable length array 'ia'. (hardware/bert_aie_v1/pl.cpp:42:0)",
+    "WARNING: [HLS 214-464] Skipping array undecay on variable length array 'ib'. (hardware/bert_aie_v1/pl.cpp:42:0)",
+    "WARNING: [HLS 214-464] Skipping array undecay on variable length array 'ic'. (hardware/bert_aie_v1/pl.cpp:42:0)",
+    "WARNING: [HLS 214-464] Skipping array undecay on variable length array 'fa'. (hardware/bert_aie_v1/pl.cpp:42:0)",
+    "WARNING: [HLS 214-464] Skipping array undecay on variable length array 'fb'. (hardware/bert_aie_v1/pl.cpp:42:0)",
+    "WARNING: [HLS 214-464] Skipping array undecay on variable length array 'fc'. (hardware/bert_aie_v1/pl.cpp:42:0)",
+    "WARNING: [HLS 214-464] Skipping array undecay on variable length array 'e_ia'. (hardware/bert_aie_v1/model.hpp:120:0)",
+    "WARNING: [HLS 214-464] Skipping array undecay on variable length array 'e_ib'. (hardware/bert_aie_v1/model.hpp:120:0)",
+    "WARNING: [HLS 214-464] Skipping array undecay on variable length array 'e_ic'. (hardware/bert_aie_v1/model.hpp:120:0)",
+    "WARNING: [HLS 214-464] Skipping array undecay on variable length array 'e_fa'. (hardware/bert_aie_v1/model.hpp:120:0)",
+    "WARNING: [HLS 214-464] Skipping array undecay on variable length array 'e_fb'. (hardware/bert_aie_v1/model.hpp:120:0)",
+    "WARNING: [HLS 214-464] Skipping array undecay on variable length array 'e_fc'. (hardware/bert_aie_v1/model.hpp:120:0)",
+    "WARNING: [HLS 214-464] Skipping array undecay on variable length array 'e_fa'. (hardware/bert_aie_v1/model.hpp:89:0)",
+    "WARNING: [HLS 214-464] Skipping array undecay on variable length array 'e_fb'. (hardware/bert_aie_v1/model.hpp:89:0)",
+    "WARNING: [HLS 214-464] Skipping array undecay on variable length array 'e_fc'. (hardware/bert_aie_v1/model.hpp:89:0)",
+    "WARNING: [HLS 214-464] Skipping array undecay on variable length array 'engine_ia'. (hardware/bert_aie_v1/model.hpp:70:0)",
+    "WARNING: [HLS 214-464] Skipping array undecay on variable length array 'engine_ib'. (hardware/bert_aie_v1/model.hpp:70:0)",
+    "WARNING: [HLS 214-464] Skipping array undecay on variable length array 'engine_ic'. (hardware/bert_aie_v1/model.hpp:70:0)",
+    "WARNING: [HLS 214-464] Skipping array undecay on variable length array 'mask'. (hardware/bert_aie_v1/model.hpp:120:0)",
+    "WARNING: [XFORM 203-561] Updating loop lower bound from 1 to 8 for loop 'VITIS_LOOP_74_3' (hardware/bert_aie_v1/model.hpp:74:70) in function 'bert_aie::linear<AieTiles>'.",
+    "WARNING: [XFORM 203-561] Updating loop upper bound from 16777216 to 4 for loop 'VITIS_LOOP_76_4' (hardware/bert_aie_v1/model.hpp:76:34) in function 'bert_aie::linear<AieTiles>'.",
+    "WARNING: [XFORM 203-561] Ignored invalid trip count directive (MAX (= 4) < AVE (= 8388608)) for loop 'VITIS_LOOP_76_4' (hardware/bert_aie_v1/model.hpp:76:34) in function 'bert_aie::linear<AieTiles>'.",
+    "WARNING: [XFORM 203-561] Updating loop upper bound from 134217728 to 32 for loop 'VITIS_LOOP_74_3' in function 'bert_aie::linear<AieTiles>'.",
+    "WARNING: [XFORM 203-561] Ignored invalid trip count directive (MAX (= 32) < AVE (= 67108864)) for loop 'VITIS_LOOP_74_3' in function 'bert_aie::linear<AieTiles>'.",
+    "WARNING: [SYN 201-103] Legalizing function name 'model<true, AieTiles>_Pipeline_VITIS_LOOP_132_2' to 'model_true_AieTiles_Pipeline_VITIS_LOOP_132_2'.",
+    "WARNING: [SYN 201-103] Legalizing function name 'linear<AieTiles>_Pipeline_VITIS_LOOP_73_1' to 'linear_AieTiles_Pipeline_VITIS_LOOP_73_1'.",
+    "WARNING: [SYN 201-103] Legalizing function name 'linear<AieTiles>_Pipeline_2' to 'linear_AieTiles_Pipeline_2'.",
+    "WARNING: [SYN 201-103] Legalizing function name 'linear<AieTiles>_Pipeline_VITIS_LOOP_78_5_VITIS_LOOP_78_6' to 'linear_AieTiles_Pipeline_VITIS_LOOP_78_5_VITIS_LOOP_78_6'.",
+    "WARNING: [SYN 201-103] Legalizing function name 'linear<AieTiles>_Pipeline_VITIS_LOOP_80_7_VITIS_LOOP_80_8' to 'linear_AieTiles_Pipeline_VITIS_LOOP_80_7_VITIS_LOOP_80_8'.",
+    "WARNING: [SYN 201-103] Legalizing function name 'linear<AieTiles>_Pipeline_VITIS_LOOP_82_9' to 'linear_AieTiles_Pipeline_VITIS_LOOP_82_9'.",
+    "WARNING: [SYN 201-103] Legalizing function name 'linear<AieTiles>_Pipeline_VITIS_LOOP_84_10_VITIS_LOOP_84_11' to 'linear_AieTiles_Pipeline_VITIS_LOOP_84_10_VITIS_LOOP_84_11'.",
+    "WARNING: [SYN 201-103] Legalizing function name 'linear<AieTiles>' to 'linear_AieTiles_s'.",
+    "WARNING: [SYN 201-103] Legalizing function name 'attention<AieTiles>_Pipeline_VITIS_LOOP_94_4_VITIS_LOOP_94_5' to 'attention_AieTiles_Pipeline_VITIS_LOOP_94_4_VITIS_LOOP_94_5'.",
+    "WARNING: [SYN 201-103] Legalizing function name 'attention<AieTiles>_Pipeline_VITIS_LOOP_95_6_VITIS_LOOP_95_7' to 'attention_AieTiles_Pipeline_VITIS_LOOP_95_6_VITIS_LOOP_95_7'.",
+    "WARNING: [SYN 201-103] Legalizing function name 'attention<AieTiles>_Pipeline_VITIS_LOOP_97_8_VITIS_LOOP_97_9' to 'attention_AieTiles_Pipeline_VITIS_LOOP_97_8_VITIS_LOOP_97_9'.",
+    "WARNING: [SYN 201-103] Legalizing function name 'attention<AieTiles>_Pipeline_VITIS_LOOP_101_11' to 'attention_AieTiles_Pipeline_VITIS_LOOP_101_11'.",
+    "WARNING: [SYN 201-103] Legalizing function name 'attention<AieTiles>_Pipeline_VITIS_LOOP_102_12' to 'attention_AieTiles_Pipeline_VITIS_LOOP_102_12'.",
+    "WARNING: [SYN 201-103] Legalizing function name 'attention<AieTiles>_Pipeline_VITIS_LOOP_103_13' to 'attention_AieTiles_Pipeline_VITIS_LOOP_103_13'.",
+    "WARNING: [SYN 201-103] Legalizing function name 'attention<AieTiles>_Pipeline_7' to 'attention_AieTiles_Pipeline_7'.",
+    "WARNING: [SYN 201-103] Legalizing function name 'attention<AieTiles>_Pipeline_VITIS_LOOP_109_16_VITIS_LOOP_109_17' to 'attention_AieTiles_Pipeline_VITIS_LOOP_109_16_VITIS_LOOP_109_17'.",
+    "WARNING: [SYN 201-103] Legalizing function name 'attention<AieTiles>_Pipeline_VITIS_LOOP_110_18_VITIS_LOOP_110_19' to 'attention_AieTiles_Pipeline_VITIS_LOOP_110_18_VITIS_LOOP_110_19'.",
+    "WARNING: [SYN 201-103] Legalizing function name 'attention<AieTiles>_Pipeline_VITIS_LOOP_112_20' to 'attention_AieTiles_Pipeline_VITIS_LOOP_112_20'.",
+    "WARNING: [SYN 201-103] Legalizing function name 'attention<AieTiles>_Pipeline_VITIS_LOOP_114_21_VITIS_LOOP_114_22' to 'attention_AieTiles_Pipeline_VITIS_LOOP_114_21_VITIS_LOOP_114_22'.",
+    "WARNING: [SYN 201-103] Legalizing function name 'attention<AieTiles>' to 'attention_AieTiles_s'.",
+    "WARNING: [SYN 201-103] Legalizing function name 'model<true, AieTiles>_Pipeline_VITIS_LOOP_144_4' to 'model_true_AieTiles_Pipeline_VITIS_LOOP_144_4'.",
+    "WARNING: [SYN 201-103] Legalizing function name 'generic_erf<float>' to 'generic_erf_float_s'.",
+    "WARNING: [SYN 201-103] Legalizing function name 'model<true, AieTiles>_Pipeline_VITIS_LOOP_147_5' to 'model_true_AieTiles_Pipeline_VITIS_LOOP_147_5'.",
+    "WARNING: [SYN 201-103] Legalizing function name 'model<true, AieTiles>_Pipeline_VITIS_LOOP_149_6' to 'model_true_AieTiles_Pipeline_VITIS_LOOP_149_6'.",
+    "WARNING: [SYN 201-103] Legalizing function name 'model<true, AieTiles>_Pipeline_VITIS_LOOP_154_8' to 'model_true_AieTiles_Pipeline_VITIS_LOOP_154_8'.",
+    "WARNING: [SYN 201-103] Legalizing function name 'exp_generic<double>' to 'exp_generic_double_s'.",
+    "WARNING: [SYN 201-103] Legalizing function name 'generic_tanh<float>' to 'generic_tanh_float_s'.",
+    "WARNING: [SYN 201-103] Legalizing function name 'model<true, AieTiles>_Pipeline_VITIS_LOOP_157_9_VITIS_LOOP_158_10' to 'model_true_AieTiles_Pipeline_VITIS_LOOP_157_9_VITIS_LOOP_158_10'.",
+    "WARNING: [SYN 201-103] Legalizing function name 'model<true, AieTiles>' to 'model_true_AieTiles_s'.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-448] Lower bound of II is 3 due to multiple bus read operation ('parameters_addr_read', hardware/bert_aie_v1/model.hpp:132) on port 'parameters' (hardware/bert_aie_v1/model.hpp:132), bus read operation ('parameters_addr_2_read', hardware/bert_aie_v1/model.hpp:132) on port 'parameters' (hardware/bert_aie_v1/model.hpp:132), bus read operation ('parameters_addr_3_read', hardware/bert_aie_v1/model.hpp:132) on port 'parameters' (hardware/bert_aie_v1/model.hpp:132) accessing 'parameters' m_axi read",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-448] Lower bound of II is 2 due to multiple bus read operation ('parameters_addr_read', hardware/bert_aie_v1/model.hpp:49) on port 'parameters' (hardware/bert_aie_v1/model.hpp:49), bus read operation ('parameters_addr_1_read', hardware/bert_aie_v1/model.hpp:49) on port 'parameters' (hardware/bert_aie_v1/model.hpp:49) accessing 'parameters' m_axi read",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-448] Lower bound of II is 2 due to multiple bus read operation ('parameters_addr_read', hardware/bert_aie_v1/model.hpp:85) on port 'parameters' (hardware/bert_aie_v1/model.hpp:85), bus read operation ('parameters_addr_7_read', hardware/bert_aie_v1/model.hpp:85) on port 'parameters' (hardware/bert_aie_v1/model.hpp:85) accessing 'parameters' m_axi read",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-871] Estimated clock period (3.505 ns) exceeds the target (target clock period: 4.000 ns, clock uncertainty: 1.080 ns, effective delay budget: 2.920 ns).",
+    "WARNING: [HLS 200-1016] The critical path in module 'generic_erf_float_s' consists of the following:",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-871] Estimated clock period (3.505 ns) exceeds the target (target clock period: 4.000 ns, clock uncertainty: 1.080 ns, effective delay budget: 2.920 ns).",
+    "WARNING: [HLS 200-1016] The critical path in module 'model_true_AieTiles_Pipeline_VITIS_LOOP_147_5' consists of the following:",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-2042] Usage of URAM can potentially cause worse II as Vitis HLS does not exploit read-first mode for URAMs. Consider using BRAMs instead.",
+    "WARNING: [HLS 200-880] The II Violation in module 'model_true_AieTiles_Pipeline_VITIS_LOOP_157_9_VITIS_LOOP_158_10' (loop 'VITIS_LOOP_157_9_VITIS_LOOP_158_10'): Unable to enforce a carried dependence constraint (II = 1, distance = 1, offset = 0) between 'store' operation ('sum_write_ln158', hardware/bert_aie_v1/model.hpp:158) of variable 'sum', hardware/bert_aie_v1/model.hpp:158 32 bit on local variable 'sum', hardware/bert_aie_v1/model.hpp:158 and 'load' operation 32 bit ('sum_load', hardware/bert_aie_v1/model.hpp:157) on local variable 'sum', hardware/bert_aie_v1/model.hpp:158.",
+    "WARNING: [RTGEN 206-101] RTL name 'sparsemux_15_3_32_1_1' is changed to 'sparsemux_15_3_32_1_1_x' due to conflict.",
+    "WARNING: [RTGEN 206-101] RTL name 'sparsemux_15_3_32_1_1' is changed to 'sparsemux_15_3_32_1_1_x0' due to conflict.",
+    "WARNING: [RTGEN 206-101] RTL name 'sparsemux_15_3_32_1_1' is changed to 'sparsemux_15_3_32_1_1_x1' due to conflict.",
+    "WARNING: [RTGEN 206-101] RTL name 'sparsemux_15_3_32_1_1' is changed to 'sparsemux_15_3_32_1_1_x2' due to conflict.",
+    "WARNING: [RTGEN 206-101] RTL name 'fdiv_32ns_32ns_32_11_no_dsp_1' is changed to 'fdiv_32ns_32ns_32_11_no_dsp_1_x' due to conflict.",
+    "WARNING: [RTGEN 206-101] RTL name 'fexp_32ns_32ns_32_9_med_dsp_1' is changed to 'fexp_32ns_32ns_32_9_med_dsp_1_x' due to conflict.",
+    "WARNING: [RTGEN 206-101] RTL name 'fmadd_32ns_32ns_32ns_32ns_32_2_primitive_dsp_1' is changed to 'fmadd_32ns_32ns_32ns_32ns_32_2_primitive_dsp_1_x' due to conflict.",
+    "WARNING: [RTGEN 206-101] RTL name 'fmul_32ns_32ns_32_1_primitive_dsp_1' is changed to 'fmul_32ns_32ns_32_1_primitive_dsp_1_x' due to conflict.",
+    "WARNING: [RTGEN 206-101] RTL name 'sparsemux_15_3_32_1_1' is changed to 'sparsemux_15_3_32_1_1_x3' due to conflict.",
+    "WARNING: [RTGEN 206-101] Design contains AXI ports. Reset is fixed to synchronous and active low.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_AWVALID' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Setting dangling out port 'bert_pl/m_axi_scratch_AWVALID' to 0.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_AWREADY' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_AWADDR' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Setting dangling out port 'bert_pl/m_axi_scratch_AWADDR' to 0.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_AWID' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Setting dangling out port 'bert_pl/m_axi_scratch_AWID' to 0.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_AWLEN' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Setting dangling out port 'bert_pl/m_axi_scratch_AWLEN' to 0.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_AWSIZE' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Setting dangling out port 'bert_pl/m_axi_scratch_AWSIZE' to 0.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_AWBURST' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Setting dangling out port 'bert_pl/m_axi_scratch_AWBURST' to 0.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_AWLOCK' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Setting dangling out port 'bert_pl/m_axi_scratch_AWLOCK' to 0.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_AWCACHE' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Setting dangling out port 'bert_pl/m_axi_scratch_AWCACHE' to 0.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_AWPROT' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Setting dangling out port 'bert_pl/m_axi_scratch_AWPROT' to 0.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_AWQOS' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Setting dangling out port 'bert_pl/m_axi_scratch_AWQOS' to 0.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_AWREGION' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Setting dangling out port 'bert_pl/m_axi_scratch_AWREGION' to 0.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_AWUSER' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Setting dangling out port 'bert_pl/m_axi_scratch_AWUSER' to 0.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_WVALID' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Setting dangling out port 'bert_pl/m_axi_scratch_WVALID' to 0.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_WREADY' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_WDATA' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Setting dangling out port 'bert_pl/m_axi_scratch_WDATA' to 0.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_WSTRB' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Setting dangling out port 'bert_pl/m_axi_scratch_WSTRB' to 0.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_WLAST' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Setting dangling out port 'bert_pl/m_axi_scratch_WLAST' to 0.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_WID' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Setting dangling out port 'bert_pl/m_axi_scratch_WID' to 0.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_WUSER' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Setting dangling out port 'bert_pl/m_axi_scratch_WUSER' to 0.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_ARVALID' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Setting dangling out port 'bert_pl/m_axi_scratch_ARVALID' to 0.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_ARREADY' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_ARADDR' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Setting dangling out port 'bert_pl/m_axi_scratch_ARADDR' to 0.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_ARID' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Setting dangling out port 'bert_pl/m_axi_scratch_ARID' to 0.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_ARLEN' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Setting dangling out port 'bert_pl/m_axi_scratch_ARLEN' to 0.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_ARSIZE' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Setting dangling out port 'bert_pl/m_axi_scratch_ARSIZE' to 0.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_ARBURST' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Setting dangling out port 'bert_pl/m_axi_scratch_ARBURST' to 0.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_ARLOCK' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Setting dangling out port 'bert_pl/m_axi_scratch_ARLOCK' to 0.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_ARCACHE' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Setting dangling out port 'bert_pl/m_axi_scratch_ARCACHE' to 0.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_ARPROT' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Setting dangling out port 'bert_pl/m_axi_scratch_ARPROT' to 0.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_ARQOS' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Setting dangling out port 'bert_pl/m_axi_scratch_ARQOS' to 0.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_ARREGION' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Setting dangling out port 'bert_pl/m_axi_scratch_ARREGION' to 0.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_ARUSER' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Setting dangling out port 'bert_pl/m_axi_scratch_ARUSER' to 0.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_RVALID' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_RREADY' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Setting dangling out port 'bert_pl/m_axi_scratch_RREADY' to 0.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_RDATA' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_RLAST' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_RID' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_RUSER' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_RRESP' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_BVALID' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_BREADY' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Setting dangling out port 'bert_pl/m_axi_scratch_BREADY' to 0.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_BRESP' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_BID' has no fanin or fanout and is left dangling.",
+    "WARNING: [RTGEN 206-101] Port 'bert_pl/m_axi_scratch_BUSER' has no fanin or fanout and is left dangling."
+  ],
+  "actual_shape_schedule_estimate": {
+    "linear_call_cycles": {
+      "K256_O256": 896430,
+      "K256_O1024": 3388974,
+      "K1024_O256": 2979438
+    },
+    "fixed_layer_cycles": 4208279,
+    "actual_layer_cycles": 14162411,
+    "conservative_nonlayer_cycles": 690717,
+    "whole_cycles": 57340361,
+    "seconds_at_requested_clock": 0.22936144400000003,
+    "formula_constants": {
+      "quant_min": 65564,
+      "quant_max": 262172,
+      "k_panel": 9825,
+      "tile_extra": 3157,
+      "row_extra": 2,
+      "linear_extra": 2
+    },
+    "assumptions": "Reconstructs reported loop schedule at actual K/O call shapes; conservative remaining overhead. AXI/AIE streams assumed ready by HLS latency estimate; actual stalls, routed clock and whole-model runtime unmeasured.",
+    "anchors": [
+      "linear_AieTiles_s: VITIS_LOOP_74_2,74_3,76_4",
+      "linear_AieTiles_Pipeline_VITIS_LOOP_73_1",
+      "model_*_AieTiles_s: VITIS_LOOP_136_3"
+    ]
+  }
+}

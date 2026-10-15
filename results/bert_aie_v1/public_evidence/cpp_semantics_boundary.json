@@ -1,0 +1,27 @@
+{
+  "schema": "bert_cpp_native_boundary_v1",
+  "inspected_sources": [
+    "hardware/bert_aie_v1/functional.cpp",
+    "hardware/bert_aie_v1/model.hpp",
+    "hardware/bert_aie_v1/pl.cpp",
+    "hardware/bert_aie_v1/tiles.cpp"
+  ],
+  "portable": {
+    "engine": "CpuTiles",
+    "integer": "Sequential exact int32 dot at full K256/1024; no overflow for codes[-127,127]",
+    "attention": "BF16 operands rounded RNE, sequential FP32 dot with K64 chunk accumulation",
+    "nonlinear": "std/libm FP32 LayerNorm, erf GELU, softmax, tanh",
+    "compile_command": "g++ -O2 -std=c++17 -ffp-contract=off hardware/bert_aie_v1/functional.cpp -o build/bert_aie_v1/common/bert_functional_stream"
+  },
+  "physical_design_source": {
+    "hls_engine": "AieTiles AXI stream adapter, not CpuTiles",
+    "integer_kernel": "aie::mmul<4,16,8,int8,int8,acc32>,16 K steps, native int32 result",
+    "attention_kernel": "aie::mmul<4,8,8,bfloat16,bfloat16,accfloat>,8 K steps, float result",
+    "nonlinear": "hls_math functions under BERT_HLS; RTL approximation remains separately qualified"
+  },
+  "limits": [
+    "Native BF16 mmul summation and scalar CpuTiles summation are mathematically comparable but not promised bit-identical.",
+    "Portable corpus equality does not establish native AIE or RTL numerical identity or performance.",
+    "Actual simulator/RTL comparisons must validate packet packing, BF16 error and nonlinear arithmetic separately."
+  ]
+}

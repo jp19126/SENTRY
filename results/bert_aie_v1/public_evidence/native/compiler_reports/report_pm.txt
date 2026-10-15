@@ -1,0 +1,10 @@
+Note: All sizes are in bytes
+
+Core 10_0
+	PM Size Used = 3264
+	PM Size Allotted = 16384
+	PM Usage by Functions : Refer Work/aie/10_0/Release/10_0.calltree
+Core 11_0
+	PM Size Used = 1040
+	PM Size Allotted = 16384
+	PM Usage by Functions : Refer Work/aie/11_0/Release/11_0.calltree

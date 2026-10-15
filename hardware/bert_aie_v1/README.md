@@ -90,6 +90,9 @@ lock per stage and also GPU lock for AIE compilation to exclude memory contentio
 It requires4GiB Windows/8GiB WSL available before vendor launch and stops at
 2GiB/4GiB runtime floors. `--Xelfgen=-j1` is the compiler's documented
 low-concurrency correction after an observed memory-floor abort.
+The coordinator may explicitly pass `--aie-vendor-only` to allow single-job AIE
+compilation alongside GPU training under the same memory floors. The log records
+this assumption and observed minimum memory; it is not an unrestricted overlap.
 Attempt logs preserve exact commands; compiled archives/XO/XSA are not assumed
 to exist merely because sources or a command are supplied.
 
