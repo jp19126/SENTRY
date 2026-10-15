@@ -119,38 +119,68 @@ def resume(previous,out):
  write_json(out/'prepared.json',{'resume_from':str(previous),'prior_run_sha256':digest(previous/'run.json'),'project_before_resume_sha256':digest(project),'preserved_failed_runs':str(archive),'boundary':'Reuse validated BD and completed interconnect synthesis; repeat interrupted core/top only, no kernel change'})
 
 
+def resume_implementation(project_root,failed_attempt,out):
+ """Prepare a lean parent: reuse completed synthesis, no pre-route open_run."""
+ project_root=Path(project_root).resolve();failed_attempt=Path(failed_attempt).resolve();out=Path(out).resolve()
+ if json.loads((failed_attempt/'run.json').read_text())['state']!='failed':raise ValueError('Failed attempt required')
+ runs=project_root/'project/kd_cnn_system.runs';project=project_root/'project/kd_cnn_system.xpr';dcp=runs/'synth_1/cnn_system_wrapper.dcp'
+ if not (runs/'synth_1/__synthesis_is_complete__').exists() or not dcp.exists():raise ValueError('Completed connected synthesis required')
+ out.mkdir(exist_ok=False);archive=out/'failed_impl_snapshot';shutil.copytree(runs/'impl_1',archive)
+ lines=['set_param general.maxThreads 2','set_param synth.maxThreads 1',f'open_project {quote(project)}',
+  'reset_run impl_1','launch_runs impl_1 -to_step write_device_image -jobs 1','wait_on_run impl_1',
+  'if {[get_property PROGRESS [get_runs impl_1]] ne "100%"} {error "Implementation-only resume failed"}',
+  'open_run impl_1',f'report_utilization -file {quote(out/"utilization.rpt")}',f'report_timing_summary -file {quote(out/"timing.rpt")}',f'report_drc -file {quote(out/"drc.rpt")}',
+  f'write_hw_platform -fixed -include_bit -force -file {quote(out/"implemented.xsa")}','exit']
+ (out/'system.tcl').write_text('\n'.join(lines)+'\n')
+ write_json(out/'prepared.json',{'project_root':str(project_root),'failed_attempt':str(failed_attempt),'prior_run_sha256':digest(failed_attempt/'run.json'),'synth_dcp':str(dcp),'synth_dcp_sha256':digest(dcp),'preserved_failed_impl':str(archive),'repair':'Parent does not open synthesized design before launching implementation; existing synthesis reports and DCP reused','memory_estimate':{'prior_observed_parent_rss_kib':4986912,'prior_reported_project_only_peak_mb':1830.176,'estimated_parent_reduction_gib':3.0,'route_peak_unmeasured':True},'boundary':'Prepared only; no additional dispatch or success claimed'})
+
+
 def execute(out,seconds):
  if os.name!='posix':raise RuntimeError('Execute from WSL')
  sys.path.insert(0,str(ROOT/'scripts'));from r1_challengers import resource_check
- out=Path(out).resolve();pre=resource_check(True);record=out/'run.json'
+ out=Path(out).resolve();pre=resource_check(True);record=out/'run.json';prepared=json.loads((out/'prepared.json').read_text())
  if record.exists():raise FileExistsError('Retain prior attempt')
  if not 1<=seconds<=7200:raise ValueError('Bound must be <=7200 seconds')
+ if prepared.get('synth_dcp_sha256') and digest(prepared['synth_dcp'])!=prepared['synth_dcp_sha256']:raise ValueError('Reusable synthesis checkpoint changed')
+ for field,name in [('system_tcl_sha256','system.tcl'),('preimage_reports_sha256','preimage_reports.tcl'),('packaging_job_sha256','packaging_job.json')]:
+  if prepared.get(field) and digest(out/name)!=prepared[field]:raise ValueError('Prepared system/package identity changed: '+name)
  args=['/home/jp19126/Xilinx/2025.2/Vivado/bin/vivado','-mode','batch','-source',str(out/'system.tcl'),'-log',str(out/'vivado.log'),'-journal',str(out/'vivado.jou')]
- r={'command':args,'preflight':pre,'start_utc':datetime.now(timezone.utc).isoformat(),'state':'running'};start=time.monotonic();proc=None
+ stages=[('implementation',args,'stdout.log')]
+ if (out/'packaging_job.json').exists():stages.append(('offline_packaging',[sys.executable,str(out/'package_scripts/hardware_package.py'),'--job',str(out/'packaging_job.json')],'package_stdout.log'))
+ r={'command':args,'preflight':pre,'start_utc':datetime.now(timezone.utc).isoformat(),'state':'running','stages':[],'shared_deadline_seconds':seconds};start=time.monotonic();proc=None
  try:
-  with (out/'stdout.log').open('x') as log:
-   proc=subprocess.Popen(args,cwd=out,stdout=log,stderr=subprocess.STDOUT,start_new_session=True);r['pid']=proc.pid;write_json(record,r)
-   while proc.poll() is None:
-    if (out/'STOP_REQUESTED').exists():raise InterruptedError('Coordinator stop requested; preserve vendor checkpoints')
-    if time.monotonic()-start>seconds:raise TimeoutError('System build ceiling')
-    obs=resource_check()
-    with (out/'resources.jsonl').open('a') as f:f.write(json.dumps(obs)+'\n')
-    time.sleep(5)
-   r.update(returncode=proc.returncode,state='completed' if proc.returncode==0 else 'failed')
+  for name,command,logname in stages:
+   if (out/'STOP_REQUESTED').exists():raise InterruptedError('Coordinator stop requested')
+   if time.monotonic()-start>=seconds:raise TimeoutError('Original shared system/packaging deadline')
+   resource_check();phase={'name':name,'command':command,'state':'running'};r['stages'].append(phase);phase_start=time.monotonic()
+   with (out/logname).open('x') as log:
+    proc=subprocess.Popen(command,cwd=out,stdout=log,stderr=subprocess.STDOUT,start_new_session=True);r['pid']=proc.pid;r['phase']=name;write_json(record,r)
+    while proc.poll() is None:
+     if (out/'STOP_REQUESTED').exists():raise InterruptedError('Coordinator stop requested; preserve vendor checkpoints')
+     if time.monotonic()-start>seconds:raise TimeoutError('Original shared system/packaging deadline')
+     obs=resource_check()
+     with (out/'resources.jsonl').open('a') as f:f.write(json.dumps(obs)+'\n')
+     time.sleep(5)
+    phase.update(returncode=proc.returncode,seconds=time.monotonic()-phase_start,state='completed' if proc.returncode==0 else 'failed');write_json(record,r)
+    if proc.returncode:raise RuntimeError(name+' failed; inspect retained logs')
+  r.update(returncode=0,state='completed')
  except BaseException as error:
-  r.update(state='failed',error=repr(error));raise
+  r.update(state='failed',error=repr(error))
+  if r['stages'] and r['stages'][-1]['state']=='running':r['stages'][-1].update(state='failed',seconds=time.monotonic()-phase_start,error=repr(error))
+  raise
  finally:
   if proc is not None and proc.poll() is None:
    os.killpg(proc.pid,signal.SIGTERM)
    try:proc.wait(timeout=20)
    except subprocess.TimeoutExpired:os.killpg(proc.pid,signal.SIGKILL);proc.wait(timeout=10)
   r['seconds']=time.monotonic()-start;write_json(record,r)
- if proc.returncode:raise RuntimeError('Vivado failed; inspect log')
+
 def main():
- p=argparse.ArgumentParser();p.add_argument('--hls',type=Path);p.add_argument('--resume-from',type=Path);p.add_argument('--out',type=Path,required=True);p.add_argument('--config',type=Path);p.add_argument('--implement',action='store_true');p.add_argument('--execute',action='store_true');p.add_argument('--seconds',type=int,default=7200)
+ p=argparse.ArgumentParser();p.add_argument('--hls',type=Path);p.add_argument('--resume-from',type=Path);p.add_argument('--resume-implementation',type=Path);p.add_argument('--failed-attempt',type=Path);p.add_argument('--out',type=Path,required=True);p.add_argument('--config',type=Path);p.add_argument('--implement',action='store_true');p.add_argument('--execute',action='store_true');p.add_argument('--seconds',type=int,default=7200)
  a=p.parse_args()
  if not (a.out/'prepared.json').exists():
-  if a.resume_from:resume(a.resume_from,a.out)
+  if a.resume_implementation:resume_implementation(a.resume_implementation,a.failed_attempt,a.out)
+  elif a.resume_from:resume(a.resume_from,a.out)
   else:prepare(a.hls,a.out,a.config,a.implement)
  if a.execute:execute(a.out,a.seconds)
 if __name__=='__main__':main()

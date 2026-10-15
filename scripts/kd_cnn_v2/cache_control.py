@@ -19,6 +19,21 @@ SEED = 20261015
 CONTROL_ID = "shuffled_pooled_fit_only_v1"
 
 
+def control_id(expected_layer):
+    if expected_layer not in (2,4):
+        raise ValueError("Alignment control permits only teacher layer 2 or 4")
+    return CONTROL_ID if expected_layer==2 else "shuffled_pooled_layer4_fit_only_v1"
+
+
+def validate_source_layer(manifest,expected_layer):
+    ident=control_id(expected_layer)
+    if manifest.get("intervention") or manifest.get("control_id"):
+        raise ValueError("Source must be the original unshuffled teacher cache")
+    if manifest.get("association",{}).get("teacher_layer")!=expected_layer:
+        raise ValueError(f"Expected original pooled teacher layer {expected_layer}")
+    return ident
+
+
 def task_path(canonical, path):
     path = Path(path)
     path = (path if path.is_absolute() else canonical / path).resolve()
@@ -126,7 +141,7 @@ def signal_diagnostic(canonical, fit_root, source_root, fitting, cached, source_
     }
 
 
-def build(canonical, fit_root, source_root, output):
+def build(canonical, fit_root, source_root, output, expected_layer=2):
     canonical = Path(canonical).resolve()
     fit_root, source_root, output = (task_path(canonical, value) for value in (fit_root, source_root, output))
     if source_root == output or output.exists():
@@ -135,10 +150,7 @@ def build(canonical, fit_root, source_root, output):
     source_manifest_path = source_root / "manifest.json"
     source_manifest_sha = sha(source_manifest_path)
     source_manifest = read(source_manifest_path)
-    if source_manifest.get("intervention") or source_manifest.get("control_id"):
-        raise ValueError("Source must be the original unshuffled teacher cache")
-    if source_manifest.get("association",{}).get("teacher_layer") != 2:
-        raise ValueError("Expected original pooled teacher layer 2")
+    ident=validate_source_layer(source_manifest,expected_layer)
     if source_manifest.get("fitting") != fitting["identity"]:
         raise ValueError("Source cache and expanded fitting material differ")
     expected_teacher = {"checkpoint_sha256": source_manifest["association"]["teacher_checkpoint_sha256"]}
@@ -177,8 +189,9 @@ def build(canonical, fit_root, source_root, output):
         write(output / "teacher_signal_diagnostic.json",diagnostic)
         association = dict(source_manifest["association"])
         association["intervention"] = {
-            "id": CONTROL_ID,
+            "id": ident,
             "kind": "global_fit_window_pooled_row_shuffle",
+            "teacher_layer":expected_layer,
             "seed": SEED,
             "permutation_mapping": "output pooled row i equals original source pooled row permutation[i]",
             "permutation_sha256": sha(output / "permutation.npy"),
@@ -188,7 +201,8 @@ def build(canonical, fit_root, source_root, output):
             "labels_used_for_permutation": False,
         }
         manifest = {
-            "complete":True,"role":"fit","control_id":CONTROL_ID,"intervention":association["intervention"],
+            "complete":True,"role":"fit","control_id":ident,"teacher_layer":expected_layer,
+            "intervention":association["intervention"],
             "association":association,"association_sha256":identity(association),
             "fitting":fitting["identity"],"document_ids":source_manifest["document_ids"],
             "files_sha256":{name:sha(output/name) for name in
@@ -200,7 +214,7 @@ def build(canonical, fit_root, source_root, output):
             "same_source_group_pairs":same_source_group,
             "pooled_dtype":str(original_pooled.dtype),"margin_dtype":str(cached["window_margins"].dtype),
             "max_float16_pool_absolute_error":source_manifest["max_float16_pool_absolute_error"],
-            "purpose":"Causal development control: hold the richer .1 auxiliary regularizer and training recipe fixed while breaking matched teacher representation content.",
+            "purpose":"Development alignment control: keep the caller's chosen training recipe and representation-loss weight fixed while breaking matched teacher pooled-feature content. This cache does not prescribe a loss weight.",
             "limit":"A global shuffle preserves the pooled-target marginal distribution but creates artificial mismatched targets. It tests matched representation signal versus an auxiliary regularizer; it is not a deployment model or a new independent teacher.",
             "scope":"Expanded FIT only; no development, confirmation, final, or NotInject data used to construct targets.",
             "command":sys.argv,
@@ -225,8 +239,9 @@ def main():
     parser.add_argument("--fit-root",required=True)
     parser.add_argument("--source-cache",required=True)
     parser.add_argument("--out",required=True)
+    parser.add_argument("--expected-layer",type=int,choices=(2,4),default=2)
     args = parser.parse_args()
-    result = build(args.canonical_root,args.fit_root,args.source_cache,args.out)
+    result = build(args.canonical_root,args.fit_root,args.source_cache,args.out,args.expected_layer)
     print(json.dumps({"complete":result["complete"],"control_id":result["control_id"],
                       "windows":result["windows"],"documents":result["documents"],
                       "same_document_pairs":result["same_document_pairs"],

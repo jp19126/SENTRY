@@ -76,7 +76,22 @@ def final_recipe(parent, arm, seed, step, role='terminal'):
     return result
 
 
-def proposal(config, principal_run, principal_step, include_rf13=False, include_shuffled=False):
+def training_identity(recipe, step):
+    """Comparison identity for an exact fixed prefix, excluding evaluation I/O."""
+    value = copy.deepcopy(recipe)
+    horizon = value.get('scheduler_steps', value['total_steps'])
+    for name in ('run_id', 'monitor_development', 'eval_every_steps', 'scoring_batch_windows', 'epochs',
+                 'development_root', 'development_selection_root', 'development_calibration_root', 'patience'):
+        value.pop(name, None)
+    value['total_steps'] = step
+    if value.get('scheduler', 'constant') == 'constant' and value.get('warmup_fraction', 0.) == 0:
+        value.pop('scheduler_steps', None)
+    else: value['scheduler_steps'] = horizon
+    return value
+
+
+def proposal(config, principal_run, principal_step, include_rf13=False, include_shuffled=False, matched_shuffle=None,
+             alternative_run=None, alternative_step=None):
     registry = validate_recipe_ids(config['recipes'])
     arms = list(PRINCIPAL_ARMS)
     if include_rf13: arms.append(OPTIONAL_ARMS[0])
@@ -121,6 +136,50 @@ def proposal(config, principal_run, principal_step, include_rf13=False, include_
     principal = {'arm': principal_arm, 'seed42_source_run': principal_run, 'step': principal_step,
                  'seed42_checkpoint_name': checkpoint, 'final_recipe_ids': selected_ids,
                  'selection': 'Explicit coordinator choice on development only; no seed or confirmation selection'}
+    if matched_shuffle:
+        if parent.get('representation_weight', 0) <= 0 or 'shuffled' in parent.get('teacher_cache', '').lower():
+            raise ValueError('Matched shuffle requires an aligned richer principal')
+        safe_id(matched_shuffle['id'])
+        if not matched_shuffle.get('cache') or not re.fullmatch(r'[a-f0-9]{64}', matched_shuffle.get('manifest_sha256', '')):
+            raise ValueError('Matched shuffle needs explicitly pinned prequalified cache manifest')
+        matched = {'id': matched_shuffle['id'], 'cache': matched_shuffle['cache'],
+            'manifest_sha256': matched_shuffle['manifest_sha256'], 'step': principal_step,
+            'seed42_source_run': matched_shuffle.get('reuse_seed42_run'), 'recipes_by_seed': {},
+            'intervention': 'Only pooled row alignment changes; teacher margins, layer, weights and exact training exposure remain fixed'}
+        for seed in (42, 1337, 2026):
+            control = final_recipe(parent, matched_shuffle['id'], seed, principal_step, 'matched_shuffle')
+            control['teacher_cache'] = matched_shuffle['cache']
+            if seed == 42 and matched.get('seed42_source_run'):
+                reuse = registry.get(matched['seed42_source_run'])
+                if reuse is None or reuse['total_steps'] < principal_step or training_identity(reuse, principal_step) != training_identity(control, principal_step):
+                    raise ValueError('Explicit seed42 shuffle reuse is not an exact training-prefix match')
+                matched['seed42_checkpoint_name'] = 'checkpoint_latest.pt' if reuse['total_steps'] == principal_step else 'checkpoint_selected.pt'
+                matched['recipes_by_seed'][str(seed)] = {'reuse_source_run': reuse['run_id']}
+                continue
+            compatible = [r for r in list(registry.values()) + recipes
+                if r.get('seed') == seed and not r.get('monitor_development', True)
+                and r.get('total_steps') == principal_step and training_identity(r, principal_step) == training_identity(control, principal_step)]
+            if compatible:
+                matched['recipes_by_seed'][str(seed)] = {'run_id': sorted(compatible, key=lambda r: r['run_id'])[0]['run_id'], 'reused_compatible_fixed_recipe': True}
+            else:
+                recipes.append(control); matched['recipes_by_seed'][str(seed)] = {'run_id': control['run_id'], 'reused_compatible_fixed_recipe': False}
+        principal['matched_shuffle_control'] = matched
+    if alternative_run is not None or alternative_step is not None:
+        if alternative_run is None or alternative_step is None: raise ValueError('Named alternative requires explicit run and step together')
+        alternative = registry.get(alternative_run, {})
+        if (alternative.get('model_id') != 'dilated64_rf127' or alternative.get('seed') != 42
+                or not alternative_run.endswith('_s42_dev') or alternative.get('representation_weight', 0) <= 0
+                or 'shuffled' in alternative.get('teacher_cache', '').lower()):
+            raise ValueError('Explicit alternative must be an aligned RF127 richer development treatment')
+        if alternative_run == principal_run and alternative_step == principal_step:
+            raise ValueError('Informative alternative must differ from the nominated principal point')
+        alternative_arm = alternative_run[:-len('_s42_dev')]
+        alternative_recipes = [final_recipe(alternative, alternative_arm, seed, alternative_step, 'alternative') for seed in FINAL_SEEDS]
+        recipes.extend(alternative_recipes)
+        principal['informative_alternative'] = {'arm': alternative_arm, 'seed42_source_run': alternative_run,
+            'step': alternative_step, 'seed42_checkpoint_name': 'checkpoint_latest.pt' if alternative_step == alternative['total_steps'] else 'checkpoint_selected.pt',
+            'final_recipe_ids': [recipe['run_id'] for recipe in alternative_recipes],
+            'selection': 'Explicit coordinator nomination before confirmation; frozen step for1337/2026, exact seed42 retained source reuse'}
     existing, additions = registry, []
     for recipe in recipes:
         if recipe['run_id'] in existing:
@@ -132,6 +191,39 @@ def proposal(config, principal_run, principal_step, include_rf13=False, include_
         if parents[left]['total_steps'] != parents[right]['total_steps']:
             raise ValueError('Terminal causal comparison update counts differ: ' + left + '/' + right)
     return additions, points, principal
+
+
+def qualify_matched_cache(canonical, principal_recipe, spec):
+    """Validate the prequalified FIT-only intervention without loading a model."""
+    source_root = resolve(principal_recipe['teacher_cache'], canonical)
+    control_root = resolve(spec['cache'], canonical)
+    source_path, control_path = source_root / 'manifest.json', control_root / 'manifest.json'
+    if sha(control_path) != spec['manifest_sha256']: raise ValueError('Matched shuffle manifest digest differs')
+    source, control = read(source_path), read(control_path)
+    if source.get('role') != 'fit' or control.get('role') != 'fit' or not source.get('complete') or not control.get('complete'):
+        raise ValueError('Both matched caches must be completed FIT-only artifacts')
+    intervention = control.get('intervention', {})
+    if (source.get('intervention') or intervention.get('kind') != 'global_fit_window_pooled_row_shuffle'
+            or intervention.get('labels_used_for_permutation') is not False or control.get('fixed_window_pairs') != 0
+            or control.get('source_cache_manifest_sha256') != sha(source_path)
+            or intervention.get('source_cache_manifest_sha256') != sha(source_path)):
+        raise ValueError('Matched cache is not the pinned label-independent pooled-only shuffle')
+    association = dict(control['association']); association.pop('intervention', None)
+    if association != source['association'] or control['fitting'] != source['fitting'] or control['document_ids'] != source['document_ids']:
+        raise ValueError('Matched shuffle changed teacher/layer/pooling/data/document identities')
+    if identity(control['association']) != control['association_sha256'] or identity(source['association']) != source['association_sha256']:
+        raise ValueError('Matched cache association digest differs')
+    for name in ('document_margins.npy', 'window_margins.npy'):
+        if control['files_sha256'][name] != source['files_sha256'][name] or sha(control_root / name) != sha(source_root / name) or sha(control_root / name) != source['files_sha256'][name]:
+            raise ValueError('Matched shuffle changed teacher margins')
+    for name in ('pooled.npy', 'permutation.npy'):
+        if sha(control_root / name) != control['files_sha256'][name]: raise ValueError('Matched shuffled payload changed')
+    if intervention.get('source_pooled_sha256') != source['files_sha256']['pooled.npy'] or sha(source_root / 'pooled.npy') != source['files_sha256']['pooled.npy']:
+        raise ValueError('Aligned pooled source changed')
+    return {'source_manifest_sha256': sha(source_path), 'control_manifest_sha256': sha(control_path),
+            'teacher_layer': source['association']['teacher_layer'], 'unchanged_margin_hashes': {
+                name: source['files_sha256'][name] for name in ('document_margins.npy', 'window_margins.npy')},
+            'pooled_shuffle_only': True, 'labels_used_for_permutation': False}
 
 
 def source_artifact(canonical, config, run_id, checkpoint_name, expected_step):
@@ -196,9 +288,11 @@ def histories(canonical):
     return result
 
 
-def make_plan(config_path, canonical, out, principal_run, principal_step, include_rf13, include_shuffled):
+def make_plan(config_path, canonical, out, principal_run, principal_step, include_rf13, include_shuffled, matched_shuffle=None,
+              alternative_run=None, alternative_step=None):
     config = read(config_path); source_config_sha = sha(config_path)
-    additions, points, principal = proposal(config, principal_run, principal_step, include_rf13, include_shuffled)
+    additions, points, principal = proposal(config, principal_run, principal_step, include_rf13, include_shuffled, matched_shuffle,
+                                            alternative_run, alternative_step)
     accounting = fit_accounting(config, additions, canonical)
     sources = {}
     for point in points:
@@ -209,18 +303,37 @@ def make_plan(config_path, canonical, out, principal_run, principal_step, includ
     if principal_key not in sources:
         sources[principal_key] = source_artifact(canonical, config, principal_run, principal['seed42_checkpoint_name'], principal_step)
     principal['seed42_source_key'] = principal_key
-    choices = {'principal_run': principal_run, 'principal_step': principal_step, 'include_rf13': include_rf13, 'include_shuffled': include_shuffled}
+    if principal.get('informative_alternative'):
+        alternative = principal['informative_alternative']
+        key = alternative_run + ':alternative'
+        sources[key] = source_artifact(canonical, config, alternative_run, alternative['seed42_checkpoint_name'], alternative_step)
+        alternative['seed42_source_key'] = key
+    matched_identity = None
+    if matched_shuffle:
+        matched_identity = qualify_matched_cache(canonical, validate_recipe_ids(config['recipes'])[principal_run], matched_shuffle)
+        matched = principal['matched_shuffle_control']
+        if matched.get('seed42_source_run'):
+            key = matched['seed42_source_run'] + ':matched_shuffle'
+            sources[key] = source_artifact(canonical, config, matched['seed42_source_run'], matched['seed42_checkpoint_name'], principal_step)
+            matched['seed42_source_key'] = key
+    choices = {'principal_run': principal_run, 'principal_step': principal_step, 'include_rf13': include_rf13,
+               'include_shuffled': include_shuffled, 'matched_shuffle': matched_shuffle,
+               'alternative_run': alternative_run, 'alternative_step': alternative_step}
     new_config = copy.deepcopy(config); new_config['recipes'].extend(additions)
     new_config['phase'] = 'final_learning_recipes_frozen_before_confirmation'
     new_config['final_learning_plan'] = {'path': str(out.resolve()), 'choices': choices,
         'terminal_recipe_ids': [run for point in points for run in point['final_recipe_ids']],
         'principal_recipe_ids': principal['final_recipe_ids'], 'seed42_reuse': sources}
+    if matched_shuffle: new_config['final_learning_plan']['matched_shuffle_control'] = principal['matched_shuffle_control']
+    if principal.get('informative_alternative'):
+        new_config['final_learning_plan']['informative_alternative'] = principal['informative_alternative']
     artifact = {'schema': 'kd_cnn_v2_final_learning_v1', 'immutable': True, 'before_new_confirmation': True,
         'choices': choices, 'source_config_sha256': source_config_sha,
         'output_config_sha256': hashlib.sha256(encoded(new_config)).hexdigest(),
         'common_contract_sha256': config['shared_contract_sha256'], 'seeds': [42, 1337, 2026],
         'terminal_causal_points': points, 'principal_selected_point': principal, 'seed42_source_artifacts': sources,
         'new_recipes': additions, 'fit_accounting': accounting, 'helper_sha256': sha(Path(__file__)),
+        'matched_shuffle_cache_qualification': matched_identity,
         'selection_boundary': 'Coordinator supplies the principal run and retained step; this helper does not rank outcomes or choose a seed.',
         'final_execution': 'Train new fixed recipes without development monitoring, then freeze actual checkpoints/formats/threshold policy in evaluate.py before confirmation.',
         'qat_recipe_fields': {'required': ['run_id', 'model_id', 'seed', 'initial_checkpoint', 'initial_checkpoint_sha256', 'parent_run',
@@ -274,6 +387,40 @@ def self_test():
     assert len(extra) == 12 and len(original_points) == 5
     assert extra_principal['final_recipe_ids'] == ['richer_weight3_expanded_s1337_final_selected', 'richer_weight3_expanded_s2026_final_selected']
     assert not any(point['arm'] == 'richer_weight3_expanded' for point in original_points)
+    # Named layer/weight/exposure matched control: three new fixed seeds, with
+    # only the teacher pooled-cache path changed from the aligned principal.
+    treatment['teacher_cache'] = 'fit_layer4_aligned'
+    treatment['representation_weight'] = 3.
+    spec = {'id': 'matched_layer4_weight3_shuffle', 'cache': 'fit_layer4_shuffled', 'manifest_sha256': 'a' * 64}
+    matched_recipes, matched_points, matched_principal = proposal(additional, treatment['run_id'], 44, matched_shuffle=spec)
+    controls = [r for r in matched_recipes if r['run_id'].endswith('_final_matched_shuffle')]
+    assert len(controls) == 3 and {r['seed'] for r in controls} == {42, 1337, 2026}
+    assert all(r['total_steps'] == 44 and not r['monitor_development'] and r['representation_weight'] == 3. and r['teacher_cache'] == spec['cache'] for r in controls)
+    assert len(matched_points) == 5 and len(matched_recipes) == 15
+    # Baseline layer2/weight.1 at terminal can reuse explicitly nominated seed42
+    # and the already requested standard shuffled1337/2026 fixed recipes.
+    baseline = copy.deepcopy(config)
+    for recipe in baseline['recipes']:
+        recipe['teacher_cache'] = 'aligned' if recipe['run_id'] != 'shuffled_richer_expanded_s42_dev' else 'shuffled'
+        recipe['representation_weight'] = .1
+    reusable = {'id': 'matched_baseline_shuffle', 'cache': 'shuffled', 'manifest_sha256': 'b' * 64,
+                'reuse_seed42_run': 'shuffled_richer_expanded_s42_dev'}
+    reused, _, principal_reused = proposal(baseline, 'richer_expanded_s42_dev', 88, include_shuffled=True, matched_shuffle=reusable)
+    assert not any(r['run_id'].endswith('_final_matched_shuffle') for r in reused)
+    assert principal_reused['matched_shuffle_control']['recipes_by_seed']['1337']['reused_compatible_fixed_recipe']
+    nine = copy.deepcopy(additional)
+    nine['recipes'].append(dict(treatment, run_id='richer_layer4_weight3_expanded_s42_dev'))
+    nine['resource_limits'] = {'max_learning_runs': 28}
+    for include_standard, expected_count in ((False, 26), (True, 28)):
+        planned, _, _ = proposal(nine, 'richer_layer4_weight3_expanded_s42_dev', 44,
+            include_rf13=True, include_shuffled=include_standard, matched_shuffle=spec)
+        assert fit_accounting(nine, planned, Path(__file__).parent / 'nonexistent_accounting_fixture')['planned_plus_started_distinct_fits'] == expected_count
+    exact28, _, chosen28 = proposal(nine, 'richer_layer4_weight3_expanded_s42_dev', 44, include_rf13=True,
+        matched_shuffle=spec, alternative_run='richer_weight3_expanded_s42_dev', alternative_step=22)
+    assert fit_accounting(nine, exact28, Path(__file__).parent / 'nonexistent_accounting_fixture')['planned_plus_started_distinct_fits'] == 28
+    assert chosen28['informative_alternative']['step'] == 22
+    assert all(r['total_steps'] == 22 and not r['monitor_development'] and r['seed'] in FINAL_SEEDS
+               for r in exact28 if r['run_id'].endswith('_final_alternative'))
     capped = copy.deepcopy(config); capped['resource_limits'] = {'max_learning_runs': 28}
     assert fit_accounting(capped, a, Path(__file__).parent / 'nonexistent_accounting_fixture')['planned_plus_started_distinct_fits'] == 19
     capped['recipes'].extend({'run_id': 'reserved' + str(index)} for index in range(8))
@@ -283,7 +430,10 @@ def self_test():
     return {'passed': True, 'five_arms_plus_distinct_selected_new_fits': len(a), 'seven_terminal_arms_new_fits': len(b),
             'idempotent_recipe_proposal': True, 'original_recipes_unchanged': True,
             'fit_cap_and_changed_recipe_and_implicit_optional_arm_rejected': True,
-            'explicit_extra_richer_principal_preserves_five_terminal_arms': True}
+            'explicit_extra_richer_principal_preserves_five_terminal_arms': True,
+            'matched_control_three_fixed_seeds_and_compatible_reuse': True,
+            'nine_development_plus_final_controls_fit_counts': [26, 28],
+            'explicit_alternative_exact28_fit_plan': True}
 
 
 def main():
@@ -291,6 +441,9 @@ def main():
     parser.add_argument('--config'); parser.add_argument('--canonical-root'); parser.add_argument('--out')
     parser.add_argument('--principal-run'); parser.add_argument('--principal-step', type=int)
     parser.add_argument('--include-rf13', action='store_true'); parser.add_argument('--include-shuffled', action='store_true')
+    parser.add_argument('--matched-shuffle-id'); parser.add_argument('--matched-shuffle-cache')
+    parser.add_argument('--matched-shuffle-manifest-sha256'); parser.add_argument('--matched-shuffle-reuse-seed42-run')
+    parser.add_argument('--alternative-run'); parser.add_argument('--alternative-step', type=int)
     parser.add_argument('--write', action='store_true'); parser.add_argument('--config-sha256')
     parser.add_argument('--inspect-histories', action='store_true'); parser.add_argument('--self-test', action='store_true')
     args = parser.parse_args()
@@ -301,19 +454,30 @@ def main():
     if any(value is None for value in (args.config, args.out, args.principal_run, args.principal_step)):
         parser.error('--config, --out, --principal-run and --principal-step required')
     config_path, out = Path(args.config), Path(args.out)
+    matched_shuffle = None
+    matched_arguments = (args.matched_shuffle_id, args.matched_shuffle_cache, args.matched_shuffle_manifest_sha256)
+    if any(value is not None for value in matched_arguments):
+        if any(value is None for value in matched_arguments): parser.error('Matched shuffle needs --id, --cache and --manifest-sha256 together')
+        matched_shuffle = {'id': args.matched_shuffle_id, 'cache': args.matched_shuffle_cache,
+                           'manifest_sha256': args.matched_shuffle_manifest_sha256}
+        if args.matched_shuffle_reuse_seed42_run: matched_shuffle['reuse_seed42_run'] = args.matched_shuffle_reuse_seed42_run
+    elif args.matched_shuffle_reuse_seed42_run:
+        parser.error('Explicit seed42 shuffle reuse requires pinned matched-shuffle arguments')
     if args.write and (not args.config_sha256 or sha(config_path) != args.config_sha256):
         raise ValueError('--write requires exact current --config-sha256 to protect concurrent edits')
     if out.exists():
         existing = read(out)
         expected = {'principal_run': args.principal_run, 'principal_step': args.principal_step,
-                    'include_rf13': args.include_rf13, 'include_shuffled': args.include_shuffled}
+                    'include_rf13': args.include_rf13, 'include_shuffled': args.include_shuffled, 'matched_shuffle': matched_shuffle,
+                    'alternative_run': args.alternative_run, 'alternative_step': args.alternative_step}
         if existing.get('schema') != 'kd_cnn_v2_final_learning_v1' or existing['choices'] != expected:
             raise ValueError('Existing immutable plan differs; preserve it')
         if sha(config_path) == existing['output_config_sha256']:
             print(json.dumps({'complete': True, 'reused_immutable_plan': str(out), 'fits': existing['fit_accounting']})); return
         if sha(config_path) != existing['source_config_sha256']:
             raise ValueError('Existing plan config source/output differs; explicit reconciliation required')
-    artifact, new_config = make_plan(config_path, canonical, out, args.principal_run, args.principal_step, args.include_rf13, args.include_shuffled)
+    artifact, new_config = make_plan(config_path, canonical, out, args.principal_run, args.principal_step, args.include_rf13,
+        args.include_shuffled, matched_shuffle, args.alternative_run, args.alternative_step)
     if args.write:
         if out.exists() and read(out) != artifact: raise ValueError('Immutable final plan differs')
         if not out.exists():
