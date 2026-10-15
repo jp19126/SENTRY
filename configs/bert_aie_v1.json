@@ -1,0 +1,81 @@
+{
+  "study_id": "bert_aie_v1",
+  "authorized_by": "User submitted SENTRY_Path2_BERT_AIE_Execution_Prompt.md on 2026-10-15; approved Git synchronization separately",
+  "decision_stage": "whole-model offline feasibility and isolated co-design comparison",
+  "phase": "implementation_and_development_qualification",
+  "shared_root": "/home/jp19126/Projects/SENTRY/results/dual_track_v1/shared",
+  "canonical_root": "/home/jp19126/Projects/SENTRY",
+  "teacher": {
+    "path": "results/cnn_adoption_v1/runs/bert_matched_lr5e5_supervised_s42_r2/checkpoint_selected.pt",
+    "sha256": "95025bfc0e29163efea613d556d7da0b516ec1bb6c6fac9d9c4c9c6f1f373525",
+    "selection": "Existing development-selected matched BERT; seed42 fixed independently of exposed confirmation",
+    "new_learning_runs": 0
+  },
+  "numerical_variants": [
+    "fp32_reference",
+    "w8a8_fp32_attention",
+    "w8a8_bf16_attention"
+  ],
+  "selection_rule": "Keep original model and conventional reference. Qualify exact integer/casts; report numerical and decision changes. Select target-native BF16 attention only if correct functional implementation and development behavior are established; no held-out-based rescue.",
+  "calibration_policy": {
+    "primary_alpha": 0.01,
+    "secondary_alphas": [
+      0.005,
+      0.02,
+      0.05
+    ],
+    "score": "max_window_logit_margin",
+    "rule": "score > threshold",
+    "ties": "deterministic conservative order statistic",
+    "criterion_status": "reporting points, not safety guarantees or adoption gates"
+  },
+  "hypothesis": "At identical whole-BERT numerics, retain encoder intermediates in the connected compute path rather than writing each intermediate to external memory; compare complete schedule and measured traffic/latency, including residency storage and the actual PL/AIE crossings.",
+  "controls": [
+    "same model/numerics with conventional intermediate spills",
+    "same model/numerics with resident intermediate buffers",
+    "FP32 reference versus frozen W8/A8 with FP32 and BF16 attention"
+  ],
+  "falsifier": "Residency is not useful within tested scope if it cannot fit/connect or if complete measured latency/traffic does not improve after storage, crossings and clock differences are included. Absence of a novel distinction from CAT/SSR means supporting engineering only.",
+  "constraints": {
+    "target_part": "xcve2802-vsvh1760-2MP-e-S",
+    "physical_device_authorized": false,
+    "paid_services_authorized": false,
+    "protected_final_data_authorized": false,
+    "training": "No initial training; reuse fixed model. Any later justified adaptation recipe must be recorded before fit and confirmation."
+  },
+  "bounded_matrix": {
+    "numerical_formats": 3,
+    "initial_fit_calibration_windows": 64,
+    "hardware_mappings": 2,
+    "correction_policy": "At most two focused corrections per diagnosed integration blocker, retain each failure",
+    "gpu_total_seconds_ceiling": 7200,
+    "cpu_experiment_seconds_ceiling": 28800,
+    "vendor_total_seconds_ceiling": 57600,
+    "single_score_seconds": 1800,
+    "single_profile_seconds": 600,
+    "single_synthesis_seconds": 7200,
+    "single_link_route_seconds": 14400,
+    "reserve": "At least half GPU budget reserved for confirmation and full model differential/profile evidence"
+  },
+  "usage_pause": {
+    "weekly_used_percent": 90,
+    "initial_used_percent": 13,
+    "automatic_reset_allowed": false
+  },
+  "evidence_boundary": "Detector labels and software differential checks do not prove downstream protection, synthesized timing, routed closure, board latency or energy. Porting established techniques alone is not scientific novelty.",
+  "primary_confirmation_data": {
+    "shared_protocol_sha256": "614549f8a1eeac21cc4168f551812fe6398c3da2e856529f81bb55910ce1b398",
+    "calibration": "data/prepared/new_calibration",
+    "selection": "data/prepared/new_confirmation",
+    "selection_before_any_new_scoring": true
+  },
+  "preserved_unused_panel": "results/dual_track_v1/shared/prospective_v1; no quality evaluation; initial alternative timing superseded by shared/data/timing_manifest.json",
+  "timing_manifest": {
+    "path": "results/dual_track_v1/shared/data/timing_manifest.json",
+    "sha256": "8d141711fcee46d65394c37460ef4bb377bd7346592ce11afa240ed6cf254162",
+    "documents": 18,
+    "windows": 77,
+    "repetitions": 20,
+    "warmups": 3
+  }
+}
