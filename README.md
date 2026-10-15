@@ -18,6 +18,7 @@ or general proof against LLM/model poisoning.
 |---|---|
 | [RESEARCH_SCOPE.md](RESEARCH_SCOPE.md) | Approved scientific purpose, application boundary and criteria for a contribution |
 | [AGENTS.md](AGENTS.md) | Standing execution and evidence rules; deliberately **no specific research goals** |
+| [EVALUATION_POLICY.md](EVALUATION_POLICY.md) | Literature-grounded, stage-specific criteria for research selection versus scientific and deployment claims |
 | [STATUS.md](STATUS.md) | Current findings, unresolved claims, permissions and next decision |
 | [SENTRY_codex_execution_prompt.md](SENTRY_codex_execution_prompt.md) | Current authorized CNN adoption prompt; earlier exploration and method-first prompts are archived |
 | [Method study](reports/method_study.md) | Verified prior art, approved span-coupled experiment contract, executed results and limitations |
@@ -132,9 +133,12 @@ detailed experiment records belong in `reports/`, not in this README.
 The existing pilot's grouped partitions, scoring/threshold rules, numerical
 identities and closed final sets are documented in
 [reports/protocol.md](reports/protocol.md). Pilot-specific thresholds are not
-universal requirements for a future method. Distinguish classifier quality,
-real protection of a target LLM, software timing, synthesis and measured
-end-to-end FPGA behavior. Report each only within its actual evidence boundary.
+universal requirements for a future method. The standing
+[EVALUATION_POLICY.md](EVALUATION_POLICY.md) specifies how prospective research
+criteria must be justified and how frozen earlier results are preserved.
+Distinguish classifier quality, real protection of a target LLM, software
+timing, synthesis and measured end-to-end FPGA behavior. Report each only
+within its actual evidence boundary.
 
 ## Git synchronization after the rename
 
