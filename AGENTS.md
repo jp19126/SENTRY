@@ -9,7 +9,9 @@ Those belong in [RESEARCH_SCOPE.md](RESEARCH_SCOPE.md) and
 
 1. Read [README.md](README.md) for the repository map,
    [RESEARCH_SCOPE.md](RESEARCH_SCOPE.md) for the approved scientific boundary,
-   and [STATUS.md](STATUS.md) for the current decision and evidence state.
+   [EVALUATION_POLICY.md](EVALUATION_POLICY.md) for stage-appropriate evaluation
+   and numerical-criterion provenance, and [STATUS.md](STATUS.md) for the
+   current decision and evidence state.
 2. Consult the relevant protocol, source files, configuration and evidence
    reports before changing a method or implementation. In particular,
    [configs/project.json](configs/project.json) records experimental settings;
@@ -28,10 +30,13 @@ Those belong in [RESEARCH_SCOPE.md](RESEARCH_SCOPE.md) and
 - Assess novelty against the closest relevant prior work, including methods and
   implementations. Describe the actual difference and what outcome could
   disprove its usefulness. Do not relabel standard engineering as novel research.
-- Use competent, comparable baselines and ablations. Account for changes in
-  numerical behavior, task utility, performance, resources and end-to-end costs
-  when those quantities matter to the claim. Avoid selecting success criteria
-  after observing favorable results.
+- Use competent, comparable baselines and ablations. Follow
+  [EVALUATION_POLICY.md](EVALUATION_POLICY.md): state the decision stage and
+  distinguish justified hard requirements, reporting metrics and exploratory
+  targets. Do not import arbitrary thresholds as universal adoption rules.
+  Account for numerical behavior, task utility, performance, resources and
+  end-to-end costs when they matter to the claim; avoid choosing success
+  criteria after observing favorable results.
 - Keep supporting ports, profiling, toolchain setup and optimization bounded by
   a named question and stopping point. Do not let an easy implementation task
   silently replace the project's scientific purpose.
