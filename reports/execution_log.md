@@ -3128,3 +3128,31 @@ completed offline state. Previous report/config/status bytes are preserved in
 results/cnn_adoption_v1/. The final completion audit binds the current files.
 Local commit d8a6e39 stores the preceding requested Git snapshot; push of three
 commits remains blocked by automatic approval review pending explicit approval.
+
+
+## 2026-10-15 — retrospective evaluation policy reassessment
+
+After explicit user instruction to reevaluate under EVALUATION_POLICY.md,
+reused released scores for16 final confirmation targets and36 R2 development
+target/format records. No retraining, inference or new threshold deployment.
+scripts/reassess_cnn_candidates.py verifies frozen sources, completed-audit and
+score-file hashes, reproduces registered calibration counts, and calculates
+exact tied-score ROC/AUC, hard-benign/genre discrimination and paired CNN
+error overlap. Known-label empirical ROC points are retrospective diagnostics.
+Initial sandbox WSL-path access failed before analysis; scoped approved runs
+completed in9.961 and10.989 internal CPU wall seconds, retaining both outputs.
+Independent direct pairwise-AUC/order-statistic checks passed all16 targets
+in2.392 seconds after a metadata Windows-path lookup correction; the first
+failed check produced no artifact or changed metric.
+
+reports/cnn_policy_reassessment_20261015.md recommends provisional LocalContext
+PCA+KD for a bounded co-design feasibility investigation, C98 as control/tail
+challenger, and matched BERT as strongest quality reference. This decision stage
+is separate from the unchanged original negative adoption verdict. TextCNN and
+Stacked remain useful simple baselines; missing new repeated confirmation is
+not invented. Original report/configuration/evaluation sources remain byte-exact.
+README and safely updated STATUS distinguish the two conclusions; preceding
+STATUS is archived verbatim. New evidence/provenance is under
+results/cnn_adoption_v1/policy_reassessment_20261015/.
+No new learning/accelerator/vendor/API/physical-device work or Git sync occurred.
+Review and documentation time remains untimed rather than inferred as zero.

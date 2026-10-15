@@ -61,6 +61,12 @@ Export and software qualification support the comparison, while conditional
 storage savings do not establish a physical FPGA advantage. The study leaves
 the project's FPGA-centered scientific purpose and earlier findings intact.
 
+A subsequent [retrospective policy reassessment](reports/cnn_policy_reassessment_20261015.md)
+recommends LocalContext PCA + KD as a provisional CNN for bounded co-design
+research, with C98 as a control and matched BERT as the stronger detector.
+It applies the new stage-specific evaluation policy while preserving the
+original negative adoption result; it does not establish deployment readiness.
+
 The [CNN architecture exploration](reports/cnn_study.md) completed its authorized
 offline stage on 14 October 2026: 96 screens, 23 longer inner fits, one matched
 replacement and 24 frozen three-seed finalist fits, with checked confirmation
